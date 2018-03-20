@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/python网络socket/index.html">
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="用法   123456import socketsocket.setdefaulttimeout(2)s.socket.socket()s.connect((ip,port))banner = s.recv(1024) #获取套接字中1024字节的数据print banner">
-<meta property="og:updated_time" content="2018-03-20T07:20:49.405Z">
+<meta property="og:updated_time" content="2018-03-20T07:58:12.944Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python网络socket">
 <meta name="twitter:description" content="用法   123456import socketsocket.setdefaulttimeout(2)s.socket.socket()s.connect((ip,port))banner = s.recv(1024) #获取套接字中1024字节的数据print banner">
@@ -156,7 +156,7 @@
 <blockquote>
 <p>使用python socket循环扫描ip和端口</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">def retBanner(ip,port):</span><br><span class="line">     try:</span><br><span class="line">        socket.setdefaulttimeout(2)</span><br><span class="line">        s.socket.socket()</span><br><span class="line">        s.connect((ip,port))</span><br><span class="line">        banner = s.recv(1024)</span><br><span class="line">        return banner</span><br><span class="line">    Exception,e:</span><br><span class="line">        return str(e)</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    iplist = [10,20,136,200]</span><br><span class="line">    portlist = [21,22,25,80,110,443] </span><br><span class="line">    for ipf in iplist:</span><br><span class="line">        ip1 = &quot;192.168.137.&quot;+ipf</span><br><span class="line">        for portf in portlist:</span><br><span class="line">        banner = retBanner(ipf,portf)</span><br><span class="line">        print banner</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">def retBanner(ip,port):</span><br><span class="line">    try:</span><br><span class="line">        socket.setdefaulttimeout(2)</span><br><span class="line">        s.socket.socket()</span><br><span class="line">        s.connect((ip,port))</span><br><span class="line">        banner = s.recv(1024)</span><br><span class="line">        return banner</span><br><span class="line">    Exception,e:</span><br><span class="line">        return str(e)</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    iplist = [10,20,136,200]</span><br><span class="line">    portlist = [21,22,25,80,110,443] </span><br><span class="line">    for ipf in iplist:</span><br><span class="line">        ip1 = &quot;192.168.137.&quot;+ipf</span><br><span class="line">        for portf in portlist:</span><br><span class="line">        banner = retBanner(ipf,portf)</span><br><span class="line">        print banner</span><br></pre></td></tr></table></figure>
       
 
       
@@ -373,11 +373,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color3">食物</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">食物</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
             
             <div class="clearfix"></div>
