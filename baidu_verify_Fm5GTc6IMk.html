@@ -6,19 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>python re模块 | 想与做</title>
+  <title>想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="从公众号:日常学python学习，为了以后能方便查找记录并写在博客  正则表达式是特殊的字符序列，用来检测字符串是否与我们所设定的字符串相匹配 python 中处理正则表达式的库:re 匹配正则表达式的方法: findall(pattern,string,flags)  pattrn: 正则表达式 string: 要进行匹配的字符串 flags: 匹配的模式">
-<meta name="keywords" content="python">
-<meta property="og:type" content="article">
-<meta property="og:title" content="python re模块">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/pythonre模块/index.html">
+  <meta name="description" content="Fm5GTc6IMk">
+<meta property="og:type" content="website">
+<meta property="og:title" content="想与做">
+<meta property="og:url" content="http://blog.jbyusk.com/baidu_verify_Fm5GTc6IMk.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="从公众号:日常学python学习，为了以后能方便查找记录并写在博客  正则表达式是特殊的字符序列，用来检测字符串是否与我们所设定的字符串相匹配 python 中处理正则表达式的库:re 匹配正则表达式的方法: findall(pattern,string,flags)  pattrn: 正则表达式 string: 要进行匹配的字符串 flags: 匹配的模式">
-<meta property="og:updated_time" content="2018-03-24T15:40:35.371Z">
+<meta property="og:description" content="Fm5GTc6IMk">
+<meta property="og:updated_time" content="2018-03-25T14:15:20.170Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python re模块">
-<meta name="twitter:description" content="从公众号:日常学python学习，为了以后能方便查找记录并写在博客  正则表达式是特殊的字符序列，用来检测字符串是否与我们所设定的字符串相匹配 python 中处理正则表达式的库:re 匹配正则表达式的方法: findall(pattern,string,flags)  pattrn: 正则表达式 string: 要进行匹配的字符串 flags: 匹配的模式">
+<meta name="twitter:title" content="想与做">
+<meta name="twitter:description" content="Fm5GTc6IMk">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -139,61 +138,12 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-<article id="post-pythonre模块" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      python re模块
-    </h1>
-  
-
-		
-		<span class="archive-article-date">
-			阅读量 <span id="busuanzi_value_page_pv"></span>
-		</span>
-	    
-        
-        <a href="/2018/03/20/pythonre模块/" class="archive-article-date">
-  	<time datetime="2018-03-20T09:40:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
-</a>
-        
-      </header>
-
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p> 从公众号:日常学python学习，为了以后能方便查找记录并写在博客</p>
-<p> 正则表达式是特殊的字符序列，用来检测字符串是否与我们所设定的字符串相匹配<br> python 中处理正则表达式的库:re<br> 匹配正则表达式的方法:<br> findall(pattern,string,flags)</p>
-<ul>
-<li>pattrn: 正则表达式</li>
-<li>string: 要进行匹配的字符串</li>
-<li>flags: 匹配的模式<a id="more"></a>
-</li>
-</ul>
-<hr>
-<blockquote>
-<p>匹配字符串</p>
-</blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">a = &apos;sg35g923kg0se35asdfe&apos;</span><br><span class="line">r1 = re.findall(&apos;\d&apos;,a) #数字</span><br><span class="line">r2 = re.findall(&apos;\D&apos;,a) #非数字</span><br><span class="line">print(r1)</span><br><span class="line">print(r2)</span><br></pre></td></tr></table></figure>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">a = &apos;abc,acc,agc,anc,afc,adc,aec&apos;</span><br><span class="line">r1 = re.findall(&apos;a[cf]c&apos;,a) #ac之间是c或f</span><br><span class="line">r2 = re.findall(&apos;a[^cf]c&apos;,a) #ac之间非c或非f</span><br><span class="line">r3 = re.findall(&apos;a[b-n]c&apos;,a) #ac之间字符在b到n之间的任一字符</span><br><span class="line">print(r1)</span><br><span class="line">print(r2)</span><br><span class="line">print(r3)</span><br><span class="line"></span><br><span class="line">匹配汉字: [\u4E00-\u9FA5]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>\w：匹配数字和字符「不包括&amp;符号」只匹配单词，数字和下划线</li>
-<li>\W：与\w相反，这个包括空格和回车</li>
-<li>\s：匹配空格字符，如空格，回车和制表符</li>
-<li>\S：与\s相反</li>
-<li>.：匹配除换行符之外的其他字符</li>
-</ul>
-<blockquote>
-<p>字符需要匹配多次</p>
-</blockquote>
-<p> [a-zA-z]{3}<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">a = &apos;is is test or python111sdf23err kakakak&apos;</span><br><span class="line">r1 = re.findall(&apos;[a-z]&#123;3&#125;&apos;,a) #匹配3个字符</span><br><span class="line">r2 = re.findall(&apos;[a-z]&#123;3,6&#125;&apos;,a) #匹配3到6个字符 贪婪匹配</span><br><span class="line">r3 = re.findall(&apos;[a-z]&#123;3,6&#125;?&apos;,a) #匹配满足第一条件的即停止匹配</span><br><span class="line">print(r1)</span><br><span class="line">print(r2)</span><br><span class="line">print(r3)</span><br></pre></td></tr></table></figure></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">a = &apos;tes123test234testt&apos;</span><br><span class="line">r1 = re.findall(&apos;test*&apos;,a) #匹配t0次或无限多次</span><br><span class="line">r2 = re.findall(&apos;test+&apos;,a) #匹配t1次或以上</span><br><span class="line">r3 = re.findall(&apos;test?&apos;,a) #匹配t0次或1次</span><br><span class="line">print(r1)</span><br><span class="line">print(r2)</span><br><span class="line">print(r3)</span><br></pre></td></tr></table></figure>
-<hr>
-
+        Fm5GTc6IMk
       
 
       
@@ -201,17 +151,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -262,7 +201,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/20/pythonre模块/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/baidu_verify_Fm5GTc6IMk.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -274,25 +213,6 @@
 </article>
 
   
-<nav id="article-nav">
-  
-    <a href="/2018/03/25/关于我/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          我
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/03/20/pythonrequests模块/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python requests模块</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -334,7 +254,6 @@
              
         <!-- 目录内容结束 -->
 
-
           </div>
         </div>
       </div>
@@ -356,7 +275,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
