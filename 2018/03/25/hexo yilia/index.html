@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>想与做</title>
+  <title>hexo yilia一些小技巧 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="想与做">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/pythonos模块/index.html">
+  <meta name="description" content="hexo yilia主题添加文章访问量统计   学习自:http://www.lookk.cn/2017/12/09/hexo-yilia%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E8%AE%BF%E9%97%AE%E9%87%8F%E7%BB%9F%E8%AE%A1/  引入不蒜子以及添加站点访问量在/themes/yilia">
+<meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo yilia一些小技巧">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/03/25/hexo yilia/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:updated_time" content="2018-03-20T08:43:51.998Z">
+<meta property="og:description" content="hexo yilia主题添加文章访问量统计   学习自:http://www.lookk.cn/2017/12/09/hexo-yilia%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E8%AE%BF%E9%97%AE%E9%87%8F%E7%BB%9F%E8%AE%A1/  引入不蒜子以及添加站点访问量在/themes/yilia">
+<meta property="og:updated_time" content="2018-03-25T09:26:14.697Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="想与做">
+<meta name="twitter:title" content="hexo yilia一些小技巧">
+<meta name="twitter:description" content="hexo yilia主题添加文章访问量统计   学习自:http://www.lookk.cn/2017/12/09/hexo-yilia%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E8%AE%BF%E9%97%AE%E9%87%8F%E7%BB%9F%E8%AE%A1/  引入不蒜子以及添加站点访问量在/themes/yilia">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -73,6 +77,17 @@
 				
 			</div>
 		</nav>
+		<nav class="header-nav">
+    <div class="social">
+        
+    </div>
+
+    <!--音乐播放插件-->
+    <div style="margin-top:30px;">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=240 height=52 src="//music.163.com/outchain/player?type=2&id=536570516&auto=0&height=32"></iframe>
+    </div>
+</nav>
+		
 	</header>		
 </div>
 
@@ -125,12 +140,48 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-pythonos模块" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-hexo yilia" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      hexo yilia一些小技巧
+    </h1>
+  
+
+		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+	    
+        
+        <a href="/2018/03/25/hexo yilia/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <blockquote>
+<p>hexo yilia主题添加文章访问量统计</p>
+</blockquote>
+<p> 学习自:<a href="http://www.lookk.cn/2017/12/09/hexo-yilia%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E8%AE%BF%E9%97%AE%E9%87%8F%E7%BB%9F%E8%AE%A1/" target="_blank" rel="noopener">http://www.lookk.cn/2017/12/09/hexo-yilia%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E8%AE%BF%E9%97%AE%E9%87%8F%E7%BB%9F%E8%AE%A1/</a></p>
+<ul>
+<li><p>引入不蒜子以及添加站点访问量<br>在/themes/yilia/layout/_partial/footer.ejs最后添加如下代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script async src=&quot;//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;span id=&quot;busuanzi_container_site_uv&quot;&gt; </span><br><span class="line">本站访客数&lt;span id=&quot;busuanzi_value_site_uv&quot;&gt;&lt;/span&gt;人次</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加文章访问量<br>在/themes/yilia/layout/_partial/article.ejs中类似如下添加:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;header class=&quot;article-header&quot;&gt;</span><br><span class="line">      &lt;%- partial(&apos;post/title&apos;, &#123;class_name: &apos;article-title&apos;&#125;) %&gt;</span><br><span class="line">      #从这开始添加</span><br><span class="line">&lt;% if ( !index )&#123; %&gt;</span><br><span class="line">&lt;span class=&quot;archive-article-date&quot;&gt;</span><br><span class="line">	阅读量 &lt;span id=&quot;busuanzi_value_page_pv&quot;&gt;&lt;/span&gt;</span><br><span class="line">&lt;/span&gt;</span><br><span class="line">   &lt;% &#125; %&gt;</span><br><span class="line">	#此处添加结束</span><br><span class="line">      &lt;% if (!post.noDate)&#123; %&gt;</span><br><span class="line">      &lt;%- partial(&apos;post/date&apos;, &#123;class_name: &apos;archive-article-date&apos;, date_format: null&#125;) %&gt;</span><br><span class="line">      &lt;% &#125; %&gt;</span><br><span class="line">&lt;/header&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>添加音乐<br> 学习自:<a href="http://www.lookk.cn/2017/12/09/heox-%E6%B7%BB%E5%8A%A0%E9%9F%B3%E4%B9%90%E6%B5%8B%E8%AF%95/" target="_blank" rel="noopener">http://www.lookk.cn/2017/12/09/heox-%E6%B7%BB%E5%8A%A0%E9%9F%B3%E4%B9%90%E6%B5%8B%E8%AF%95/</a></p>
+</blockquote>
+
       
 
       
@@ -138,6 +189,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -188,7 +250,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/20/pythonos模块/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/25/hexo yilia/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -202,18 +264,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/20/pythonsys模块/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/25/markdown语法/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          python sys+os模块
+          markdown语法
         
       </div>
     </a>
   
   
-    <a href="/2018/03/20/python网络socket/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python网络socket</div>
+    <a href="/2018/03/20/pythonrequests模块/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python requests模块</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -275,6 +337,7 @@
     </div>
   </div>
 </footer>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     </div>
     <script>
 	var yiliaConfig = {
@@ -340,6 +403,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
