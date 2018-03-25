@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/python基础/index.html">
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="变量type(变量)获取变量的类型  整型   port = 21 连接字符串时需要用str() 例子:print “test”+str(port)  字符串   1234567banner = &amp;quot;Free FTP Server&amp;quot;以下几个常用的函数print banner.upper() 打印大写print banner.lower() 打印小写print banner.rep">
-<meta property="og:updated_time" content="2018-03-20T07:32:37.476Z">
+<meta property="og:updated_time" content="2018-03-24T15:53:34.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python基础">
 <meta name="twitter:description" content="变量type(变量)获取变量的类型  整型   port = 21 连接字符串时需要用str() 例子:print “test”+str(port)  字符串   1234567banner = &amp;quot;Free FTP Server&amp;quot;以下几个常用的函数print banner.upper() 打印大写print banner.lower() 打印小写print banner.rep">
@@ -128,7 +128,8 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-python基础" class="article article-type-post " itemscope itemprop="blogPost">
+            
+<article id="post-python基础" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -179,7 +180,7 @@
 </blockquote>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">   print &quot;test&quot;+str(100/0)</span><br><span class="line">except:</span><br><span class="line">   print</span><br><span class="line">或者</span><br><span class="line">try:</span><br><span class="line">   print &quot;test&quot;+str(100/0)</span><br><span class="line">except Exception,e:</span><br><span class="line">   print str(e)  #将异常信息存储在变量中并打印出来</span><br></pre></td></tr></table></figure>
 <h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p> def testfunc(arg1,arg2): #严格缩进</p>
-<h1 id="文件I-O"><a href="#文件I-O" class="headerlink" title="文件I/O"></a>文件I/O</h1> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f = open(&quot;test.txt&quot;,&apos;r&apos;)</span><br><span class="line">for line in f.readlines():</span><br><span class="line">   if line.strip(&apos;\n&apos;) in banner:</span><br><span class="line">       print banner.strip(&apos;\n&apos;) #strip函数去除首尾的某个字符</span><br></pre></td></tr></table></figure>
+<h1 id="文件I-O"><a href="#文件I-O" class="headerlink" title="文件I/O"></a>文件I/O</h1> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">f = open(&quot;test.txt&quot;,&apos;r&apos;)</span><br><span class="line">for line in f.readlines():</span><br><span class="line">   if line.strip(&apos;\n&apos;) in banner:</span><br><span class="line">       print banner.strip(&apos;\n&apos;) #strip函数去除首尾的某个字符</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line">#with as用法 不需要再close</span><br><span class="line">with open(&apos;baidu.png&apos;,&apos;wb&apos;) as f: #注意写的方式是以二进制方式写入</span><br><span class="line">   f.write(response.content)</span><br></pre></td></tr></table></figure>
       
 
       
@@ -318,6 +319,7 @@
  <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
 
           </div>
         </div>
