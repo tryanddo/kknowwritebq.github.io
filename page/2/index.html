@@ -6,19 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>python sys模块 | 想与做</title>
+  <title>想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="命令行参数用法   12345678910import sysimport osif len(sys.argv) == 2: filename = sys.argv[1]if not os.path.isfile(filename) print &amp;apos;[-] &amp;apos;+filename+&amp;apos;does not exist&amp;apos;.	 exit(0)if not os.acce">
-<meta name="keywords" content="python">
-<meta property="og:type" content="article">
-<meta property="og:title" content="python sys模块">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/pythonsys模块/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="想与做">
+<meta property="og:url" content="http://blog.jbyusk.com/page/2/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="命令行参数用法   12345678910import sysimport osif len(sys.argv) == 2: filename = sys.argv[1]if not os.path.isfile(filename) print &amp;apos;[-] &amp;apos;+filename+&amp;apos;does not exist&amp;apos;.	 exit(0)if not os.acce">
-<meta property="og:updated_time" content="2018-03-29T10:36:28.159Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python sys模块">
-<meta name="twitter:description" content="命令行参数用法   12345678910import sysimport osif len(sys.argv) == 2: filename = sys.argv[1]if not os.path.isfile(filename) print &amp;apos;[-] &amp;apos;+filename+&amp;apos;does not exist&amp;apos;.	 exit(0)if not os.acce">
+<meta name="twitter:title" content="想与做">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -154,25 +149,22 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-pythonsys模块" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <article id="post-python基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      python sys模块
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/python基础/">python基础</a>
     </h1>
   
 
 		
-		<span class="archive-article-date">
-			阅读量 <span id="busuanzi_value_page_pv"></span>
-		</span>
-	    
         
-        <a href="/2018/03/20/pythonsys模块/" class="archive-article-date">
-  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+        <a href="/2018/03/20/python基础/" class="archive-article-date">
+  	<time datetime="2018-03-20T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
 </a>
         
       </header>
@@ -180,10 +172,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>命令行参数用法</p>
+        <h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>type(变量)获取变量的类型</p>
+<blockquote>
+<p>整型</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line">if len(sys.argv) == 2:</span><br><span class="line"> filename = sys.argv[1]</span><br><span class="line">if not os.path.isfile(filename)</span><br><span class="line"> print &apos;[-] &apos;+filename+&apos;does not exist&apos;.</span><br><span class="line">	 exit(0)</span><br><span class="line">if not os.access(filename,os.R_OK):</span><br><span class="line"> print &apos;[-] &apos;+filename+&apos; access denied.&apos;</span><br><span class="line"> exit(0)</span><br></pre></td></tr></table></figure>
+<p> port = 21<br> 连接字符串时需要用str()<br> 例子:print “test”+str(port)</p>
+<blockquote>
+<p>字符串</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">banner = &quot;Free FTP Server&quot;</span><br><span class="line">以下几个常用的函数</span><br><span class="line">print (banner.upper()) 打印大写</span><br><span class="line">print (banner.lower()) 打印小写</span><br><span class="line">print (banner.replace(&apos;Free&apos;,&apos;charge&apos;))替换,注意用单引号</span><br><span class="line">print (banner.find(&apos;FTP&apos;))查找字符串</span><br><span class="line">print (len(banner)) 获取长度 len计算字符数</span><br><span class="line"></span><br><span class="line">编码问题:</span><br><span class="line">以下2行强制使用utf-8编码</span><br><span class="line">#!/usr/bin/env python3</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">python 3版本字符串以Unicode编码</span><br><span class="line">对于单个字符的编码</span><br><span class="line">ord(&apos;A&apos;) #获取字符整数表示</span><br><span class="line">chr(66) #获取编码对应的字符</span><br><span class="line"></span><br><span class="line">UTF-8是可变长编码</span><br><span class="line">str.encode(&apos;ascii&apos;)</span><br><span class="line">str.encode(&apos;utf-8&apos;)</span><br><span class="line">byte.decode(&apos;utf-8&apos;,errors=&apos;ignore&apos;) #忽略错误的字节</span><br><span class="line"></span><br><span class="line">格式化字符串</span><br><span class="line">print(&apos;%2d-%s&apos; % (3,1))</span><br><span class="line">print(&apos;%.2f&apos; % 3.1415926)</span><br><span class="line">&apos;hello, &#123;0&#125;, 成绩提升了 &#123;1:.1f&#125;%&apos;.format(&apos;小明&apos;, 17.125)</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2018/03/20/python基础/#more">more >></a>
+        
       
 
       
@@ -205,84 +205,16 @@
       
 
       
-
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/python基础/">展开全文 >></a>
+        </p>
       
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
 
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/20/pythonsys模块/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/03/20/pythonos模块/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          python os模块
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/03/20/python网络socket/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python网络socket</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -302,27 +234,201 @@
 
 
 
-  
-  <!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2159376"></script>
-<!-- UY END --> 
-  
-  
-  
-  
-  
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
 
   
-
+    <article id="post-牛腱肉做法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/14/牛腱肉做法/">记一次比较好吃的牛腱肉做法</a>
+    </h1>
   
 
-  
+		
+        
+        <a href="/2018/03/14/牛腱肉做法/" class="archive-article-date">
+  	<time datetime="2018-03-14T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>1:炖牛肉</p>
+</blockquote>
+<pre><code>先加水至沸腾
+然后加入大块牛腱肉与切丝的生姜，水需要没过牛腱肉。
+倒入适量料酒，生抽和盐。
+小火炖，如果喜欢有嚼劲的牛腱肉，炖1小时左右即捞起，如果喜欢烂点的炖1个半小时以上。
+</code></pre><blockquote>
+<p>2:炒牛肉</p>
+</blockquote>
+<pre><code>将大块牛腱肉切片。
+切好少量姜丝和半个洋葱切成丝。
+将刚才炖牛肉的汤倒入少许进炒锅中，倒入洋葱丝，加适量生抽和少量糖，小火炒至至洋葱软了。
+然后倒入姜丝，大火炒一下。接着倒入牛腱肉片。
+大火炒至水干。加适量盐，如果喜欢味精，可以加适量味精。
+起锅。
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">食物</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/14/牛腱肉做法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
 
 
  <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+  
+    <article id="post-怎么读" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/14/怎么读/">怎么读书</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/14/怎么读/" class="archive-article-date">
+  	<time datetime="2018-03-14T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在看古典老师的拆掉思维里的墙:原来我可以这样活这本书时，书中很多观点都曾经有过或者思考过。然后突然发现这个问题，一本书，一个动画，看的过程中颇有感触，带来了一段时间的兴奋与共鸣。但是再过一个星期或者一个月，这些感悟并没有真正的影响到生活中，也没有真正的成为你的知识，从而塑造你的价值观。</p>
+<h3 id="在这里我想对自己提出几个的问题，并在未来不断完善答案来回答自己"><a href="#在这里我想对自己提出几个的问题，并在未来不断完善答案来回答自己" class="headerlink" title="在这里我想对自己提出几个的问题，并在未来不断完善答案来回答自己"></a>在这里我想对自己提出几个的问题，并在未来不断完善答案来回答自己</h3><blockquote>
+<p>应该如何看书？</p>
+</blockquote>
+<blockquote>
+<p>看完一本书,怎么让自己能复述出书的大纲？</p>
+</blockquote>
+<blockquote>
+<p>了解了书的观点后，如果让自己吸收这些内容？</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/14/怎么读/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
+  
 
 
           </div>
@@ -345,8 +451,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
-		isPost: true,
+		isHome: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
