@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/python基础/index.html">
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="变量type(变量)获取变量的类型  整型   port = 21 连接字符串时需要用str() 例子:print “test”+str(port)  字符串   123456789101112131415161718192021222324252627banner = &amp;quot;Free FTP Server&amp;quot;以下几个常用的函数print (banner.upper()) 打印大写p">
-<meta property="og:updated_time" content="2018-03-30T10:22:08.327Z">
+<meta property="og:updated_time" content="2018-04-03T07:13:27.217Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python基础">
 <meta name="twitter:description" content="变量type(变量)获取变量的类型  整型   port = 21 连接字符串时需要用str() 例子:print “test”+str(port)  字符串   123456789101112131415161718192021222324252627banner = &amp;quot;Free FTP Server&amp;quot;以下几个常用的函数print (banner.upper()) 打印大写p">
@@ -216,7 +216,7 @@
 <h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><blockquote>
 <p>异常处理</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">try:  #使用sys.exit()无法退成程序，因为异常被捕获，慎用</span><br><span class="line">   print &quot;test&quot;+str(100/0)</span><br><span class="line">except:</span><br><span class="line">   print</span><br><span class="line">或者 </span><br><span class="line">try: #捕获除sys.exit()的异常</span><br><span class="line">   print &quot;test&quot;+str(100/0)</span><br><span class="line">except Exception,e:</span><br><span class="line">   print str(e)  #将异常信息存储在变量中并打印出来</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line">   f = open(&quot;foo&quot;,&quot;r&quot;)</span><br><span class="line">except IOError as e:</span><br><span class="line">   ...</span><br><span class="line">else: #如果没有异常就执行else</span><br><span class="line">   data = f.read()</span><br><span class="line">finally: #无论是否有异常都会执行</span><br><span class="line">   f.close()</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">try:  #使用sys.exit()无法退成程序，因为异常被捕获，慎用</span><br><span class="line">   print &quot;test&quot;+str(100/0)</span><br><span class="line">except:</span><br><span class="line">   print</span><br><span class="line">或者 </span><br><span class="line">try: #捕获除sys.exit()的异常</span><br><span class="line">   print &quot;test&quot;+str(100/0)</span><br><span class="line">except Exception,e: #python2</span><br><span class="line">except Exception as e: #python3</span><br><span class="line">   print str(e)  #将异常信息存储在变量中并打印出来</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line">   f = open(&quot;foo&quot;,&quot;r&quot;)</span><br><span class="line">except IOError as e:</span><br><span class="line">   ...</span><br><span class="line">else: #如果没有异常就执行else</span><br><span class="line">   data = f.read()</span><br><span class="line">finally: #无论是否有异常都会执行</span><br><span class="line">   f.close()</span><br></pre></td></tr></table></figure>
 <h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p> def testfunc(arg1,arg2): #严格缩进</p>
 <h1 id="文件I-O"><a href="#文件I-O" class="headerlink" title="文件I/O"></a>文件I/O</h1> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">f = open(&quot;test.txt&quot;,&apos;r&apos;)</span><br><span class="line">for line in f.readlines():</span><br><span class="line">   if line.strip(&apos;\n&apos;) in banner:</span><br><span class="line">       print banner.strip(&apos;\n&apos;) #strip函数去除首尾的某个字符</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line">#with as用法 不需要再close</span><br><span class="line">with open(&apos;baidu.png&apos;,&apos;wb&apos;) as f: #注意写的方式是以二进制方式写入</span><br><span class="line">   f.write(response.content)</span><br></pre></td></tr></table></figure>
       
@@ -376,6 +376,9 @@
   </div>
 </footer>
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_uv"> 
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
     </div>
     <script>
 	var yiliaConfig = {
@@ -447,11 +450,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color4">读后感</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -464,6 +471,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
               </li>
             
             <div class="clearfix"></div>

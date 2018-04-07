@@ -150,6 +150,262 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-pythonsysargparse模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/pythonsysargparse模块/">python sys与argparse模块</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/pythonsysargparse模块/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>命令行参数用法</p>
+</blockquote>
+<ul>
+<li>sys模块<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line">if len(sys.argv) == 2:</span><br><span class="line"> filename = sys.argv[1]</span><br><span class="line">if not os.path.isfile(filename)</span><br><span class="line"> print &apos;[-] &apos;+filename+&apos;does not exist&apos;.</span><br><span class="line">	 exit(0)</span><br><span class="line">if not os.access(filename,os.R_OK):</span><br><span class="line"> print &apos;[-] &apos;+filename+&apos; access denied.&apos;</span><br><span class="line"> exit(0)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>argparse模块<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(&quot;zname&quot;,type=str)</span><br><span class="line">parser.add_argument(&quot;dname&quot;,type=str)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">zname = args.zname</span><br><span class="line">dname = args.dname</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/pythonsysargparse模块/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-pythonos模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/pythonos模块/">python os模块</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/pythonos模块/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>一些os模块函数</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">path_a = os.path.abspath(&apos;.&apos;) #获取当前路径的绝对路径</span><br><span class="line"></span><br><span class="line">os.mkdir(title) #创建目录</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/pythonos模块/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-python网络socket" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/python网络socket/">python网络socket</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/python网络socket/" class="archive-article-date">
+  	<time datetime="2018-03-20T07:20:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>一些函数</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">socket.gethostbyname(hostname) #将主机名换成ip地址</span><br><span class="line">socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2018/03/20/python网络socket/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/python网络socket/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-python基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -262,17 +518,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在看古典老师的拆掉思维里的墙:原来我可以这样活这本书时，书中很多观点都曾经有过或者思考过。然后突然发现这个问题，一本书，一个动画，看的过程中颇有感触，带来了一段时间的兴奋与共鸣。但是再过一个星期或者一个月，这些感悟并没有真正的影响到生活中，也没有真正的成为你的知识，从而塑造你的价值观。</p>
-<h3 id="在这里我想对自己提出几个的问题，并在未来不断完善答案来回答自己"><a href="#在这里我想对自己提出几个的问题，并在未来不断完善答案来回答自己" class="headerlink" title="在这里我想对自己提出几个的问题，并在未来不断完善答案来回答自己"></a>在这里我想对自己提出几个的问题，并在未来不断完善答案来回答自己</h3><blockquote>
-<p>应该如何看书？</p>
-</blockquote>
-<blockquote>
-<p>看完一本书,怎么让自己能复述出书的大纲？</p>
-</blockquote>
-<blockquote>
-<p>了解了书的观点后，如果让自己吸收这些内容？</p>
-</blockquote>
-
+        <p>在看古典老师的拆掉思维里的墙:原来我可以这样活这本书时，书中很多观点都曾经有过或者思考过。然后突然发现这个问题，一本书，一个动画，看的过程中颇有感触，带来了一段时间的兴奋与共鸣。但是再过一个星期或者一个月，这些感悟并没有真正的影响到生活中，也没有真正的成为你的知识，从而塑造你的价值观。<br></p>
+        
+          <a class="article-more-a" href="/2018/03/14/怎么读/#more">more >></a>
+        
       
 
       
@@ -329,20 +578,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-牛腱肉做法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-香菇枸杞炖脊骨" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/牛腱肉做法/">记一次比较好吃的牛腱肉做法</a>
+      <a class="article-title" href="/2018/03/14/香菇枸杞炖脊骨/">香菇枸杞炖脊骨</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/14/牛腱肉做法/" class="archive-article-date">
+        <a href="/2018/03/14/香菇枸杞炖脊骨/" class="archive-article-date">
   	<time datetime="2018-03-14T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
 </a>
         
@@ -352,21 +601,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>1:炖牛肉</p>
+<p>1:材料处理</p>
 </blockquote>
-<pre><code>先加水至沸腾
-然后加入大块牛腱肉与切丝的生姜，水需要没过牛腱肉。
-倒入适量料酒，生抽和盐。
-小火炖，如果喜欢有嚼劲的牛腱肉，炖1小时左右即捞起，如果喜欢烂点的炖1个半小时以上。
+<pre><code>脊骨泡冷水半小时。
+干香菇泡水半小时。
+洗净枸杞备好。
+锅中煮水至沸腾，倒入脊骨大火煮3分钟。捞起脊骨。
 </code></pre><blockquote>
-<p>2:炒牛肉</p>
+<p>2:炖</p>
 </blockquote>
-<pre><code>将大块牛腱肉切片。
-切好少量姜丝和半个洋葱切成丝。
-将刚才炖牛肉的汤倒入少许进炒锅中，倒入洋葱丝，加适量生抽和少量糖，小火炒至至洋葱软了。
-然后倒入姜丝，大火炒一下。接着倒入牛腱肉片。
-大火炒至水干。加适量盐，如果喜欢味精，可以加适量味精。
-起锅。
+<pre><code>另外烧一锅水，根据材料多少加水。
+倒入洗净的香菇，枸杞。水沸腾后加入脊骨(为了保持肉的嫩，只有在水开后加入脊骨)，并加入一块冰糖。
+水再次沸腾后，小火炖。
+炖40分钟，起锅。
 </code></pre>
       
 
@@ -390,7 +637,99 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/14/牛腱肉做法/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/14/香菇枸杞炖脊骨/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-赛螃蟹炒番茄" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/14/赛螃蟹炒番茄/">赛螃蟹炒番茄</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/14/赛螃蟹炒番茄/" class="archive-article-date">
+  	<time datetime="2018-03-14T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>1:材料处理</p>
+</blockquote>
+<pre><code>番茄切成小块备好。
+姜，蒜切碎至吃不出颗粒程度，备好。
+打2个鸡蛋，并倒入姜，蒜搅以及一点生抽拌均匀。
+</code></pre><blockquote>
+<p>2:炒</p>
+</blockquote>
+<pre><code>锅中少油，倒入鸡蛋，中火，待底部开始凝固，炒成块状。
+另起一锅，锅中少油，倒入番茄，白糖，炒至番茄出汁。如果汁少可加适当水。
+番茄出汁后，倒入煎好的鸡蛋，混合均匀即可。
+超级下饭。
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">食物</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/14/赛螃蟹炒番茄/">展开全文 >></a>
         </p>
       
 
@@ -447,6 +786,9 @@
   </div>
 </footer>
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_uv"> 
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
     </div>
     <script>
 	var yiliaConfig = {
@@ -518,11 +860,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color4">读后感</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -535,6 +881,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
               </li>
             
             <div class="clearfix"></div>

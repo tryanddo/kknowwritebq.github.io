@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
   <title>python网络socket | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用法   123456import socketsocket.setdefaulttimeout(2)s.socket.socket()s.connect((ip,port))banner = s.recv(1024) #获取套接字中1024字节的数据print banner">
+  <meta name="description" content="一些函数   12socket.gethostbyname(hostname) #将主机名换成ip地址socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python网络socket">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/python网络socket/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="用法   123456import socketsocket.setdefaulttimeout(2)s.socket.socket()s.connect((ip,port))banner = s.recv(1024) #获取套接字中1024字节的数据print banner">
-<meta property="og:updated_time" content="2018-03-20T07:58:12.944Z">
+<meta property="og:description" content="一些函数   12socket.gethostbyname(hostname) #将主机名换成ip地址socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址">
+<meta property="og:updated_time" content="2018-04-04T13:09:27.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python网络socket">
-<meta name="twitter:description" content="用法   123456import socketsocket.setdefaulttimeout(2)s.socket.socket()s.connect((ip,port))banner = s.recv(1024) #获取套接字中1024字节的数据print banner">
+<meta name="twitter:description" content="一些函数   12socket.gethostbyname(hostname) #将主机名换成ip地址socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -181,14 +181,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
+<p>一些函数</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">socket.gethostbyname(hostname) #将主机名换成ip地址</span><br><span class="line">socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<blockquote>
 <p>用法</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">socket.setdefaulttimeout(2)</span><br><span class="line">s.socket.socket()</span><br><span class="line">s.connect((ip,port))</span><br><span class="line">banner = s.recv(1024) #获取套接字中1024字节的数据</span><br><span class="line">print banner</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">socket.setdefaulttimeout(2)</span><br><span class="line">s = socket.socket()</span><br><span class="line">s.connect((ip,port))</span><br><span class="line">banner = s.recv(1024) #获取套接字中1024字节的数据</span><br><span class="line">print banner</span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>使用python socket循环扫描ip和端口</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">def retBanner(ip,port):</span><br><span class="line">    try:</span><br><span class="line">        socket.setdefaulttimeout(2)</span><br><span class="line">        s.socket.socket()</span><br><span class="line">        s.connect((ip,port))</span><br><span class="line">        banner = s.recv(1024)</span><br><span class="line">        return banner</span><br><span class="line">    Exception,e:</span><br><span class="line">        return str(e)</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    iplist = [10,20,136,200]</span><br><span class="line">    portlist = [21,22,25,80,110,443] </span><br><span class="line">    for ipf in iplist:</span><br><span class="line">        ip1 = &quot;192.168.137.&quot;+ipf</span><br><span class="line">        for portf in portlist:</span><br><span class="line">        banner = retBanner(ipf,portf)</span><br><span class="line">        print banner</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">def retBanner(ip,port):</span><br><span class="line">    try:</span><br><span class="line">        socket.setdefaulttimeout(2)</span><br><span class="line">        s = socket.socket()</span><br><span class="line">        s.connect((ip,port))</span><br><span class="line">        banner = s.recv(1024)</span><br><span class="line">        return banner</span><br><span class="line">    Exception,e:</span><br><span class="line">        return str(e)</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    iplist = [10,20,136,200]</span><br><span class="line">    portlist = [21,22,25,80,110,443] </span><br><span class="line">    for ipf in iplist:</span><br><span class="line">        ip1 = &quot;192.168.137.&quot;+ipf</span><br><span class="line">        for portf in portlist:</span><br><span class="line">        banner = retBanner(ipf,portf)</span><br><span class="line">        print banner</span><br></pre></td></tr></table></figure>
       
 
       
@@ -271,11 +275,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/20/pythonsys模块/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/20/pythonos模块/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          python sys模块
+          python os模块
         
       </div>
     </a>
@@ -346,6 +350,9 @@
   </div>
 </footer>
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_uv"> 
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
     </div>
     <script>
 	var yiliaConfig = {
@@ -417,11 +424,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color4">读后感</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -434,6 +445,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
               </li>
             
             <div class="clearfix"></div>
