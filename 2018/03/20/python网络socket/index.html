@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>python网络socket | 想与做</title>
+  <title>python网络socket /nmap | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一些函数   12socket.gethostbyname(hostname) #将主机名换成ip地址socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址">
+  <meta name="description" content="socket模块函数介绍   12345socket.gethostbyname(hostname) #将主机名换成ip地址socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址socket.socket(family,type,proto) #family地址簇:AF_INET(默认),AF_INET6或者是AF_UNIX. socke">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python网络socket">
+<meta property="og:title" content="python网络socket &#x2F;nmap">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/python网络socket/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="一些函数   12socket.gethostbyname(hostname) #将主机名换成ip地址socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址">
-<meta property="og:updated_time" content="2018-04-04T13:09:27.519Z">
+<meta property="og:description" content="socket模块函数介绍   12345socket.gethostbyname(hostname) #将主机名换成ip地址socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址socket.socket(family,type,proto) #family地址簇:AF_INET(默认),AF_INET6或者是AF_UNIX. socke">
+<meta property="og:updated_time" content="2018-04-09T05:59:23.821Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python网络socket">
-<meta name="twitter:description" content="一些函数   12socket.gethostbyname(hostname) #将主机名换成ip地址socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址">
+<meta name="twitter:title" content="python网络socket &#x2F;nmap">
+<meta name="twitter:description" content="socket模块函数介绍   12345socket.gethostbyname(hostname) #将主机名换成ip地址socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址socket.socket(family,type,proto) #family地址簇:AF_INET(默认),AF_INET6或者是AF_UNIX. socke">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -167,7 +167,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      python网络socket
+      python网络socket /nmap
     </h1>
   
 
@@ -187,18 +187,22 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>一些函数</p>
+<p>socket模块函数介绍</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">socket.gethostbyname(hostname) #将主机名换成ip地址</span><br><span class="line">socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">socket.gethostbyname(hostname) #将主机名换成ip地址</span><br><span class="line">socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址</span><br><span class="line">socket.socket(family,type,proto) #family地址簇:AF_INET(默认),AF_INET6或者是AF_UNIX. socket类型:SOCK_STREAM(默认为TCP套接字)或者是SOCK_DGRAM(UDP套接字),还有其他的套接字。 协议号通常为零，故大部分情况省略。</span><br><span class="line">socket.connect(address) address是[ip/host,port]的元组</span><br><span class="line">socket.create_connection(address[,timeout[,source_address]]) #可以选择超时重连</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <blockquote>
-<p>用法</p>
+<p>基本用法</p>
 </blockquote>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">socket.setdefaulttimeout(2)</span><br><span class="line">s = socket.socket()</span><br><span class="line">s.connect((ip,port))</span><br><span class="line">banner = s.recv(1024) #获取套接字中1024字节的数据</span><br><span class="line">print banner</span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>使用python socket循环扫描ip和端口</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">def retBanner(ip,port):</span><br><span class="line">    try:</span><br><span class="line">        socket.setdefaulttimeout(2)</span><br><span class="line">        s = socket.socket()</span><br><span class="line">        s.connect((ip,port))</span><br><span class="line">        banner = s.recv(1024)</span><br><span class="line">        return banner</span><br><span class="line">    Exception,e:</span><br><span class="line">        return str(e)</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    iplist = [10,20,136,200]</span><br><span class="line">    portlist = [21,22,25,80,110,443] </span><br><span class="line">    for ipf in iplist:</span><br><span class="line">        ip1 = &quot;192.168.137.&quot;+ipf</span><br><span class="line">        for portf in portlist:</span><br><span class="line">        banner = retBanner(ipf,portf)</span><br><span class="line">        print banner</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">def retBanner(ip,port):</span><br><span class="line">    try:</span><br><span class="line">        socket.setdefaulttimeout(2)</span><br><span class="line">        s = socket.socket()</span><br><span class="line">        s.connect((ip,port))</span><br><span class="line">        banner = s.recv(1024)</span><br><span class="line">        return banner</span><br><span class="line">    except Exception as e:</span><br><span class="line">        return str(e)</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    iplist = [10,20,136,200]</span><br><span class="line">    portlist = [21,22,25,80,110,443] </span><br><span class="line">    for ipf in iplist:</span><br><span class="line">        ip1 = &quot;192.168.137.&quot;+ipf</span><br><span class="line">        for portf in portlist:</span><br><span class="line">        banner = retBanner(ipf,portf)</span><br><span class="line">        print banner</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>使用python socket 结合threading和argparse模块扫描端口</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import socket</span><br><span class="line">import argparse</span><br><span class="line">import threading</span><br><span class="line">screenLock = threading.Semaphore(value=1)</span><br><span class="line">def connScan(tarHost, tarPort):</span><br><span class="line">    try:</span><br><span class="line">        connSkt = socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">        connSkt.connect((tarHost,tarPort))</span><br><span class="line">        connSkt.send(b&apos;ViolentPython\r\n&apos;)</span><br><span class="line">        results = connSkt.recv(100)</span><br><span class="line">        screenLock.acquire()</span><br><span class="line">        print(&apos;[+]%d/tcp open&apos; % tarPort)</span><br><span class="line">        print(results)</span><br><span class="line">    except Exception as e:</span><br><span class="line">        screenLock.acquire()</span><br><span class="line">       # print(&apos;[-]%d/tcp closed&apos; % tarPort)</span><br><span class="line">        print(e)</span><br><span class="line">    finally:</span><br><span class="line">        screenLock.release()</span><br><span class="line">        connSkt.close()</span><br><span class="line">def portScan(tarHost, tarPorts):</span><br><span class="line">    print(&apos;start portScan&apos;)</span><br><span class="line">    try:</span><br><span class="line">        tarIP = socket.gethostbyname(tarHost)</span><br><span class="line">    except:</span><br><span class="line">        print(&apos;cannot resolve %s: Unkonwn host&apos; % tarHost)</span><br><span class="line">        return</span><br><span class="line">    try:</span><br><span class="line">        tarName = socket.gethostbyaddr(tarIP)</span><br><span class="line">        print(&apos;\n[+] Scan Result for:&apos; + tarName[0])</span><br><span class="line">    except:</span><br><span class="line">        print(&apos;\n[+] Scan Result for:&apos; + tarIP)</span><br><span class="line">    socket.setdefaulttimeout(1)</span><br><span class="line">    for tarPort in tarPorts:</span><br><span class="line">        print(&apos;Scanning port &apos; + str(tarPort))</span><br><span class="line">        t = threading.Thread(target=connScan,args=(tarHost,int(tarPort)))</span><br><span class="line">        t.start()</span><br><span class="line">def main():</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    parse =argparse.ArgumentParser()</span><br><span class="line">    parse.add_argument(&apos;-host&apos;,dest=&apos;tarhost&apos;,type=str,help=&apos;get a host namee&apos;)</span><br><span class="line">    parse.add_argument(&apos;-port&apos;,action=&apos;append&apos;,dest=&apos;tarport&apos;,type=int,help=&apos;get scan port&apos;)</span><br><span class="line">    args = parse.parse_args()</span><br><span class="line">    tarHost = args.tarhost</span><br><span class="line">    tarPort = args.tarport</span><br><span class="line">    print(&apos;start portScan:&apos;+tarHost,tarPort)</span><br><span class="line">    portScan(tarHost,tarPort)</span><br><span class="line">    #此处为argparse用法暂屏蔽未使用</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    portScan(&apos;www.jbyusk.com&apos;,[80,443,3389,1433,23,445])</span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    print(&apos;start main&apos;)</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
       
 
       
@@ -281,11 +285,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/20/pythonos模块/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/20/kail/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          python os模块
+          kail记录
         
       </div>
     </a>
@@ -426,6 +430,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -434,7 +446,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">如何阅读一本书</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -442,15 +458,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color3">食物</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">食物</a>
               </li>
             
             <div class="clearfix"></div>
