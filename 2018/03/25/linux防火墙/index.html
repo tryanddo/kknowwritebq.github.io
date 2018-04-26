@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>markdown语法 | 想与做</title>
+  <title>linux防火墙设置 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="首先记录几个可以查询markdown语法的网站:https://www.jianshu.com/p/78fb460f538ehttps://blog.csdn.net/abcd302/article/details/51776467">
-<meta name="keywords" content="hexo">
+  <meta name="description" content="centos7 下Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.参考:https://blog.csdn.net/c233728461/article/details/5267955812345678910111213systemctl stop f">
+<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="markdown语法">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/03/25/markdown语法/index.html">
+<meta property="og:title" content="linux防火墙设置">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/03/25/linux防火墙/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="首先记录几个可以查询markdown语法的网站:https://www.jianshu.com/p/78fb460f538ehttps://blog.csdn.net/abcd302/article/details/51776467">
-<meta property="og:updated_time" content="2018-03-25T15:03:36.124Z">
+<meta property="og:description" content="centos7 下Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.参考:https://blog.csdn.net/c233728461/article/details/5267955812345678910111213systemctl stop f">
+<meta property="og:updated_time" content="2018-04-25T02:20:01.110Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="markdown语法">
-<meta name="twitter:description" content="首先记录几个可以查询markdown语法的网站:https://www.jianshu.com/p/78fb460f538ehttps://blog.csdn.net/abcd302/article/details/51776467">
+<meta name="twitter:title" content="linux防火墙设置">
+<meta name="twitter:description" content="centos7 下Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.参考:https://blog.csdn.net/c233728461/article/details/5267955812345678910111213systemctl stop f">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -160,14 +160,14 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-markdown语法" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-linux防火墙" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      markdown语法
+      linux防火墙设置
     </h1>
   
 
@@ -177,7 +177,7 @@
 		</span>
 	    
         
-        <a href="/2018/03/25/markdown语法/" class="archive-article-date">
+        <a href="/2018/03/25/linux防火墙/" class="archive-article-date">
   	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
 </a>
         
@@ -186,17 +186,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>首先记录几个可以查询markdown语法的网站:<br><a href="https://www.jianshu.com/p/78fb460f538e" target="_blank" rel="noopener">https://www.jianshu.com/p/78fb460f538e</a><br><a href="https://blog.csdn.net/abcd302/article/details/51776467" target="_blank" rel="noopener">https://blog.csdn.net/abcd302/article/details/51776467</a><br><a id="more"></a></p>
+        <p>centos7 下<br>Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.<br>参考:<a href="https://blog.csdn.net/c233728461/article/details/52679558" target="_blank" rel="noopener">https://blog.csdn.net/c233728461/article/details/52679558</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl mask firewalld </span><br><span class="line">yum install iptables-services #安装iptables</span><br><span class="line">systemctl enable iptables #设置开机启动</span><br><span class="line"></span><br><span class="line">systemctl/service stop iptables</span><br><span class="line">systemctl/service start iptables</span><br><span class="line">systemctl/service restart iptables</span><br><span class="line">systemctl/service reload iptables</span><br><span class="line"></span><br><span class="line">service iptables save #保存设置</span><br><span class="line"></span><br><span class="line">最后规则写入到/etc/sysconfig/iptables</span><br></pre></td></tr></table></figure></p>
+<p>kail2.0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables-save &gt; iptables.bak #保存</span><br><span class="line">iptables-restore &lt; iptables.bak #启动</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>一些常用的语法</p>
+<p>iptables设置</p>
 </blockquote>
-<ul>
-<li><p>首行缩进</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp; #一个大空格</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加代码<br>头尾使用3个`将代码包含起来</p>
-</li>
-</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#1.设定预设规则</span><br><span class="line">iptables -P INPUT DROP</span><br><span class="line">iptables -P OUTPUT ACCEPT #也可以设置为DROP，但需要设置更多规则</span><br><span class="line">iptables -P FORWARD DROP</span><br><span class="line"></span><br><span class="line">#2.添加规则</span><br><span class="line">iptables -A INPUT -i lo -j ACCEPT #配置本机可以访问自身</span><br><span class="line">iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT #配置本机可以与外部设备建立连接</span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT #配置本机开放的端口</span><br><span class="line">iptables -A INPUT -p icmp -j ACCEPT #允许其它设备PING本机</span><br><span class="line"></span><br><span class="line">#3.减少不安全的端口连接</span><br><span class="line">iptables -A OUTPUT -p tcp --sport 31337 -j DROP</span><br><span class="line">iptables -A OUTPUT -p tcp --dport 31337 -j DROP</span><br></pre></td></tr></table></figure>
 
       
 
@@ -210,7 +205,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
@@ -266,7 +261,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/25/markdown语法/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/25/linux防火墙/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -280,18 +275,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/25/linux网络/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/25/hexo yilia/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          linux网络相关
+          hexo yilia一些小技巧
         
       </div>
     </a>
   
   
-    <a href="/2018/03/25/知识变现/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">知识变现-记录</div>
+    <a href="/2018/03/25/Jordan Peterson/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Jordan Peterson视频语录记录</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>kail记录 | 想与做</title>
+  <title>kail2.0 python环境设置 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="虚拟机kail更换国内源,apt-get install 失败http://blog.51cto.com/1inux/2048278">
-<meta name="keywords" content="kail">
+  <meta name="description" content="使用pythonpython2和python3切换 123456update-alternatives --install /usr/bin/python python /usr/bin/python2 100update-alternatives --install /usr/bin/python python /usr/bin/python3 150现在的版本即为python3如果要进行切换">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kail记录">
+<meta property="og:title" content="kail2.0 python环境设置">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/kail/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="虚拟机kail更换国内源,apt-get install 失败http://blog.51cto.com/1inux/2048278">
-<meta property="og:updated_time" content="2018-04-10T07:52:35.117Z">
+<meta property="og:description" content="使用pythonpython2和python3切换 123456update-alternatives --install /usr/bin/python python /usr/bin/python2 100update-alternatives --install /usr/bin/python python /usr/bin/python3 150现在的版本即为python3如果要进行切换">
+<meta property="og:updated_time" content="2018-04-16T10:29:48.638Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="kail记录">
-<meta name="twitter:description" content="虚拟机kail更换国内源,apt-get install 失败http://blog.51cto.com/1inux/2048278">
+<meta name="twitter:title" content="kail2.0 python环境设置">
+<meta name="twitter:description" content="使用pythonpython2和python3切换 123456update-alternatives --install /usr/bin/python python /usr/bin/python2 100update-alternatives --install /usr/bin/python python /usr/bin/python3 150现在的版本即为python3如果要进行切换">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -167,7 +167,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      kail记录
+      kail2.0 python环境设置
     </h1>
   
 
@@ -187,9 +187,27 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
-<li>虚拟机kail更换国内源,apt-get install 失败<br><a href="http://blog.51cto.com/1inux/2048278" target="_blank" rel="noopener">http://blog.51cto.com/1inux/2048278</a></li>
+<li><p>使用python<br>python2和python3切换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python2 100</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3 150</span><br><span class="line">现在的版本即为python3</span><br><span class="line">如果要进行切换:</span><br><span class="line">update-alternatives --config python</span><br><span class="line">选择版本即可</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>python 配置pip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">安装pip：</span><br><span class="line">apt-get install python-setuptools</span><br><span class="line">easy_install pip</span><br><span class="line">pip install   xxxx #python2</span><br><span class="line">pip3 install xxxx #python3</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-
+<blockquote>
+<p>使用pip有如下报错pkg_resources.DistributionNotFound: The ‘pip==8.1.2’ distribution was not found and is required by the application</p>
+</blockquote>
+<ol>
+<li><p>重新安装python的distribution </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://pypi.python.org/packages/5f/ad/1fde06877a8d7d5c9b60eff7de2d452f639916ae1d48f0b8f97bf97e570a/distribute-0.7.3.zip#md5=c6c59594a7b180af57af8a0cc0cf5b4a</span><br><span class="line">unzip distribute-0.7.3.zip</span><br><span class="line">cd distribute-0.7.3/</span><br><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装pip==8.1.2<br>easy_install pip==8.1.2</p>
+</li>
+</ol>
+<blockquote>
+<p>kail 安装eclipse+python</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#下载eclipse.tar.gz</span><br><span class="line">tar -xzvf eclipse-inst-linux64.tar.gz</span><br><span class="line">cd eclipse-installer</span><br><span class="line">./eclipse-inst</span><br><span class="line">#由于kail自带java故不需要安装其他linux需要安装java</span><br></pre></td></tr></table></figure>
       
 
       
@@ -202,7 +220,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">kail</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
@@ -282,8 +300,8 @@
     </a>
   
   
-    <a href="/2018/03/20/python网络socket/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python网络socket /nmap</div>
+    <a href="/2018/03/20/pythonsysargparse模块/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python sys与argparse模块</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -417,15 +435,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kail</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -433,11 +443,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">如何阅读一本书</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -450,6 +464,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">如何阅读一本书</a>
               </li>
             
             <div class="clearfix"></div>

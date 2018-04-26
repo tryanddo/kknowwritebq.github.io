@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>markdown语法 | 想与做</title>
+  <title>linux网络相关 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="首先记录几个可以查询markdown语法的网站:https://www.jianshu.com/p/78fb460f538ehttps://blog.csdn.net/abcd302/article/details/51776467">
-<meta name="keywords" content="hexo">
+  <meta name="description" content="网络设置:12345678centos:  /etc/sysconfig/network-scripts/ifcfg-*  ifup #开启某个网卡  ifdown #关闭某个网卡  service network start/stop/restartdebian:  /etc/network/interface  service networking restart/start/stop  ne">
+<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="markdown语法">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/03/25/markdown语法/index.html">
+<meta property="og:title" content="linux网络相关">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/03/25/linux网络/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="首先记录几个可以查询markdown语法的网站:https://www.jianshu.com/p/78fb460f538ehttps://blog.csdn.net/abcd302/article/details/51776467">
-<meta property="og:updated_time" content="2018-03-25T15:03:36.124Z">
+<meta property="og:description" content="网络设置:12345678centos:  /etc/sysconfig/network-scripts/ifcfg-*  ifup #开启某个网卡  ifdown #关闭某个网卡  service network start/stop/restartdebian:  /etc/network/interface  service networking restart/start/stop  ne">
+<meta property="og:updated_time" content="2018-04-25T03:03:34.644Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="markdown语法">
-<meta name="twitter:description" content="首先记录几个可以查询markdown语法的网站:https://www.jianshu.com/p/78fb460f538ehttps://blog.csdn.net/abcd302/article/details/51776467">
+<meta name="twitter:title" content="linux网络相关">
+<meta name="twitter:description" content="网络设置:12345678centos:  /etc/sysconfig/network-scripts/ifcfg-*  ifup #开启某个网卡  ifdown #关闭某个网卡  service network start/stop/restartdebian:  /etc/network/interface  service networking restart/start/stop  ne">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -160,14 +160,14 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-markdown语法" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-linux网络" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      markdown语法
+      linux网络相关
     </h1>
   
 
@@ -177,7 +177,7 @@
 		</span>
 	    
         
-        <a href="/2018/03/25/markdown语法/" class="archive-article-date">
+        <a href="/2018/03/25/linux网络/" class="archive-article-date">
   	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
 </a>
         
@@ -186,18 +186,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>首先记录几个可以查询markdown语法的网站:<br><a href="https://www.jianshu.com/p/78fb460f538e" target="_blank" rel="noopener">https://www.jianshu.com/p/78fb460f538e</a><br><a href="https://blog.csdn.net/abcd302/article/details/51776467" target="_blank" rel="noopener">https://blog.csdn.net/abcd302/article/details/51776467</a><br><a id="more"></a></p>
+        <p>网络设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">centos:</span><br><span class="line">  /etc/sysconfig/network-scripts/ifcfg-*</span><br><span class="line">  ifup #开启某个网卡</span><br><span class="line">  ifdown #关闭某个网卡</span><br><span class="line">  service network start/stop/restart</span><br><span class="line">debian:</span><br><span class="line">  /etc/network/interface</span><br><span class="line">  service networking restart/start/stop</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>一些常用的语法</p>
+<p>netstat</p>
 </blockquote>
-<ul>
-<li><p>首行缩进</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp; #一个大空格</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加代码<br>头尾使用3个`将代码包含起来</p>
-</li>
-</ul>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tulnp | grep port #获取端口占用</span><br></pre></td></tr></table></figure>
       
 
       
@@ -210,7 +203,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
@@ -266,7 +259,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/25/markdown语法/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/25/linux网络/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -280,18 +273,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/25/linux网络/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/04/02/为什么我会想要写下来/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          linux网络相关
+          为什么我要开始写作
         
       </div>
     </a>
   
   
-    <a href="/2018/03/25/知识变现/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">知识变现-记录</div>
+    <a href="/2018/03/25/markdown语法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">markdown语法</div>
       <i class="icon-circle-right"></i>
     </a>
   
