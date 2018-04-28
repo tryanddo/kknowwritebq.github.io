@@ -241,20 +241,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-linux防火墙" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-知识变现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/linux防火墙/">linux防火墙设置</a>
+      <a class="article-title" href="/2018/03/25/知识变现/">知识变现-记录</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/25/linux防火墙/" class="archive-article-date">
+        <a href="/2018/03/25/知识变现/" class="archive-article-date">
   	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
 </a>
         
@@ -263,12 +263,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>centos7 下<br>Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.<br>参考:<a href="https://blog.csdn.net/c233728461/article/details/52679558" target="_blank" rel="noopener">https://blog.csdn.net/c233728461/article/details/52679558</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl mask firewalld </span><br><span class="line">yum install iptables-services #安装iptables</span><br><span class="line">systemctl enable iptables #设置开机启动</span><br><span class="line"></span><br><span class="line">systemctl/service stop iptables</span><br><span class="line">systemctl/service start iptables</span><br><span class="line">systemctl/service restart iptables</span><br><span class="line">systemctl/service reload iptables</span><br><span class="line"></span><br><span class="line">service iptables save #保存设置</span><br><span class="line"></span><br><span class="line">最后规则写入到/etc/sysconfig/iptables</span><br></pre></td></tr></table></figure></p>
-<p>kail2.0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables-save &gt; iptables.bak #保存</span><br><span class="line">iptables-restore &lt; iptables.bak #启动</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>iptables设置</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#1.设定预设规则</span><br><span class="line">iptables -P INPUT DROP</span><br><span class="line">iptables -P OUTPUT ACCEPT #也可以设置为DROP，但需要设置更多规则</span><br><span class="line">iptables -P FORWARD DROP</span><br><span class="line"></span><br><span class="line">#2.添加规则</span><br><span class="line">iptables -A INPUT -i lo -j ACCEPT #配置本机可以访问自身</span><br><span class="line">iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT #配置本机可以与外部设备建立连接</span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT #配置本机开放的端口</span><br><span class="line">iptables -A INPUT -p icmp -j ACCEPT #允许其它设备PING本机</span><br><span class="line"></span><br><span class="line">#3.减少不安全的端口连接</span><br><span class="line">iptables -A OUTPUT -p tcp --sport 31337 -j DROP</span><br><span class="line">iptables -A OUTPUT -p tcp --dport 31337 -j DROP</span><br></pre></td></tr></table></figure>
+        <p>核心能力与热闹无关，不过时，不褪色。<br>持续行动的能力是可以训练的而训练的方式，就是持续行动。</p>
 
       
 
@@ -282,7 +277,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
         		</li>
       		
 		</ul>
@@ -292,7 +287,89 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/linux防火墙/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/25/知识变现/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-markdown语法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/markdown语法/">markdown语法</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/markdown语法/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先记录几个可以查询markdown语法的网站:<br><a href="https://www.jianshu.com/p/78fb460f538e" target="_blank" rel="noopener">https://www.jianshu.com/p/78fb460f538e</a><br><a href="https://blog.csdn.net/abcd302/article/details/51776467" target="_blank" rel="noopener">https://blog.csdn.net/abcd302/article/details/51776467</a><br></p>
+        
+          <a class="article-more-a" href="/2018/03/25/markdown语法/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/25/markdown语法/">展开全文 >></a>
         </p>
       
 
@@ -379,6 +456,88 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/03/25/Jordan Peterson/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-shell学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/shell学习/">shell学习1</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/shell学习/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><p>常见shells<br>/bin/sh<br>/bin/bash #预设<br>/bin/zsh<br>/bin/csh<br>查看用户默认shell<br>/etc/passwd<br></p>
+        
+          <a class="article-more-a" href="/2018/03/25/shell学习/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/25/shell学习/">展开全文 >></a>
         </p>
       
 
@@ -585,20 +744,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-pythonos模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-python threading模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/pythonos模块/">python os模块</a>
+      <a class="article-title" href="/2018/03/20/python threading模块/">python threading模块</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/20/pythonos模块/" class="archive-article-date">
+        <a href="/2018/03/20/python threading模块/" class="archive-article-date">
   	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
 </a>
         
@@ -608,9 +767,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>一些os模块函数</p>
+<p>线程简单用法</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">path_a = os.path.abspath(&apos;.&apos;) #获取当前路径的绝对路径</span><br><span class="line"></span><br><span class="line">os.mkdir(title) #创建目录</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> import threading</span><br><span class="line">screenLock = threading.Semaphore(value=1) #使用锁阻止其他进程进入</span><br><span class="line">def test(n1,n2)</span><br><span class="line">    screenLock.acquire() </span><br><span class="line">    print(n1+n2)</span><br><span class="line">    screenLock.release()</span><br><span class="line"> def main()</span><br><span class="line">    t=threading.Thread(target=test,args=(n1,n2))</span><br><span class="line">    t.start()</span><br></pre></td></tr></table></figure>
       
 
       
@@ -633,7 +792,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/pythonos模块/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/20/python threading模块/">展开全文 >></a>
         </p>
       
 
@@ -767,20 +926,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-pythonsysargparse模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-pythonos模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/pythonsysargparse模块/">python sys与argparse模块</a>
+      <a class="article-title" href="/2018/03/20/pythonos模块/">python os模块</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/20/pythonsysargparse模块/" class="archive-article-date">
+        <a href="/2018/03/20/pythonos模块/" class="archive-article-date">
   	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
 </a>
         
@@ -790,19 +949,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>命令行参数用法</p>
+<p>一些os模块函数</p>
 </blockquote>
-<ul>
-<li>sys模块<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line">if len(sys.argv) == 2:</span><br><span class="line"> filename = sys.argv[1]</span><br><span class="line">if not os.path.isfile(filename)</span><br><span class="line"> print &apos;[-] &apos;+filename+&apos;does not exist&apos;.</span><br><span class="line">	 exit(0)</span><br><span class="line">if not os.access(filename,os.R_OK):</span><br><span class="line"> print &apos;[-] &apos;+filename+&apos; access denied.&apos;</span><br><span class="line"> exit(0)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>argparse模块</p>
-<h3 id="addargument函数详解"><a href="#addargument函数详解" class="headerlink" title="addargument函数详解"></a>addargument函数详解</h3><p>更详细可参考:<a href="https://blog.csdn.net/yugongpeng_blog/article/details/46693471" target="_blank" rel="noopener">https://blog.csdn.net/yugongpeng_blog/article/details/46693471</a></p>
-<p>parser.add_argument(‘-a’, action=”store_true”, dest=’test’,type=str,default=False)<br>第一个参数为执行py文件时后面加的选项，例如: python test.py -a ‘test’<br>dest参数 属性的名称，用法args.test<br>action store(保存参数值),storeconst(加上const参数)，append(列表)，append_const(把const参数放在列表)<br>type 类型，str,int等<br>help 帮助信息 python test.py -h 获取帮助信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(dest=&quot;zname&quot;,type=str)</span><br><span class="line">parser.add_argument(dest=&quot;dname&quot;,type=str)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">zname = args.zname</span><br><span class="line">dname = args.dname</span><br></pre></td></tr></table></figure></li>
-</ul>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">path_a = os.path.abspath(&apos;.&apos;) #获取当前路径的绝对路径</span><br><span class="line"></span><br><span class="line">os.mkdir(title) #创建目录</span><br></pre></td></tr></table></figure>
       
 
       
@@ -825,169 +974,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/pythonsysargparse模块/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-python threading模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/python threading模块/">python threading模块</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/20/python threading模块/" class="archive-article-date">
-  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>线程简单用法</p>
-</blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> import threading</span><br><span class="line">screenLock = threading.Semaphore(value=1) #使用锁阻止其他进程进入</span><br><span class="line">def test(n1,n2)</span><br><span class="line">    screenLock.acquire() </span><br><span class="line">    print(n1+n2)</span><br><span class="line">    screenLock.release()</span><br><span class="line"> def main()</span><br><span class="line">    t=threading.Thread(target=test,args=(n1,n2))</span><br><span class="line">    t.start()</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/python threading模块/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-python pexpect" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/python pexpect/">python pexpect</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/20/python pexpect/" class="archive-article-date">
-  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>安装:pip install pexpect<br>   如果配置pip详见&lt;kail2.0 python环境设置&gt;博文</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/python pexpect/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/20/pythonos模块/">展开全文 >></a>
         </p>
       
 
@@ -1118,7 +1105,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1126,7 +1113,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1147,6 +1134,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">如何阅读一本书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
             
             <div class="clearfix"></div>

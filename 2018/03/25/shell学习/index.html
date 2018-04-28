@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>shell学习 | 想与做</title>
+  <title>shell学习1 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="shell常见shells/bin/sh/bin/bash #预设/bin/zsh/bin/csh查看用户默认shell/etc/passwd 功能 命令编修功能:~/.bash_history记录前一次登入之前执行的命令history命令$HISTSIZE而这一次登陆执行的命令暂存在内存中 命令补全功能[tab][tab] 命令别名(alias)设定功能:alias lm=’ls -al’ 批次">
+  <meta name="description" content="shell常见shells/bin/sh/bin/bash #预设/bin/zsh/bin/csh查看用户默认shell/etc/passwd">
 <meta name="keywords" content="linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell学习">
+<meta property="og:title" content="shell学习1">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/03/25/shell学习/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="shell常见shells/bin/sh/bin/bash #预设/bin/zsh/bin/csh查看用户默认shell/etc/passwd 功能 命令编修功能:~/.bash_history记录前一次登入之前执行的命令history命令$HISTSIZE而这一次登陆执行的命令暂存在内存中 命令补全功能[tab][tab] 命令别名(alias)设定功能:alias lm=’ls -al’ 批次">
-<meta property="og:updated_time" content="2018-04-25T08:07:25.525Z">
+<meta property="og:description" content="shell常见shells/bin/sh/bin/bash #预设/bin/zsh/bin/csh查看用户默认shell/etc/passwd">
+<meta property="og:updated_time" content="2018-04-26T08:35:38.988Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell学习">
-<meta name="twitter:description" content="shell常见shells/bin/sh/bin/bash #预设/bin/zsh/bin/csh查看用户默认shell/etc/passwd 功能 命令编修功能:~/.bash_history记录前一次登入之前执行的命令history命令$HISTSIZE而这一次登陆执行的命令暂存在内存中 命令补全功能[tab][tab] 命令别名(alias)设定功能:alias lm=’ls -al’ 批次">
+<meta name="twitter:title" content="shell学习1">
+<meta name="twitter:description" content="shell常见shells/bin/sh/bin/bash #预设/bin/zsh/bin/csh查看用户默认shell/etc/passwd">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -167,7 +167,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      shell学习
+      shell学习1
     </h1>
   
 
@@ -186,7 +186,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><p>常见shells<br>/bin/sh<br>/bin/bash #预设<br>/bin/zsh<br>/bin/csh<br>查看用户默认shell<br>/etc/passwd</p>
+        <h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><p>常见shells<br>/bin/sh<br>/bin/bash #预设<br>/bin/zsh<br>/bin/csh<br>查看用户默认shell<br>/etc/passwd<br><a id="more"></a></p>
 <h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><ol>
 <li>命令编修功能:<br>~/.bash_history记录前一次登入之前执行的命令<br>history命令<br>$HISTSIZE<br>而这一次登陆执行的命令暂存在内存中</li>
 <li>命令补全功能<br>[tab][tab]</li>
@@ -206,7 +206,7 @@
 <p>变量设定功能</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># ##</span><br><span class="line">test=&quot;ptest1ptest2ptest3ptest4ptest5&quot;</span><br><span class="line">echo $&#123;test##p*p&#125;  #类似于贪婪，找出最大的p和p之间的字符串</span><br><span class="line">test5</span><br><span class="line">echo $&#123;test#p*p&#125; #非贪婪，找出最小的字符串</span><br><span class="line">test2ptest3ptest4ptest5</span><br><span class="line">% %%</span><br><span class="line">echo $&#123;test%%4*&#125;或者echo $&#123;test%%4*5&#125; #从最后一个字符开始找起</span><br><span class="line">ptest1ptest2ptest3ptest</span><br><span class="line">echo $&#123;test%%p*&#125; #且取最大字符串</span><br><span class="line">空的</span><br><span class="line">echo $&#123;test%p*&#125;</span><br><span class="line">ptest1ptest2ptest3ptest4 #取最小字符串</span><br><span class="line">/ // 取代</span><br><span class="line">echo $&#123;test//test/TEST&#125;</span><br><span class="line">pTEST1pTEST2pTEST3pTEST4pTEST5</span><br><span class="line">echo $&#123;test/test/TEST&#125;</span><br><span class="line">pTEST1ptest2ptest3ptest4ptest5</span><br></pre></td></tr></table></figure>
-<p>###语系<br>locale -a #查看语系 /usr/lib/locale<br>LANG=”” / /etc/locale.conf</p>
+<h3 id="语系"><a href="#语系" class="headerlink" title="语系"></a>语系</h3><p>locale -a #查看语系 /usr/lib/locale<br>LANG=”” / /etc/locale.conf</p>
 <blockquote>
 <p>系统设定值</p>
 </blockquote>
@@ -225,6 +225,46 @@
 <p>万用字符与特殊字符/组合键</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">一些常用的但是不熟的万用字符</span><br><span class="line">? 代表[一定有]一个字符(或数字) ls test?? #一定有2个字符</span><br><span class="line">;  连续命令的界定</span><br><span class="line">&amp; 指令背景下工作</span><br><span class="line">&apos; &quot; 单引号没有变量置换功能，而双引号有</span><br><span class="line">() 例如echo $(ls)执行ls命令后的输出效果与echo `ls`一样</span><br><span class="line">[] 中间为某个字符的组合 [a-z] 字符为a到z的某个字符</span><br><span class="line">&#123;&#125; 中间为命令区块的组合 $&#123;PATH&#125;</span><br><span class="line">组合键</span><br><span class="line">Ctrl + D 在文档中输入EOF</span><br><span class="line">Ctrl + M Enter</span><br><span class="line">Ctrl + S 暂停屏幕输出</span><br><span class="line">Ctrl + Q 恢复屏幕输出</span><br><span class="line">Ctrl + U 在提示字符下，将整行命令删除</span><br><span class="line">Ctrl + Z 暂停目前的命令</span><br></pre></td></tr></table></figure>
+<h3 id="管线命令"><a href="#管线命令" class="headerlink" title="管线命令"></a>管线命令</h3><blockquote>
+<p>cut</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd | cut -d &apos;:&apos; -f 3,5 #-d分隔符 -f 第5个 和split功能类似</span><br><span class="line">cat /etc/passwd | cut -d &apos;:&apos; -f 3-5</span><br><span class="line">cat /etc/passwd | cut -c 10-15/10-/-15 #10到15的字符/10开始的/从头开始到第15个字符</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>grep </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-a binary档案按照text方式搜寻数据</span><br><span class="line">-c 字符串次数</span><br><span class="line">-i 忽略大小写</span><br><span class="line">-n 输出行号 </span><br><span class="line">-v 反向选择</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>tee 双重导向</p>
+</blockquote>
+<p>last | tee last.list |cut -d “ “ -f 1</p>
+<blockquote>
+<p>字元转换命令:tr, col, join, paste, expand</p>
+</blockquote>
+<pre><code>1.tr 删除文字或者替换重复的文字
+  last | tr &apos;[a-z]&apos; &apos;[A-Z]&apos; #无参数，小写变大写
+  cat /etc/passwd | tr -d &apos;:&apos; #-d删除字符串
+  echo &apos;test    test1&apos; | tr -s &apos; &apos; &apos;%&apos;  #-s替换重复的字元，4个空格变成一个&apos;%&apos;
+  结果:test%test1
+
+2.col
+  col -x #将[tab]变成相应的空白键
+
+3.join
+  -t 预设为以空白字元分隔资料，并比对第一栏位的资料
+  -i 忽略大小写
+  -1 第一个档案的第几栏来比对
+  -2 第二个档案的第几栏来比对
+  join -t &apos;:&apos; -1 4 /etc/passwd -2 3 /etc/group #以：为分隔符,第一个档案的第4栏位和第二个档案的第3个栏位
+
+4.paste 同一个行沾在一起，以tab隔开
+
+5.expand 将tab换成空白键，一般一个tab=8个空格，但是可以自己决定tab替换成功几个空白键
+  expand -t 1 #一个tab变成一个空格
+</code></pre><blockquote>
+<p>-号</p>
+</blockquote>
+<p> 代表stdin/stdout</p>
+
       
 
       
@@ -307,18 +347,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/25/如何阅读一本书/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/25/Jordan Peterson/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          &lt;如何阅读一本书&gt;之读后感
+          Jordan Peterson视频语录记录
         
       </div>
     </a>
   
   
-    <a href="/2018/03/25/hexo yilia/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">hexo yilia一些小技巧</div>
+    <a href="/2018/03/20/pythonrequests模块/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python requests模块</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -456,7 +496,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -464,7 +504,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -485,6 +525,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">如何阅读一本书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
             
             <div class="clearfix"></div>

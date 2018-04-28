@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>Tag: hexo | 想与做</title>
+  <title>shell学习2正则表达式 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="想与做">
-<meta property="og:url" content="http://blog.jbyusk.com/tags/hexo/index.html">
+  <meta name="description" content="grep 支持正规表达式  重要特殊字符  ^符 ^word待搜寻的字符串(word)在行首grep -n ‘^#’ test.txt #以#开头的行 [^]方向选择grep -n [^a-zA-Z] test.txt #找出有数字的行$符 word$待搜寻的字符串(word)在行尾grep -n ‘。$’ test.txt #以。为结尾的字符串  . 代表任意一个字符grep -n ‘a.a’">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell学习2正则表达式">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/03/25/shell正则表达/index.html">
 <meta property="og:site_name" content="想与做">
+<meta property="og:description" content="grep 支持正规表达式  重要特殊字符  ^符 ^word待搜寻的字符串(word)在行首grep -n ‘^#’ test.txt #以#开头的行 [^]方向选择grep -n [^a-zA-Z] test.txt #找出有数字的行$符 word$待搜寻的字符串(word)在行尾grep -n ‘。$’ test.txt #以。为结尾的字符串  . 代表任意一个字符grep -n ‘a.a’">
+<meta property="og:updated_time" content="2018-04-26T08:12:48.128Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="想与做">
+<meta name="twitter:title" content="shell学习2正则表达式">
+<meta name="twitter:description" content="grep 支持正规表达式  重要特殊字符  ^符 ^word待搜寻的字符串(word)在行首grep -n ‘^#’ test.txt #以#开头的行 [^]方向选择grep -n [^a-zA-Z] test.txt #找出有数字的行$符 word$待搜寻的字符串(word)在行尾grep -n ‘。$’ test.txt #以。为结尾的字符串  . 代表任意一个字符grep -n ‘a.a’">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -155,97 +160,193 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-shell正则表达" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/25/hexo yilia/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/25/hexo yilia/">hexo yilia一些小技巧</a>
+    <h1 class="article-title" itemprop="name">
+      shell学习2正则表达式
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+	    
+        
+        <a href="/2018/03/25/shell正则表达/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>grep 支持正规表达式</p>
+<blockquote>
+<p>重要特殊字符</p>
+</blockquote>
+<h3 id="符"><a href="#符" class="headerlink" title="^符"></a>^符</h3><ol>
+<li>^word<br>待搜寻的字符串(word)在行首<br>grep -n ‘^#’ test.txt #以#开头的行</li>
+<li>[^]<br>方向选择<br>grep -n [^a-zA-Z] test.txt #找出有数字的行<h3 id="符-1"><a href="#符-1" class="headerlink" title="$符"></a>$符</h3></li>
+<li>word$<br>待搜寻的字符串(word)在行尾<br>grep -n ‘。$’ test.txt #以。为结尾的字符串</li>
+</ol>
+<h3 id=""><a href="#" class="headerlink" title="."></a>.</h3><ol>
+<li>代表任意一个字符<br>grep -n ‘a.a’ test.txt #a和a之间必须有一个字符</li>
+<li>由于.是特殊字符在字符串内需要用.来跳脱</li>
+</ol>
+<h3 id="-1"><a href="#-1" class="headerlink" title="+"></a>+</h3><p>   重复一个或一个以上的字符<br>   grep -n ‘#+a’ test.txt #有至少一个#号的字符串</p>
+<h3 id="-2"><a href="#-2" class="headerlink" title="?"></a>?</h3><p>   0个或一个的前一个字符<br>   grep -n ‘#?a’ test.txt #有至少一个#号的字符串</p>
+<h3 id="-3"><a href="#-3" class="headerlink" title="|"></a>|</h3><p>   用or的方式找出数个字符串<br>   grep -n ‘dog|check’ test.txt #找出有dog或者check的行</p>
+<h3 id="-4"><a href="#-4" class="headerlink" title="*"></a>*</h3><p> 正规表达式中<em>代表0个或者无限个前一个字符<br> (.</em>)代表任意无限个字符</p>
+<p>###()群组<br> grep -n ‘t(st|x)t’ test.txt 找出有test和txt的字符串</p>
+<h3 id="n-m"><a href="#n-m" class="headerlink" title="{n,m}"></a>{n,m}</h3><ol>
+<li>连续n到m个前一个字符<br>grep -n ‘te{2,3}st’ test.txt #e至少2个以上的字符串</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/25/shell正则表达/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/25/markdown语法/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/03/25/linux网络/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          linux网络相关
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/25/linux防火墙/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux防火墙设置</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/25/markdown语法/">markdown语法</a>
-    </h1>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2159376"></script>
+<!-- UY END --> 
+  
+  
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
 
 
           </div>
@@ -272,9 +373,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
