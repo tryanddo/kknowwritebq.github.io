@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
   <title>python os模块 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一些os模块函数  1234import ospath_a = os.path.abspath(&amp;apos;.&amp;apos;) #获取当前路径的绝对路径os.mkdir(title) #创建目录">
+  <meta name="description" content="一些os模块函数  参考:https://www.cnblogs.com/mufenglin/p/7676160.html 123456789import osos.mkdir(title) #创建目录os.chdir(dirname) #改变工作目录os.system(cmd) 执行命令cmd，如果成功返回0，不成功返回1os.getcwd() 获取当前工作路径,即当前python脚本工作的目">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python os模块">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/pythonos模块/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="一些os模块函数  1234import ospath_a = os.path.abspath(&amp;apos;.&amp;apos;) #获取当前路径的绝对路径os.mkdir(title) #创建目录">
-<meta property="og:updated_time" content="2018-03-29T10:36:26.966Z">
+<meta property="og:description" content="一些os模块函数  参考:https://www.cnblogs.com/mufenglin/p/7676160.html 123456789import osos.mkdir(title) #创建目录os.chdir(dirname) #改变工作目录os.system(cmd) 执行命令cmd，如果成功返回0，不成功返回1os.getcwd() 获取当前工作路径,即当前python脚本工作的目">
+<meta property="og:updated_time" content="2018-05-02T07:00:40.159Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python os模块">
-<meta name="twitter:description" content="一些os模块函数  1234import ospath_a = os.path.abspath(&amp;apos;.&amp;apos;) #获取当前路径的绝对路径os.mkdir(title) #创建目录">
+<meta name="twitter:description" content="一些os模块函数  参考:https://www.cnblogs.com/mufenglin/p/7676160.html 123456789import osos.mkdir(title) #创建目录os.chdir(dirname) #改变工作目录os.system(cmd) 执行命令cmd，如果成功返回0，不成功返回1os.getcwd() 获取当前工作路径,即当前python脚本工作的目">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -189,7 +189,8 @@
         <blockquote>
 <p>一些os模块函数</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">path_a = os.path.abspath(&apos;.&apos;) #获取当前路径的绝对路径</span><br><span class="line"></span><br><span class="line">os.mkdir(title) #创建目录</span><br></pre></td></tr></table></figure>
+<p>参考:<a href="https://www.cnblogs.com/mufenglin/p/7676160.html" target="_blank" rel="noopener">https://www.cnblogs.com/mufenglin/p/7676160.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line">os.mkdir(title) #创建目录</span><br><span class="line">os.chdir(dirname) #改变工作目录</span><br><span class="line">os.system(cmd) 执行命令cmd，如果成功返回0，不成功返回1</span><br><span class="line">os.getcwd() 获取当前工作路径,即当前python脚本工作的目录路径</span><br><span class="line"></span><br><span class="line">os.path常用方法</span><br><span class="line">path_a = os.path.abspath(&apos;.&apos;) #获取当前路径的绝对路径</span><br></pre></td></tr></table></figure>
       
 
       
@@ -272,18 +273,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/20/kail/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/20/pythonsysargparse模块/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          kail2.0 python环境设置
+          python sys与argparse模块
         
       </div>
     </a>
   
   
-    <a href="/2018/03/20/python pexpect/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python pexpect</div>
+    <a href="/2018/03/20/python threading模块/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python threading模块</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -417,11 +418,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -429,7 +426,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -437,7 +442,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">如何阅读一本书</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -449,11 +454,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">如何阅读一本书</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
             
             <div class="clearfix"></div>
