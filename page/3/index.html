@@ -12,6 +12,7 @@
 <meta property="og:title" content="想与做">
 <meta property="og:url" content="http://blog.jbyusk.com/page/3/index.html">
 <meta property="og:site_name" content="想与做">
+<meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="想与做">
   
@@ -156,6 +157,454 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-pythonrequests模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/pythonrequests模块/">python requests模块</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/pythonrequests模块/" class="archive-article-date">
+  	<time datetime="2018-03-20T09:40:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>从公众号:日常学python学习，为了以后能方便查找记录并写在博客</p>
+<blockquote>
+<p>使用requests模块简单get/post</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#如果有编码问题可以指定编码类型</span><br><span class="line">response。encoding = &apos;utf-8&apos;</span><br><span class="line"></span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line">#headers = &#123;&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&apos;&#125;</span><br><span class="line">#response = requests.get(&apos;http://httpbin.org/get&apos;,headers=headers) #get加headers用法</span><br><span class="line">#data = &#123;&apos;name&apos;:&apos;june&apos;, &apos;password&apos;:123456&#125;</span><br><span class="line">#response = requests.get(&apos;http://httpbin.org/get&apos;,params=data) #get加参数用法</span><br><span class="line"></span><br><span class="line">headers = &#123;&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&apos;&#125;</span><br><span class="line">data = &#123;&apos;name&apos;:&apos;june&apos;, &apos;password&apos;:123456&#125;</span><br><span class="line">response = requests.post(&apos;http://httpbin.org/post&apos;,data=data,headers=headers) #post用法</span><br><span class="line"></span><br><span class="line">response = requests.put() </span><br><span class="line"></span><br><span class="line">response = requests.delete()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#print(response.headers)</span><br><span class="line">print(response.text)</span><br><span class="line">#print(response.status_code) #请求状态码</span><br><span class="line">#print(response.content) #获取网页的二进制内容</span><br><span class="line">#print(response.url) #获取请求的sql</span><br><span class="line">#print(response.cookies) #获取cookie</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2018/03/20/pythonrequests模块/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/pythonrequests模块/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-pythonre模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/pythonre模块/">python re模块</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/pythonre模块/" class="archive-article-date">
+  	<time datetime="2018-03-20T09:40:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> 从公众号:日常学python学习，为了以后能方便查找记录并写在博客</p>
+<p> 正则表达式是特殊的字符序列，用来检测字符串是否与我们所设定的字符串相匹配<br> python 中处理正则表达式的库:re<br> 匹配正则表达式的方法:<br> findall(pattern,string,flags)</p>
+<ul>
+<li>pattrn: 正则表达式</li>
+<li>string: 要进行匹配的字符串</li>
+<li>flags: 匹配的模式</li></ul>
+        
+          <a class="article-more-a" href="/2018/03/20/pythonre模块/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/pythonre模块/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-pythonsysargparse模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/pythonsysargparse模块/">python sys与argparse模块</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/pythonsysargparse模块/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>命令行参数用法</p>
+</blockquote>
+<ul>
+<li>sys模块<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line">if len(sys.argv) == 2:</span><br><span class="line"> filename = sys.argv[1]</span><br><span class="line">if not os.path.isfile(filename)</span><br><span class="line"> print &apos;[-] &apos;+filename+&apos;does not exist&apos;.</span><br><span class="line">	 exit(0)</span><br><span class="line">if not os.access(filename,os.R_OK):</span><br><span class="line"> print &apos;[-] &apos;+filename+&apos; access denied.&apos;</span><br><span class="line"> exit(0)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>argparse模块</p>
+<h3 id="addargument函数详解"><a href="#addargument函数详解" class="headerlink" title="addargument函数详解"></a>addargument函数详解</h3><p>更详细可参考:<a href="https://blog.csdn.net/yugongpeng_blog/article/details/46693471" target="_blank" rel="noopener">https://blog.csdn.net/yugongpeng_blog/article/details/46693471</a></p>
+<p>parser.add_argument(‘-a’, action=”store_true”, dest=’test’,type=str,default=False)<br>第一个参数为执行py文件时后面加的选项，例如: python test.py -a ‘test’<br>dest参数 属性的名称，用法args.test<br>action store(保存参数值),storeconst(加上const参数)，append(列表)，append_const(把const参数放在列表)<br>type 类型，str,int等<br>help 帮助信息 python test.py -h 获取帮助信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(dest=&quot;zname&quot;,type=str)</span><br><span class="line">parser.add_argument(dest=&quot;dname&quot;,type=str)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">zname = args.zname</span><br><span class="line">dname = args.dname</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/pythonsysargparse模块/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-kail" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/kail/">kail2.0 python环境设置</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/kail/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>使用python<br>python2和python3切换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python2 100</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3 150</span><br><span class="line">现在的版本即为python3</span><br><span class="line">如果要进行切换:</span><br><span class="line">update-alternatives --config python</span><br><span class="line">选择版本即可</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>python 配置pip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">安装pip：</span><br><span class="line">apt-get install python-setuptools</span><br><span class="line">easy_install pip</span><br><span class="line">pip install   xxxx #python2</span><br><span class="line">pip3 install xxxx #python3</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>使用pip有如下报错pkg_resources.DistributionNotFound: The ‘pip==8.1.2’ distribution was not found and is required by the application</p>
+</blockquote>
+<ol>
+<li><p>重新安装python的distribution </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://pypi.python.org/packages/5f/ad/1fde06877a8d7d5c9b60eff7de2d452f639916ae1d48f0b8f97bf97e570a/distribute-0.7.3.zip#md5=c6c59594a7b180af57af8a0cc0cf5b4a</span><br><span class="line">unzip distribute-0.7.3.zip</span><br><span class="line">cd distribute-0.7.3/</span><br><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装pip==8.1.2<br>easy_install pip==8.1.2</p>
+</li>
+</ol>
+<blockquote>
+<p>kail 安装eclipse+python</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#下载eclipse.tar.gz</span><br><span class="line">tar -xzvf eclipse-inst-linux64.tar.gz</span><br><span class="line">cd eclipse-installer</span><br><span class="line">./eclipse-inst</span><br><span class="line">#由于kail自带java故不需要安装其他linux需要安装java</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/kail/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-pythonos模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/pythonos模块/">python os模块</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/pythonos模块/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>一些os模块函数</p>
+</blockquote>
+<p>参考:<a href="https://www.cnblogs.com/mufenglin/p/7676160.html" target="_blank" rel="noopener">https://www.cnblogs.com/mufenglin/p/7676160.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line">os.mkdir(title) #创建目录</span><br><span class="line">os.chdir(dirname) #改变工作目录</span><br><span class="line">os.system(cmd) 执行命令cmd，如果成功返回0，不成功返回1</span><br><span class="line">os.getcwd() 获取当前工作路径,即当前python脚本工作的目录路径</span><br><span class="line"></span><br><span class="line">os.path常用方法</span><br><span class="line">path_a = os.path.abspath(&apos;.&apos;) #获取当前路径的绝对路径</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/pythonos模块/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-python threading模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -292,106 +741,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/03/20/python pexpect/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-kail" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/kail/">kail2.0 python环境设置</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/20/kail/" class="archive-article-date">
-  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>使用python<br>python2和python3切换</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python2 100</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3 150</span><br><span class="line">现在的版本即为python3</span><br><span class="line">如果要进行切换:</span><br><span class="line">update-alternatives --config python</span><br><span class="line">选择版本即可</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>python 配置pip</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">安装pip：</span><br><span class="line">apt-get install python-setuptools</span><br><span class="line">easy_install pip</span><br><span class="line">pip install   xxxx #python2</span><br><span class="line">pip3 install xxxx #python3</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>使用pip有如下报错pkg_resources.DistributionNotFound: The ‘pip==8.1.2’ distribution was not found and is required by the application</p>
-</blockquote>
-<ol>
-<li><p>重新安装python的distribution </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://pypi.python.org/packages/5f/ad/1fde06877a8d7d5c9b60eff7de2d452f639916ae1d48f0b8f97bf97e570a/distribute-0.7.3.zip#md5=c6c59594a7b180af57af8a0cc0cf5b4a</span><br><span class="line">unzip distribute-0.7.3.zip</span><br><span class="line">cd distribute-0.7.3/</span><br><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装pip==8.1.2<br>easy_install pip==8.1.2</p>
-</li>
-</ol>
-<blockquote>
-<p>kail 安装eclipse+python</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#下载eclipse.tar.gz</span><br><span class="line">tar -xzvf eclipse-inst-linux64.tar.gz</span><br><span class="line">cd eclipse-installer</span><br><span class="line">./eclipse-inst</span><br><span class="line">#由于kail自带java故不需要安装其他linux需要安装java</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/kail/">展开全文 >></a>
         </p>
       
 
@@ -600,88 +949,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-怎么读" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/怎么读/">怎么读书</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/14/怎么读/" class="archive-article-date">
-  	<time datetime="2018-03-14T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在看古典老师的拆掉思维里的墙:原来我可以这样活这本书时，书中很多观点都曾经有过或者思考过。然后突然发现这个问题，一本书，一个动画，看的过程中颇有感触，带来了一段时间的兴奋与共鸣。但是再过一个星期或者一个月，这些感悟并没有真正的影响到生活中，也没有真正的成为你的知识，从而塑造你的价值观。<br></p>
-        
-          <a class="article-more-a" href="/2018/03/14/怎么读/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/14/怎么读/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-赛螃蟹炒番茄" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -774,102 +1041,9 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-香菇枸杞炖脊骨" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/香菇枸杞炖脊骨/">香菇枸杞炖脊骨</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/14/香菇枸杞炖脊骨/" class="archive-article-date">
-  	<time datetime="2018-03-14T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>1:材料处理</p>
-</blockquote>
-<pre><code>脊骨泡冷水半小时。
-干香菇泡水半小时。
-洗净枸杞备好。
-锅中煮水至沸腾，倒入脊骨大火煮3分钟。捞起脊骨。
-</code></pre><blockquote>
-<p>2:炖</p>
-</blockquote>
-<pre><code>另外烧一锅水，根据材料多少加水。
-倒入洗净的香菇，枸杞。水沸腾后加入脊骨(为了保持肉的嫩，只有在水开后加入脊骨)，并加入一块冰糖。
-水再次沸腾后，小火炖。
-炖40分钟，起锅。
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">食物</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/14/香菇枸杞炖脊骨/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -960,18 +1134,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -980,11 +1142,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -996,7 +1174,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">食物</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>

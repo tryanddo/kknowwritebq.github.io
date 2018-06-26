@@ -15,7 +15,8 @@
 <meta property="og:url" content="http://blog.jbyusk.com/2018/03/25/linux防火墙/index.html">
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="centos7 下Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.参考:https://blog.csdn.net/c233728461/article/details/52679558">
-<meta property="og:updated_time" content="2018-04-25T08:10:51.374Z">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-21T02:24:57.549Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux防火墙设置">
 <meta name="twitter:description" content="centos7 下Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.参考:https://blog.csdn.net/c233728461/article/details/52679558">
@@ -189,9 +190,15 @@
         <p>centos7 下<br>Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.<br>参考:<a href="https://blog.csdn.net/c233728461/article/details/52679558" target="_blank" rel="noopener">https://blog.csdn.net/c233728461/article/details/52679558</a><br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl mask firewalld </span><br><span class="line">yum install iptables-services #安装iptables</span><br><span class="line">systemctl enable iptables #设置开机启动</span><br><span class="line"></span><br><span class="line">systemctl/service stop iptables</span><br><span class="line">systemctl/service start iptables</span><br><span class="line">systemctl/service restart iptables</span><br><span class="line">systemctl/service reload iptables</span><br><span class="line"></span><br><span class="line">service iptables save #保存设置</span><br><span class="line"></span><br><span class="line">最后规则写入到/etc/sysconfig/iptables</span><br></pre></td></tr></table></figure></p>
 <p>kail2.0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables-save &gt; iptables.bak #保存</span><br><span class="line">iptables-restore &lt; iptables.bak #启动</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>iptables设置</p>
+<p>iptables 防火墙设置</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#1.设定预设规则</span><br><span class="line">iptables -P INPUT DROP</span><br><span class="line">iptables -P OUTPUT ACCEPT #也可以设置为DROP，但需要设置更多规则</span><br><span class="line">iptables -P FORWARD DROP</span><br><span class="line"></span><br><span class="line">#2.添加规则</span><br><span class="line">iptables -A INPUT -i lo -j ACCEPT #配置本机可以访问自身</span><br><span class="line">iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT #配置本机可以与外部设备建立连接</span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT #配置本机开放的端口</span><br><span class="line">iptables -A INPUT -p icmp -j ACCEPT #允许其它设备PING本机</span><br><span class="line"></span><br><span class="line">#3.减少不安全的端口连接</span><br><span class="line">iptables -A OUTPUT -p tcp --sport 31337 -j DROP</span><br><span class="line">iptables -A OUTPUT -p tcp --dport 31337 -j DROP</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>iptables nat规则</p>
+</blockquote>
+<p>打开内核的路由功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#临时生效</span><br><span class="line">echo &quot;1&quot;&gt;/proc/sys/net/ipv4/ip_forward</span><br><span class="line">#永久生效</span><br><span class="line">vim /etc/sysctl.conf</span><br><span class="line">net.ipvr.ipforward = 1</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></p>
+<p>示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">A服务器: 10.10.10.129/24</span><br><span class="line">B服务器: 10.10.10.254/24 eth0, 192.168.10.254/24 eth1</span><br><span class="line">C服务器: 192.168.10.129/24</span><br><span class="line"></span><br><span class="line">如果要让C服务器访问A服务器</span><br><span class="line">#需要在B服务器上开启iptables nat转发</span><br><span class="line">/sbin/iptables -t nat -A POSTROUTING(路由) -s(来源) 192.168.10.0/24 -d(目的)10.10.10.0/24 -o eth0 -j MASQUERADE</span><br><span class="line">由于重启会失效所以需要命令写在rc.local</span><br><span class="line">#A和C服务器上设置路由为B服务器IP</span><br><span class="line">A服务器:route add -net 192.168.10.0 netmask 255.255.255.0 gw 10.10.10.254 </span><br><span class="line">C服务器:route add -net 10.10.10.0 netmask 255.255.255.0 gw 192.168.10.254</span><br></pre></td></tr></table></figure></p>
+<p>NAT不同设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">PREROUTEING：定义目的NAT的规则</span><br><span class="line">POSTROUTEING:定义源NAT规则</span><br><span class="line">OUTPUT:</span><br><span class="line">1.MASQUERADE:动态分配ip时用的IP伪装:在nat表的POSTROUTING链加入一条规则:所有从eth0口送出的包会被伪装（MASQUERADE）</span><br><span class="line">iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</span><br><span class="line">2.SNAT:共享上网</span><br><span class="line">所有从eth0(外网卡)出来的数据包的源地址改为指定地址</span><br><span class="line">iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 10.10.10.254</span><br><span class="line">3.DNAT:目的nat,只能DNS</span><br><span class="line">4.REDIRECT:重定向,例如squid透明代理时需要用</span><br></pre></td></tr></table></figure></p>
 
       
 
@@ -275,18 +282,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/25/markdown语法/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/25/知识变现/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          markdown语法
+          知识变现-记录
         
       </div>
     </a>
   
   
-    <a href="/2018/03/25/linux网络/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">linux网络相关</div>
+    <a href="/2018/03/25/markdown语法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">markdown语法</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -420,18 +427,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -440,11 +435,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -456,7 +467,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">食物</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
