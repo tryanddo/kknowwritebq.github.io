@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
   <title>python os模块 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一些os模块函数  参考:https://www.cnblogs.com/mufenglin/p/7676160.html 123456789import osos.mkdir(title) #创建目录os.chdir(dirname) #改变工作目录os.system(cmd) 执行命令cmd，如果成功返回0，不成功返回1os.getcwd() 获取当前工作路径,即当前python脚本工作的目">
+  <meta name="description" content="一些os模块函数  1234567891011121314151617import osos.listdir(path) #返回目录下的文件和目录名 将路径使用unicode()转后调用最好os.remove(path) #删除一个文件os.path.isfile(path) #判断是不是文件os.path.isdir(path) #判断是不是目录os.path.splitext(path) #">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python os模块">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/pythonos模块/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="一些os模块函数  参考:https://www.cnblogs.com/mufenglin/p/7676160.html 123456789import osos.mkdir(title) #创建目录os.chdir(dirname) #改变工作目录os.system(cmd) 执行命令cmd，如果成功返回0，不成功返回1os.getcwd() 获取当前工作路径,即当前python脚本工作的目">
+<meta property="og:description" content="一些os模块函数  1234567891011121314151617import osos.listdir(path) #返回目录下的文件和目录名 将路径使用unicode()转后调用最好os.remove(path) #删除一个文件os.path.isfile(path) #判断是不是文件os.path.isdir(path) #判断是不是目录os.path.splitext(path) #">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-02T07:00:40.159Z">
+<meta property="og:updated_time" content="2018-08-02T12:08:26.505Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python os模块">
-<meta name="twitter:description" content="一些os模块函数  参考:https://www.cnblogs.com/mufenglin/p/7676160.html 123456789import osos.mkdir(title) #创建目录os.chdir(dirname) #改变工作目录os.system(cmd) 执行命令cmd，如果成功返回0，不成功返回1os.getcwd() 获取当前工作路径,即当前python脚本工作的目">
+<meta name="twitter:description" content="一些os模块函数  1234567891011121314151617import osos.listdir(path) #返回目录下的文件和目录名 将路径使用unicode()转后调用最好os.remove(path) #删除一个文件os.path.isfile(path) #判断是不是文件os.path.isdir(path) #判断是不是目录os.path.splitext(path) #">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -190,8 +190,11 @@
         <blockquote>
 <p>一些os模块函数</p>
 </blockquote>
-<p>参考:<a href="https://www.cnblogs.com/mufenglin/p/7676160.html" target="_blank" rel="noopener">https://www.cnblogs.com/mufenglin/p/7676160.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line">os.mkdir(title) #创建目录</span><br><span class="line">os.chdir(dirname) #改变工作目录</span><br><span class="line">os.system(cmd) 执行命令cmd，如果成功返回0，不成功返回1</span><br><span class="line">os.getcwd() 获取当前工作路径,即当前python脚本工作的目录路径</span><br><span class="line"></span><br><span class="line">os.path常用方法</span><br><span class="line">path_a = os.path.abspath(&apos;.&apos;) #获取当前路径的绝对路径</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line">os.listdir(path) #返回目录下的文件和目录名 将路径使用unicode()转后调用最好</span><br><span class="line">os.remove(path) #删除一个文件</span><br><span class="line">os.path.isfile(path) #判断是不是文件</span><br><span class="line">os.path.isdir(path) #判断是不是目录</span><br><span class="line">os.path.splitext(path) #路径与文件名后缀拆分开</span><br><span class="line">os.path.basename()  #获取文件名</span><br><span class="line">os.sta #获取文件属性</span><br><span class="line">os.chmod #修改文件属性和时间戳</span><br><span class="line">os.mkdir(title) #创建目录</span><br><span class="line">os.chdir(dirname) #改变工作目录</span><br><span class="line">os.system(cmd) 执行命令cmd，如果成功返回0，不成功返回1</span><br><span class="line">os.getcwd() 获取当前工作路径,即当前python脚本工作的目录路径</span><br><span class="line"></span><br><span class="line">os.path常用方法</span><br><span class="line">path_a = os.path.abspath(&apos;.&apos;) #获取当前路径的绝对路径</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>实例:递归清理某些文件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import os</span><br><span class="line">def clearFile(pathall):</span><br><span class="line">    #获取目录信息</span><br><span class="line">    for path in os.listdir(pathall):</span><br><span class="line">        temp = pathall+&apos;\\&apos;+path    </span><br><span class="line">        if os.path.isdir(temp):</span><br><span class="line">            clearFile(temp)</span><br><span class="line">        else:           </span><br><span class="line">            if os.path.splitext(temp)[1] == &apos;.log&apos;:</span><br><span class="line">                print(temp)</span><br><span class="line">                os.remove(temp) </span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    path = unicode(&apos;C:\\c_code\\进程和线程&apos;,&apos;utf-8&apos;)</span><br><span class="line">    clearFile(path)</span><br></pre></td></tr></table></figure>
       
 
       
@@ -274,11 +277,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/20/python pexpect/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/20/kail/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          python pexpect
+          kail2.0 python环境设置
         
       </div>
     </a>
@@ -419,6 +422,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -427,27 +446,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -463,7 +470,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">-随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows编程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>空虚感和意义感 | 想与做</title>
+  <title>汇编学习1寄存器 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="读文章https://www.zhihu.com/question/19980610/answer/26205500后感   意义感的本质是，我们感觉自己和未来，和他人，和更大世界有联系。我们是属于一个宏大而有序的整体的一部分。  比如一个单块的拼板，不知道它用来做什么，放在什么位置上就会随意处置或者丢弃它。而如果我们这样随意处置时间，生命和我们自己，就会产生空虚感。  意义与目标   当知道">
-<meta name="keywords" content="笔记">
+  <meta name="description" content="CPU寄存器  123456789101112131415161718192021222324252627282930313233343536通用寄存器:32位:EAX,EBX,ECX,EDXESI:源变址寄存器EDI:目的变址寄存器ESP:栈顶指针EBP:栈底指针16位:AX,BX,CX,DXSI,DI,SP,BP8位:AH,AL,BH,BL,CH,CL,DH,DL指令指针寄存器:EIP,IP">
+<meta name="keywords" content="汇编">
 <meta property="og:type" content="article">
-<meta property="og:title" content="空虚感和意义感">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/空虚感和意义感/index.html">
+<meta property="og:title" content="汇编学习1寄存器">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/08/20/汇编1_寄存器/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="读文章https://www.zhihu.com/question/19980610/answer/26205500后感   意义感的本质是，我们感觉自己和未来，和他人，和更大世界有联系。我们是属于一个宏大而有序的整体的一部分。  比如一个单块的拼板，不知道它用来做什么，放在什么位置上就会随意处置或者丢弃它。而如果我们这样随意处置时间，生命和我们自己，就会产生空虚感。  意义与目标   当知道">
+<meta property="og:description" content="CPU寄存器  123456789101112131415161718192021222324252627282930313233343536通用寄存器:32位:EAX,EBX,ECX,EDXESI:源变址寄存器EDI:目的变址寄存器ESP:栈顶指针EBP:栈底指针16位:AX,BX,CX,DXSI,DI,SP,BP8位:AH,AL,BH,BL,CH,CL,DH,DL指令指针寄存器:EIP,IP">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-28T02:49:26.831Z">
+<meta property="og:updated_time" content="2018-08-20T12:56:16.332Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="空虚感和意义感">
-<meta name="twitter:description" content="读文章https://www.zhihu.com/question/19980610/answer/26205500后感   意义感的本质是，我们感觉自己和未来，和他人，和更大世界有联系。我们是属于一个宏大而有序的整体的一部分。  比如一个单块的拼板，不知道它用来做什么，放在什么位置上就会随意处置或者丢弃它。而如果我们这样随意处置时间，生命和我们自己，就会产生空虚感。  意义与目标   当知道">
+<meta name="twitter:title" content="汇编学习1寄存器">
+<meta name="twitter:description" content="CPU寄存器  123456789101112131415161718192021222324252627282930313233343536通用寄存器:32位:EAX,EBX,ECX,EDXESI:源变址寄存器EDI:目的变址寄存器ESP:栈顶指针EBP:栈底指针16位:AX,BX,CX,DXSI,DI,SP,BP8位:AH,AL,BH,BL,CH,CL,DH,DL指令指针寄存器:EIP,IP">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -161,14 +161,14 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-空虚感和意义感" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-汇编1_寄存器" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      空虚感和意义感
+      汇编学习1寄存器
     </h1>
   
 
@@ -178,8 +178,8 @@
 		</span>
 	    
         
-        <a href="/2018/03/20/空虚感和意义感/" class="archive-article-date">
-  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+        <a href="/2018/08/20/汇编1_寄存器/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
       </header>
@@ -187,30 +187,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>  读文章<a href="https://www.zhihu.com/question/19980610/answer/26205500" target="_blank" rel="noopener">https://www.zhihu.com/question/19980610/answer/26205500</a>后感</p>
-<p>  意义感的本质是，我们感觉自己和未来，和他人，和更大世界有联系。我们是属于一个宏大而有序的整体的一部分。<br>  比如一个单块的拼板，不知道它用来做什么，放在什么位置上就会随意处置或者丢弃它。而如果我们这样随意处置时间，生命和我们自己，就会产生空虚感。</p>
-<blockquote>
-<p>意义与目标</p>
+        <blockquote>
+<p>CPU寄存器</p>
 </blockquote>
-<p> 当知道自己要在人生的这一时刻要干什么，就会感到有意义。但是当受限于能力无法完成想象中的人生图景时，我们便会感到空虚。目标让实现它的过程有意义。</p>
-<blockquote>
-<p>意义与人际关系</p>
-</blockquote>
-<p> 当我们感觉到空虚的时候，不会出现和亲密的家人，朋友相处的时间里。我们需要和被需要，爱与被爱，愿意彼此付出。在这个过程中，我们重要而又关键所以珍惜彼此，所以我们就会有意义感。<br> 所以如果生活是孤立的，没有人在乎，不知道是否真的爱着谁又被谁爱着，就会空虚。</p>
-<blockquote>
-<p>目标与坚持</p>
-</blockquote>
-<p> 刚开始决定一个目标的时候，有时候出自于强烈的兴趣，有时候只是想要尝试看看。但是这过程中都需要坚持。我认为坚持不是闷头苦干，坚持需要有正反馈，不管这种反馈是来自于他人，还是来自于自己。一直关注scalers的公众号，他提供了一个环境，一群人一起坚持做某件事，通过互相鼓励，互相之间得到正反馈来完成坚持的目标。如果没有一个环境让你去坚持目标，那分享出自己的坚持，把自己的坚持书写出来，记录下来或许也是一个不错的选择。</p>
-<blockquote>
-<p>目标与疲惫感</p>
-</blockquote>
-<p> 我认为疲惫感有几种。</p>
-<ol>
-<li>由于在完成目标或者与人交际过程中受到了不可攀越的阻力，当自己的能力无法实现自己所幻想的蓝图时，就会产生很强烈的疲惫感。</li>
-<li>人生需要正反馈，一个大目标持续的时间可能是人生的一段时间。但是记忆一直在受到时间空间各种方面的侵蚀，如果没有小目标的正反馈在记忆中维持感觉，便会忘记当初的所谓的目标与意义感。感觉越来越弱，没有坚持的意义，自然感觉到了疲惫感。</li>
-<li>纯粹就是累了，闷头一觉便是。</li>
-</ol>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">通用寄存器:</span><br><span class="line">32位:</span><br><span class="line">EAX,EBX,ECX,EDX</span><br><span class="line">ESI:源变址寄存器</span><br><span class="line">EDI:目的变址寄存器</span><br><span class="line">ESP:栈顶指针</span><br><span class="line">EBP:栈底指针</span><br><span class="line">16位:</span><br><span class="line">AX,BX,CX,DX</span><br><span class="line">SI,DI,SP,BP</span><br><span class="line">8位:</span><br><span class="line">AH,AL,BH,BL,CH,CL,DH,DL</span><br><span class="line"></span><br><span class="line">指令指针寄存器:EIP,IP 与CS联用指向下一个指令的物理地址</span><br><span class="line"></span><br><span class="line">标志位寄存器FLAGS</span><br><span class="line">状态标志</span><br><span class="line">0 CF 进位标志    进位或借位置1，否则置0    无符号是有效</span><br><span class="line">2 PF 奇偶标志    低8位 1的个数，奇数个为0，偶数个为1</span><br><span class="line">4 AF 辅助标志    低半字节是否有进位或借位</span><br><span class="line">6 ZF 零标志        结果是0置1，否则置0    </span><br><span class="line">7 SF 符号标志    最高位为1则置1，否则置0</span><br><span class="line">11 OF 溢出标志   溢出OF为1，否则为0    有符号数运算是否超出范围</span><br><span class="line">控制标志</span><br><span class="line">8 TF 陷阱标志   TF=0，处理器正常工作，TF=1，处理器单步执行指令</span><br><span class="line">9 IF 中断标志    IF=1 允许中断，IF=0，禁止中断 CLI(IF=0) STI(IF=1)</span><br><span class="line">10 DF 方向标志 DF=0 存储器地址自动增加 DF=1 存储器地址自动减少</span><br><span class="line"></span><br><span class="line">段寄存器:</span><br><span class="line">CS:代码段的起始位置</span><br><span class="line">DS:数据段的起始位置</span><br><span class="line">ES:附加段的起始位置</span><br><span class="line">SS:堆栈段的起始位置</span><br><span class="line">没有指明情况下，数据访问在DS段,BP访问内存在SS段</span><br><span class="line">段超越: 一般数据访问(DS)，BP基址的寻址方式(SS)，串操作的源操作数(DS)</span><br><span class="line">	可以使用（段寄存器:）实现超越</span><br></pre></td></tr></table></figure>
       
 
       
@@ -223,7 +203,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
         		</li>
       		
 		</ul>
@@ -279,7 +259,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/20/空虚感和意义感/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/08/20/汇编1_寄存器/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -293,18 +273,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/20/python pexpect/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/21/汇编3Win32汇编/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          python pexpect
+          汇编学习2Win32汇编及进阶技术
         
       </div>
     </a>
   
   
-    <a href="/2018/03/20/python网络socket/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python网络socket /nmap</div>
+    <a href="/2018/08/20/汇编指令/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">汇编学习2汇编指令</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -438,6 +418,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
               </li>
              
@@ -446,19 +434,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -474,15 +458,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows编程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">食物</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
               </li>
             
             <div class="clearfix"></div>

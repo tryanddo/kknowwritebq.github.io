@@ -157,6 +157,273 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-汇编3Win32汇编" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/21/汇编3Win32汇编/">汇编学习2Win32汇编及进阶技术</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/21/汇编3Win32汇编/" class="archive-article-date">
+  	<time datetime="2018-08-21T08:39:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-21</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Hello 15pb</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">.386	;指定386指令集</span><br><span class="line">.model flat,stdcall ;内存模型平坦模式，win32程序调用方式stdcall</span><br><span class="line">option casemap:none ;选项区分大小写</span><br><span class="line"></span><br><span class="line">include windows.inc</span><br><span class="line">include user32.inc	;包含头文件</span><br><span class="line">includelib user32.lib	;包含库文件</span><br><span class="line">include msvcrt.inc	;运行时头文件</span><br><span class="line">includelib msvcrt.lib	;运行时库文件</span><br><span class="line"></span><br><span class="line">.const	;常量</span><br><span class="line"></span><br><span class="line">.data	;数据定义,伪指令</span><br><span class="line"></span><br><span class="line">	;全局变量</span><br><span class="line">	;定义字符串 </span><br><span class="line">	;变量名 变量类型 初始值</span><br><span class="line">	szTitle byte &quot;hello&quot;,0ah,0dh,0</span><br><span class="line">	szText byte &quot;hello 15pb&quot;,0ah,0dh,0</span><br><span class="line">	</span><br><span class="line">	;定义变量</span><br><span class="line">	;变量名 变量类型 变量初始值</span><br><span class="line">	age dword 4,5,6,7</span><br><span class="line">	;变量名 变量类型 数组长度 dup(初始值)</span><br><span class="line">	array dword 20 dup(?) ;20个的数组  </span><br><span class="line">.code</span><br><span class="line"></span><br><span class="line">;函数格式</span><br><span class="line">	; 函数名 proc</span><br><span class="line">	; 	内容</span><br><span class="line">	; 函数名 endp</span><br><span class="line">Fun proc</span><br><span class="line">	</span><br><span class="line">	push offset szText</span><br><span class="line">	call crt_printf</span><br><span class="line">	add esp,04h</span><br><span class="line">	ret</span><br><span class="line">	</span><br><span class="line">Fun endp</span><br><span class="line">	</span><br><span class="line">start:	;程序入口</span><br><span class="line">	call Fun</span><br><span class="line">	mov ecx,5</span><br><span class="line">LOOP1:</span><br><span class="line">	push 0;按钮</span><br><span class="line">	push offset szTitle;标题</span><br><span class="line">	push offset szText;内容</span><br><span class="line">	push 0;第一个参数,句柄</span><br><span class="line">	call MessageBox</span><br><span class="line">	loop LOOP1</span><br><span class="line">	</span><br><span class="line">	ret;返回系统调用</span><br><span class="line"></span><br><span class="line">end start	;程序结束</span><br><span class="line"></span><br><span class="line">end		;文件结尾</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>X86调用约定</p>
+</blockquote>
+<p>调用约定:函数参数入栈顺序和函数平衡者<br><strong>cdecl    C/C++ 默认调用约定，参数从右往左入栈，堆栈由调用者平衡
+</strong>stdcall    标准调用约定 winapi绝大部分的调用约定 ret imm 函数内部平衡堆栈<br><strong>fastcall    参数从右往左,mov edx,2 mov ecx,1 前2个参数放在寄存器中,函数内部平衡堆栈
+</strong>thiscall    c++类调用约定  参数从右往左,this指针放入ecx<br></p>
+        
+          <a class="article-more-a" href="/2018/08/21/汇编3Win32汇编/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/21/汇编3Win32汇编/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-汇编1_寄存器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/汇编1_寄存器/">汇编学习1寄存器</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/汇编1_寄存器/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>CPU寄存器</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">通用寄存器:</span><br><span class="line">32位:</span><br><span class="line">EAX,EBX,ECX,EDX</span><br><span class="line">ESI:源变址寄存器</span><br><span class="line">EDI:目的变址寄存器</span><br><span class="line">ESP:栈顶指针</span><br><span class="line">EBP:栈底指针</span><br><span class="line">16位:</span><br><span class="line">AX,BX,CX,DX</span><br><span class="line">SI,DI,SP,BP</span><br><span class="line">8位:</span><br><span class="line">AH,AL,BH,BL,CH,CL,DH,DL</span><br><span class="line"></span><br><span class="line">指令指针寄存器:EIP,IP 与CS联用指向下一个指令的物理地址</span><br><span class="line"></span><br><span class="line">标志位寄存器FLAGS</span><br><span class="line">状态标志</span><br><span class="line">0 CF 进位标志    进位或借位置1，否则置0    无符号是有效</span><br><span class="line">2 PF 奇偶标志    低8位 1的个数，奇数个为0，偶数个为1</span><br><span class="line">4 AF 辅助标志    低半字节是否有进位或借位</span><br><span class="line">6 ZF 零标志        结果是0置1，否则置0    </span><br><span class="line">7 SF 符号标志    最高位为1则置1，否则置0</span><br><span class="line">11 OF 溢出标志   溢出OF为1，否则为0    有符号数运算是否超出范围</span><br><span class="line">控制标志</span><br><span class="line">8 TF 陷阱标志   TF=0，处理器正常工作，TF=1，处理器单步执行指令</span><br><span class="line">9 IF 中断标志    IF=1 允许中断，IF=0，禁止中断 CLI(IF=0) STI(IF=1)</span><br><span class="line">10 DF 方向标志 DF=0 存储器地址自动增加 DF=1 存储器地址自动减少</span><br><span class="line"></span><br><span class="line">段寄存器:</span><br><span class="line">CS:代码段的起始位置</span><br><span class="line">DS:数据段的起始位置</span><br><span class="line">ES:附加段的起始位置</span><br><span class="line">SS:堆栈段的起始位置</span><br><span class="line">没有指明情况下，数据访问在DS段,BP访问内存在SS段</span><br><span class="line">段超越: 一般数据访问(DS)，BP基址的寻址方式(SS)，串操作的源操作数(DS)</span><br><span class="line">	可以使用（段寄存器:）实现超越</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/汇编1_寄存器/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-汇编指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/汇编指令/">汇编学习2汇编指令</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/汇编指令/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>数据传输指令</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MOV</span><br><span class="line">MOVSX 符号位扩展填充16位或者32位</span><br><span class="line">MOVZX 0扩展填充至16位或者32位</span><br><span class="line">PUSH/POP 压栈/出栈</span><br><span class="line">PUSHF/POPF 压栈/出栈 标志寄存器</span><br><span class="line">PUSHA/POPA/PUSHAD/POPAD 所有寄存器压栈或出栈(16位/32位)</span><br><span class="line">XCHG 交换源操作数和目标操作数的内容</span><br><span class="line">LEA 源操作数的地址给予寄存器 LEA AX,[2];ax=2</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>算术和逻辑运算指令</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ADD</span><br><span class="line">ADC 加上进位CF</span><br><span class="line">INC:自增1，不影响CF标志位</span><br><span class="line">SUB </span><br><span class="line">SBB 减去进位CF</span><br><span class="line">DEC:自减1，不影响CF标志位</span><br><span class="line">MUL:</span><br><span class="line">IMUL:</span><br><span class="line">DIV:</span><br><span class="line">IDIV:</span><br><span class="line">CMP:第一个操作数减去第二个操作数,不保存结果,影响EFLAGS寄存器中标志位</span><br><span class="line">AND:与</span><br><span class="line">OR: 或</span><br><span class="line">XOR:异或</span><br><span class="line">NOT:取反</span><br><span class="line">TEST:与and相同，但是不保存结果，只影响标志位</span><br><span class="line">SHL:高位放CF，低位置0</span><br><span class="line">SHR:低位移入CF,高位补0,无符号除法</span><br><span class="line">SAR:操作数右移，符号位不变,用于有符号数除法</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>串操作指令</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">movs:串操作指令 movsb/movsw/movsd 执行次数有cx决定 源操作数有Si/ESi 目的操作数Di/EDI 根据DF标志位决定 </span><br><span class="line">lea si,[100]</span><br><span class="line">lea di,[100]</span><br><span class="line">mov cx,10</span><br><span class="line">cld </span><br><span class="line">rep movsb ;相当于memcpy</span><br><span class="line"></span><br><span class="line">stos:存入串指令 stosb/stosw/stosd 将al/ax/eax寄存器中的字节/字/双字存储到目标操作数 </span><br><span class="line">lea di,[100]</span><br><span class="line">mov cx,10</span><br><span class="line">mov al,31</span><br><span class="line">cld</span><br><span class="line">rep stosb ;填充10个字节的31h,相当于memset</span><br><span class="line"></span><br><span class="line">lods:取出串指令 lodsb/lodsw/lodsd 将源操作数中的字节/字/双字分别加载到 al/ax/eax寄存器 </span><br><span class="line">lea si,[120] </span><br><span class="line">mov cx,10 </span><br><span class="line">xor a,ax </span><br><span class="line">xor dx,dx </span><br><span class="line">lodsb </span><br><span class="line">add dx,ax, ;加法计算 </span><br><span class="line">loop 10B</span><br><span class="line"></span><br><span class="line">cmps:串比较指令 cmpsb/cmpsw/cmpsd </span><br><span class="line">lea si,[100] </span><br><span class="line">lea di,[120] </span><br><span class="line">mov cx,10 </span><br><span class="line">cld </span><br><span class="line">repe cmpsb </span><br><span class="line">je 114 ;相等跳出mov bx,1 </span><br><span class="line">mov bx,1</span><br><span class="line"></span><br><span class="line">rep:重复操作前缀 rep:cx = 0结束 repe:cx =0/zf=0 repne:cx=0/zf=1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>控制转移指令</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JMP:无条件转移 near ptr(近转移) short(短转移) far ptr(远转移 CS+IP) </span><br><span class="line">JCC:有条件转移 </span><br><span class="line">LOOP:循环指令 loop 立即数 </span><br><span class="line">CALL:函数调用指令 call完用ret返回指令回到主程序 </span><br><span class="line">RET:返回指令 ret/retf(远跳)/retn(近跳) 立即数 :SP+立即数</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/汇编指令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-python基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -371,7 +638,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">-随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
         		</li>
       		
 		</ul>
@@ -484,176 +751,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/06/28/空虚感和意义感/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-随想随记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/26/随想随记/">随想随记</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/06/26/随想随记/" class="archive-article-date">
-  	<time datetime="2018-06-26T03:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>思考并不等于理智。认知和经验产生了直觉，理智获取这些直觉来做出判断，假如认可就形成行为。如果不认可就会通过自控来约束自己的直觉。<br>我认为理智不起作用的几种情况:</p>
-<blockquote>
-<p>1.认知缺陷</p>
-</blockquote>
-<p>  认知缺陷我认为通俗易懂的话来说就是智商税，在见识的巨大差距下，有限的知识在直觉的联想启发和天生的因果推理关系下形成错误的判断。</p>
-<blockquote>
-<p>2.自我损耗</p>
-</blockquote>
-<p>  当你必须要去完成一些认知活动时，又出现了一些额外的事情需要去处理的时候，就会出现自我损耗。自我损耗会导致自控力下降并且容易产生自私的情绪。即为心烦意乱，所以最好不要在别人进行忙的时候打扰到别人，就算是你认为亲近的人。因为这样可能会导致矛盾的产生。</p>
-<p>  一件事情的发生，事实本身已经无法改变，因为即使重来一次，你还是会做出这样的决定。这些事情的产生往往来至于知识经验等各方面的不足。当事情发生后，后悔并不能解决任何问题，从中知道自己的不足之处然后改正过来便是难以做到的事情了。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/26/随想随记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-git" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/26/git/">git使用</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/06/26/git/" class="archive-article-date">
-  	<time datetime="2018-06-26T03:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="第一次使用git配置github"><a href="#第一次使用git配置github" class="headerlink" title="第一次使用git配置github"></a>第一次使用git配置github</h3><p>配置ssh key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ras -C &quot;邮件地址&quot;</span><br><span class="line">找到.ssh\id_rsa.pub文件，再github中个人设置中添加 sshkey</span><br><span class="line">ssh -T git@github.com # 注意邮箱地址不用改</span><br><span class="line">配置成功出现:Hi xxx! You&apos;ve successfully authenticated, but GitHub does not provide shell access. </span><br><span class="line"></span><br><span class="line">然后:</span><br><span class="line">git config --global user.name &quot;xxx&quot;// 你的github用户名，非昵称</span><br><span class="line">git config --global user.email  &quot;xxx@qq.com&quot;// 填写你的github注册邮箱</span><br></pre></td></tr></table></figure></p>
-<p>一直需要输入用户名密码执行一下命令<br>git config –global credential.helper store</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/26/git/">展开全文 >></a>
         </p>
       
 
@@ -827,21 +924,21 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-metasploit_情报收集技术" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-git" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/13/metasploit_情报收集技术/">情报收集</a>
+      <a class="article-title" href="/2018/06/26/git/">git使用</a>
     </h1>
   
 
 		
         
-        <a href="/2018/06/13/metasploit_情报收集技术/" class="archive-article-date">
-  	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
+        <a href="/2018/06/26/git/" class="archive-article-date">
+  	<time datetime="2018-06-26T03:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
 </a>
         
       </header>
@@ -849,32 +946,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>外围信息搜集</p>
-</blockquote>
-<h3 id="通过DNS和IP地址挖掘目标网络信息"><a href="#通过DNS和IP地址挖掘目标网络信息" class="headerlink" title="通过DNS和IP地址挖掘目标网络信息"></a>通过DNS和IP地址挖掘目标网络信息</h3><p>  1.whois域名注册信息查询<br>    whois testfire.net<br>  2.nslookup与dig域名查询<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nslookup</span><br><span class="line">&gt; set type=A //可以对其IP地址进行解析</span><br><span class="line">&gt; testfire.net</span><br></pre></td></tr></table></figure></p>
-<p>  3.IP2Location地理位置查询(国外),QQ纯真数据库(国内)<br>    <a href="http://www.maxmind.com" target="_blank" rel="noopener">http://www.maxmind.com</a> 国外<br>    <a href="http://www.cz88.net" target="_blank" rel="noopener">http://www.cz88.net</a><br>  4.netcraft网站提供的信息查询服务<br>    <a href="http://searchdns.netcraft.com/" target="_blank" rel="noopener">http://searchdns.netcraft.com/</a><br>  5.IP2Domain反查域名<br>    <a href="http://www.ip-adress.com/reverse_ip/" target="_blank" rel="noopener">http://www.ip-adress.com/reverse_ip/</a> 国外<br>    <a href="http://www.7c.com/" target="_blank" rel="noopener">http://www.7c.com/</a> 国内</p>
-<h3 id="通过搜索引擎进行信息搜集"><a href="#通过搜索引擎进行信息搜集" class="headerlink" title="通过搜索引擎进行信息搜集"></a>通过搜索引擎进行信息搜集</h3><p>  1.Google Hacking<br>    书籍:<google hacking="" for="" penetration="" testers=""><br>  数据库:GHDB(Google Hacking DataBase,Google黑客数据库)<br>        <a href="http://www.exploit-db.com/google-dorks可以查看GHDB内容" target="_blank" rel="noopener">http://www.exploit-db.com/google-dorks可以查看GHDB内容</a><br> 自动化工具:SiteDigger和Search Diggity<br>        SiteDigger:<a href="http://www.mcafee.com/us/downloads/freee-tools/sitedigger.aspx" target="_blank" rel="noopener">http://www.mcafee.com/us/downloads/freee-tools/sitedigger.aspx</a> 集成了FSDB和GHDB<br>        Search Diggity:<a href="http://www.stachliu.com" target="_blank" rel="noopener">http://www.stachliu.com</a><br>  2.探索网站的目录结构<br>    google:parent directory site:testfire.net<br>    metasploit:brute_dirs,dir_listing,dir_scanner<br>  3.检索特定类型的文件<br>    site:testfire.net filetype:xls<br>  4.搜索网站中的E-mail地址<br>    use auxiliary/gather/search_email_collector<br>  5.搜索易存在SQL注入点的页面<br>    site:testfire.net inurl:login</google></p>
-<blockquote>
-<p>主机探测与端口扫描</p>
-</blockquote>
-<h3 id="活跃主机扫描"><a href="#活跃主机扫描" class="headerlink" title="活跃主机扫描"></a>活跃主机扫描</h3><p> 1.ICMP ping<br>   ping -c 5 <a href="http://www.dvssc.com" target="_blank" rel="noopener">www.dvssc.com</a><br> 2.Metasploit的主机发现模块<br>   modules/auxiliary/scanner/discovery/<br>   arp_sweep<br>   udp_sweep 发送udp包探查指定主机是否活跃，并发现主机上的UDP服务<br> 3.Nmap主机探测</p>
-<p> 4.python socket模块</p>
-<h3 id="端口扫描与服务类型探测"><a href="#端口扫描与服务类型探测" class="headerlink" title="端口扫描与服务类型探测"></a>端口扫描与服务类型探测</h3><p> 1.Metasploit中的端口扫描器<br>   search portscan<br> 2.Nmap的端口扫描功能 P111<br> 3.Nmap探测更详细的服务信息 P112</p>
-<blockquote>
-<p>服务扫描与查点</p>
-</blockquote>
-<h3 id="网络服务扫描-version"><a href="#网络服务扫描-version" class="headerlink" title="网络服务扫描_version"></a>网络服务扫描_version</h3><p> 1.Telnet服务扫描<br>   telnet_version<br> 2.ssh服务扫描<br>   ssh_version<br> 3.oracle数据库服务查点<br>   tnslsnr_version<br> 4.开放代理探测与利用<br>   open_proxy</p>
-<h3 id="口令猜测与嗅探-login"><a href="#口令猜测与嗅探-login" class="headerlink" title="口令猜测与嗅探 _login"></a>口令猜测与嗅探 _login</h3><p> 1.SSH服务口令猜测<br> 2.psnuffle口令嗅探<br>   auxiliary/sniffer/psnuffle</p>
-<blockquote>
-<p>网络漏洞扫描</p>
-</blockquote>
-<p> OpenVAS漏洞扫描器</p>
-<h3 id="查找特定服务漏洞"><a href="#查找特定服务漏洞" class="headerlink" title="查找特定服务漏洞"></a>查找特定服务漏洞</h3><p> nmap -P0 –script=smb-check-vulns 10.10.10.130</p>
-<blockquote>
-<p>数据库支持</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat /opt/framework/config/database.yml</span><br><span class="line">cat /opt/framework/properties.ini | grep &quot;postgres_root_password&quot; //查看默认安装PostgreSQL数据库默认管理员的命令</span><br><span class="line">db_status  //状态</span><br><span class="line">db_connect 用户名:口令@服务器地址: 端口/数据库名称</span><br><span class="line">db_disconnect 断开连接</span><br></pre></td></tr></table></figure>
+        <h3 id="第一次使用git配置github"><a href="#第一次使用git配置github" class="headerlink" title="第一次使用git配置github"></a>第一次使用git配置github</h3><p>配置ssh key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ras -C &quot;邮件地址&quot;</span><br><span class="line">找到.ssh\id_rsa.pub文件，再github中个人设置中添加 sshkey</span><br><span class="line">ssh -T git@github.com # 注意邮箱地址不用改</span><br><span class="line">配置成功出现:Hi xxx! You&apos;ve successfully authenticated, but GitHub does not provide shell access. </span><br><span class="line"></span><br><span class="line">然后:</span><br><span class="line">git config --global user.name &quot;xxx&quot;// 你的github用户名，非昵称</span><br><span class="line">git config --global user.email  &quot;xxx@qq.com&quot;// 填写你的github注册邮箱</span><br></pre></td></tr></table></figure></p>
+<p>一直需要输入用户名密码执行一下命令<br>git config –global credential.helper store</p>
 
       
 
@@ -888,11 +961,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">metasploit</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">metasploit渗透魔鬼训练营笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
         		</li>
       		
 		</ul>
@@ -902,7 +971,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/13/metasploit_情报收集技术/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/06/26/git/">展开全文 >></a>
         </p>
       
 
@@ -936,21 +1005,21 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-metasploit_web应用攻击类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-随想随记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/13/metasploit_web应用攻击类型/">web应用攻击的主要类型</a>
+      <a class="article-title" href="/2018/06/26/随想随记/">随想随记</a>
     </h1>
   
 
 		
         
-        <a href="/2018/06/13/metasploit_web应用攻击类型/" class="archive-article-date">
-  	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
+        <a href="/2018/06/26/随想随记/" class="archive-article-date">
+  	<time datetime="2018-06-26T03:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
 </a>
         
       </header>
@@ -958,17 +1027,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h3><p>  普通注入<br>  盲注:攻击者运用脚本通过仅有的判断信息(比如时间差)对表中的每一个字段进行探测。</p>
-<h3 id="跨站脚本"><a href="#跨站脚本" class="headerlink" title="跨站脚本"></a>跨站脚本</h3><p>  恶意使用者将程序代码注入到网页上，其他使用者在浏览网页的时候会受到不同程度的影响。HTML语言以及目标主机使用的脚本语言。<br>  xss攻击分为存储型XSS，反射型XSS,DOM型XSS。</p>
-<h3 id="跨站伪造请求"><a href="#跨站伪造请求" class="headerlink" title="跨站伪造请求"></a>跨站伪造请求</h3><p>  使用XSS注入方式注入一段脚本，通过该脚本伪造受害者发送一个合法请求。</p>
-<h3 id="会话认证管理缺陷"><a href="#会话认证管理缺陷" class="headerlink" title="会话认证管理缺陷"></a>会话认证管理缺陷</h3><p>  首次认证cookie后不对cookie内容进行检查，攻击者可以通过修改cookie的重要信息，提升权限对网站资料进行存取。</p>
-<h3 id="安全误配置"><a href="#安全误配置" class="headerlink" title="安全误配置"></a>安全误配置</h3><h3 id="不安全密码存储"><a href="#不安全密码存储" class="headerlink" title="不安全密码存储"></a>不安全密码存储</h3><p>  敏感资料未加密<br>  使用自己未开发的未经证明的算法<br>  使用强度不足的算法<br>  未经程序处理的key，以及将key存储在不受保护的地方</p>
-<h1 id="基于Metasploit框架的Web应用渗透技术"><a href="#基于Metasploit框架的Web应用渗透技术" class="headerlink" title="基于Metasploit框架的Web应用渗透技术"></a>基于Metasploit框架的Web应用渗透技术</h1><p>辅助模块:wmap<br>渗透模块:</p>
-<h3 id="Web应用漏洞扫描探测"><a href="#Web应用漏洞扫描探测" class="headerlink" title="Web应用漏洞扫描探测"></a>Web应用漏洞扫描探测</h3><p>扫描神奇 W3AF</p>
+        <p>思考并不等于理智。认知和经验产生了直觉，理智获取这些直觉来做出判断，假如认可就形成行为。如果不认可就会通过自控来约束自己的直觉。<br>我认为理智不起作用的几种情况:</p>
 <blockquote>
-<p>SQL注入漏洞探测:SQLMAP </p>
+<p>1.认知缺陷</p>
 </blockquote>
-<p> use auxiliary/scanner/http/sqlmap</p>
+<p>  认知缺陷我认为通俗易懂的话来说就是智商税，在见识的巨大差距下，有限的知识在直觉的联想启发和天生的因果推理关系下形成错误的判断。</p>
+<blockquote>
+<p>2.自我损耗</p>
+</blockquote>
+<p>  当你必须要去完成一些认知活动时，又出现了一些额外的事情需要去处理的时候，就会出现自我损耗。自我损耗会导致自控力下降并且容易产生自私的情绪。即为心烦意乱，所以最好不要在别人进行忙的时候打扰到别人，就算是你认为亲近的人。因为这样可能会导致矛盾的产生。</p>
+<p>  一件事情的发生，事实本身已经无法改变，因为即使重来一次，你还是会做出这样的决定。这些事情的产生往往来至于知识经验等各方面的不足。当事情发生后，后悔并不能解决任何问题，从中知道自己的不足之处然后改正过来便是难以做到的事情了。</p>
 
       
 
@@ -982,11 +1050,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">metasploit</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">metasploit渗透魔鬼训练营笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随记</a>
         		</li>
       		
 		</ul>
@@ -996,89 +1060,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/13/metasploit_web应用攻击类型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-metasploit问题集锦" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/13/metasploit问题集锦/">metasploit使用问题集锦</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/06/13/metasploit问题集锦/" class="archive-article-date">
-  	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Database not connected or cache not built</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service postgresql start</span><br><span class="line">db_rebuild_cache</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">metasploit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/13/metasploit问题集锦/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/06/26/随想随记/">展开全文 >></a>
         </p>
       
 
@@ -1114,7 +1096,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1205,6 +1187,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -1213,27 +1211,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1249,7 +1235,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">-随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows编程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">

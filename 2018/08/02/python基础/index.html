@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="变量type(变量)获取变量的类型id(变量)查看地址  整型   port = 21 连接字符串时需要用str() 例子:print “test”+str(port)  字符串   12345678910111213141516171819202122232425262728单引号 双引号(单引号不用换行) 三引号(多行)banner = &amp;quot;Free FTP Server&amp;quot;以">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-02T11:59:50.906Z">
+<meta property="og:updated_time" content="2018-08-03T13:28:45.917Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python基础">
 <meta name="twitter:description" content="变量type(变量)获取变量的类型id(变量)查看地址  整型   port = 21 连接字符串时需要用str() 例子:print “test”+str(port)  字符串   12345678910111213141516171819202122232425262728单引号 双引号(单引号不用换行) 三引号(多行)banner = &amp;quot;Free FTP Server&amp;quot;以">
@@ -230,8 +230,17 @@
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">try:  #使用sys.exit()无法退成程序，因为异常被捕获，慎用</span><br><span class="line">   print &quot;test&quot;+str(100/0)</span><br><span class="line">except:</span><br><span class="line">   print</span><br><span class="line">或者 </span><br><span class="line">try: #捕获除sys.exit()的异常</span><br><span class="line">   print &quot;test&quot;+str(100/0)</span><br><span class="line">except Exception,e: #python2</span><br><span class="line">except Exception as e: #python3</span><br><span class="line">   print str(e)  #将异常信息存储在变量中并打印出来</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line">   f = open(&quot;foo&quot;,&quot;r&quot;)</span><br><span class="line">except IOError as e:</span><br><span class="line">   ...</span><br><span class="line">else: #如果没有异常就执行else</span><br><span class="line">   data = f.read()</span><br><span class="line">finally: #无论是否有异常都会执行</span><br><span class="line">   f.close()</span><br></pre></td></tr></table></figure>
 <h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p> def testfunc(arg1,arg2): #严格缩进<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#默认参数</span><br><span class="line">def Add2(number1,number2=6):</span><br><span class="line">return number1+number2</span><br><span class="line"></span><br><span class="line">#变长参数</span><br><span class="line">def fun(*arg) #相当于列表我觉得</span><br><span class="line">print(arg[5])</span><br><span class="line">print(arg)</span><br></pre></td></tr></table></figure></p>
 <p> #全局变量<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">global </span><br><span class="line">1.当函数外有全部变量，那么如果声明的global变量被修改，外部全局变量也被修改</span><br><span class="line">2.当函数外没有全局变量，那么声明global变量，python解释器将创建一个全局变量</span><br></pre></td></tr></table></figure></p>
-<p> #导入模块<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import test #导入模块</span><br><span class="line">from test import fun #导入模块指定的函数，变量，类</span><br><span class="line">from test import * #导入模块中所有的函数，变量，类</span><br></pre></td></tr></table></figure></p>
-<h1 id="文件I-O"><a href="#文件I-O" class="headerlink" title="文件I/O"></a>文件I/O</h1> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">f = open(&quot;test.txt&quot;,&apos;r&apos;)</span><br><span class="line">for line in f.readlines():</span><br><span class="line">   if line.strip(&apos;\n&apos;) in banner:</span><br><span class="line">       print banner.strip(&apos;\n&apos;) #strip函数去除首尾的某个字符</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line">#with as用法 不需要再close</span><br><span class="line">with open(&apos;baidu.png&apos;,&apos;wb&apos;) as f: #注意写的方式是以二进制方式写入</span><br><span class="line">   f.write(response.content)</span><br></pre></td></tr></table></figure>
+<p> #导入模块<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">模块私有 加下划线 _number</span><br><span class="line">import test #导入模块</span><br><span class="line">from test import fun #导入模块指定的函数，变量，类</span><br><span class="line">from test import * #导入模块中所有的函数，变量，类</span><br></pre></td></tr></table></figure></p>
+<h1 id="文件I-O"><a href="#文件I-O" class="headerlink" title="文件I/O"></a>文件I/O</h1> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">open	#打开文件</span><br><span class="line">read	#可以指定大小的读取</span><br><span class="line">readline #读取一行</span><br><span class="line">readlines #读取多行</span><br><span class="line">write</span><br><span class="line">writelines #多行一次性写入，参数是序列</span><br><span class="line">tell	#返回文件操作标记位置</span><br><span class="line">next	#返回下一行</span><br><span class="line">seek	#将文件标记移动到某个位置</span><br><span class="line">f = open(&quot;test.txt&quot;,&apos;r&apos;)</span><br><span class="line">for line in f.readlines():</span><br><span class="line">   if line.strip(&apos;\n&apos;) in banner:</span><br><span class="line">       print banner.strip(&apos;\n&apos;) #strip函数去除首尾的某个字符</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line">#with as用法 不需要再close</span><br><span class="line">with open(&apos;baidu.png&apos;,&apos;wb&apos;) as f: #注意写的方式是以二进制方式写入</span><br><span class="line">   f.write(response.content)</span><br></pre></td></tr></table></figure>
+<h1 id="类定义"><a href="#类定义" class="headerlink" title="类定义"></a>类定义</h1> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):#加上object多了很多默认的属性</span><br><span class="line">count = 0 #类属性 通过类名修改/访问 实例名只能访问不能修改</span><br><span class="line">books = [] #类属性 可以使用类名动态添加类属性</span><br><span class="line"></span><br><span class="line">def __init__(self):</span><br><span class="line">	self.name = &apos;&apos; #实例成员数据属性 只能通过实例访问</span><br><span class="line">	self.age = 0   #实例成员数据属性</span><br><span class="line">	self.__year = 0 #类私有</span><br><span class="line">#实例方法 第一个参数必须是self，只能实例调用</span><br><span class="line">def fun(self):</span><br><span class="line">	print(&quot;%d %d&quot; %(self.name,self.age))</span><br><span class="line">#类方法，@classmethod修饰方法,第一个参数cls，通过类名调用</span><br><span class="line">@classmethod</span><br><span class="line">def fun1(cls):</span><br><span class="line">	print(&apos;classmethod %d&apos; %(cls.count))</span><br><span class="line">#静态方法，@staticmethod修饰方法，没有参数限制，通过类名调用</span><br><span class="line">@staticmethod</span><br><span class="line">def fun2():</span><br><span class="line">	print(&apos;this is static method %d&apos;%(Studnet.count))</span><br><span class="line"></span><br><span class="line">#继承</span><br><span class="line">class BigStudent(Student):</span><br><span class="line">#子类没有构造，实例化对象，会调用父类构造</span><br><span class="line">#子类实现构造，需要显示调用父类的构造</span><br><span class="line">   def __init__(self,name,age):</span><br><span class="line">        #显示调用父类的构造</span><br><span class="line">        #1.Student.__init__(self)</span><br><span class="line">        #2.super(子类类型，self).父类方法</span><br><span class="line">        super(BigStudent,self).__init__()</span><br><span class="line">if __name__=&apos;__main__&apos;:</span><br><span class="line">obj1 = Student()</span><br><span class="line">#可以使用一下方法访问类私有成员</span><br><span class="line">   obj1._Student__year</span><br><span class="line">   #实例方法调用</span><br><span class="line">	obj1.fun()</span><br><span class="line">#类方法调用</span><br><span class="line">Student.fun1()</span><br><span class="line">#静态方法调用</span><br><span class="line">Student.fun2()</span><br></pre></td></tr></table></figure>
+<h1 id="特殊函数-语法"><a href="#特殊函数-语法" class="headerlink" title="特殊函数+语法"></a>特殊函数+语法</h1><ul>
+<li><p>filter/reduce/map + lambda</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># :前为参数,:后为表达式</span><br><span class="line">print(list(filter(lambda x:x%2==0,[n for n in range(0,50)]))) #filter表达式为true时,x放入list内</span><br><span class="line">print(reduce(lambda a,b:a+b,[n for n in range(1,101)])) #只能有2个参数，将序列第一个和第二个作为参数传入，然后返回值再与第三个传入作为参数，最后返回最终值</span><br><span class="line">print(list(map(lambda x:x.lower(),[chr(n) for n in range(65,80)]))) #将表达式结果返回到列表</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>闭包+装饰器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#嵌套函数 闭包</span><br><span class="line">def fun(numb1):</span><br><span class="line">def inner(numb2): #内部函数</span><br><span class="line">	return numb2 * numb1</span><br><span class="line">return inner</span><br><span class="line"></span><br><span class="line">inner = fun(5)</span><br><span class="line">print(inner(3)) #numb1在fun(5)结束后，扔存在未释放</span><br><span class="line"></span><br><span class="line">#装饰器 </span><br><span class="line">def w1(fun):</span><br><span class="line">def inner(number):</span><br><span class="line">	print(&apos;随便打印点东西&apos;) #相当于在fun调用前增加代码</span><br><span class="line">	return fun(number)</span><br><span class="line">return inner</span><br><span class="line">@w1</span><br><span class="line">def fun1(number)</span><br><span class="line">return number+5</span><br><span class="line"></span><br><span class="line">print(fun1(6))</span><br></pre></td></tr></table></figure></li>
+</ul>
+
       
 
       
@@ -313,6 +322,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/08/20/汇编指令/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          汇编学习2汇编指令
+        
+      </div>
+    </a>
   
   
     <a href="/2018/07/12/付出与收获/" id="article-nav-older" class="article-nav-link-wrap">
@@ -450,6 +468,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -458,27 +492,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -494,7 +516,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">-随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows编程基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
