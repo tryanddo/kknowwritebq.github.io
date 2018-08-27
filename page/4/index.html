@@ -157,20 +157,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-linux防火墙" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-shell正则表达" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/linux防火墙/">linux防火墙设置</a>
+      <a class="article-title" href="/2018/03/25/shell正则表达/">shell学习2正则表达式</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/25/linux防火墙/" class="archive-article-date">
+        <a href="/2018/03/25/shell正则表达/" class="archive-article-date">
   	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
 </a>
         
@@ -179,10 +179,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>centos7 下<br>Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.<br>参考:<a href="https://blog.csdn.net/c233728461/article/details/52679558" target="_blank" rel="noopener">https://blog.csdn.net/c233728461/article/details/52679558</a><br></p>
-        
-          <a class="article-more-a" href="/2018/03/25/linux防火墙/#more">more >></a>
-        
+        <p>grep 支持正规表达式</p>
+<blockquote>
+<p>重要特殊字符</p>
+</blockquote>
+<h3 id="符"><a href="#符" class="headerlink" title="^符"></a>^符</h3><ol>
+<li>^word<br>待搜寻的字符串(word)在行首<br>grep -n ‘^#’ test.txt #以#开头的行</li>
+<li>[^]<br>方向选择<br>grep -n [^a-zA-Z] test.txt #找出有数字的行<h3 id="符-1"><a href="#符-1" class="headerlink" title="$符"></a>$符</h3></li>
+<li>word$<br>待搜寻的字符串(word)在行尾<br>grep -n ‘。$’ test.txt #以。为结尾的字符串</li>
+</ol>
+<h3 id=""><a href="#" class="headerlink" title="."></a>.</h3><ol>
+<li>代表任意一个字符<br>grep -n ‘a.a’ test.txt #a和a之间必须有一个字符</li>
+<li>由于.是特殊字符在字符串内需要用.来跳脱</li>
+</ol>
+<h3 id="-1"><a href="#-1" class="headerlink" title="+"></a>+</h3><p>   重复一个或一个以上的字符<br>   grep -n ‘#+a’ test.txt #有至少一个#号的字符串</p>
+<h3 id="-2"><a href="#-2" class="headerlink" title="?"></a>?</h3><p>   0个或一个的前一个字符<br>   grep -n ‘#?a’ test.txt #有至少一个#号的字符串</p>
+<h3 id="-3"><a href="#-3" class="headerlink" title="|"></a>|</h3><p>   用or的方式找出数个字符串<br>   grep -n ‘dog|check’ test.txt #找出有dog或者check的行</p>
+<h3 id="-4"><a href="#-4" class="headerlink" title="*"></a>*</h3><p> 正规表达式中<em>代表0个或者无限个前一个字符<br> (.</em>)代表任意无限个字符</p>
+<p>###()群组<br> grep -n ‘t(st|x)t’ test.txt 找出有test和txt的字符串</p>
+<h3 id="n-m"><a href="#n-m" class="headerlink" title="{n,m}"></a>{n,m}</h3><ol>
+<li>连续n到m个前一个字符<br>grep -n ‘te{2,3}st’ test.txt #e至少2个以上的字符串</li>
+</ol>
+
       
 
       
@@ -205,7 +223,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/linux防火墙/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/25/shell正则表达/">展开全文 >></a>
         </p>
       
 
@@ -379,6 +397,192 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/03/20/pythonrequests模块/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-C++容器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/C++容器/">容器使用</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/C++容器/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>vector/list</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;iostream&gt; </span><br><span class="line">using std::vector;</span><br><span class="line">using std::cout;</span><br><span class="line">using std::endl;</span><br><span class="line">using std::iterator;</span><br><span class="line">//1.vector构造函数 </span><br><span class="line">vector&lt;int&gt; vec1;</span><br><span class="line"></span><br><span class="line">//2.添加元素 </span><br><span class="line">vec1.push_back(1); //末尾添加元素</span><br><span class="line">vec1.insert(vec1.begin(),1); </span><br><span class="line">vec1.insert(vec1.begin(),&#123;1,2,3,4&#125;);</span><br><span class="line">vec1.insert(vec1.begin(),10,2);</span><br><span class="line"></span><br><span class="line">//3.访问元素</span><br><span class="line">vec1[1] = 10; //不检查边界 ！！list不可这样使用</span><br><span class="line">vec1.front(); //返回第一个元素的引用</span><br><span class="line">vec1.back();  //返回第一个元素的引用</span><br><span class="line"></span><br><span class="line">//4.查询属性</span><br><span class="line">vec1.size();</span><br><span class="line">vec1.max_size();</span><br><span class="line">vec1.empty();</span><br><span class="line"></span><br><span class="line">//5.删除元素</span><br><span class="line">vec1.erase(vec1.begin()); //返回值为下一个迭代器</span><br><span class="line">vec1.pop_back();</span><br><span class="line"></span><br><span class="line">//6.遍历</span><br><span class="line">for(int i=0;i&lt;vec.size();i++)&#123;</span><br><span class="line">cout&lt;&lt;vec1[i]&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for(auto begin = vec1.begin();begin!=vec1.end();begin++)</span><br><span class="line">cout&lt;&lt; *begin &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">for(auto &amp; a:vec1)</span><br><span class="line">cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">//7.循环删除某些元素</span><br><span class="line">for(auto begin = vec1.begin();begin!=vec1.end();)&#123;</span><br><span class="line">   if(xxx)&#123;</span><br><span class="line">	begin = vec1.erase(begin);</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">	begin++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>map</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;map&gt;</span><br><span class="line">#include&lt;iostream&gt; </span><br><span class="line">using std::map;</span><br><span class="line">using std::make_pair;</span><br><span class="line">using std::cout;</span><br><span class="line">using std::endl;</span><br><span class="line"></span><br><span class="line">//键的类型，值的类型</span><br><span class="line">map&lt;const char*,double&gt; m = &#123;&#123;&quot;a&quot;,1.1&#125;,&#123;&quot;b&quot;,2.2&#125;&#125;;</span><br><span class="line"></span><br><span class="line">//插入操作</span><br><span class="line">m[&quot;小明&quot;] = 80;</span><br><span class="line">m.insert(&#123;&quot;小刚&quot;,1.1&#125;);</span><br><span class="line">m.insert(make_pair(&quot;小刚&quot;,1.1))</span><br><span class="line"></span><br><span class="line">m.erase(&quot;小刚&quot;);</span><br><span class="line"></span><br><span class="line">m.count(&quot;小刚&quot;);</span><br><span class="line"></span><br><span class="line">for(const auto &amp; v:m)&#123;</span><br><span class="line">	cout &lt;&lt; v.first &lt;&lt; &quot; &quot;;</span><br><span class="line">cout &lt;&lt; v.second &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/C++容器/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-kail" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/kail/">kail2.0 python环境设置</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/kail/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>使用python<br>python2和python3切换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python2 100</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3 150</span><br><span class="line">现在的版本即为python3</span><br><span class="line">如果要进行切换:</span><br><span class="line">update-alternatives --config python</span><br><span class="line">选择版本即可</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>python 配置pip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">安装pip：</span><br><span class="line">apt-get install python-setuptools</span><br><span class="line">easy_install pip</span><br><span class="line">pip install   xxxx #python2</span><br><span class="line">pip3 install xxxx #python3</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>使用pip有如下报错pkg_resources.DistributionNotFound: The ‘pip==8.1.2’ distribution was not found and is required by the application</p>
+</blockquote>
+<ol>
+<li><p>重新安装python的distribution </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://pypi.python.org/packages/5f/ad/1fde06877a8d7d5c9b60eff7de2d452f639916ae1d48f0b8f97bf97e570a/distribute-0.7.3.zip#md5=c6c59594a7b180af57af8a0cc0cf5b4a</span><br><span class="line">unzip distribute-0.7.3.zip</span><br><span class="line">cd distribute-0.7.3/</span><br><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装pip==8.1.2<br>easy_install pip==8.1.2</p>
+</li>
+</ol>
+<blockquote>
+<p>kail 安装eclipse+python</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#下载eclipse.tar.gz</span><br><span class="line">tar -xzvf eclipse-inst-linux64.tar.gz</span><br><span class="line">cd eclipse-installer</span><br><span class="line">./eclipse-inst</span><br><span class="line">#由于kail自带java故不需要安装其他linux需要安装java</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/kail/">展开全文 >></a>
         </p>
       
 
@@ -672,20 +876,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-C++容器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-python_mysql" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/C++容器/">容器使用</a>
+      <a class="article-title" href="/2018/03/20/python_mysql/">python连接mysql</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/20/C++容器/" class="archive-article-date">
+        <a href="/2018/03/20/python_mysql/" class="archive-article-date">
   	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
 </a>
         
@@ -694,114 +898,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>vector/list</p>
-</blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;iostream&gt; </span><br><span class="line">using std::vector;</span><br><span class="line">using std::cout;</span><br><span class="line">using std::endl;</span><br><span class="line">using std::iterator;</span><br><span class="line">//1.vector构造函数 </span><br><span class="line">vector&lt;int&gt; vec1;</span><br><span class="line"></span><br><span class="line">//2.添加元素 </span><br><span class="line">vec1.push_back(1); //末尾添加元素</span><br><span class="line">vec1.insert(vec1.begin(),1); </span><br><span class="line">vec1.insert(vec1.begin(),&#123;1,2,3,4&#125;);</span><br><span class="line">vec1.insert(vec1.begin(),10,2);</span><br><span class="line"></span><br><span class="line">//3.访问元素</span><br><span class="line">vec1[1] = 10; //不检查边界 ！！list不可这样使用</span><br><span class="line">vec1.front(); //返回第一个元素的引用</span><br><span class="line">vec1.back();  //返回第一个元素的引用</span><br><span class="line"></span><br><span class="line">//4.查询属性</span><br><span class="line">vec1.size();</span><br><span class="line">vec1.max_size();</span><br><span class="line">vec1.empty();</span><br><span class="line"></span><br><span class="line">//5.删除元素</span><br><span class="line">vec1.erase(vec1.begin()); //返回值为下一个迭代器</span><br><span class="line">vec1.pop_back();</span><br><span class="line"></span><br><span class="line">//6.遍历</span><br><span class="line">for(int i=0;i&lt;vec.size();i++)&#123;</span><br><span class="line">cout&lt;&lt;vec1[i]&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for(auto begin = vec1.begin();begin!=vec1.end();begin++)</span><br><span class="line">cout&lt;&lt; *begin &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">for(auto &amp; a:vec1)</span><br><span class="line">cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">//7.循环删除某些元素</span><br><span class="line">for(auto begin = vec1.begin();begin!=vec1.end();)&#123;</span><br><span class="line">   if(xxx)&#123;</span><br><span class="line">	begin = vec1.erase(begin);</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">	begin++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="安装pymysql-模块"><a href="#安装pymysql-模块" class="headerlink" title="安装pymysql 模块"></a>安装pymysql 模块</h1><p>pip install pymysql</p>
+<p>#code<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import pymysql</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    #建立连接</span><br><span class="line">    con = pymysql.connect(host=&apos;ip&apos;,</span><br><span class="line">                          port=端口,</span><br><span class="line">                          user=用户,</span><br><span class="line">                          password=pass,</span><br><span class="line">                          db=数据库名称)</span><br><span class="line">    </span><br><span class="line">    #获取游标</span><br><span class="line">    cursor = con.cursor()</span><br><span class="line">    #执行sql语句</span><br><span class="line">    cursor.execute(&apos;select * from users;&apos;)</span><br><span class="line">    #读取结果集</span><br><span class="line">    result = cursor.fetchall()</span><br><span class="line">    #遍历结果集</span><br><span class="line">    for row in result:</span><br><span class="line">        print(row)</span><br><span class="line">        #for key,value in row.item(): #row为字典</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>map</p>
+<p>使用python连接mysql报错</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;map&gt;</span><br><span class="line">#include&lt;iostream&gt; </span><br><span class="line">using std::map;</span><br><span class="line">using std::make_pair;</span><br><span class="line">using std::cout;</span><br><span class="line">using std::endl;</span><br><span class="line"></span><br><span class="line">//键的类型，值的类型</span><br><span class="line">map&lt;const char*,double&gt; m = &#123;&#123;&quot;a&quot;,1.1&#125;,&#123;&quot;b&quot;,2.2&#125;&#125;;</span><br><span class="line"></span><br><span class="line">//插入操作</span><br><span class="line">m[&quot;小明&quot;] = 80;</span><br><span class="line">m.insert(&#123;&quot;小刚&quot;,1.1&#125;);</span><br><span class="line">m.insert(make_pair(&quot;小刚&quot;,1.1))</span><br><span class="line"></span><br><span class="line">m.erase(&quot;小刚&quot;);</span><br><span class="line"></span><br><span class="line">m.count(&quot;小刚&quot;);</span><br><span class="line"></span><br><span class="line">for(const auto &amp; v:m)&#123;</span><br><span class="line">	cout &lt;&lt; v.first &lt;&lt; &quot; &quot;;</span><br><span class="line">cout &lt;&lt; v.second &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#远程连接 1045 报错</span><br><span class="line">grant usage on *.* to 用户@ip identified by &apos;pass&apos;</span><br><span class="line">FLUSH privileges;</span><br><span class="line"></span><br><span class="line">#远程连接 1044报错</span><br><span class="line">grant ALL PRIVILEGES on *.* to 用户@ip identified by &apos;pass&apos; with grant option;</span><br><span class="line">FLUSH privileges;</span><br></pre></td></tr></table></figure>
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/C++容器/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-kail" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/kail/">kail2.0 python环境设置</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/20/kail/" class="archive-article-date">
-  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>使用python<br>python2和python3切换</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python2 100</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3 150</span><br><span class="line">现在的版本即为python3</span><br><span class="line">如果要进行切换:</span><br><span class="line">update-alternatives --config python</span><br><span class="line">选择版本即可</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>python 配置pip</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">安装pip：</span><br><span class="line">apt-get install python-setuptools</span><br><span class="line">easy_install pip</span><br><span class="line">pip install   xxxx #python2</span><br><span class="line">pip3 install xxxx #python3</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>使用pip有如下报错pkg_resources.DistributionNotFound: The ‘pip==8.1.2’ distribution was not found and is required by the application</p>
-</blockquote>
-<ol>
-<li><p>重新安装python的distribution </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://pypi.python.org/packages/5f/ad/1fde06877a8d7d5c9b60eff7de2d452f639916ae1d48f0b8f97bf97e570a/distribute-0.7.3.zip#md5=c6c59594a7b180af57af8a0cc0cf5b4a</span><br><span class="line">unzip distribute-0.7.3.zip</span><br><span class="line">cd distribute-0.7.3/</span><br><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装pip==8.1.2<br>easy_install pip==8.1.2</p>
-</li>
-</ol>
-<blockquote>
-<p>kail 安装eclipse+python</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#下载eclipse.tar.gz</span><br><span class="line">tar -xzvf eclipse-inst-linux64.tar.gz</span><br><span class="line">cd eclipse-installer</span><br><span class="line">./eclipse-inst</span><br><span class="line">#由于kail自带java故不需要安装其他linux需要安装java</span><br></pre></td></tr></table></figure>
       
 
       
@@ -824,7 +927,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/kail/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/20/python_mysql/">展开全文 >></a>
         </p>
       
 
@@ -912,91 +1015,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/03/20/python pexpect/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-python_mysql" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/python_mysql/">python连接mysql</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/20/python_mysql/" class="archive-article-date">
-  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="安装pymysql-模块"><a href="#安装pymysql-模块" class="headerlink" title="安装pymysql 模块"></a>安装pymysql 模块</h1><p>pip install pymysql</p>
-<p>#code<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import pymysql</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    #建立连接</span><br><span class="line">    con = pymysql.connect(host=&apos;ip&apos;,</span><br><span class="line">                          port=端口,</span><br><span class="line">                          user=用户,</span><br><span class="line">                          password=pass,</span><br><span class="line">                          db=数据库名称)</span><br><span class="line">    </span><br><span class="line">    #获取游标</span><br><span class="line">    cursor = con.cursor()</span><br><span class="line">    #执行sql语句</span><br><span class="line">    cursor.execute(&apos;select * from users;&apos;)</span><br><span class="line">    #读取结果集</span><br><span class="line">    result = cursor.fetchall()</span><br><span class="line">    #遍历结果集</span><br><span class="line">    for row in result:</span><br><span class="line">        print(row)</span><br><span class="line">        #for key,value in row.item(): #row为字典</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>使用python连接mysql报错</p>
-</blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#远程连接 1045 报错</span><br><span class="line">grant usage on *.* to 用户@ip identified by &apos;pass&apos;</span><br><span class="line">FLUSH privileges;</span><br><span class="line"></span><br><span class="line">#远程连接 1044报错</span><br><span class="line">grant ALL PRIVILEGES on *.* to 用户@ip identified by &apos;pass&apos; with grant option;</span><br><span class="line">FLUSH privileges;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/python_mysql/">展开全文 >></a>
         </p>
       
 
@@ -1123,7 +1141,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1135,15 +1153,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1155,6 +1173,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
@@ -1163,23 +1185,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows编程基础</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">食物</a>
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+                <a href="javascript:void(0)" class="js-tag color3">食物</a>
               </li>
             
             <div class="clearfix"></div>
