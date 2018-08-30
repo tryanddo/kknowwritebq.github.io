@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>Archives: 2018/8 | 想与做</title>
+  <title>PE文件数据结构 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="想与做">
-<meta property="og:url" content="http://blog.jbyusk.com/archives/2018/08/index.html">
+  <meta name="description" content="IMAGE_DOS_HEADER dos头部">
+<meta name="keywords" content="Window编程原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PE文件数据结构">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/08/20/PE文件数据结构/index.html">
 <meta property="og:site_name" content="想与做">
+<meta property="og:description" content="IMAGE_DOS_HEADER dos头部">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-28T06:42:06.745Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="想与做">
+<meta name="twitter:title" content="PE文件数据结构">
+<meta name="twitter:description" content="IMAGE_DOS_HEADER dos头部">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -156,73 +161,65 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-PE文件数据结构" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PE文件数据结构
+    </h1>
+  
+
+		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+	    
+        
+        <a href="/2018/08/20/PE文件数据结构/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>IMAGE_DOS_HEADER dos头部</p>
+</blockquote>
+ <a id="more"></a>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//只要关注第一个字段和最后一个字段 64个字节</span><br><span class="line">typedef struct _IMAGE_DOS_HEADER &#123;      // DOS .EXE header</span><br><span class="line">   WORD   e_magic;                     // IMAGE_DOS_SIGNATURE(0x5A4D判断是否是pe文件)</span><br><span class="line">   WORD   e_cblp;                      // Bytes on last page of file</span><br><span class="line">   WORD   e_cp;                        // Pages in file</span><br><span class="line">   WORD   e_crlc;                      // Relocations</span><br><span class="line">   WORD   e_cparhdr;                   // Size of header in paragraphs</span><br><span class="line">   WORD   e_minalloc;                  // Minimum extra paragraphs needed</span><br><span class="line">   WORD   e_maxalloc;                  // Maximum extra paragraphs needed</span><br><span class="line">   WORD   e_ss;                        // Initial (relative) SS value</span><br><span class="line">   WORD   e_sp;                        // Initial SP value</span><br><span class="line">   WORD   e_csum;                      // Checksum</span><br><span class="line">   WORD   e_ip;                        // Initial IP value</span><br><span class="line">   WORD   e_cs;                        // Initial (relative) CS value</span><br><span class="line">   WORD   e_lfarlc;                    // File address of relocation table</span><br><span class="line">   WORD   e_ovno;                      // Overlay number</span><br><span class="line">   WORD   e_res[4];                    // Reserved words</span><br><span class="line">   WORD   e_oemid;                     // OEM identifier (for e_oeminfo)</span><br><span class="line">   WORD   e_oeminfo;                   // OEM information; e_oemid specific</span><br><span class="line">   WORD   e_res2[10];                  // Reserved words</span><br><span class="line">   LONG   e_lfanew;                    // 指向nt结构体的偏移地址</span><br><span class="line"> &#125; IMAGE_DOS_HEADER, *PIMAGE_DOS_HEADER;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>IMAGE_NT_HEADER nt头部</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">//nt头部包含</span><br><span class="line">typedef struct _IMAGE_NT_HEADERS &#123;</span><br><span class="line">    DWORD Signature; //IMAGE_NT_SIGNATURE=0x00004550(PE00)与dos头的e_magic共同判断是否是pe文件</span><br><span class="line">    IMAGE_FILE_HEADER FileHeader;</span><br><span class="line">    IMAGE_OPTIONAL_HEADER32 OptionalHeader;</span><br><span class="line">&#125; IMAGE_NT_HEADERS32, *PIMAGE_NT_HEADERS32;</span><br><span class="line"></span><br><span class="line">typedef struct _IMAGE_FILE_HEADER &#123;</span><br><span class="line">    WORD    Machine; //运行平台</span><br><span class="line">    WORD    NumberOfSections; //区段的数量 循环偏移区段</span><br><span class="line">    DWORD   TimeDateStamp;	//文件创建时间</span><br><span class="line">    DWORD   PointerToSymbolTable; //符号表偏移</span><br><span class="line">    DWORD   NumberOfSymbols; //符号个数</span><br><span class="line">    WORD    SizeOfOptionalHeader; //扩展头的大小 32一般00E0 64一般00F0</span><br><span class="line">    WORD    Characteristics; //PE文件属性值 DLL-0x0210 EXE-0x010F</span><br><span class="line">&#125; IMAGE_FILE_HEADER, *PIMAGE_FILE_HEADER;</span><br><span class="line"></span><br><span class="line">typedef struct _IMAGE_OPTIONAL_HEADER &#123;</span><br><span class="line">    //</span><br><span class="line">    // Standard fields.</span><br><span class="line">    //</span><br><span class="line"></span><br><span class="line">    WORD    Magic; //标志什么类型的PE文件 32-0x10B 64-0x0x020B ROM镜像-0x0170</span><br><span class="line">    BYTE    MajorLinkerVersion;</span><br><span class="line">    BYTE    MinorLinkerVersion;</span><br><span class="line">    DWORD   SizeOfCode; //代码区段总大小</span><br><span class="line">    DWORD   SizeOfInitializedData; //已初始化数据的总大小</span><br><span class="line">    DWORD   SizeOfUninitializedData; //未初始化数据的总大小</span><br><span class="line">    DWORD   AddressOfEntryPoint; //程序开始执行的相对虚拟地址</span><br><span class="line">    DWORD   BaseOfCode; //起始代码的相对虚拟地址</span><br><span class="line">    DWORD   BaseOfData; //起始数据的相对虚拟地址</span><br><span class="line"></span><br><span class="line">    //</span><br><span class="line">    // NT additional fields.</span><br><span class="line">    //</span><br><span class="line"></span><br><span class="line">    DWORD   ImageBase; //默认加载地址</span><br><span class="line">    DWORD   SectionAlignment; //块对齐数，映射到内存中的区段对齐，必须大于文件对齐数，一般0x1000</span><br><span class="line">    DWORD   FileAlignment; //文件对齐数，磁盘文件中的区段对齐,一般0x0200</span><br><span class="line">    WORD    MajorOperatingSystemVersion;</span><br><span class="line">    WORD    MinorOperatingSystemVersion;</span><br><span class="line">    WORD    MajorImageVersion;</span><br><span class="line">    WORD    MinorImageVersion;</span><br><span class="line">    WORD    MajorSubsystemVersion;</span><br><span class="line">    WORD    MinorSubsystemVersion;</span><br><span class="line">    DWORD   Win32VersionValue;</span><br><span class="line">    DWORD   SizeOfImage;   //块对齐后,要把文件加载进内存需要多大的内存大小</span><br><span class="line">    DWORD   SizeOfHeaders; //所有的头部大小,一般也是文件主体相对文件起始的偏移</span><br><span class="line">    DWORD   CheckSum;</span><br><span class="line">    WORD    Subsystem; //子系统</span><br><span class="line">    WORD    DllCharacteristics; //指示Dll特征的标志</span><br><span class="line">    DWORD   SizeOfStackReserve; //进程中栈可以增长到的最大值,一般1MB</span><br><span class="line">    DWORD   SizeOfStackCommit; //进程中栈的初始值，据说也是栈每次分配增长的值一般4kb</span><br><span class="line">    DWORD   SizeOfHeapReserve; //进程中堆可以增长到的最大值,一般1MB</span><br><span class="line">    DWORD   SizeOfHeapCommit; //进程中堆的初始值</span><br><span class="line">    DWORD   LoaderFlags;</span><br><span class="line">    DWORD   NumberOfRvaAndSizes; //数据目录的个数 一般是16个</span><br><span class="line">    IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];//数据目录表</span><br><span class="line">&#125; IMAGE_OPTIONAL_HEADER32, *PIMAGE_OPTIONAL_HEADER32;</span><br><span class="line"></span><br><span class="line">typedef struct _IMAGE_DATA_DIRECTORY &#123;</span><br><span class="line">    DWORD   VirtualAddress; //目录表的RVA</span><br><span class="line">    DWORD   Size;</span><br><span class="line">&#125; IMAGE_DATA_DIRECTORY, *PIMAGE_DATA_DIRECTORY;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>PIMAGE_SECTION_HEADER 区段头表</p>
+</blockquote>
+<ul>
+<li>编程中使用IMAGE_FIRST_SECTION(pNtHeader)获取第一个区段头表的地址,通过+1获取下一个的地址</li>
+<li>FOA = RVA - VirtualAddress + PointerToRawData;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_SECTION_HEADER &#123;</span><br><span class="line">    BYTE    Name[IMAGE_SIZEOF_SHORT_NAME]; //区段的名字</span><br><span class="line">    union &#123;</span><br><span class="line">            DWORD   PhysicalAddress;</span><br><span class="line">            DWORD   VirtualSize;</span><br><span class="line">    &#125; Misc;							//区段的大小</span><br><span class="line">    DWORD   VirtualAddress;			//区段起始的相对虚拟地址(RVA)</span><br><span class="line">    DWORD   SizeOfRawData;			//区段在文件中的大小</span><br><span class="line">    DWORD   PointerToRawData;		//区段的文件偏移</span><br><span class="line">    DWORD   PointerToRelocations;</span><br><span class="line">    DWORD   PointerToLinenumbers;</span><br><span class="line">    WORD    NumberOfRelocations;</span><br><span class="line">    WORD    NumberOfLinenumbers;</span><br><span class="line">    DWORD   Characteristics; //区段的属性，载入时的意义比较重大</span><br><span class="line">&#125; IMAGE_SECTION_HEADER, *PIMAGE_SECTION_HEADER;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>PIMAGE_EXPORT_DIRECTORY 导出表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_EXPORT_DIRECTORY &#123;</span><br><span class="line">    DWORD   Characteristics;</span><br><span class="line">    DWORD   TimeDateStamp;</span><br><span class="line">    WORD    MajorVersion;</span><br><span class="line">    WORD    MinorVersion;</span><br><span class="line">    DWORD   Name;	//模块名称 编译时的模块名称</span><br><span class="line">    DWORD   Base;	//索引基数 索引基数+地址表下标才是真正的函数序号</span><br><span class="line">    DWORD   NumberOfFunctions; //导出地址表中成员个数</span><br><span class="line">    DWORD   NumberOfNames;	//导出名称表中成员个数</span><br><span class="line">    DWORD   AddressOfFunctions;     // 导出地址表</span><br><span class="line">    DWORD   AddressOfNames;         // 导出名称表</span><br><span class="line">    DWORD   AddressOfNameOrdinals;  // 指向导出序号数组</span><br><span class="line">&#125; IMAGE_EXPORT_DIRECTORY, *PIMAGE_EXPORT_DIRECTORY;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>PIMAGE_IMPORT_DESCRIPTOR 导入表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_IMPORT_DESCRIPTOR &#123;</span><br><span class="line">    union &#123;</span><br><span class="line">        DWORD   Characteristics;            //</span><br><span class="line">        DWORD   OriginalFirstThunk;         // 指向一个结构体数组(INT 输入名称表)的相对虚拟地址 </span><br><span class="line">    &#125; DUMMYUNIONNAME;</span><br><span class="line">    DWORD   TimeDateStamp;                  </span><br><span class="line">    DWORD   ForwarderChain;     //转发机制用到           </span><br><span class="line">    DWORD   Name;				//导入的pe文件的名字的相对虚拟地址RVA</span><br><span class="line">    DWORD   FirstThunk;         //指向一个结构体数组(IAT 输入地址表)的相对虚拟地址 </span><br><span class="line">&#125; IMAGE_IMPORT_DESCRIPTOR;</span><br><span class="line">typedef IMAGE_IMPORT_DESCRIPTOR UNALIGNED *PIMAGE_IMPORT_DESCRIPTOR;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/21/汇编3Win32汇编/" class="archive-article-date">
-  	<time datetime="2018-08-21T08:39:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/21/汇编3Win32汇编/">汇编学习2Win32汇编及进阶技术</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/20/PE文件编程/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/20/PE文件编程/">PE文件编程</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -234,209 +231,127 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/08/20/PE文件数据结构/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/20/汇编指令/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/08/20/dll文件的导出和调用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          DLL文件的导出和调用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/02/python基础/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python基础</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/20/汇编指令/">汇编学习2汇编指令</a>
-    </h1>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2159376"></script>
+<!-- UY END --> 
+  
+  
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/20/汇编1_寄存器/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/20/汇编1_寄存器/">汇编学习1寄存器</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/20/dll文件的导出和调用/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/20/dll文件的导出和调用/">DLL文件的导出和调用</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/20/PE文件数据结构/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/20/PE文件数据结构/">PE文件数据结构</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/02/python基础/" class="archive-article-date">
-  	<time datetime="2018-08-02T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/02/python基础/">python基础</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
 
 
           </div>
@@ -463,8 +378,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
