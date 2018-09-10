@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="IMAGE_DOS_HEADER dos头部">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-28T06:42:06.745Z">
+<meta property="og:updated_time" content="2018-08-30T13:27:31.757Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PE文件数据结构">
 <meta name="twitter:description" content="IMAGE_DOS_HEADER dos头部">
@@ -207,11 +207,11 @@
 <blockquote>
 <p>PIMAGE_EXPORT_DIRECTORY 导出表</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_EXPORT_DIRECTORY &#123;</span><br><span class="line">    DWORD   Characteristics;</span><br><span class="line">    DWORD   TimeDateStamp;</span><br><span class="line">    WORD    MajorVersion;</span><br><span class="line">    WORD    MinorVersion;</span><br><span class="line">    DWORD   Name;	//模块名称 编译时的模块名称</span><br><span class="line">    DWORD   Base;	//索引基数 索引基数+地址表下标才是真正的函数序号</span><br><span class="line">    DWORD   NumberOfFunctions; //导出地址表中成员个数</span><br><span class="line">    DWORD   NumberOfNames;	//导出名称表中成员个数</span><br><span class="line">    DWORD   AddressOfFunctions;     // 导出地址表</span><br><span class="line">    DWORD   AddressOfNames;         // 导出名称表</span><br><span class="line">    DWORD   AddressOfNameOrdinals;  // 指向导出序号数组</span><br><span class="line">&#125; IMAGE_EXPORT_DIRECTORY, *PIMAGE_EXPORT_DIRECTORY;</span><br></pre></td></tr></table></figure>
+<p>导出序号表的内容与导出地址表的下标对应<br>导出序号表的下标与导出名称表的下标一致<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_EXPORT_DIRECTORY &#123;</span><br><span class="line">    DWORD   Characteristics;</span><br><span class="line">    DWORD   TimeDateStamp;</span><br><span class="line">    WORD    MajorVersion;</span><br><span class="line">    WORD    MinorVersion;</span><br><span class="line">    DWORD   Name;	//模块名称 编译时的模块名称</span><br><span class="line">    DWORD   Base;	//索引基数 索引基数+地址表下标才是真正的函数序号</span><br><span class="line">    DWORD   NumberOfFunctions; //导出地址表中成员个数</span><br><span class="line">    DWORD   NumberOfNames;	//导出名称表中成员个数</span><br><span class="line">    DWORD   AddressOfFunctions;     // 导出地址表</span><br><span class="line">    DWORD   AddressOfNames;         // 导出名称表</span><br><span class="line">    DWORD   AddressOfNameOrdinals;  // 指向导出序号数组</span><br><span class="line">&#125; IMAGE_EXPORT_DIRECTORY, *PIMAGE_EXPORT_DIRECTORY;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>PIMAGE_IMPORT_DESCRIPTOR 导入表</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_IMPORT_DESCRIPTOR &#123;</span><br><span class="line">    union &#123;</span><br><span class="line">        DWORD   Characteristics;            //</span><br><span class="line">        DWORD   OriginalFirstThunk;         // 指向一个结构体数组(INT 输入名称表)的相对虚拟地址 </span><br><span class="line">    &#125; DUMMYUNIONNAME;</span><br><span class="line">    DWORD   TimeDateStamp;                  </span><br><span class="line">    DWORD   ForwarderChain;     //转发机制用到           </span><br><span class="line">    DWORD   Name;				//导入的pe文件的名字的相对虚拟地址RVA</span><br><span class="line">    DWORD   FirstThunk;         //指向一个结构体数组(IAT 输入地址表)的相对虚拟地址 </span><br><span class="line">&#125; IMAGE_IMPORT_DESCRIPTOR;</span><br><span class="line">typedef IMAGE_IMPORT_DESCRIPTOR UNALIGNED *PIMAGE_IMPORT_DESCRIPTOR;</span><br></pre></td></tr></table></figure>
+<p>1.导入表结构有多个，由于可能需要多个pe文件的支持。所以导入表是一个结构体数组，以全0元素为结尾<br>2.OriginalFirstThunk与FirstThunk指向相同类型的结构体IMAGE_THUCK_DATA,但是一般使用FirstThunk获取结构体地址，因为INT可能为空<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_IMPORT_DESCRIPTOR &#123;</span><br><span class="line">    union &#123;</span><br><span class="line">        DWORD   Characteristics;            //</span><br><span class="line">        DWORD   OriginalFirstThunk;         // 指向一个结构体数组(INT 输入名称表)的相对虚拟地址 </span><br><span class="line">    &#125; DUMMYUNIONNAME;</span><br><span class="line">    DWORD   TimeDateStamp;                  </span><br><span class="line">    DWORD   ForwarderChain;     //转发机制用到           </span><br><span class="line">    DWORD   Name;				//导入的pe文件的名字的相对虚拟地址RVA</span><br><span class="line">    DWORD   FirstThunk;         //指向一个结构体数组(IAT 输入地址表)的相对虚拟地址 </span><br><span class="line">&#125; IMAGE_IMPORT_DESCRIPTOR;</span><br><span class="line">typedef IMAGE_IMPORT_DESCRIPTOR UNALIGNED *PIMAGE_IMPORT_DESCRIPTOR;</span><br><span class="line"></span><br><span class="line">//高位为1时，序号导入起作用,可以使用宏IMAGE_SNAP_BY_ORDINAL32()来判断最高位是否为1</span><br><span class="line">typedef struct _IMAGE_THUNK_DATA32 &#123;</span><br><span class="line">    union &#123;</span><br><span class="line">        DWORD ForwarderString;      // 转发用到</span><br><span class="line">        DWORD Function;             // 导入函数的地址,加载到内存,才会起作用</span><br><span class="line">        DWORD Ordinal; 				//序号导入的,才会用到</span><br><span class="line">        DWORD AddressOfData;        //函数名导入的，指向PIMAGE_IMPORT_BY_NAME结构体</span><br><span class="line">    &#125; u1;</span><br><span class="line">&#125; IMAGE_THUNK_DATA32;</span><br><span class="line"></span><br><span class="line">typedef struct _IMAGE_IMPORT_BY_NAME &#123;</span><br><span class="line">    WORD    Hint;</span><br><span class="line">    CHAR   Name[1]; </span><br><span class="line">&#125; IMAGE_IMPORT_BY_NAME, *PIMAGE_IMPORT_BY_NAME;</span><br></pre></td></tr></table></figure></p>
 
       
 
@@ -295,18 +295,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/dll文件的导出和调用/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/20/远程线程注入技术/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          DLL文件的导出和调用
+          远程线程注入技术
         
       </div>
     </a>
   
   
-    <a href="/2018/08/02/python基础/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python基础</div>
+    <a href="/2018/08/20/汇编指令/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">汇编学习2汇编指令</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -440,7 +440,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -448,15 +448,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -464,7 +460,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -476,15 +476,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
