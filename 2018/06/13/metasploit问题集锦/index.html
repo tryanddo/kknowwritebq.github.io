@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>metasploit使用问题集锦 | 想与做</title>
+  <title>metasploit使用集锦 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Database not connected or cache not built  12service postgresql startdb_rebuild_cache">
+  <meta name="description" content="metasploit PostgreSQL数据库  123456//Database not connected or cache not builtservice postgresql startdb_rebuild_cachedb_status //查看数据库连接是否正常  模块  辅助模块:auxiliary攻击模块:exploits后渗透攻击模块:post攻击载荷模块:payload">
 <meta name="keywords" content="metasploit渗透魔鬼训练营笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="metasploit使用问题集锦">
+<meta property="og:title" content="metasploit使用集锦">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/06/13/metasploit问题集锦/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="Database not connected or cache not built  12service postgresql startdb_rebuild_cache">
+<meta property="og:description" content="metasploit PostgreSQL数据库  123456//Database not connected or cache not builtservice postgresql startdb_rebuild_cachedb_status //查看数据库连接是否正常  模块  辅助模块:auxiliary攻击模块:exploits后渗透攻击模块:post攻击载荷模块:payload">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-27T07:37:52.585Z">
+<meta property="og:updated_time" content="2018-09-11T13:31:13.538Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="metasploit使用问题集锦">
-<meta name="twitter:description" content="Database not connected or cache not built  12service postgresql startdb_rebuild_cache">
+<meta name="twitter:title" content="metasploit使用集锦">
+<meta name="twitter:description" content="metasploit PostgreSQL数据库  123456//Database not connected or cache not builtservice postgresql startdb_rebuild_cachedb_status //查看数据库连接是否正常  模块  辅助模块:auxiliary攻击模块:exploits后渗透攻击模块:post攻击载荷模块:payload">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -168,7 +168,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      metasploit使用问题集锦
+      metasploit使用集锦
     </h1>
   
 
@@ -188,9 +188,16 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>Database not connected or cache not built</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service postgresql start</span><br><span class="line">db_rebuild_cache</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>metasploit PostgreSQL数据库</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//Database not connected or cache not built</span><br><span class="line"></span><br><span class="line">service postgresql start</span><br><span class="line">db_rebuild_cache</span><br><span class="line"></span><br><span class="line">db_status //查看数据库连接是否正常</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>模块</p>
+</blockquote>
+<p>辅助模块:auxiliary<br>攻击模块:exploits<br>后渗透攻击模块:post<br>攻击载荷模块:payloads 在渗透攻击成功后，促使目标系统运行一段植入的代码 独立=传输器+传输体<br>空指令模块:nops 为了避免内存地址随机化和返回地址计算偏差等原因导致的shellcode执行失败，添加空指令区<br>编码器模块:encoders</p>
+
       
 
       
@@ -273,18 +280,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/06/13/metasploit_web应用攻击类型/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/06/13/sqlmap/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          web应用攻击的主要类型
+          kail 2.0sqlmap使用
         
       </div>
     </a>
   
   
-    <a href="/2018/06/13/metasploit_情报收集技术/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">情报收集</div>
+    <a href="/2018/05/19/快思考与慢思考/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">快思考与慢思考</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -422,7 +429,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -454,15 +465,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -475,6 +482,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
             
             <div class="clearfix"></div>

@@ -157,6 +157,143 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-异常分发原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/11/异常分发原理/">异常分发原理</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/09/11/异常分发原理/" class="archive-article-date">
+  	<time datetime="2018-09-11T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-11</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>先构造TRAP_FRAME陷阱帧结构,保存寄存器现场，然后调用CommonDispatchException</li>
+<li>通过CS段寄存器后2位判断是用户异常还是内核异常，并构建一个异常记录的结构(异常地址，异常Code)，调用KiDispatchException</li>
+<li>KiDispatchException中判断异常时在内核还是用户。如果是用户层则检测内核调试器，发给内核调试器。处理了，结束异常分发，程序继续执行。检测用户调试器，发给用户调试器，处理了，结束异常分发，程序继续执行。设置TrapFram-&gt;Eip = KeUserDispachExcption，用户层异常处理</li>
+<li>KeUserDispachExcption： 用户层函数，寻找异常处理程序， VEH-&gt;SEH-&gt;VCH. 无法处理，抛出异常RtlRaiseException(),异常次数为2. 处理了异常,ZwContinue(),恢复程序。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/11/异常分发原理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-关于情商的思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>几年前也看过类似的言论，之前也没觉得很对。现在见识多了，感觉好像貌似挺对的。如果说智商的提高可以通过不断看书，思考，培养逻辑思维的话，那情商其实是也是掌握了某些相处的规则，某种关于情绪的规则，亦或长久以来约定俗成的规则，亦或是天生基因自带来规则。大部分人，遇人遇事都以自己的情绪在考虑问题，那么情商高的人考虑自己的时候也会考虑别人。但是从某种意义上，也会存在一批人掌握了规则，然后可以利用这些规则来获取别人的信任等等。突然觉得玄幻小说里，将人的能力具现到掌握各种规则的简单粗暴的世界到底是怎么样的？有的人说，活得太明白，反而就没意思了。有的人说，如果活都活不明白，那岂不是没意思。度的把握总是难的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/11/关于情商的思考/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-汇编3Win32汇编" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -215,179 +352,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/21/汇编3Win32汇编/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-汇编1_寄存器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/汇编1_寄存器/">汇编学习1寄存器</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/汇编1_寄存器/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>CPU寄存器</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">通用寄存器:</span><br><span class="line">32位:</span><br><span class="line">EAX,EBX,ECX,EDX</span><br><span class="line">ESI:源变址寄存器</span><br><span class="line">EDI:目的变址寄存器</span><br><span class="line">ESP:栈顶指针</span><br><span class="line">EBP:栈底指针</span><br><span class="line">16位:</span><br><span class="line">AX,BX,CX,DX</span><br><span class="line">SI,DI,SP,BP</span><br><span class="line">8位:</span><br><span class="line">AH,AL,BH,BL,CH,CL,DH,DL</span><br><span class="line"></span><br><span class="line">指令指针寄存器:EIP,IP 与CS联用指向下一个指令的物理地址</span><br><span class="line"></span><br><span class="line">标志位寄存器FLAGS</span><br><span class="line">状态标志</span><br><span class="line">0 CF 进位标志    进位或借位置1，否则置0    无符号是有效</span><br><span class="line">2 PF 奇偶标志    低8位 1的个数，奇数个为0，偶数个为1</span><br><span class="line">4 AF 辅助标志    低半字节是否有进位或借位</span><br><span class="line">6 ZF 零标志        结果是0置1，否则置0    </span><br><span class="line">7 SF 符号标志    最高位为1则置1，否则置0</span><br><span class="line">11 OF 溢出标志   溢出OF为1，否则为0    有符号数运算是否超出范围</span><br><span class="line">控制标志</span><br><span class="line">8 TF 陷阱标志   TF=0，处理器正常工作，TF=1，处理器单步执行指令</span><br><span class="line">9 IF 中断标志    IF=1 允许中断，IF=0，禁止中断 CLI(IF=0) STI(IF=1)</span><br><span class="line">10 DF 方向标志 DF=0 存储器地址自动增加 DF=1 存储器地址自动减少</span><br><span class="line"></span><br><span class="line">段寄存器:</span><br><span class="line">CS:代码段的起始位置</span><br><span class="line">DS:数据段的起始位置</span><br><span class="line">ES:附加段的起始位置</span><br><span class="line">SS:堆栈段的起始位置</span><br><span class="line">没有指明情况下，数据访问在DS段,BP访问内存在SS段</span><br><span class="line">段超越: 一般数据访问(DS)，BP基址的寻址方式(SS)，串操作的源操作数(DS)</span><br><span class="line">	可以使用（段寄存器:）实现超越</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/汇编1_寄存器/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-远程线程注入技术" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/远程线程注入技术/">远程线程注入技术</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/远程线程注入技术/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>远程线程注入</p>
-</blockquote>
-<p>1.通过OpenProcess打开进程<br>2.使用虚拟内存等方法在进程中申请一段虚拟内存空间,将DLL路径写入到内存空间中<br>3.通过CreateRemoteThread的回调函数与LoadLibraryA参数相同的原理,将LoadLibraryA做为线程的回调函数</p>
-<ul>
-<li><p>创建DLL文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:</span><br><span class="line">		MessageBox(0, L&quot;注入成功&quot;, L&quot;注入&quot;, 0);</span><br><span class="line">	case DLL_THREAD_ATTACH:</span><br><span class="line">	case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>注入DLL文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">#define DLL_PATH &quot;D:\\Debug\\Dll_Inject.dll&quot;</span><br><span class="line"></span><br><span class="line">int _tmain(int argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwPid;</span><br><span class="line">	printf(&quot;请输入进程ID:&quot;);</span><br><span class="line">	scanf_s(&quot;%d&quot;, &amp;dwPid);</span><br><span class="line"></span><br><span class="line">	//获取目标进程句柄</span><br><span class="line">	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS,</span><br><span class="line">		                          FALSE,</span><br><span class="line">		                          dwPid);</span><br><span class="line"></span><br><span class="line">	if (hProcess == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;进程打开失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//申请一块内存（大小是DLL路径的长度）</span><br><span class="line">	LPVOID lpBuf = VirtualAllocEx(hProcess,</span><br><span class="line">		NULL,</span><br><span class="line">		strlen(DLL_PATH) + 1,</span><br><span class="line">		MEM_COMMIT,</span><br><span class="line">		PAGE_READWRITE);</span><br><span class="line"></span><br><span class="line">	if (lpBuf == 0)</span><br><span class="line">	&#123;</span><br><span class="line">		CloseHandle(hProcess);</span><br><span class="line">		printf(&quot;VirtualAllocEx失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//把DLL路径写入到进程中</span><br><span class="line">	DWORD dwWrite;</span><br><span class="line">	WriteProcessMemory(hProcess,</span><br><span class="line">		lpBuf,</span><br><span class="line">		DLL_PATH,</span><br><span class="line">		strlen(DLL_PATH) + 1,</span><br><span class="line">		&amp;dwWrite);</span><br><span class="line">	//创建远程线程</span><br><span class="line">	HANDLE hThread = CreateRemoteThread(hProcess,    // 远程进程句柄</span><br><span class="line">		NULL,										 // 安全属性</span><br><span class="line">		NULL,										 // 栈大小</span><br><span class="line">		(LPTHREAD_START_ROUTINE)LoadLibraryA, 		 // 进程处理函数    </span><br><span class="line">		lpBuf,										 // 传入参数</span><br><span class="line">		NULL,										 // 默认创建后的状态</span><br><span class="line">		NULL);										 // 线程ID</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	WaitForSingleObject(hThread, -1);</span><br><span class="line">	//释放内存，关闭句柄</span><br><span class="line">	VirtualFreeEx(hProcess, lpBuf, 0, MEM_RELEASE);</span><br><span class="line">	CloseHandle(hProcess);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/远程线程注入技术/">展开全文 >></a>
         </p>
       
 
@@ -505,6 +469,97 @@
         <!-- 目录内容结束 -->
 
   
+    <article id="post-Windows调试器编写" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/Windows调试器编写/">调试器</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/Windows调试器编写/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>CPU对调试的硬件支持<br> 外部中断称为中断,内部中断称为异常。<br> 异常的中断分为3种:故障/陷阱/终止</p>
+<pre><code>1. 故障,进入异常处理程序前,保存引发异常的CS和EIP,然后处理异常后返回异常出现的指令出接着执行。
+2. 陷阱,    进入异常处理程序前,保存引发异常的下一条指令的CS和EIP
+3. 终止,很难纠正此类错误的明确信息。
+</code></pre></blockquote>
+<p>调试器一般有以下2种形式:</p>
+<ol>
+<li>汇编级调试器:显示被调试进程正在执行的指令,只提供被调试程序的指令反汇编成汇编指令。单步调试时,以一条指令为最小单位。</li>
+<li>源码级调试:编译一个可执行文件时,一般会生成与这个可执行文件对应的调试符号文件,这个符号文件保存了大量调试信息，这个调试信息包含调试行号,函数名,全局变量名,全局对象名,局部变量名等。源码级调试器要能读取调试符号文件，并根据正在执行的二进制代码所对应的源代码文件信息,从而以源码的方式来调试程序。单步调试时,以一条源码作为最小单位。</li>
+</ol>
+<p>调试器功能:<br>CPU如何将程序异常通知操作系统?<br>CPU调用中断向量表中指向的程序，然后把异常处理交给操作系统。<br>操作系统如何将异常发送给调试器?<br>操作系统在函数内进行环境的保存(栈帧,寄存器),如果程序有调试器,则发给调试器,否则交给程序的异常处理机制(SEH,VEH,VCH等)处理。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/Windows调试器编写/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-汇编指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -566,308 +621,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/20/汇编指令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-dll文件的导出和调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/dll文件的导出和调用/">DLL文件的导出和调用</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/dll文件的导出和调用/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>导出函数的方式</p>
-</blockquote>
-<ul>
-<li><p>关键字导出:_declspec(dllexport)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 导出一个全局变量</span><br><span class="line">  _declspec(dllexport) DWORD g_nNum;</span><br><span class="line">  // 导出一个函数</span><br><span class="line">  _declspec(dllexport) void fun() &#123;</span><br><span class="line">      MessageBox(0, L&quot;fun&quot;, 0, 0);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>def模块定义导出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.添加.def格式文件到项目</span><br><span class="line">2.visual c++中属性-&gt;链接器-&gt;输入-&gt;模块定义文件 填写.def格式文件名称</span><br><span class="line">3. .def文件中,填写要导出的函数</span><br><span class="line">	EXPORTS</span><br><span class="line">	函数名 @序号 ;@序号 表示导出函数的序号</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>DLL文件的调用</p>
-</blockquote>
-<ul>
-<li><p>显式调用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">步骤:</span><br><span class="line">1.将(LoadLibrary)DLL加载到进程中. 得到DLL模块句柄</span><br><span class="line">2.获取dll的导出函数 (GetProcAddress ), 定义函数指针, 保存导出函数的地址</span><br><span class="line">3.通过函数指针调用导出函数.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>隐式调用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.包含对应的头文件(包含了DLL导出函数的原型信息的头文件)</span><br><span class="line">2.包含对应的导入库</span><br><span class="line">	#pragma comment(lib , &quot;../debug/DllTest.lib&quot;)</span><br><span class="line">3.直接调用函数</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>DLL文件的调试</p>
-</blockquote>
-<ul>
-<li>dll与exe都是自己写的,直接F11进入DLL代码中</li>
-<li><p>dll是自己编写,exe不是自己编写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.dll项目中,在项目属性中 配置属性-&gt;调试-&gt;命令 添加调用dll导出函数的exe的路径</span><br><span class="line">在dll导出函数中,下断点，然后以调试方式运行dll项目</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>dll与exe都不是自己编写,只能使用汇编级调试器。</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/dll文件的导出和调用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-Hook原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/Hook原理/">HooK原理</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/Hook原理/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>万能神奇Hook:<br>1.系统提供的消息Hook机制<br>2.自定义的Hook汇编技巧</p>
-<blockquote>
-<p>消息钩子例子</p>
-</blockquote>
-<p>1.SetWindowsHookEx设置钩子<br>2.CallNextHookEx为钩子链的下一个程序设置钩子<br>3.UnhookWindowsHookEx卸载钩子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">HHOOK g_Hook;</span><br><span class="line">HMODULE g_hModule;</span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK KeyboardProc(</span><br><span class="line">	int code,           // 消息类型</span><br><span class="line">	WPARAM wParam,      // 虚拟码</span><br><span class="line">	LPARAM lParam) &#123;    // 按键信息</span><br><span class="line"></span><br><span class="line">	// 判断是否wParam与lParam都有键盘消息，是的话则执行打印操作</span><br><span class="line">	if (code == HC_ACTION)&#123;</span><br><span class="line">		// 将256个虚拟键的状态拷贝到指定的缓冲区中，如果成功则继续</span><br><span class="line">		BYTE KeyState[256] = &#123; 0 &#125;;</span><br><span class="line">		if (GetKeyboardState(KeyState)) &#123;</span><br><span class="line">			// 得到第16–23位，键盘虚拟码</span><br><span class="line">			LONG  KeyInfo = lParam;</span><br><span class="line">			UINT  keyCode = (KeyInfo &gt;&gt; 16) &amp; 0x00ff;</span><br><span class="line">			WCHAR wKeyCode = 0;</span><br><span class="line">			ToAscii((UINT)wParam, keyCode, KeyState, (LPWORD)&amp;wKeyCode, 0);</span><br><span class="line">			// 将其打印出来</span><br><span class="line">			WCHAR szInfo[512] = &#123; 0 &#125;;</span><br><span class="line">			swprintf_s(szInfo, 512, L&quot;Hook_%c&quot;, (char)wKeyCode);</span><br><span class="line">			OutputDebugString(szInfo);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return CallNextHookEx(g_Hook, code, wParam, lParam);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BOOL InstallHook() &#123;</span><br><span class="line">	g_Hook = SetWindowsHookEx(</span><br><span class="line">		WH_KEYBOARD,//按键消息的钩子</span><br><span class="line">		KeyboardProc, //回调函数</span><br><span class="line">		g_hModule,</span><br><span class="line">		0);</span><br><span class="line"></span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br><span class="line">// 导出函数：卸载钩子</span><br><span class="line">BOOL UninstallHook() &#123;</span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return UnhookWindowsHookEx(g_Hook);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:</span><br><span class="line">		g_hModule = hModule;</span><br><span class="line">		InstallHook();</span><br><span class="line"></span><br><span class="line">		break;</span><br><span class="line">// 	case DLL_THREAD_ATTACH:</span><br><span class="line">// 	case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		//UninstallHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>自定义钩子</p>
-</blockquote>
-<ul>
-<li><p>内联Hook<br>通过修改Opcode 使原本跳转到原函数的地址变成跳转到制定函数的地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void UnHook();</span><br><span class="line">void OnHook();</span><br><span class="line">BYTE g_old[5];</span><br><span class="line">BYTE g_New[5] = &#123;0xE9&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line">	//卸载钩子</span><br><span class="line">	UnHook();</span><br><span class="line">	int nRet = MessageBoxW(hWnd, lpText, lpCaption, uType);</span><br><span class="line">	//安装钩子</span><br><span class="line">	OnHook();</span><br><span class="line">	return nRet;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void OnHook()</span><br><span class="line">&#123;</span><br><span class="line">	//获取MessageBoxW地址</span><br><span class="line">	DWORD dwMsg = (DWORD)MessageBoxW;</span><br><span class="line">	DWORD dwMyMsg = (DWORD)MyMessageBoxW;</span><br><span class="line">	//计算偏移 offset = 目标地址 - jmp所在地址 - 指令长度</span><br><span class="line">	DWORD dwOffset = dwMyMsg - dwMsg - 5;</span><br><span class="line"></span><br><span class="line">	//保存原来的Opcode</span><br><span class="line">	memcpy(g_old, MessageBoxW, 5);</span><br><span class="line">	//构造Hook地址</span><br><span class="line">	*(DWORD*)(g_New + 1) = dwOffset;</span><br><span class="line">	//修改地址</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW,g_New,  5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW, g_old, 5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int _tmain(int argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	OnHook();</span><br><span class="line">	MessageBox(0,0,0,0);</span><br><span class="line">	UnHook();</span><br><span class="line">	MessageBox(0, 0, 0, 0);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>IATHook<br>1.通过导入表查询到制定的函数名<br>2.根据函数名制定函数地址<br>3.替换函数地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">// dllmain.cpp : 定义 DLL 应用程序的入口点。</span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">typedef int (WINAPI*FP_MSG)(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType);</span><br><span class="line"></span><br><span class="line">FP_MSG g_MyMsg;</span><br><span class="line">DWORD g_IAT_Addr;</span><br><span class="line">DWORD g_Addr;</span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line"></span><br><span class="line">	return g_MyMsg(hWnd, lpText, lpCaption, uType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line"></span><br><span class="line">	*(DWORD*)g_IAT_Addr = (DWORD)g_MyMsg;</span><br><span class="line"></span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line">   INT中函数名的下标与IAT中函数地址是一一对应的</span><br><span class="line">*/</span><br><span class="line">void IAT_hook(char* pFunName,char* pDllName)</span><br><span class="line">&#123;</span><br><span class="line">	//获取加载基址</span><br><span class="line">	HMODULE hMod = GetModuleHandle(NULL);</span><br><span class="line">	DWORD dwImageBase = (DWORD)hMod;</span><br><span class="line"></span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)hMod;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = </span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + dwImageBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pImportDir = </span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)</span><br><span class="line">		&amp;pNt-&gt;OptionalHeader.DataDirectory[1];</span><br><span class="line">	//获取导入表地址</span><br><span class="line">	PIMAGE_IMPORT_DESCRIPTOR pImport = </span><br><span class="line">		(PIMAGE_IMPORT_DESCRIPTOR)</span><br><span class="line">		(pImportDir-&gt;VirtualAddress + dwImageBase);</span><br><span class="line">	</span><br><span class="line">	//遍历导入表，查找函数地址的位置</span><br><span class="line">	while (pImport-&gt;Name)</span><br><span class="line">	&#123;</span><br><span class="line">		char* pDll = (char*)(pImport-&gt;Name + dwImageBase);</span><br><span class="line">		//比对模块名（_stricmp比对时不区分大小写）</span><br><span class="line">		if (!_stricmp(pDll, pDllName))</span><br><span class="line">		&#123;</span><br><span class="line">			//IAT找到了</span><br><span class="line">			DWORD* pIAT = (DWORD*)(pImport-&gt;FirstThunk + dwImageBase);</span><br><span class="line">			DWORD* pINT = (DWORD*)(pImport-&gt;OriginalFirstThunk + dwImageBase);</span><br><span class="line"></span><br><span class="line">			while (*pINT)</span><br><span class="line">			&#123;</span><br><span class="line">				//最高位为0是名称导入的</span><br><span class="line">				if (!(*pINT &amp; 0x80000000))</span><br><span class="line">				&#123;</span><br><span class="line">					PIMAGE_IMPORT_BY_NAME pName =</span><br><span class="line">						(PIMAGE_IMPORT_BY_NAME)</span><br><span class="line">						(*pINT + dwImageBase);</span><br><span class="line">					//比对函数名称</span><br><span class="line">					if (!_stricmp(pName-&gt;Name,pFunName))</span><br><span class="line">					&#123;</span><br><span class="line">						//进来说明找到了</span><br><span class="line">						//保存原来的地址用于恢复</span><br><span class="line">						g_IAT_Addr = (DWORD)pIAT;</span><br><span class="line">						//将MessageBoxW地址赋值给函数指针</span><br><span class="line">						g_MyMsg = (FP_MSG)*pIAT;</span><br><span class="line">					    //IAT表的内存属性是只读</span><br><span class="line">						//需要修改内存属性为可写才能修改</span><br><span class="line">						DWORD dwOld;</span><br><span class="line">						VirtualProtect(pIAT, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">						//修改为自己的函数地址</span><br><span class="line">						*pIAT = (DWORD)MyMessageBoxW;</span><br><span class="line">						//恢复原来的属性</span><br><span class="line">						VirtualProtect(pIAT, 4, dwOld, &amp;dwOld);</span><br><span class="line">						return;</span><br><span class="line">						</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				//下一个</span><br><span class="line">				pINT++;</span><br><span class="line">				pIAT++;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		//下一个某块</span><br><span class="line">		pImport++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:		</span><br><span class="line">		IAT_hook(&quot;MessageBoxW&quot;,&quot;user32.dll&quot;);</span><br><span class="line">		break;</span><br><span class="line">	//case DLL_THREAD_ATTACH:</span><br><span class="line">	//case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		UnHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/Hook原理/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-windows权限" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/windows权限/">windows权限</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/windows权限/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>令牌:创建的进程与登陆系统的账户有相同的权限，这个权限称为令牌<br>安全描述符:创建对象时拥有,描述什么样的用户以及权限可以访问自己,什么用户是拒绝访问的。<br>UAC:User Account Control UAC机制,即使以管理员权限创建进程也是分配一个低权限的令牌(Filter Token).</p>
-<blockquote>
-<p>通过按钮控制UAC的提权操作</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">// 1. 获得本进程的令牌</span><br><span class="line">	HANDLE hToken = NULL;</span><br><span class="line">	if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &amp;hToken))</span><br><span class="line">		return false;</span><br><span class="line">	// 2. 获取提升类型</span><br><span class="line">	TOKEN_ELEVATION_TYPE ElevationType = TokenElevationTypeDefault;</span><br><span class="line">	BOOL                 bIsAdmin = false;</span><br><span class="line">	DWORD                dwSize = 0;</span><br><span class="line">	if (GetTokenInformation(hToken, TokenElevationType, &amp;ElevationType,</span><br><span class="line">		sizeof(TOKEN_ELEVATION_TYPE), &amp;dwSize)) &#123;</span><br><span class="line">		// 2.1 创建管理员组的对应SID</span><br><span class="line">		BYTE adminSID[SECURITY_MAX_SID_SIZE];</span><br><span class="line">		dwSize = sizeof(adminSID);</span><br><span class="line">		CreateWellKnownSid(WinBuiltinAdministratorsSid, NULL, &amp;adminSID, &amp;dwSize);</span><br><span class="line">		// 2.2 判断当前进程运行用户角色是否为管理员</span><br><span class="line">		if (ElevationType == TokenElevationTypeLimited) &#123;</span><br><span class="line">			// a. 获取连接令牌的句柄</span><br><span class="line">			HANDLE hUnfilteredToken = NULL;</span><br><span class="line">			GetTokenInformation(hToken, TokenLinkedToken, (PVOID)&amp;hUnfilteredToken,</span><br><span class="line">				sizeof(HANDLE), &amp;dwSize);</span><br><span class="line">			// b. 检查这个原始的令牌是否包含管理员的SID</span><br><span class="line">			if (!CheckTokenMembership(hUnfilteredToken, &amp;adminSID, &amp;bIsAdmin))</span><br><span class="line">				return false;</span><br><span class="line">			CloseHandle(hUnfilteredToken);</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			bIsAdmin = IsUserAnAdmin();</span><br><span class="line">		&#125;</span><br><span class="line">		CloseHandle(hToken);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 3. 判断具体的权限状况</span><br><span class="line">	BOOL bFullToken = false;</span><br><span class="line">	switch (ElevationType) &#123;</span><br><span class="line">	case TokenElevationTypeDefault: /* 默认的用户或UAC被禁用 */</span><br><span class="line">		if (IsUserAnAdmin())  bFullToken = true; // 默认用户有管理员权限</span><br><span class="line">		else                  bFullToken = false;// 默认用户不是管理员组</span><br><span class="line">		break;</span><br><span class="line">	case TokenElevationTypeFull:    /* 已经成功提高进程权限 */</span><br><span class="line">		if (IsUserAnAdmin())  bFullToken = true; //当前以管理员权限运行</span><br><span class="line">		else                  bFullToken = false;//当前未以管理员权限运行</span><br><span class="line">		break;</span><br><span class="line">	case TokenElevationTypeLimited: /* 进程在以有限的权限运行 */</span><br><span class="line">		if (bIsAdmin)  bFullToken = false;//用户有管理员权限，但进程权限有限</span><br><span class="line">		else           bFullToken = false;//用户不是管理员组，且进程权限有限</span><br><span class="line">	&#125;</span><br><span class="line">	// 4. 根据权限的不同控制按钮的显示</span><br><span class="line">	if (!bFullToken)</span><br><span class="line">		Button_SetElevationRequiredState(m_Button.m_hWnd,</span><br><span class="line">		!bFullToken);</span><br><span class="line">	else</span><br><span class="line">		::ShowWindow(m_Button.m_hWnd, SW_HIDE);</span><br><span class="line"></span><br><span class="line">	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>管理员权限打开窗口</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 1. 隐藏当前窗口</span><br><span class="line">	::ShowWindow(this-&gt;m_hWnd, SW_HIDE);</span><br><span class="line">	// 2. 获取当前程序路径</span><br><span class="line">	WCHAR szApplication[MAX_PATH] = &#123; 0 &#125;;</span><br><span class="line">	DWORD cchLength = _countof(szApplication);</span><br><span class="line">	QueryFullProcessImageName(GetCurrentProcess(), 0,</span><br><span class="line">		szApplication, &amp;cchLength);</span><br><span class="line">	// 3. 以管理员权限重新打开进程</span><br><span class="line">	SHELLEXECUTEINFO sei = &#123; sizeof(SHELLEXECUTEINFO) &#125;;</span><br><span class="line">	sei.lpVerb = L&quot;runas&quot;;      // 请求提升权限</span><br><span class="line">	sei.lpFile = szApplication; // 可执行文件路径</span><br><span class="line">	sei.lpParameters = NULL;          // 不需要参数</span><br><span class="line">	sei.nShow = SW_SHOWNORMAL; // 正常显示窗口</span><br><span class="line">	if (ShellExecuteEx(&amp;sei))</span><br><span class="line">		exit(0);</span><br><span class="line">	else</span><br><span class="line">		::ShowWindow(this-&gt;m_hWnd, SW_SHOWNORMAL);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>提升进程权限为调试权限</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">BOOL fOk = FALSE;    HANDLE hToken;</span><br><span class="line">	// 以修改权限的方式，打开进程的令牌</span><br><span class="line">	if (OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES,</span><br><span class="line">		&amp;hToken)) &#123;</span><br><span class="line">		// 令牌权限结构体</span><br><span class="line">		TOKEN_PRIVILEGES tp;</span><br><span class="line">		tp.PrivilegeCount = 1;</span><br><span class="line">		//获得LUID</span><br><span class="line">		LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &amp;tp.Privileges[0].Luid);</span><br><span class="line">		tp.Privileges[0].Attributes = fEnable ? SE_PRIVILEGE_ENABLED : 0;</span><br><span class="line">		AdjustTokenPrivileges(hToken, FALSE, &amp;tp, sizeof(tp), NULL, NULL); //修改权限</span><br><span class="line">		fOk = (GetLastError() == ERROR_SUCCESS);</span><br><span class="line">		CloseHandle(hToken);</span><br><span class="line">	&#125;</span><br><span class="line">	return(fOk);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>权限的遍历</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">//打开令牌，获取句柄</span><br><span class="line">	HANDLE hToken = 0;</span><br><span class="line">	OpenProcessToken(GetCurrentProcess(), //进程句柄</span><br><span class="line">		TOKEN_QUERY,                      //打开方式（查询）</span><br><span class="line">		&amp;hToken);</span><br><span class="line">	if (hToken == 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;令牌打开失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取令牌权限信息</span><br><span class="line">	//第一次调用是为了获取所需要的空间大小</span><br><span class="line">	DWORD dwSize = 0;</span><br><span class="line">	GetTokenInformation(hToken,  //令牌句柄</span><br><span class="line">		TokenPrivileges,         //查询内容</span><br><span class="line">		NULL,                    //查询结果（缓冲区地址） </span><br><span class="line">		NULL,                    //缓冲区地址大小</span><br><span class="line">		&amp;dwSize);                //实际需要的大小</span><br><span class="line">	//获取到大小后，申请相应的内存后，</span><br><span class="line">	//再次调用GetTokenInformation，此时就会得到</span><br><span class="line">	//令牌权限信息</span><br><span class="line">	char* pBuf = new char[dwSize]&#123;&#125;;</span><br><span class="line">	GetTokenInformation(hToken,</span><br><span class="line">		TokenPrivileges,</span><br><span class="line">		pBuf, dwSize,</span><br><span class="line">		&amp;dwSize);</span><br><span class="line">	TOKEN_PRIVILEGES* pTokenPrivileges = </span><br><span class="line">		              (TOKEN_PRIVILEGES*)pBuf;</span><br><span class="line">	//权限保存在LUID_AND_ATTRIBUTES中，</span><br><span class="line">	//个数为pTokenPrivileges-&gt;PrivilegeCount个</span><br><span class="line">	LUID_AND_ATTRIBUTES* pPrivileges = </span><br><span class="line">		                   pTokenPrivileges-&gt;Privileges;</span><br><span class="line">	//遍历权限</span><br><span class="line">	for (int i = 0; i &lt; pTokenPrivileges-&gt;PrivilegeCount; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		char szPrivilegeName[100] = &#123;&#125;;</span><br><span class="line">		DWORD dwSize = sizeof(szPrivilegeName);</span><br><span class="line">		//根据权限的LUID来查询相对应的字符串命名</span><br><span class="line">		//pPrivileges-&gt;Attributes表示权限是否开启</span><br><span class="line">		//（0：未开启；2：开启；3：默认开启）</span><br><span class="line">		LookupPrivilegeNameA(NULL,</span><br><span class="line">			&amp;pPrivileges-&gt;Luid,</span><br><span class="line">			szPrivilegeName,</span><br><span class="line">			&amp;dwSize);</span><br><span class="line"></span><br><span class="line">		printf(&quot;权限：%s --- 状态[%d]\n&quot;, </span><br><span class="line">			 szPrivilegeName, pPrivileges-&gt;Attributes);</span><br><span class="line">		//下一个</span><br><span class="line">		pPrivileges++;</span><br><span class="line">	&#125;</span><br><span class="line">	//释放内存</span><br><span class="line">	delete pBuf;</span><br><span class="line">	system(&quot;pause&quot;);</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/windows权限/">展开全文 >></a>
         </p>
       
 
@@ -1016,6 +769,118 @@
         <!-- 目录内容结束 -->
 
   
+    <article id="post-dll文件的导出和调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/dll文件的导出和调用/">DLL文件的导出和调用</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/dll文件的导出和调用/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>导出函数的方式</p>
+</blockquote>
+<ul>
+<li><p>关键字导出:_declspec(dllexport)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 导出一个全局变量</span><br><span class="line">  _declspec(dllexport) DWORD g_nNum;</span><br><span class="line">  // 导出一个函数</span><br><span class="line">  _declspec(dllexport) void fun() &#123;</span><br><span class="line">      MessageBox(0, L&quot;fun&quot;, 0, 0);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>def模块定义导出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.添加.def格式文件到项目</span><br><span class="line">2.visual c++中属性-&gt;链接器-&gt;输入-&gt;模块定义文件 填写.def格式文件名称</span><br><span class="line">3. .def文件中,填写要导出的函数</span><br><span class="line">	EXPORTS</span><br><span class="line">	函数名 @序号 ;@序号 表示导出函数的序号</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>DLL文件的调用</p>
+</blockquote>
+<ul>
+<li><p>显式调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">步骤:</span><br><span class="line">1.将(LoadLibrary)DLL加载到进程中. 得到DLL模块句柄</span><br><span class="line">2.获取dll的导出函数 (GetProcAddress ), 定义函数指针, 保存导出函数的地址</span><br><span class="line">3.通过函数指针调用导出函数.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>隐式调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.包含对应的头文件(包含了DLL导出函数的原型信息的头文件)</span><br><span class="line">2.包含对应的导入库</span><br><span class="line">	#pragma comment(lib , &quot;../debug/DllTest.lib&quot;)</span><br><span class="line">3.直接调用函数</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>DLL文件的调试</p>
+</blockquote>
+<ul>
+<li>dll与exe都是自己写的,直接F11进入DLL代码中</li>
+<li><p>dll是自己编写,exe不是自己编写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.dll项目中,在项目属性中 配置属性-&gt;调试-&gt;命令 添加调用dll导出函数的exe的路径</span><br><span class="line">在dll导出函数中,下断点，然后以调试方式运行dll项目</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dll与exe都不是自己编写,只能使用汇编级调试器。</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/dll文件的导出和调用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-PE文件编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1085,6 +950,101 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/20/PE文件编程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-Hook原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/Hook原理/">HooK原理</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/Hook原理/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>万能神奇Hook:<br>1.系统提供的消息Hook机制<br>2.自定义的Hook汇编技巧</p>
+<blockquote>
+<p>消息钩子例子</p>
+</blockquote>
+<p>1.SetWindowsHookEx设置钩子<br>2.CallNextHookEx为钩子链的下一个程序设置钩子<br>3.UnhookWindowsHookEx卸载钩子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">HHOOK g_Hook;</span><br><span class="line">HMODULE g_hModule;</span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK KeyboardProc(</span><br><span class="line">	int code,           // 消息类型</span><br><span class="line">	WPARAM wParam,      // 虚拟码</span><br><span class="line">	LPARAM lParam) &#123;    // 按键信息</span><br><span class="line"></span><br><span class="line">	// 判断是否wParam与lParam都有键盘消息，是的话则执行打印操作</span><br><span class="line">	if (code == HC_ACTION)&#123;</span><br><span class="line">		// 将256个虚拟键的状态拷贝到指定的缓冲区中，如果成功则继续</span><br><span class="line">		BYTE KeyState[256] = &#123; 0 &#125;;</span><br><span class="line">		if (GetKeyboardState(KeyState)) &#123;</span><br><span class="line">			// 得到第16–23位，键盘虚拟码</span><br><span class="line">			LONG  KeyInfo = lParam;</span><br><span class="line">			UINT  keyCode = (KeyInfo &gt;&gt; 16) &amp; 0x00ff;</span><br><span class="line">			WCHAR wKeyCode = 0;</span><br><span class="line">			ToAscii((UINT)wParam, keyCode, KeyState, (LPWORD)&amp;wKeyCode, 0);</span><br><span class="line">			// 将其打印出来</span><br><span class="line">			WCHAR szInfo[512] = &#123; 0 &#125;;</span><br><span class="line">			swprintf_s(szInfo, 512, L&quot;Hook_%c&quot;, (char)wKeyCode);</span><br><span class="line">			OutputDebugString(szInfo);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return CallNextHookEx(g_Hook, code, wParam, lParam);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BOOL InstallHook() &#123;</span><br><span class="line">	g_Hook = SetWindowsHookEx(</span><br><span class="line">		WH_KEYBOARD,//按键消息的钩子</span><br><span class="line">		KeyboardProc, //回调函数</span><br><span class="line">		g_hModule,</span><br><span class="line">		0);</span><br><span class="line"></span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br><span class="line">// 导出函数：卸载钩子</span><br><span class="line">BOOL UninstallHook() &#123;</span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return UnhookWindowsHookEx(g_Hook);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:</span><br><span class="line">		g_hModule = hModule;</span><br><span class="line">		InstallHook();</span><br><span class="line"></span><br><span class="line">		break;</span><br><span class="line">// 	case DLL_THREAD_ATTACH:</span><br><span class="line">// 	case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		//UninstallHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>自定义钩子</p>
+</blockquote>
+<ul>
+<li><p>内联Hook<br>通过修改Opcode 使原本跳转到原函数的地址变成跳转到制定函数的地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void UnHook();</span><br><span class="line">void OnHook();</span><br><span class="line">BYTE g_old[5];</span><br><span class="line">BYTE g_New[5] = &#123;0xE9&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line">	//卸载钩子</span><br><span class="line">	UnHook();</span><br><span class="line">	int nRet = MessageBoxW(hWnd, lpText, lpCaption, uType);</span><br><span class="line">	//安装钩子</span><br><span class="line">	OnHook();</span><br><span class="line">	return nRet;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void OnHook()</span><br><span class="line">&#123;</span><br><span class="line">	//获取MessageBoxW地址</span><br><span class="line">	DWORD dwMsg = (DWORD)MessageBoxW;</span><br><span class="line">	DWORD dwMyMsg = (DWORD)MyMessageBoxW;</span><br><span class="line">	//计算偏移 offset = 目标地址 - jmp所在地址 - 指令长度</span><br><span class="line">	DWORD dwOffset = dwMyMsg - dwMsg - 5;</span><br><span class="line"></span><br><span class="line">	//保存原来的Opcode</span><br><span class="line">	memcpy(g_old, MessageBoxW, 5);</span><br><span class="line">	//构造Hook地址</span><br><span class="line">	*(DWORD*)(g_New + 1) = dwOffset;</span><br><span class="line">	//修改地址</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW,g_New,  5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW, g_old, 5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int _tmain(int argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	OnHook();</span><br><span class="line">	MessageBox(0,0,0,0);</span><br><span class="line">	UnHook();</span><br><span class="line">	MessageBox(0, 0, 0, 0);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>IATHook<br>1.通过导入表查询到制定的函数名<br>2.根据函数名制定函数地址<br>3.替换函数地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">// dllmain.cpp : 定义 DLL 应用程序的入口点。</span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">typedef int (WINAPI*FP_MSG)(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType);</span><br><span class="line"></span><br><span class="line">FP_MSG g_MyMsg;</span><br><span class="line">DWORD g_IAT_Addr;</span><br><span class="line">DWORD g_Addr;</span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line"></span><br><span class="line">	return g_MyMsg(hWnd, lpText, lpCaption, uType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line"></span><br><span class="line">	*(DWORD*)g_IAT_Addr = (DWORD)g_MyMsg;</span><br><span class="line"></span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line">   INT中函数名的下标与IAT中函数地址是一一对应的</span><br><span class="line">*/</span><br><span class="line">void IAT_hook(char* pFunName,char* pDllName)</span><br><span class="line">&#123;</span><br><span class="line">	//获取加载基址</span><br><span class="line">	HMODULE hMod = GetModuleHandle(NULL);</span><br><span class="line">	DWORD dwImageBase = (DWORD)hMod;</span><br><span class="line"></span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)hMod;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = </span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + dwImageBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pImportDir = </span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)</span><br><span class="line">		&amp;pNt-&gt;OptionalHeader.DataDirectory[1];</span><br><span class="line">	//获取导入表地址</span><br><span class="line">	PIMAGE_IMPORT_DESCRIPTOR pImport = </span><br><span class="line">		(PIMAGE_IMPORT_DESCRIPTOR)</span><br><span class="line">		(pImportDir-&gt;VirtualAddress + dwImageBase);</span><br><span class="line">	</span><br><span class="line">	//遍历导入表，查找函数地址的位置</span><br><span class="line">	while (pImport-&gt;Name)</span><br><span class="line">	&#123;</span><br><span class="line">		char* pDll = (char*)(pImport-&gt;Name + dwImageBase);</span><br><span class="line">		//比对模块名（_stricmp比对时不区分大小写）</span><br><span class="line">		if (!_stricmp(pDll, pDllName))</span><br><span class="line">		&#123;</span><br><span class="line">			//IAT找到了</span><br><span class="line">			DWORD* pIAT = (DWORD*)(pImport-&gt;FirstThunk + dwImageBase);</span><br><span class="line">			DWORD* pINT = (DWORD*)(pImport-&gt;OriginalFirstThunk + dwImageBase);</span><br><span class="line"></span><br><span class="line">			while (*pINT)</span><br><span class="line">			&#123;</span><br><span class="line">				//最高位为0是名称导入的</span><br><span class="line">				if (!(*pINT &amp; 0x80000000))</span><br><span class="line">				&#123;</span><br><span class="line">					PIMAGE_IMPORT_BY_NAME pName =</span><br><span class="line">						(PIMAGE_IMPORT_BY_NAME)</span><br><span class="line">						(*pINT + dwImageBase);</span><br><span class="line">					//比对函数名称</span><br><span class="line">					if (!_stricmp(pName-&gt;Name,pFunName))</span><br><span class="line">					&#123;</span><br><span class="line">						//进来说明找到了</span><br><span class="line">						//保存原来的地址用于恢复</span><br><span class="line">						g_IAT_Addr = (DWORD)pIAT;</span><br><span class="line">						//将MessageBoxW地址赋值给函数指针</span><br><span class="line">						g_MyMsg = (FP_MSG)*pIAT;</span><br><span class="line">					    //IAT表的内存属性是只读</span><br><span class="line">						//需要修改内存属性为可写才能修改</span><br><span class="line">						DWORD dwOld;</span><br><span class="line">						VirtualProtect(pIAT, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">						//修改为自己的函数地址</span><br><span class="line">						*pIAT = (DWORD)MyMessageBoxW;</span><br><span class="line">						//恢复原来的属性</span><br><span class="line">						VirtualProtect(pIAT, 4, dwOld, &amp;dwOld);</span><br><span class="line">						return;</span><br><span class="line">						</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				//下一个</span><br><span class="line">				pINT++;</span><br><span class="line">				pIAT++;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		//下一个某块</span><br><span class="line">		pImport++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:		</span><br><span class="line">		IAT_hook(&quot;MessageBoxW&quot;,&quot;user32.dll&quot;);</span><br><span class="line">		break;</span><br><span class="line">	//case DLL_THREAD_ATTACH:</span><br><span class="line">	//case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		UnHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/Hook原理/">展开全文 >></a>
         </p>
       
 
@@ -1215,7 +1175,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1247,15 +1211,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1268,6 +1228,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
             
             <div class="clearfix"></div>

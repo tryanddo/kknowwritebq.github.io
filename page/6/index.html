@@ -157,6 +157,445 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python_mysql" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/python_mysql/">python连接mysql</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/python_mysql/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="安装pymysql-模块"><a href="#安装pymysql-模块" class="headerlink" title="安装pymysql 模块"></a>安装pymysql 模块</h1><p>pip install pymysql</p>
+<p>#code<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import pymysql</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    #建立连接</span><br><span class="line">    con = pymysql.connect(host=&apos;ip&apos;,</span><br><span class="line">                          port=端口,</span><br><span class="line">                          user=用户,</span><br><span class="line">                          password=pass,</span><br><span class="line">                          db=数据库名称)</span><br><span class="line">    </span><br><span class="line">    #获取游标</span><br><span class="line">    cursor = con.cursor()</span><br><span class="line">    #执行sql语句</span><br><span class="line">    cursor.execute(&apos;select * from users;&apos;)</span><br><span class="line">    #读取结果集</span><br><span class="line">    result = cursor.fetchall()</span><br><span class="line">    #遍历结果集</span><br><span class="line">    for row in result:</span><br><span class="line">        print(row)</span><br><span class="line">        #for key,value in row.item(): #row为字典</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>使用python连接mysql报错</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#远程连接 1045 报错</span><br><span class="line">grant usage on *.* to 用户@ip identified by &apos;pass&apos;</span><br><span class="line">FLUSH privileges;</span><br><span class="line"></span><br><span class="line">#远程连接 1044报错</span><br><span class="line">grant ALL PRIVILEGES on *.* to 用户@ip identified by &apos;pass&apos; with grant option;</span><br><span class="line">FLUSH privileges;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/python_mysql/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-python threading模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/python threading模块/">python threading模块</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/python threading模块/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>线程简单用法</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> import threading</span><br><span class="line">screenLock = threading.Semaphore(value=1) #使用锁阻止其他进程进入</span><br><span class="line">def test(n1,n2)</span><br><span class="line">    screenLock.acquire() </span><br><span class="line">    print(n1+n2)</span><br><span class="line">    screenLock.release()</span><br><span class="line"> def main()</span><br><span class="line">    t=threading.Thread(target=test,args=(n1,n2))</span><br><span class="line">    t.start()</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/python threading模块/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-python pexpect" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/python pexpect/">python pexpect</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/python pexpect/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>安装:pip install pexpect<br>   如果配置pip详见&lt;kail2.0 python环境设置&gt;博文</p>
+<blockquote>
+<p>pexpect用法</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pexpect</span><br><span class="line">connStr = &apos;ssh &apos; + user + &apos;@&apos; + host</span><br><span class="line">child = pexpect.spawn(connStr)</span><br><span class="line">ret = child.expect([xxx1,xxx2])</span><br><span class="line">if ret == 0: #如果提示中出现xxx1字符串，ret即为0</span><br><span class="line">  xxx</span><br><span class="line">if ret == 1: #如果提示中出现xxx2字符串，ret即为1</span><br><span class="line">  xxx</span><br><span class="line">child.sendline(cmd) #根据提示发送命令</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>pxssh</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from pexpect import pxssh</span><br><span class="line"></span><br><span class="line">ssh1 = pxssh.pxssh()</span><br><span class="line">ssh1.login(host,user,password)</span><br><span class="line">ssh1.sendline(cmd)</span><br><span class="line">ssh1.prompt()</span><br><span class="line">print(ssh1.before)</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/python pexpect/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-kail" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/kail/">kail2.0 python环境设置</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/kail/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>使用python<br>python2和python3切换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python2 100</span><br><span class="line">update-alternatives --install /usr/bin/python python /usr/bin/python3 150</span><br><span class="line">现在的版本即为python3</span><br><span class="line">如果要进行切换:</span><br><span class="line">update-alternatives --config python</span><br><span class="line">选择版本即可</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>python 配置pip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">安装pip：</span><br><span class="line">apt-get install python-setuptools</span><br><span class="line">easy_install pip</span><br><span class="line">pip install   xxxx #python2</span><br><span class="line">pip3 install xxxx #python3</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>使用pip有如下报错pkg_resources.DistributionNotFound: The ‘pip==8.1.2’ distribution was not found and is required by the application</p>
+</blockquote>
+<ol>
+<li><p>重新安装python的distribution </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://pypi.python.org/packages/5f/ad/1fde06877a8d7d5c9b60eff7de2d452f639916ae1d48f0b8f97bf97e570a/distribute-0.7.3.zip#md5=c6c59594a7b180af57af8a0cc0cf5b4a</span><br><span class="line">unzip distribute-0.7.3.zip</span><br><span class="line">cd distribute-0.7.3/</span><br><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装pip==8.1.2<br>easy_install pip==8.1.2</p>
+</li>
+</ol>
+<blockquote>
+<p>kail 安装eclipse+python</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#下载eclipse.tar.gz</span><br><span class="line">tar -xzvf eclipse-inst-linux64.tar.gz</span><br><span class="line">cd eclipse-installer</span><br><span class="line">./eclipse-inst</span><br><span class="line">#由于kail自带java故不需要安装其他linux需要安装java</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/kail/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-python网络socket" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/python网络socket/">python网络socket /nmap</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/python网络socket/" class="archive-article-date">
+  	<time datetime="2018-03-20T07:20:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>socket模块函数介绍</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">socket.gethostbyname(hostname) #将主机名换成ip地址</span><br><span class="line">socket.gethostbyaddr(ip_address) #返回包含主机名，别名列表和同一接口的ip地址</span><br><span class="line">socket.socket(family,type,proto) #family地址簇:AF_INET(默认),AF_INET6或者是AF_UNIX. socket类型:SOCK_STREAM(默认为TCP套接字)或者是SOCK_DGRAM(UDP套接字),还有其他的套接字。 协议号通常为零，故大部分情况省略。</span><br><span class="line">socket.connect(address) address是[ip/host,port]的元组</span><br><span class="line">socket.create_connection(address[,timeout[,source_address]]) #可以选择超时重连</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2018/03/20/python网络socket/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/python网络socket/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-怎么读" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -206,6 +645,191 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/03/14/怎么读/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-香菇枸杞炖脊骨" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/14/香菇枸杞炖脊骨/">香菇枸杞炖脊骨</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/14/香菇枸杞炖脊骨/" class="archive-article-date">
+  	<time datetime="2018-03-14T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>1:材料处理</p>
+</blockquote>
+<pre><code>脊骨泡冷水半小时。
+干香菇泡水半小时。
+洗净枸杞备好。
+锅中煮水至沸腾，倒入脊骨大火煮3分钟。捞起脊骨。
+</code></pre><blockquote>
+<p>2:炖</p>
+</blockquote>
+<pre><code>另外烧一锅水，根据材料多少加水。
+倒入洗净的香菇，枸杞。水沸腾后加入脊骨(为了保持肉的嫩，只有在水开后加入脊骨)，并加入一块冰糖。
+水再次沸腾后，小火炖。
+炖40分钟，起锅。
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">食物</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/14/香菇枸杞炖脊骨/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-赛螃蟹炒番茄" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/14/赛螃蟹炒番茄/">赛螃蟹炒番茄</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/14/赛螃蟹炒番茄/" class="archive-article-date">
+  	<time datetime="2018-03-14T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>1:材料处理</p>
+</blockquote>
+<pre><code>番茄切成小块备好。
+姜，蒜切碎至吃不出颗粒程度，备好。
+打2个鸡蛋，并倒入姜，蒜搅以及一点生抽拌均匀。
+</code></pre><blockquote>
+<p>2:炒</p>
+</blockquote>
+<pre><code>锅中少油，倒入鸡蛋，中火，待底部开始凝固，炒成块状。
+另起一锅，锅中少油，倒入番茄，白糖，炒至番茄出汁。如果汁少可加适当水。
+番茄出汁后，倒入煎好的鸡蛋，混合均匀即可。
+超级下饭。
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">食物</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/14/赛螃蟹炒番茄/">展开全文 >></a>
         </p>
       
 
@@ -336,7 +960,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">心理学 笔记</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -368,15 +996,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -389,6 +1013,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
             
             <div class="clearfix"></div>
