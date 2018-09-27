@@ -9,14 +9,14 @@
   <title>远程线程注入技术 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="远程线程注入  1.通过OpenProcess打开进程2.使用虚拟内存等方法在进程中申请一段虚拟内存空间,将DLL路径写入到内存空间中3.通过CreateRemoteThread的回调函数与LoadLibraryA参数相同的原理,将LoadLibraryA做为线程的回调函数  创建DLL文件 12345678910111213141516BOOL APIENTRY DllMain( HMODUL">
-<meta name="keywords" content="Window编程原理">
+<meta name="keywords" content="Window编程原理,dll注入">
 <meta property="og:type" content="article">
 <meta property="og:title" content="远程线程注入技术">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/08/20/远程线程注入技术/index.html">
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="远程线程注入  1.通过OpenProcess打开进程2.使用虚拟内存等方法在进程中申请一段虚拟内存空间,将DLL路径写入到内存空间中3.通过CreateRemoteThread的回调函数与LoadLibraryA参数相同的原理,将LoadLibraryA做为线程的回调函数  创建DLL文件 12345678910111213141516BOOL APIENTRY DllMain( HMODUL">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-06T11:24:31.404Z">
+<meta property="og:updated_time" content="2018-09-27T06:48:12.455Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="远程线程注入技术">
 <meta name="twitter:description" content="远程线程注入  1.通过OpenProcess打开进程2.使用虚拟内存等方法在进程中申请一段虚拟内存空间,将DLL路径写入到内存空间中3.通过CreateRemoteThread的回调函数与LoadLibraryA参数相同的原理,将LoadLibraryA做为线程的回调函数  创建DLL文件 12345678910111213141516BOOL APIENTRY DllMain( HMODUL">
@@ -214,6 +214,10 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">dll注入</a>
+        		</li>
       		
 		</ul>
 	</div>
@@ -282,18 +286,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/Hook原理/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/20/逆向分析方法/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          HooK原理
+          逆向分析方法
         
       </div>
     </a>
   
   
-    <a href="/2018/08/20/windows异常与调试/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">异常与调试</div>
+    <a href="/2018/08/20/Windows调试器编写/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">调试器</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -427,7 +431,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -439,7 +443,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -447,11 +451,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,11 +463,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vs设置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -475,7 +487,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -484,14 +508,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kail</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
             
             <div class="clearfix"></div>

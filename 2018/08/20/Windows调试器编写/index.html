@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="CPU对调试的硬件支持 外部中断称为中断,内部中断称为异常。 异常的中断分为3种:故障/陷阱/终止 1. 故障,进入异常处理程序前,保存引发异常的CS和EIP,然后处理异常后返回异常出现的指令出接着执行。 2. 陷阱,    进入异常处理程序前,保存引发异常的下一条指令的CS和EIP 3. 终止,很难纠正此类错误的明确信息。  调试器一般有以下2种形式:  汇编级调试器:显示被调试进程正在执行的">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-13T07:47:05.252Z">
+<meta property="og:updated_time" content="2018-09-13T13:31:07.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="调试器">
 <meta name="twitter:description" content="CPU对调试的硬件支持 外部中断称为中断,内部中断称为异常。 异常的中断分为3种:故障/陷阱/终止 1. 故障,进入异常处理程序前,保存引发异常的CS和EIP,然后处理异常后返回异常出现的指令出接着执行。 2. 陷阱,    进入异常处理程序前,保存引发异常的下一条指令的CS和EIP 3. 终止,很难纠正此类错误的明确信息。  调试器一般有以下2种形式:  汇编级调试器:显示被调试进程正在执行的">
@@ -198,7 +198,7 @@
 <li>汇编级调试器:显示被调试进程正在执行的指令,只提供被调试程序的指令反汇编成汇编指令。单步调试时,以一条指令为最小单位。</li>
 <li>源码级调试:编译一个可执行文件时,一般会生成与这个可执行文件对应的调试符号文件,这个符号文件保存了大量调试信息，这个调试信息包含调试行号,函数名,全局变量名,全局对象名,局部变量名等。源码级调试器要能读取调试符号文件，并根据正在执行的二进制代码所对应的源代码文件信息,从而以源码的方式来调试程序。单步调试时,以一条源码作为最小单位。</li>
 </ol>
-<p>调试器功能:<br>CPU如何将程序异常通知操作系统?<br>CPU调用中断向量表中指向的程序，然后把异常处理交给操作系统。<br>操作系统如何将异常发送给调试器?<br>操作系统在函数内进行环境的保存(栈帧,寄存器),如果程序有调试器,则发给调试器,否则交给程序的异常处理机制(SEH,VEH,VCH等)处理。</p>
+<p>调试功能器:<br>CPU如何将程序异常通知操作系统?<br>CPU调用中断向量表中指向的程序，然后把异常处理交给操作系统。<br>操作系统如何将异常发送给调试器?<br>操作系统在函数内进行环境的保存(栈帧,寄存器),如果程序有调试器,则发给调试器,否则交给程序的异常处理机制(SEH,VEH,VCH等)处理。</p>
 
       
 
@@ -282,18 +282,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/PE文件数据结构/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/20/远程线程注入技术/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          PE文件数据结构
+          远程线程注入技术
         
       </div>
     </a>
   
   
-    <a href="/2018/08/20/汇编指令/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">汇编学习2汇编指令</div>
+    <a href="/2018/08/20/注入方式/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">dll注入方式</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -427,7 +427,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -439,7 +439,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -447,11 +447,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,11 +459,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vs设置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -475,7 +483,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -484,14 +504,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kail</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
             
             <div class="clearfix"></div>
