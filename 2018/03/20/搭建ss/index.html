@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>汇编学习1寄存器 | 想与做</title>
+  <title>ubuntu14 搭建ss | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CPU寄存器  123456789101112131415161718192021222324252627282930313233343536通用寄存器:32位:EAX,EBX,ECX,EDXESI:源变址寄存器EDI:目的变址寄存器ESP:栈顶指针EBP:栈底指针16位:AX,BX,CX,DXSI,DI,SP,BP8位:AH,AL,BH,BL,CH,CL,DH,DL指令指针寄存器:EIP,IP">
-<meta name="keywords" content="汇编">
+  <meta name="description" content="vultr云ubuntu14自动安装脚本脚本  123456789101112131415apt-get -y install python-pip 1&amp;gt;1.logpip install shadowsocks 1&amp;gt;1.logcd /etctouch /etc/shadowsocks.jsonecho &amp;quot;&amp;#123;&amp;quot; &amp;gt;&amp;gt; /etc/shadowso">
+<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="汇编学习1寄存器">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/08/20/汇编1_寄存器/index.html">
+<meta property="og:title" content="ubuntu14 搭建ss">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/03/20/搭建ss/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="CPU寄存器  123456789101112131415161718192021222324252627282930313233343536通用寄存器:32位:EAX,EBX,ECX,EDXESI:源变址寄存器EDI:目的变址寄存器ESP:栈顶指针EBP:栈底指针16位:AX,BX,CX,DXSI,DI,SP,BP8位:AH,AL,BH,BL,CH,CL,DH,DL指令指针寄存器:EIP,IP">
+<meta property="og:description" content="vultr云ubuntu14自动安装脚本脚本  123456789101112131415apt-get -y install python-pip 1&amp;gt;1.logpip install shadowsocks 1&amp;gt;1.logcd /etctouch /etc/shadowsocks.jsonecho &amp;quot;&amp;#123;&amp;quot; &amp;gt;&amp;gt; /etc/shadowso">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-27T08:32:44.727Z">
+<meta property="og:updated_time" content="2018-09-28T08:38:52.306Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="汇编学习1寄存器">
-<meta name="twitter:description" content="CPU寄存器  123456789101112131415161718192021222324252627282930313233343536通用寄存器:32位:EAX,EBX,ECX,EDXESI:源变址寄存器EDI:目的变址寄存器ESP:栈顶指针EBP:栈底指针16位:AX,BX,CX,DXSI,DI,SP,BP8位:AH,AL,BH,BL,CH,CL,DH,DL指令指针寄存器:EIP,IP">
+<meta name="twitter:title" content="ubuntu14 搭建ss">
+<meta name="twitter:description" content="vultr云ubuntu14自动安装脚本脚本  123456789101112131415apt-get -y install python-pip 1&amp;gt;1.logpip install shadowsocks 1&amp;gt;1.logcd /etctouch /etc/shadowsocks.jsonecho &amp;quot;&amp;#123;&amp;quot; &amp;gt;&amp;gt; /etc/shadowso">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -161,14 +161,14 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-汇编1_寄存器" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-搭建ss" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      汇编学习1寄存器
+      ubuntu14 搭建ss
     </h1>
   
 
@@ -178,8 +178,8 @@
 		</span>
 	    
         
-        <a href="/2018/08/20/汇编1_寄存器/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+        <a href="/2018/03/20/搭建ss/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
 </a>
         
       </header>
@@ -188,9 +188,13 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>CPU寄存器</p>
+<p>vultr云ubuntu14自动安装脚本脚本</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">通用寄存器:</span><br><span class="line">32位:</span><br><span class="line">EAX,EBX,ECX,EDX</span><br><span class="line">ESI:源变址寄存器</span><br><span class="line">EDI:目的变址寄存器</span><br><span class="line">ESP:栈顶指针</span><br><span class="line">EBP:栈底指针</span><br><span class="line">16位:</span><br><span class="line">AX,BX,CX,DX</span><br><span class="line">SI,DI,SP,BP</span><br><span class="line">8位:</span><br><span class="line">AH,AL,BH,BL,CH,CL,DH,DL</span><br><span class="line"></span><br><span class="line">指令指针寄存器:EIP,IP 与CS联用指向下一个指令的物理地址</span><br><span class="line"></span><br><span class="line">标志位寄存器FLAGS</span><br><span class="line">状态标志</span><br><span class="line">0 CF 进位标志    进位或借位置1，否则置0    无符号是有效</span><br><span class="line">2 PF 奇偶标志    低8位 1的个数，奇数个为0，偶数个为1</span><br><span class="line">4 AF 辅助标志    低半字节是否有进位或借位</span><br><span class="line">6 ZF 零标志        结果是0置1，否则置0    </span><br><span class="line">7 SF 符号标志    最高位为1则置1，否则置0</span><br><span class="line">11 OF 溢出标志   溢出OF为1，否则为0    有符号数运算是否超出范围</span><br><span class="line">控制标志</span><br><span class="line">8 TF 陷阱标志   TF=0，处理器正常工作，TF=1，处理器单步执行指令</span><br><span class="line">9 IF 中断标志    IF=1 允许中断，IF=0，禁止中断 CLI(IF=0) STI(IF=1)</span><br><span class="line">10 DF 方向标志 DF=0 存储器地址自动增加 DF=1 存储器地址自动减少</span><br><span class="line"></span><br><span class="line">段寄存器:</span><br><span class="line">CS:代码段的起始位置</span><br><span class="line">DS:数据段的起始位置</span><br><span class="line">ES:附加段的起始位置</span><br><span class="line">SS:堆栈段的起始位置</span><br><span class="line">没有指明情况下，数据访问在DS段,BP访问内存在SS段</span><br><span class="line">段超越: 一般数据访问(DS)，BP基址的寻址方式(SS)，串操作的源操作数(DS)</span><br><span class="line">	可以使用（段寄存器:）实现超越</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apt-get -y install python-pip 1&gt;1.log</span><br><span class="line">pip install shadowsocks 1&gt;1.log</span><br><span class="line">cd /etc</span><br><span class="line">touch /etc/shadowsocks.json</span><br><span class="line">echo &quot;&#123;&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;server\&quot;:\&quot;0.0.0.0\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;server_port\&quot;:8388,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;local_address\&quot;:\&quot;127.0.0.1\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;local_port\&quot;:1080,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;password\&quot;:\&quot;notdefaultpass\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;timeout\&quot;:300,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;method\&quot;:\&quot;aes-256-cfb\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;fast_open\&quot;:false&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;&#125;&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>启停命令</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br></pre></td></tr></table></figure>
       
 
       
@@ -203,7 +207,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
@@ -259,7 +263,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/08/20/汇编1_寄存器/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/03/20/搭建ss/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -273,18 +277,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/汇编指令/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/20/pythonos模块/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          汇编学习2汇编指令
+          python os模块
         
       </div>
     </a>
   
   
-    <a href="/2018/08/20/Hook原理/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">HooK原理</div>
+    <a href="/2018/03/20/pythonsysargparse模块/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python sys与argparse模块</div>
       <i class="icon-circle-right"></i>
     </a>
   
