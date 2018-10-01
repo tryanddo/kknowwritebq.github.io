@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>metasploit使用集锦 | 想与做</title>
+  <title>漏洞利用原理高级 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="metasploit PostgreSQL数据库  123456//Database not connected or cache not builtservice postgresql startdb_rebuild_cachedb_status //查看数据库连接是否正常  模块  辅助模块:auxiliary攻击模块:exploits后渗透攻击模块:post攻击载荷模块:payload">
-<meta name="keywords" content="metasploit渗透魔鬼训练营笔记">
+  <meta name="description" content="GS编译技术一般在[esp-4]之前加入Security Cookie(esp Xor .data区第一个4字节数据),函数返回前首先检测Security Cookie是否覆盖,从而把针对操作系统的栈溢出变的困难。覆盖虚函数地址/异常处理地址覆盖/直接覆盖种子以及Security Cookie+SafeSEH调用RtlIsValidHandle()函数校验1.异常处理函数位于加载模块内存范围之外">
+<meta name="keywords" content="Window">
 <meta property="og:type" content="article">
-<meta property="og:title" content="metasploit使用集锦">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/06/13/metasploit问题集锦/index.html">
+<meta property="og:title" content="漏洞利用原理高级">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/09/29/漏洞利用原理高级/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="metasploit PostgreSQL数据库  123456//Database not connected or cache not builtservice postgresql startdb_rebuild_cachedb_status //查看数据库连接是否正常  模块  辅助模块:auxiliary攻击模块:exploits后渗透攻击模块:post攻击载荷模块:payload">
+<meta property="og:description" content="GS编译技术一般在[esp-4]之前加入Security Cookie(esp Xor .data区第一个4字节数据),函数返回前首先检测Security Cookie是否覆盖,从而把针对操作系统的栈溢出变的困难。覆盖虚函数地址/异常处理地址覆盖/直接覆盖种子以及Security Cookie+SafeSEH调用RtlIsValidHandle()函数校验1.异常处理函数位于加载模块内存范围之外">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-11T13:31:13.538Z">
+<meta property="og:updated_time" content="2018-09-29T07:48:24.365Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="metasploit使用集锦">
-<meta name="twitter:description" content="metasploit PostgreSQL数据库  123456//Database not connected or cache not builtservice postgresql startdb_rebuild_cachedb_status //查看数据库连接是否正常  模块  辅助模块:auxiliary攻击模块:exploits后渗透攻击模块:post攻击载荷模块:payload">
+<meta name="twitter:title" content="漏洞利用原理高级">
+<meta name="twitter:description" content="GS编译技术一般在[esp-4]之前加入Security Cookie(esp Xor .data区第一个4字节数据),函数返回前首先检测Security Cookie是否覆盖,从而把针对操作系统的栈溢出变的困难。覆盖虚函数地址/异常处理地址覆盖/直接覆盖种子以及Security Cookie+SafeSEH调用RtlIsValidHandle()函数校验1.异常处理函数位于加载模块内存范围之外">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -161,14 +161,14 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-metasploit问题集锦" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-漏洞利用原理高级" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      metasploit使用集锦
+      漏洞利用原理高级
     </h1>
   
 
@@ -178,8 +178,8 @@
 		</span>
 	    
         
-        <a href="/2018/06/13/metasploit问题集锦/" class="archive-article-date">
-  	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
+        <a href="/2018/09/29/漏洞利用原理高级/" class="archive-article-date">
+  	<time datetime="2018-09-29T07:28:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-29</time>
 </a>
         
       </header>
@@ -187,16 +187,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-</blockquote>
-<blockquote>
-<p>metasploit PostgreSQL数据库</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//Database not connected or cache not built</span><br><span class="line"></span><br><span class="line">service postgresql start</span><br><span class="line">db_rebuild_cache</span><br><span class="line"></span><br><span class="line">db_status //查看数据库连接是否正常</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>模块</p>
-</blockquote>
-<p>辅助模块:auxiliary<br>攻击模块:exploits<br>后渗透攻击模块:post<br>攻击载荷模块:payloads 在渗透攻击成功后，促使目标系统运行一段植入的代码 独立=传输器+传输体<br>空指令模块:nops 为了避免内存地址随机化和返回地址计算偏差等原因导致的shellcode执行失败，添加空指令区<br>编码器模块:encoders</p>
+        <ul>
+<li>GS编译技术<br>一般在[esp-4]之前加入Security Cookie(esp Xor .data区第一个4字节数据),函数返回前首先检测Security Cookie是否覆盖,从而把针对操作系统的栈溢出变的困难。<br>覆盖虚函数地址/异常处理地址覆盖/直接覆盖种子以及Security Cookie<br>+SafeSEH<br>调用RtlIsValidHandle()函数校验<br>1.异常处理函数位于加载模块内存范围之外,且dep关闭<br>2.异常处理函数位于加载模块内存范围之内,未启用SafeSEH,且模块不是纯IL<br>3.异常处理函数位于加载模块内存范围之内,相应模块启用SafeSEH,异常处理函数地址包含再安全S.E.H表中<br>4.S.E.H中的异常函数指针指向堆区</li>
+</ul>
 
       
 
@@ -210,7 +203,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">metasploit渗透魔鬼训练营笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Window</a>
         		</li>
       		
 		</ul>
@@ -266,7 +259,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/06/13/metasploit问题集锦/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/09/29/漏洞利用原理高级/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -280,18 +273,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/06/13/sqlmap/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          kail 2.0sqlmap使用
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/06/13/metasploit_情报收集技术/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">情报收集</div>
+    <a href="/2018/09/15/看书得角度转变/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">看书的角度转变</div>
       <i class="icon-circle-right"></i>
     </a>
   
