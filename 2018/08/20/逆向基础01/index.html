@@ -16,10 +16,24 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="查找main函数 visual stdio  1234567891011参数:3个push伪代码:push env 应是地址push argv 应是地址push argc 可能是个变量call mainVS2013 Main函数mainCRTstarup-&amp;gt;初始化函数-&amp;gt;mainVS2015 Main函数mainCRTStartup-&amp;gt;_scrt_common_main-&amp;gt">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-27T07:08:47.181Z">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2013_find_main1.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2013_find_main2.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2013_find_main3.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2015_find_main1.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2015_find_main2.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2015_find_main3.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2015_find_main4.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2015_find_main5.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2017_find_main1.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2017_find_main2.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2017_find_main3.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2017_find_main4.png">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/res/2017_find_main5.png">
+<meta property="og:updated_time" content="2018-10-01T07:52:34.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逆向基础01">
 <meta name="twitter:description" content="查找main函数 visual stdio  1234567891011参数:3个push伪代码:push env 应是地址push argv 应是地址push argc 可能是个变量call mainVS2013 Main函数mainCRTstarup-&amp;gt;初始化函数-&amp;gt;mainVS2015 Main函数mainCRTStartup-&amp;gt;_scrt_common_main-&amp;gt">
+<meta name="twitter:image" content="http://picture.jbyusk.com:8080/res/2013_find_main1.png">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -191,13 +205,19 @@
 <p>查找main函数 visual stdio</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">参数:3个push</span><br><span class="line">伪代码:</span><br><span class="line">push env 应是地址</span><br><span class="line">push argv 应是地址</span><br><span class="line">push argc 可能是个变量</span><br><span class="line">call main</span><br><span class="line"></span><br><span class="line">VS2013 Main函数</span><br><span class="line">mainCRTstarup-&gt;初始化函数-&gt;main</span><br><span class="line">VS2015 Main函数</span><br><span class="line">mainCRTStartup-&gt;_scrt_common_main-&gt;_scrt_common_main_seh-&gt;invoke_main-&gt;main</span><br></pre></td></tr></table></figure>
+<ul>
+<li>2013找main<br><img src="http://picture.jbyusk.com:8080/res/2013_find_main1.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2013_find_main2.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2013_find_main3.png" alt=""></li>
+</ul>
+<ul>
+<li>2015找main<br><img src="http://picture.jbyusk.com:8080/res/2015_find_main1.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2015_find_main2.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2015_find_main3.png" alt=""><br>在调用j_exit之上的倒数第二个call<br><img src="http://picture.jbyusk.com:8080/res/2015_find_main4.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2015_find_main5.png" alt=""></li>
+</ul>
+<ul>
+<li>2017找main<br><img src="http://picture.jbyusk.com:8080/res/2017_find_main1.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2017_find_main2.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2017_find_main3.png" alt=""><br>大致在mov [ebp+var_2C],eax之上<br><img src="http://picture.jbyusk.com:8080/res/2017_find_main4.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2017_find_main5.png" alt=""></li>
+</ul>
 <blockquote>
 <p>查找WinMain函数 visual stdio</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">参数:4个push</span><br><span class="line">伪代码:</span><br><span class="line">push xx</span><br><span class="line">push xx</span><br><span class="line">push hPrevInstance</span><br><span class="line">push hInstance(模块基址,可能调用GetModuleHandleeA)</span><br><span class="line">call WinMain</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>VS编译器生成默认代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.checkESP</span><br><span class="line">  调用之前,cmp xxx,esp指令,call内部是jnz xxx</span><br><span class="line">  一般在函数结束时,call调用完之后出现</span><br><span class="line">2.checkStackVars</span><br><span class="line">  调用之前是lea edx,xxxx指令,call内部对0xccccccc进行判断,函数一般在函数末尾</span><br></pre></td></tr></table></figure></p>
-</blockquote>
 
       
 
@@ -281,18 +301,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/dll文件的导出和调用/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/20/远程线程注入技术/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          DLL文件的导出和调用
+          远程线程注入技术
         
       </div>
     </a>
   
   
-    <a href="/2018/08/20/逆向分析方法/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">逆向分析方法</div>
+    <a href="/2018/08/20/PE文件数据结构/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PE文件数据结构</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -442,15 +462,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -494,6 +514,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Window</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
               </li>
              
@@ -503,10 +527,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Window</a>
               </li>
             
             <div class="clearfix"></div>

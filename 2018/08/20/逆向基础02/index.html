@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://picture.jbyusk.com:8080/res/delphi2.png">
 <meta property="og:image" content="http://picture.jbyusk.com:8080/res/yilan1.png">
 <meta property="og:image" content="http://picture.jbyusk.com:8080/res/yilan2.png">
-<meta property="og:updated_time" content="2018-09-28T11:21:23.632Z">
+<meta property="og:updated_time" content="2018-10-01T08:16:32.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逆向基础02-编译器特征">
 <meta name="twitter:description" content="EXEINFO与PEID的原理查壳或者查询编译语言使用特征1.OEP特征2.链接器特征3.人肉查找的时候,查看区段名称  BC++ OEP特征二进制特征:EB 10 66 62 3A 43 2B 2B 48 4F 4B第一个调用的API是GetModHandleA 链接器版本5.00 区段名称  delphi+ OEP特征二进制特征:55 8B EC 83 C4 F0 B8 ?? ?? ?? ?">
@@ -213,6 +213,9 @@
 <li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/yilan2.png" alt=""></li>
 </ol>
 <h3 id="VS程序的链接器版本"><a href="#VS程序的链接器版本" class="headerlink" title="VS程序的链接器版本"></a>VS程序的链接器版本</h3><p>VC 6.0 6.0<br>VC2003 7.0，7.1<br>VS2005 8.0<br>VS2008 9.0<br>VS2010 10.0<br>VS2012 11.0<br>VS2013 12.0<br>VS2015 14.0<br>VS2017 14.1</p>
+<ul>
+<li>VS2013 main函数特征<br>1.二进制特征<br>50 E8 ???????? 8B 00 50 E8 ???????? 8B 08 51 E8</li>
+</ul>
 
       
 
@@ -296,18 +299,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/注入方式/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/20/dll文件的导出和调用/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          dll注入方式
+          DLL文件的导出和调用
         
       </div>
     </a>
   
   
-    <a href="/2018/08/20/汇编1_寄存器/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">汇编学习1寄存器</div>
+    <a href="/2018/08/20/逆向分析方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">逆向分析方法</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -457,15 +460,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -509,6 +512,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Window</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
               </li>
              
@@ -518,10 +525,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Window</a>
               </li>
             
             <div class="clearfix"></div>
