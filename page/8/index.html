@@ -249,20 +249,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-搭建图片服务器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-python threading模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/搭建图片服务器/">ubuntu14 搭建图片服务器</a>
+      <a class="article-title" href="/2018/03/20/python threading模块/">python threading模块</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/20/搭建图片服务器/" class="archive-article-date">
+        <a href="/2018/03/20/python threading模块/" class="archive-article-date">
   	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
 </a>
         
@@ -272,9 +272,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">wget -qO - https://openresty.org/package/pubkey.gpg | sudo apt-key add -</span><br><span class="line">sudo apt-get -y install software-properties-common 1&gt;1.log</span><br><span class="line">sudo add-apt-repository -y &quot;deb http://openresty.org/package/ubuntu $(lsb_release -sc) main&quot; 1&gt;1.log</span><br><span class="line">sudo apt-get update 1&gt;1.log</span><br><span class="line"></span><br><span class="line">sudo apt-get -y install openresty 1&gt;1.log</span><br><span class="line"></span><br><span class="line">cd /usr/local/openresty/nginx/conf</span><br><span class="line">mv /usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/nginxbake.conf</span><br><span class="line"></span><br><span class="line">touch /usr/local/openresty/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">echo &quot;worker_processes  1;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">	server &#123;</span><br><span class="line">        listen       端口;</span><br><span class="line">        server_name  域名;</span><br><span class="line">        #charset koi8-r;</span><br><span class="line">        #access_log  logs/host.access.log  main;</span><br><span class="line">        location / &#123;</span><br><span class="line">            root   图片路径;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;&quot; &gt;&gt; /usr/local/openresty/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">ln -s /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx</span><br><span class="line">nginx -c /usr/local/openresty/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">mkdir 创建图片路径</span><br></pre></td></tr></table></figure></p>
+<p>线程简单用法</p>
 </blockquote>
-
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> import threading</span><br><span class="line">screenLock = threading.Semaphore(value=1) #使用锁阻止其他进程进入</span><br><span class="line">def test(n1,n2)</span><br><span class="line">    screenLock.acquire() </span><br><span class="line">    print(n1+n2)</span><br><span class="line">    screenLock.release()</span><br><span class="line"> def main()</span><br><span class="line">    t=threading.Thread(target=test,args=(n1,n2))</span><br><span class="line">    t.start()</span><br></pre></td></tr></table></figure>
       
 
       
@@ -287,7 +287,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
@@ -297,93 +297,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/搭建图片服务器/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-搭建ss" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/搭建ss/">ubuntu14 搭建ss</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/20/搭建ss/" class="archive-article-date">
-  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>vultr云ubuntu14自动安装脚本脚本</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apt-get -y install python-pip 1&gt;1.log</span><br><span class="line">pip install shadowsocks 1&gt;1.log</span><br><span class="line">cd /etc</span><br><span class="line">touch /etc/shadowsocks.json</span><br><span class="line">echo &quot;&#123;&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;server\&quot;:\&quot;0.0.0.0\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;server_port\&quot;:8388,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;local_address\&quot;:\&quot;127.0.0.1\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;local_port\&quot;:1080,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;password\&quot;:\&quot;notdefaultpass\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;timeout\&quot;:300,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;method\&quot;:\&quot;aes-256-cfb\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;fast_open\&quot;:false&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;&#125;&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>启停命令</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/搭建ss/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/20/python threading模块/">展开全文 >></a>
         </p>
       
 
@@ -471,6 +385,259 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/03/20/python pexpect/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-搭建图片服务器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/搭建图片服务器/">ubuntu14 搭建图片服务器</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/搭建图片服务器/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">wget -qO - https://openresty.org/package/pubkey.gpg | sudo apt-key add -</span><br><span class="line">sudo apt-get -y install software-properties-common 1&gt;1.log</span><br><span class="line">sudo add-apt-repository -y &quot;deb http://openresty.org/package/ubuntu $(lsb_release -sc) main&quot; 1&gt;1.log</span><br><span class="line">sudo apt-get update 1&gt;1.log</span><br><span class="line"></span><br><span class="line">sudo apt-get -y install openresty 1&gt;1.log</span><br><span class="line"></span><br><span class="line">cd /usr/local/openresty/nginx/conf</span><br><span class="line">mv /usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/nginxbake.conf</span><br><span class="line"></span><br><span class="line">touch /usr/local/openresty/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">echo &quot;worker_processes  1;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">	server &#123;</span><br><span class="line">        listen       端口;</span><br><span class="line">        server_name  域名;</span><br><span class="line">        #charset koi8-r;</span><br><span class="line">        #access_log  logs/host.access.log  main;</span><br><span class="line">        location / &#123;</span><br><span class="line">            root   图片路径;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;&quot; &gt;&gt; /usr/local/openresty/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">ln -s /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx</span><br><span class="line">nginx -c /usr/local/openresty/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">mkdir 创建图片路径</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/搭建图片服务器/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-python_mysql" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/python_mysql/">python连接mysql</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/python_mysql/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="安装pymysql-模块"><a href="#安装pymysql-模块" class="headerlink" title="安装pymysql 模块"></a>安装pymysql 模块</h1><p>pip install pymysql</p>
+<p>#code<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import pymysql</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    #建立连接</span><br><span class="line">    con = pymysql.connect(host=&apos;ip&apos;,</span><br><span class="line">                          port=端口,</span><br><span class="line">                          user=用户,</span><br><span class="line">                          password=pass,</span><br><span class="line">                          db=数据库名称)</span><br><span class="line">    </span><br><span class="line">    #获取游标</span><br><span class="line">    cursor = con.cursor()</span><br><span class="line">    #执行sql语句</span><br><span class="line">    cursor.execute(&apos;select * from users;&apos;)</span><br><span class="line">    #读取结果集</span><br><span class="line">    result = cursor.fetchall()</span><br><span class="line">    #遍历结果集</span><br><span class="line">    for row in result:</span><br><span class="line">        print(row)</span><br><span class="line">        #for key,value in row.item(): #row为字典</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>使用python连接mysql报错</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#远程连接 1045 报错</span><br><span class="line">grant usage on *.* to 用户@ip identified by &apos;pass&apos;</span><br><span class="line">FLUSH privileges;</span><br><span class="line"></span><br><span class="line">#远程连接 1044报错</span><br><span class="line">grant ALL PRIVILEGES on *.* to 用户@ip identified by &apos;pass&apos; with grant option;</span><br><span class="line">FLUSH privileges;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/python_mysql/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-搭建ss" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/搭建ss/">ubuntu14 搭建ss</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/20/搭建ss/" class="archive-article-date">
+  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>vultr云ubuntu14自动安装脚本脚本</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apt-get -y install python-pip 1&gt;1.log</span><br><span class="line">pip install shadowsocks 1&gt;1.log</span><br><span class="line">cd /etc</span><br><span class="line">touch /etc/shadowsocks.json</span><br><span class="line">echo &quot;&#123;&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;server\&quot;:\&quot;0.0.0.0\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;server_port\&quot;:8388,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;local_address\&quot;:\&quot;127.0.0.1\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;local_port\&quot;:1080,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;password\&quot;:\&quot;notdefaultpass\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;timeout\&quot;:300,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;method\&quot;:\&quot;aes-256-cfb\&quot;,&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;\&quot;fast_open\&quot;:false&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">echo &quot;&#125;&quot; &gt;&gt; /etc/shadowsocks.json</span><br><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>启停命令</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/20/搭建ss/">展开全文 >></a>
         </p>
       
 
@@ -861,181 +1028,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-香菇枸杞炖脊骨" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/香菇枸杞炖脊骨/">香菇枸杞炖脊骨</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/14/香菇枸杞炖脊骨/" class="archive-article-date">
-  	<time datetime="2018-03-14T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>1:材料处理</p>
-</blockquote>
-<pre><code>脊骨泡冷水半小时。
-干香菇泡水半小时。
-洗净枸杞备好。
-锅中煮水至沸腾，倒入脊骨大火煮3分钟。捞起脊骨。
-</code></pre><blockquote>
-<p>2:炖</p>
-</blockquote>
-<pre><code>另外烧一锅水，根据材料多少加水。
-倒入洗净的香菇，枸杞。水沸腾后加入脊骨(为了保持肉的嫩，只有在水开后加入脊骨)，并加入一块冰糖。
-水再次沸腾后，小火炖。
-炖40分钟，起锅。
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">食物</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/14/香菇枸杞炖脊骨/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-怎么读" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/怎么读/">怎么读书</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/14/怎么读/" class="archive-article-date">
-  	<time datetime="2018-03-14T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在看古典老师的拆掉思维里的墙:原来我可以这样活这本书时，书中很多观点都曾经有过或者思考过。然后突然发现这个问题，一本书，一个动画，看的过程中颇有感触，带来了一段时间的兴奋与共鸣。但是再过一个星期或者一个月，这些感悟并没有真正的影响到生活中，也没有真正的成为你的知识，从而塑造你的价值观。<br></p>
-        
-          <a class="article-more-a" href="/2018/03/14/怎么读/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/14/怎么读/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -1129,14 +1121,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
@@ -1145,7 +1129,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1153,11 +1141,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1177,11 +1169,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
+                <a href="javascript:void(0)" class="js-tag color5">vs设置</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">vs设置</a>
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1197,11 +1189,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1217,15 +1209,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脱壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Window</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">食物</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脱壳</a>
               </li>
              
               <li class="article-tag-list-item">
