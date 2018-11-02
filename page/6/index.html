@@ -338,105 +338,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-payload generate" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/13/payload generate/">payload generate</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/06/13/payload generate/" class="archive-article-date">
-  	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>以payload/windows/messagebox为例子</p>
-<ul>
-<li>generate -h</li>
-<li><p><img src="http://picture.jbyusk.com:8080/metasploit/payload_generate1.png" alt=""></p>
-</li>
-<li><p>generate -b</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">比如00会导致字符串拷贝截断,或者路径会排除一些特殊字符,所以生成shellcode的时候需要排除这些字符</span><br><span class="line">generate -b &apos;\x00&apos;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>generate -e 使用加密</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">msf payload(messagebox) &gt; show encoders</span><br><span class="line"></span><br><span class="line">Encoders</span><br><span class="line">========</span><br><span class="line"></span><br><span class="line">   Name                          Disclosure Date  Rank       Description</span><br><span class="line">   ----                          ---------------  ----       -----------</span><br><span class="line">   cmd/echo                                       good       Echo Command Encoder</span><br><span class="line">   cmd/generic_sh                                 manual     Generic Shell Variable Substitution Command Encoder</span><br><span class="line">   cmd/ifs                                        low        Generic $&#123;IFS&#125; Substitution Command Encoder</span><br><span class="line">   cmd/perl                                       normal     Perl Command Encoder</span><br><span class="line">   cmd/powershell_base64                          excellent  Powershell Base64 Command Encoder</span><br><span class="line">   cmd/printf_php_mq                              manual     printf(1) via PHP magic_quotes Utility Command Encoder</span><br><span class="line">   generic/eicar                                  manual     The EICAR Encoder</span><br><span class="line">   generic/none                                   normal     The &quot;none&quot; Encoder</span><br><span class="line">   mipsbe/byte_xori                               normal     Byte XORi Encoder</span><br><span class="line">   mipsbe/longxor                                 normal     XOR Encoder</span><br><span class="line">   mipsle/byte_xori                               normal     Byte XORi Encoder</span><br><span class="line">   mipsle/longxor                                 normal     XOR Encoder</span><br><span class="line">   php/base64                                     great      PHP Base64 Encoder</span><br><span class="line">   ppc/longxor                                    normal     PPC LongXOR Encoder</span><br><span class="line">   ppc/longxor_tag                                normal     PPC LongXOR Encoder</span><br><span class="line">   sparc/longxor_tag                              normal     SPARC DWORD XOR Encoder</span><br><span class="line">   x64/xor                                        normal     XOR Encoder</span><br><span class="line">   x64/zutto_dekiru                               manual     Zutto Dekiru</span><br><span class="line">   x86/add_sub                                    manual     Add/Sub Encoder</span><br><span class="line">   x86/alpha_mixed                                low        Alpha2 Alphanumeric Mixedcase Encoder</span><br><span class="line">   x86/alpha_upper                                low        Alpha2 Alphanumeric Uppercase Encoder</span><br><span class="line">   x86/avoid_underscore_tolower                   manual     Avoid underscore/tolower</span><br><span class="line">   x86/avoid_utf8_tolower                         manual     Avoid UTF8/tolower</span><br><span class="line">   x86/bloxor                                     manual     BloXor - A Metamorphic Block Based XOR Encoder</span><br><span class="line">   x86/bmp_polyglot                               manual     BMP Polyglot</span><br><span class="line">   x86/call4_dword_xor                            normal     Call+4 Dword XOR Encoder</span><br><span class="line">   x86/context_cpuid                              manual     CPUID-based Context Keyed Payload Encoder</span><br><span class="line">   x86/context_stat                               manual     stat(2)-based Context Keyed Payload Encoder</span><br><span class="line">   x86/context_time                               manual     time(2)-based Context Keyed Payload Encoder</span><br><span class="line">   x86/countdown                                  normal     Single-byte XOR Countdown Encoder</span><br><span class="line">   x86/fnstenv_mov                                normal     Variable-length Fnstenv/mov Dword XOR Encoder</span><br><span class="line">   x86/jmp_call_additive                          normal     Jump/Call XOR Additive Feedback Encoder</span><br><span class="line">   x86/nonalpha                                   low        Non-Alpha Encoder</span><br><span class="line">   x86/nonupper                                   low        Non-Upper Encoder</span><br><span class="line">   x86/opt_sub                                    manual     Sub Encoder (optimised)</span><br><span class="line">   x86/shikata_ga_nai                             excellent  Polymorphic XOR Additive Feedback Encoder</span><br><span class="line">   x86/single_static_bit                          manual     Single Static Bit</span><br><span class="line">   x86/unicode_mixed                              manual     Alpha2 Alphanumeric Unicode Mixedcase Encoder</span><br><span class="line">   x86/unicode_upper                              manual     Alpha2 Alphanumeric Unicode Uppercase Encoder</span><br><span class="line"></span><br><span class="line">msf payload(messagebox) &gt; generate -b &apos;\x00&apos; -e x86/alpha_upper</span><br><span class="line"># windows/messagebox - 612 bytes</span><br><span class="line"># http://www.metasploit.com</span><br><span class="line"># Encoder: x86/alpha_upper</span><br><span class="line"># VERBOSE=false, PrependMigrate=false, EXITFUNC=process, </span><br><span class="line"># TITLE=MessageBox, TEXT=Hello, from MSF!, ICON=NO</span><br><span class="line">buf = </span><br><span class="line">&quot;\x89\xe3\xdb\xda\xd9\x73\xf4\x59\x49\x49\x49\x49\x49\x43&quot; +</span><br><span class="line">&quot;\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33\x30\x56\x58&quot; +</span><br><span class="line">&quot;\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41\x30\x30\x41\x42&quot; +</span><br><span class="line">&quot;\x41\x41\x42\x54\x41\x41\x51\x32\x41\x42\x32\x42\x42\x30&quot; +</span><br><span class="line">&quot;\x42\x42\x58\x50\x38\x41\x43\x4a\x4a\x49\x48\x59\x5a\x4b&quot; +</span><br><span class="line">&quot;\x4d\x4b\x58\x59\x43\x44\x36\x44\x4c\x34\x36\x51\x49\x42&quot; +</span><br><span class="line">&quot;\x4f\x42\x53\x47\x36\x51\x58\x49\x52\x44\x4c\x4b\x34\x31&quot; +</span><br><span class="line">&quot;\x46\x50\x4c\x4b\x43\x46\x34\x4c\x4c\x4b\x34\x36\x45\x4c&quot; +</span><br><span class="line">&quot;\x4c\x4b\x37\x36\x55\x58\x4c\x4b\x43\x4e\x57\x50\x4c\x4b&quot; +</span><br><span class="line">&quot;\x36\x56\x50\x38\x30\x4f\x55\x48\x42\x55\x5a\x53\x46\x39&quot; +</span><br><span class="line">&quot;\x45\x51\x4e\x31\x4b\x4f\x4b\x51\x33\x50\x4c\x4b\x42\x4c&quot; +</span><br><span class="line">&quot;\x47\x54\x57\x54\x4c\x4b\x31\x55\x47\x4c\x4c\x4b\x36\x34&quot; +</span><br><span class="line">&quot;\x36\x48\x43\x48\x55\x51\x4a\x4a\x4c\x4b\x50\x4a\x42\x38&quot; +</span><br><span class="line">&quot;\x4c\x4b\x51\x4a\x31\x30\x35\x51\x5a\x4b\x4a\x43\x30\x34&quot; +</span><br><span class="line">&quot;\x50\x49\x4c\x4b\x30\x34\x4c\x4b\x53\x31\x4a\x4e\x30\x31&quot; +</span><br><span class="line">&quot;\x4b\x4f\x36\x51\x39\x50\x4b\x4c\x4e\x4c\x4c\x44\x49\x50&quot; +</span><br><span class="line">&quot;\x52\x54\x35\x57\x59\x51\x38\x4f\x54\x4d\x55\x51\x59\x57&quot; +</span><br><span class="line">&quot;\x4a\x4b\x5a\x54\x47\x4b\x43\x4c\x36\x44\x51\x38\x34\x35&quot; +</span><br><span class="line">&quot;\x4d\x31\x4c\x4b\x51\x4a\x46\x44\x45\x51\x5a\x4b\x55\x36&quot; +</span><br><span class="line">&quot;\x4c\x4b\x34\x4c\x50\x4b\x4c\x4b\x30\x5a\x45\x4c\x35\x51&quot; +</span><br><span class="line">&quot;\x5a\x4b\x4c\x4b\x54\x44\x4c\x4b\x33\x31\x4b\x58\x4b\x39&quot; +</span><br><span class="line">&quot;\x50\x44\x56\x44\x35\x4c\x33\x51\x59\x53\x48\x32\x33\x38&quot; +</span><br><span class="line">&quot;\x37\x59\x58\x54\x4c\x49\x4d\x35\x4b\x39\x48\x42\x55\x38&quot; +</span><br><span class="line">&quot;\x4c\x4e\x30\x4e\x54\x4e\x4a\x4c\x36\x32\x4a\x48\x4d\x4f&quot; +</span><br><span class="line">&quot;\x4b\x4f\x4b\x4f\x4b\x4f\x4d\x59\x57\x35\x53\x34\x4f\x4b&quot; +</span><br><span class="line">&quot;\x53\x4e\x59\x48\x4b\x52\x52\x53\x4b\x37\x55\x4c\x57\x54&quot; +</span><br><span class="line">&quot;\x31\x42\x4a\x48\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f\x4b\x39&quot; +</span><br><span class="line">&quot;\x37\x35\x45\x58\x33\x58\x32\x4c\x32\x4c\x31\x30\x57\x31&quot; +</span><br><span class="line">&quot;\x35\x38\x56\x53\x30\x32\x36\x4e\x43\x54\x42\x48\x44\x35&quot; +</span><br><span class="line">&quot;\x44\x33\x33\x55\x34\x32\x30\x30\x59\x4b\x4c\x48\x31\x4c&quot; +</span><br><span class="line">&quot;\x46\x44\x44\x4a\x4b\x39\x5a\x46\x50\x56\x4b\x4f\x51\x45&quot; +</span><br><span class="line">&quot;\x53\x34\x4b\x39\x4f\x32\x50\x50\x4f\x4b\x59\x38\x59\x32&quot; +</span><br><span class="line">&quot;\x30\x4d\x4f\x4c\x4c\x47\x45\x4c\x51\x34\x30\x52\x5a\x48&quot; +</span><br><span class="line">&quot;\x31\x4f\x4b\x4f\x4b\x4f\x4b\x4f\x35\x38\x42\x4f\x33\x48&quot; +</span><br><span class="line">&quot;\x46\x38\x51\x30\x55\x38\x33\x51\x55\x37\x42\x45\x31\x52&quot; +</span><br><span class="line">&quot;\x53\x58\x50\x4d\x43\x55\x43\x43\x53\x43\x30\x31\x39\x4b&quot; +</span><br><span class="line">&quot;\x4d\x58\x51\x4c\x31\x34\x45\x5a\x4b\x39\x4a\x43\x32\x48&quot; +</span><br><span class="line">&quot;\x50\x58\x57\x50\x31\x30\x47\x50\x55\x38\x50\x4d\x36\x33&quot; +</span><br><span class="line">&quot;\x30\x46\x37\x51\x33\x58\x42\x52\x32\x4f\x32\x4d\x47\x50&quot; +</span><br><span class="line">&quot;\x45\x38\x52\x4f\x56\x4c\x57\x50\x55\x36\x32\x48\x51\x58&quot; +</span><br><span class="line">&quot;\x55\x35\x52\x4c\x32\x4c\x46\x51\x4f\x39\x4b\x38\x50\x4c&quot; +</span><br><span class="line">&quot;\x57\x54\x52\x30\x4d\x59\x4d\x31\x50\x31\x39\x42\x30\x52&quot; +</span><br><span class="line">&quot;\x36\x33\x50\x51\x46\x32\x4b\x4f\x58\x50\x46\x51\x4f\x30&quot; +</span><br><span class="line">&quot;\x46\x30\x4b\x4f\x56\x35\x45\x58\x41\x41&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>generate -f 生成到文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf payload(messagebox) &gt; generate -b &apos;\x00&apos; -e x86/alpha_upper -f /root/test111.txt</span><br><span class="line">[*] Writing 2870 bytes to /root/test111.txt...</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>generate -i 加密次数 </p>
-</li>
-<li>generate -0 修改参数<br>格式: var=var </li>
-<li>generate -t 输出格式<br>曾使用python写脚本,但是没有执行输出格式,导致生成的shellcode一直不行,然后调了一整天,最后发现是输出格式的问题<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">msf payload(messagebox) &gt; generate -b &apos;\x00&apos; -e x86/alpha_upper -t python</span><br><span class="line"># windows/messagebox - 612 bytes</span><br><span class="line"># http://www.metasploit.com</span><br><span class="line"># Encoder: x86/alpha_upper</span><br><span class="line"># VERBOSE=false, PrependMigrate=false, EXITFUNC=process, </span><br><span class="line"># TITLE=MessageBox, TEXT=Hello, from MSF!, ICON=NO</span><br><span class="line">buf =  &quot;&quot;</span><br><span class="line">buf += &quot;\x89\xe0\xd9\xcc\xd9\x70\xf4\x59\x49\x49\x49\x49\x49&quot;</span><br><span class="line">buf += &quot;\x43\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33\x30&quot;</span><br><span class="line">buf += &quot;\x56\x58\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41\x30&quot;</span><br><span class="line">buf += &quot;\x30\x41\x42\x41\x41\x42\x54\x41\x41\x51\x32\x41\x42&quot;</span><br><span class="line">buf += &quot;\x32\x42\x42\x30\x42\x42\x58\x50\x38\x41\x43\x4a\x4a&quot;</span><br><span class="line">buf += &quot;\x49\x49\x49\x5a\x4b\x4d\x4b\x39\x49\x32\x54\x47\x54&quot;</span><br><span class="line">buf += &quot;\x4a\x54\x56\x51\x4e\x32\x4f\x42\x53\x47\x36\x51\x48&quot;</span><br><span class="line">buf += &quot;\x49\x52\x44\x4c\x4b\x44\x31\x46\x50\x4c\x4b\x43\x46&quot;</span><br><span class="line">buf += &quot;\x44\x4c\x4c\x4b\x52\x56\x45\x4c\x4c\x4b\x31\x56\x43&quot;</span><br><span class="line">buf += &quot;\x38\x4c\x4b\x33\x4e\x47\x50\x4c\x4b\x47\x46\x30\x38&quot;</span><br><span class="line">buf += &quot;\x50\x4f\x52\x38\x33\x45\x4a\x53\x50\x59\x55\x51\x48&quot;</span><br><span class="line">buf += &quot;\x51\x4b\x4f\x4b\x51\x33\x50\x4c\x4b\x52\x4c\x36\x44&quot;</span><br><span class="line">buf += &quot;\x31\x34\x4c\x4b\x31\x55\x47\x4c\x4c\x4b\x50\x54\x37&quot;</span><br><span class="line">buf += &quot;\x58\x43\x48\x35\x51\x4b\x5a\x4c\x4b\x51\x5a\x32\x38&quot;</span><br><span class="line">buf += &quot;\x4c\x4b\x31\x4a\x57\x50\x53\x31\x5a\x4b\x4a\x43\x46&quot;</span><br><span class="line">buf += &quot;\x54\x51\x59\x4c\x4b\x36\x54\x4c\x4b\x35\x51\x5a\x4e&quot;</span><br><span class="line">buf += &quot;\x30\x31\x4b\x4f\x30\x31\x4f\x30\x4b\x4c\x4e\x4c\x4d&quot;</span><br><span class="line">buf += &quot;\x54\x4f\x30\x53\x44\x43\x37\x59\x51\x48\x4f\x34\x4d&quot;</span><br><span class="line">buf += &quot;\x45\x51\x48\x47\x4a\x4b\x4a\x54\x57\x4b\x43\x4c\x57&quot;</span><br><span class="line">buf += &quot;\x54\x36\x48\x32\x55\x4d\x31\x4c\x4b\x30\x5a\x51\x34&quot;</span><br><span class="line">buf += &quot;\x45\x51\x5a\x4b\x43\x56\x4c\x4b\x34\x4c\x50\x4b\x4c&quot;</span><br><span class="line">buf += &quot;\x4b\x30\x5a\x35\x4c\x33\x31\x4a\x4b\x4c\x4b\x45\x54&quot;</span><br><span class="line">buf += &quot;\x4c\x4b\x43\x31\x4d\x38\x4d\x59\x47\x34\x47\x54\x45&quot;</span><br><span class="line">buf += &quot;\x4c\x35\x31\x39\x53\x4e\x52\x33\x38\x46\x49\x58\x54&quot;</span><br><span class="line">buf += &quot;\x4b\x39\x5a\x45\x4d\x59\x39\x52\x42\x48\x4c\x4e\x30&quot;</span><br><span class="line">buf += &quot;\x4e\x44\x4e\x5a\x4c\x36\x32\x4b\x58\x4d\x4f\x4b\x4f&quot;</span><br><span class="line">buf += &quot;\x4b\x4f\x4b\x4f\x4d\x59\x31\x55\x44\x44\x4f\x4b\x33&quot;</span><br><span class="line">buf += &quot;\x4e\x48\x58\x4a\x42\x33\x43\x4b\x37\x35\x4c\x51\x34&quot;</span><br><span class="line">buf += &quot;\x30\x52\x4a\x48\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f\x4b&quot;</span><br><span class="line">buf += &quot;\x39\x51\x55\x53\x38\x32\x48\x42\x4c\x32\x4c\x37\x50&quot;</span><br><span class="line">buf += &quot;\x47\x31\x55\x38\x56\x53\x56\x52\x56\x4e\x53\x54\x33&quot;</span><br><span class="line">buf += &quot;\x58\x32\x55\x32\x53\x55\x35\x54\x32\x56\x50\x49\x4b&quot;</span><br><span class="line">buf += &quot;\x4d\x58\x31\x4c\x51\x34\x54\x4a\x4d\x59\x4b\x56\x31&quot;</span><br><span class="line">buf += &quot;\x46\x4b\x4f\x46\x35\x55\x54\x4c\x49\x39\x52\x30\x50&quot;</span><br><span class="line">buf += &quot;\x4f\x4b\x4f\x58\x49\x32\x50\x4d\x4f\x4c\x4c\x47\x45&quot;</span><br><span class="line">buf += &quot;\x4c\x36\x44\x51\x42\x4a\x48\x31\x4f\x4b\x4f\x4b\x4f&quot;</span><br><span class="line">buf += &quot;\x4b\x4f\x42\x48\x42\x4f\x52\x58\x31\x48\x51\x30\x32&quot;</span><br><span class="line">buf += &quot;\x48\x55\x31\x32\x47\x32\x45\x31\x52\x45\x38\x30\x4d&quot;</span><br><span class="line">buf += &quot;\x53\x55\x43\x43\x33\x43\x46\x51\x39\x4b\x4d\x58\x51&quot;</span><br><span class="line">buf += &quot;\x4c\x36\x44\x54\x4a\x4b\x39\x4d\x33\x35\x38\x36\x38&quot;</span><br><span class="line">buf += &quot;\x57\x50\x57\x50\x37\x50\x43\x58\x30\x4d\x30\x53\x31&quot;</span><br><span class="line">buf += &quot;\x56\x47\x51\x52\x48\x33\x42\x52\x4f\x52\x4d\x57\x50&quot;</span><br><span class="line">buf += &quot;\x53\x58\x32\x4f\x36\x4c\x51\x30\x53\x56\x35\x38\x57&quot;</span><br><span class="line">buf += &quot;\x38\x43\x55\x32\x4c\x42\x4c\x30\x31\x59\x59\x4d\x58&quot;</span><br><span class="line">buf += &quot;\x50\x4c\x37\x54\x34\x50\x4b\x39\x4d\x31\x30\x31\x48&quot;</span><br><span class="line">buf += &quot;\x52\x56\x32\x31\x43\x30\x51\x51\x42\x4b\x4f\x48\x50&quot;</span><br><span class="line">buf += &quot;\x50\x31\x39\x50\x46\x30\x4b\x4f\x30\x55\x43\x38\x41&quot;</span><br><span class="line">buf += &quot;\x41&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">metasploit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/13/payload generate/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-sqlmap" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -588,6 +489,105 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/06/13/metasploit_web应用攻击类型/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-payload generate" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/13/payload generate/">payload generate</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/06/13/payload generate/" class="archive-article-date">
+  	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以payload/windows/messagebox为例子</p>
+<ul>
+<li>generate -h</li>
+<li><p><img src="http://picture.jbyusk.com:8080/metasploit/payload_generate1.png" alt=""></p>
+</li>
+<li><p>generate -b</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">比如00会导致字符串拷贝截断,或者路径会排除一些特殊字符,所以生成shellcode的时候需要排除这些字符</span><br><span class="line">generate -b &apos;\x00&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>generate -e 使用加密</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">msf payload(messagebox) &gt; show encoders</span><br><span class="line"></span><br><span class="line">Encoders</span><br><span class="line">========</span><br><span class="line"></span><br><span class="line">   Name                          Disclosure Date  Rank       Description</span><br><span class="line">   ----                          ---------------  ----       -----------</span><br><span class="line">   cmd/echo                                       good       Echo Command Encoder</span><br><span class="line">   cmd/generic_sh                                 manual     Generic Shell Variable Substitution Command Encoder</span><br><span class="line">   cmd/ifs                                        low        Generic $&#123;IFS&#125; Substitution Command Encoder</span><br><span class="line">   cmd/perl                                       normal     Perl Command Encoder</span><br><span class="line">   cmd/powershell_base64                          excellent  Powershell Base64 Command Encoder</span><br><span class="line">   cmd/printf_php_mq                              manual     printf(1) via PHP magic_quotes Utility Command Encoder</span><br><span class="line">   generic/eicar                                  manual     The EICAR Encoder</span><br><span class="line">   generic/none                                   normal     The &quot;none&quot; Encoder</span><br><span class="line">   mipsbe/byte_xori                               normal     Byte XORi Encoder</span><br><span class="line">   mipsbe/longxor                                 normal     XOR Encoder</span><br><span class="line">   mipsle/byte_xori                               normal     Byte XORi Encoder</span><br><span class="line">   mipsle/longxor                                 normal     XOR Encoder</span><br><span class="line">   php/base64                                     great      PHP Base64 Encoder</span><br><span class="line">   ppc/longxor                                    normal     PPC LongXOR Encoder</span><br><span class="line">   ppc/longxor_tag                                normal     PPC LongXOR Encoder</span><br><span class="line">   sparc/longxor_tag                              normal     SPARC DWORD XOR Encoder</span><br><span class="line">   x64/xor                                        normal     XOR Encoder</span><br><span class="line">   x64/zutto_dekiru                               manual     Zutto Dekiru</span><br><span class="line">   x86/add_sub                                    manual     Add/Sub Encoder</span><br><span class="line">   x86/alpha_mixed                                low        Alpha2 Alphanumeric Mixedcase Encoder</span><br><span class="line">   x86/alpha_upper                                low        Alpha2 Alphanumeric Uppercase Encoder</span><br><span class="line">   x86/avoid_underscore_tolower                   manual     Avoid underscore/tolower</span><br><span class="line">   x86/avoid_utf8_tolower                         manual     Avoid UTF8/tolower</span><br><span class="line">   x86/bloxor                                     manual     BloXor - A Metamorphic Block Based XOR Encoder</span><br><span class="line">   x86/bmp_polyglot                               manual     BMP Polyglot</span><br><span class="line">   x86/call4_dword_xor                            normal     Call+4 Dword XOR Encoder</span><br><span class="line">   x86/context_cpuid                              manual     CPUID-based Context Keyed Payload Encoder</span><br><span class="line">   x86/context_stat                               manual     stat(2)-based Context Keyed Payload Encoder</span><br><span class="line">   x86/context_time                               manual     time(2)-based Context Keyed Payload Encoder</span><br><span class="line">   x86/countdown                                  normal     Single-byte XOR Countdown Encoder</span><br><span class="line">   x86/fnstenv_mov                                normal     Variable-length Fnstenv/mov Dword XOR Encoder</span><br><span class="line">   x86/jmp_call_additive                          normal     Jump/Call XOR Additive Feedback Encoder</span><br><span class="line">   x86/nonalpha                                   low        Non-Alpha Encoder</span><br><span class="line">   x86/nonupper                                   low        Non-Upper Encoder</span><br><span class="line">   x86/opt_sub                                    manual     Sub Encoder (optimised)</span><br><span class="line">   x86/shikata_ga_nai                             excellent  Polymorphic XOR Additive Feedback Encoder</span><br><span class="line">   x86/single_static_bit                          manual     Single Static Bit</span><br><span class="line">   x86/unicode_mixed                              manual     Alpha2 Alphanumeric Unicode Mixedcase Encoder</span><br><span class="line">   x86/unicode_upper                              manual     Alpha2 Alphanumeric Unicode Uppercase Encoder</span><br><span class="line"></span><br><span class="line">msf payload(messagebox) &gt; generate -b &apos;\x00&apos; -e x86/alpha_upper</span><br><span class="line"># windows/messagebox - 612 bytes</span><br><span class="line"># http://www.metasploit.com</span><br><span class="line"># Encoder: x86/alpha_upper</span><br><span class="line"># VERBOSE=false, PrependMigrate=false, EXITFUNC=process, </span><br><span class="line"># TITLE=MessageBox, TEXT=Hello, from MSF!, ICON=NO</span><br><span class="line">buf = </span><br><span class="line">&quot;\x89\xe3\xdb\xda\xd9\x73\xf4\x59\x49\x49\x49\x49\x49\x43&quot; +</span><br><span class="line">&quot;\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33\x30\x56\x58&quot; +</span><br><span class="line">&quot;\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41\x30\x30\x41\x42&quot; +</span><br><span class="line">&quot;\x41\x41\x42\x54\x41\x41\x51\x32\x41\x42\x32\x42\x42\x30&quot; +</span><br><span class="line">&quot;\x42\x42\x58\x50\x38\x41\x43\x4a\x4a\x49\x48\x59\x5a\x4b&quot; +</span><br><span class="line">&quot;\x4d\x4b\x58\x59\x43\x44\x36\x44\x4c\x34\x36\x51\x49\x42&quot; +</span><br><span class="line">&quot;\x4f\x42\x53\x47\x36\x51\x58\x49\x52\x44\x4c\x4b\x34\x31&quot; +</span><br><span class="line">&quot;\x46\x50\x4c\x4b\x43\x46\x34\x4c\x4c\x4b\x34\x36\x45\x4c&quot; +</span><br><span class="line">&quot;\x4c\x4b\x37\x36\x55\x58\x4c\x4b\x43\x4e\x57\x50\x4c\x4b&quot; +</span><br><span class="line">&quot;\x36\x56\x50\x38\x30\x4f\x55\x48\x42\x55\x5a\x53\x46\x39&quot; +</span><br><span class="line">&quot;\x45\x51\x4e\x31\x4b\x4f\x4b\x51\x33\x50\x4c\x4b\x42\x4c&quot; +</span><br><span class="line">&quot;\x47\x54\x57\x54\x4c\x4b\x31\x55\x47\x4c\x4c\x4b\x36\x34&quot; +</span><br><span class="line">&quot;\x36\x48\x43\x48\x55\x51\x4a\x4a\x4c\x4b\x50\x4a\x42\x38&quot; +</span><br><span class="line">&quot;\x4c\x4b\x51\x4a\x31\x30\x35\x51\x5a\x4b\x4a\x43\x30\x34&quot; +</span><br><span class="line">&quot;\x50\x49\x4c\x4b\x30\x34\x4c\x4b\x53\x31\x4a\x4e\x30\x31&quot; +</span><br><span class="line">&quot;\x4b\x4f\x36\x51\x39\x50\x4b\x4c\x4e\x4c\x4c\x44\x49\x50&quot; +</span><br><span class="line">&quot;\x52\x54\x35\x57\x59\x51\x38\x4f\x54\x4d\x55\x51\x59\x57&quot; +</span><br><span class="line">&quot;\x4a\x4b\x5a\x54\x47\x4b\x43\x4c\x36\x44\x51\x38\x34\x35&quot; +</span><br><span class="line">&quot;\x4d\x31\x4c\x4b\x51\x4a\x46\x44\x45\x51\x5a\x4b\x55\x36&quot; +</span><br><span class="line">&quot;\x4c\x4b\x34\x4c\x50\x4b\x4c\x4b\x30\x5a\x45\x4c\x35\x51&quot; +</span><br><span class="line">&quot;\x5a\x4b\x4c\x4b\x54\x44\x4c\x4b\x33\x31\x4b\x58\x4b\x39&quot; +</span><br><span class="line">&quot;\x50\x44\x56\x44\x35\x4c\x33\x51\x59\x53\x48\x32\x33\x38&quot; +</span><br><span class="line">&quot;\x37\x59\x58\x54\x4c\x49\x4d\x35\x4b\x39\x48\x42\x55\x38&quot; +</span><br><span class="line">&quot;\x4c\x4e\x30\x4e\x54\x4e\x4a\x4c\x36\x32\x4a\x48\x4d\x4f&quot; +</span><br><span class="line">&quot;\x4b\x4f\x4b\x4f\x4b\x4f\x4d\x59\x57\x35\x53\x34\x4f\x4b&quot; +</span><br><span class="line">&quot;\x53\x4e\x59\x48\x4b\x52\x52\x53\x4b\x37\x55\x4c\x57\x54&quot; +</span><br><span class="line">&quot;\x31\x42\x4a\x48\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f\x4b\x39&quot; +</span><br><span class="line">&quot;\x37\x35\x45\x58\x33\x58\x32\x4c\x32\x4c\x31\x30\x57\x31&quot; +</span><br><span class="line">&quot;\x35\x38\x56\x53\x30\x32\x36\x4e\x43\x54\x42\x48\x44\x35&quot; +</span><br><span class="line">&quot;\x44\x33\x33\x55\x34\x32\x30\x30\x59\x4b\x4c\x48\x31\x4c&quot; +</span><br><span class="line">&quot;\x46\x44\x44\x4a\x4b\x39\x5a\x46\x50\x56\x4b\x4f\x51\x45&quot; +</span><br><span class="line">&quot;\x53\x34\x4b\x39\x4f\x32\x50\x50\x4f\x4b\x59\x38\x59\x32&quot; +</span><br><span class="line">&quot;\x30\x4d\x4f\x4c\x4c\x47\x45\x4c\x51\x34\x30\x52\x5a\x48&quot; +</span><br><span class="line">&quot;\x31\x4f\x4b\x4f\x4b\x4f\x4b\x4f\x35\x38\x42\x4f\x33\x48&quot; +</span><br><span class="line">&quot;\x46\x38\x51\x30\x55\x38\x33\x51\x55\x37\x42\x45\x31\x52&quot; +</span><br><span class="line">&quot;\x53\x58\x50\x4d\x43\x55\x43\x43\x53\x43\x30\x31\x39\x4b&quot; +</span><br><span class="line">&quot;\x4d\x58\x51\x4c\x31\x34\x45\x5a\x4b\x39\x4a\x43\x32\x48&quot; +</span><br><span class="line">&quot;\x50\x58\x57\x50\x31\x30\x47\x50\x55\x38\x50\x4d\x36\x33&quot; +</span><br><span class="line">&quot;\x30\x46\x37\x51\x33\x58\x42\x52\x32\x4f\x32\x4d\x47\x50&quot; +</span><br><span class="line">&quot;\x45\x38\x52\x4f\x56\x4c\x57\x50\x55\x36\x32\x48\x51\x58&quot; +</span><br><span class="line">&quot;\x55\x35\x52\x4c\x32\x4c\x46\x51\x4f\x39\x4b\x38\x50\x4c&quot; +</span><br><span class="line">&quot;\x57\x54\x52\x30\x4d\x59\x4d\x31\x50\x31\x39\x42\x30\x52&quot; +</span><br><span class="line">&quot;\x36\x33\x50\x51\x46\x32\x4b\x4f\x58\x50\x46\x51\x4f\x30&quot; +</span><br><span class="line">&quot;\x46\x30\x4b\x4f\x56\x35\x45\x58\x41\x41&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>generate -f 生成到文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf payload(messagebox) &gt; generate -b &apos;\x00&apos; -e x86/alpha_upper -f /root/test111.txt</span><br><span class="line">[*] Writing 2870 bytes to /root/test111.txt...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>generate -i 加密次数 </p>
+</li>
+<li>generate -0 修改参数<br>格式: var=var </li>
+<li>generate -t 输出格式<br>曾使用python写脚本,但是没有执行输出格式,导致生成的shellcode一直不行,然后调了一整天,最后发现是输出格式的问题<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">msf payload(messagebox) &gt; generate -b &apos;\x00&apos; -e x86/alpha_upper -t python</span><br><span class="line"># windows/messagebox - 612 bytes</span><br><span class="line"># http://www.metasploit.com</span><br><span class="line"># Encoder: x86/alpha_upper</span><br><span class="line"># VERBOSE=false, PrependMigrate=false, EXITFUNC=process, </span><br><span class="line"># TITLE=MessageBox, TEXT=Hello, from MSF!, ICON=NO</span><br><span class="line">buf =  &quot;&quot;</span><br><span class="line">buf += &quot;\x89\xe0\xd9\xcc\xd9\x70\xf4\x59\x49\x49\x49\x49\x49&quot;</span><br><span class="line">buf += &quot;\x43\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33\x30&quot;</span><br><span class="line">buf += &quot;\x56\x58\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41\x30&quot;</span><br><span class="line">buf += &quot;\x30\x41\x42\x41\x41\x42\x54\x41\x41\x51\x32\x41\x42&quot;</span><br><span class="line">buf += &quot;\x32\x42\x42\x30\x42\x42\x58\x50\x38\x41\x43\x4a\x4a&quot;</span><br><span class="line">buf += &quot;\x49\x49\x49\x5a\x4b\x4d\x4b\x39\x49\x32\x54\x47\x54&quot;</span><br><span class="line">buf += &quot;\x4a\x54\x56\x51\x4e\x32\x4f\x42\x53\x47\x36\x51\x48&quot;</span><br><span class="line">buf += &quot;\x49\x52\x44\x4c\x4b\x44\x31\x46\x50\x4c\x4b\x43\x46&quot;</span><br><span class="line">buf += &quot;\x44\x4c\x4c\x4b\x52\x56\x45\x4c\x4c\x4b\x31\x56\x43&quot;</span><br><span class="line">buf += &quot;\x38\x4c\x4b\x33\x4e\x47\x50\x4c\x4b\x47\x46\x30\x38&quot;</span><br><span class="line">buf += &quot;\x50\x4f\x52\x38\x33\x45\x4a\x53\x50\x59\x55\x51\x48&quot;</span><br><span class="line">buf += &quot;\x51\x4b\x4f\x4b\x51\x33\x50\x4c\x4b\x52\x4c\x36\x44&quot;</span><br><span class="line">buf += &quot;\x31\x34\x4c\x4b\x31\x55\x47\x4c\x4c\x4b\x50\x54\x37&quot;</span><br><span class="line">buf += &quot;\x58\x43\x48\x35\x51\x4b\x5a\x4c\x4b\x51\x5a\x32\x38&quot;</span><br><span class="line">buf += &quot;\x4c\x4b\x31\x4a\x57\x50\x53\x31\x5a\x4b\x4a\x43\x46&quot;</span><br><span class="line">buf += &quot;\x54\x51\x59\x4c\x4b\x36\x54\x4c\x4b\x35\x51\x5a\x4e&quot;</span><br><span class="line">buf += &quot;\x30\x31\x4b\x4f\x30\x31\x4f\x30\x4b\x4c\x4e\x4c\x4d&quot;</span><br><span class="line">buf += &quot;\x54\x4f\x30\x53\x44\x43\x37\x59\x51\x48\x4f\x34\x4d&quot;</span><br><span class="line">buf += &quot;\x45\x51\x48\x47\x4a\x4b\x4a\x54\x57\x4b\x43\x4c\x57&quot;</span><br><span class="line">buf += &quot;\x54\x36\x48\x32\x55\x4d\x31\x4c\x4b\x30\x5a\x51\x34&quot;</span><br><span class="line">buf += &quot;\x45\x51\x5a\x4b\x43\x56\x4c\x4b\x34\x4c\x50\x4b\x4c&quot;</span><br><span class="line">buf += &quot;\x4b\x30\x5a\x35\x4c\x33\x31\x4a\x4b\x4c\x4b\x45\x54&quot;</span><br><span class="line">buf += &quot;\x4c\x4b\x43\x31\x4d\x38\x4d\x59\x47\x34\x47\x54\x45&quot;</span><br><span class="line">buf += &quot;\x4c\x35\x31\x39\x53\x4e\x52\x33\x38\x46\x49\x58\x54&quot;</span><br><span class="line">buf += &quot;\x4b\x39\x5a\x45\x4d\x59\x39\x52\x42\x48\x4c\x4e\x30&quot;</span><br><span class="line">buf += &quot;\x4e\x44\x4e\x5a\x4c\x36\x32\x4b\x58\x4d\x4f\x4b\x4f&quot;</span><br><span class="line">buf += &quot;\x4b\x4f\x4b\x4f\x4d\x59\x31\x55\x44\x44\x4f\x4b\x33&quot;</span><br><span class="line">buf += &quot;\x4e\x48\x58\x4a\x42\x33\x43\x4b\x37\x35\x4c\x51\x34&quot;</span><br><span class="line">buf += &quot;\x30\x52\x4a\x48\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f\x4b&quot;</span><br><span class="line">buf += &quot;\x39\x51\x55\x53\x38\x32\x48\x42\x4c\x32\x4c\x37\x50&quot;</span><br><span class="line">buf += &quot;\x47\x31\x55\x38\x56\x53\x56\x52\x56\x4e\x53\x54\x33&quot;</span><br><span class="line">buf += &quot;\x58\x32\x55\x32\x53\x55\x35\x54\x32\x56\x50\x49\x4b&quot;</span><br><span class="line">buf += &quot;\x4d\x58\x31\x4c\x51\x34\x54\x4a\x4d\x59\x4b\x56\x31&quot;</span><br><span class="line">buf += &quot;\x46\x4b\x4f\x46\x35\x55\x54\x4c\x49\x39\x52\x30\x50&quot;</span><br><span class="line">buf += &quot;\x4f\x4b\x4f\x58\x49\x32\x50\x4d\x4f\x4c\x4c\x47\x45&quot;</span><br><span class="line">buf += &quot;\x4c\x36\x44\x51\x42\x4a\x48\x31\x4f\x4b\x4f\x4b\x4f&quot;</span><br><span class="line">buf += &quot;\x4b\x4f\x42\x48\x42\x4f\x52\x58\x31\x48\x51\x30\x32&quot;</span><br><span class="line">buf += &quot;\x48\x55\x31\x32\x47\x32\x45\x31\x52\x45\x38\x30\x4d&quot;</span><br><span class="line">buf += &quot;\x53\x55\x43\x43\x33\x43\x46\x51\x39\x4b\x4d\x58\x51&quot;</span><br><span class="line">buf += &quot;\x4c\x36\x44\x54\x4a\x4b\x39\x4d\x33\x35\x38\x36\x38&quot;</span><br><span class="line">buf += &quot;\x57\x50\x57\x50\x37\x50\x43\x58\x30\x4d\x30\x53\x31&quot;</span><br><span class="line">buf += &quot;\x56\x47\x51\x52\x48\x33\x42\x52\x4f\x52\x4d\x57\x50&quot;</span><br><span class="line">buf += &quot;\x53\x58\x32\x4f\x36\x4c\x51\x30\x53\x56\x35\x38\x57&quot;</span><br><span class="line">buf += &quot;\x38\x43\x55\x32\x4c\x42\x4c\x30\x31\x59\x59\x4d\x58&quot;</span><br><span class="line">buf += &quot;\x50\x4c\x37\x54\x34\x50\x4b\x39\x4d\x31\x30\x31\x48&quot;</span><br><span class="line">buf += &quot;\x52\x56\x32\x31\x43\x30\x51\x51\x42\x4b\x4f\x48\x50&quot;</span><br><span class="line">buf += &quot;\x50\x31\x39\x50\x46\x30\x4b\x4f\x30\x55\x43\x38\x41&quot;</span><br><span class="line">buf += &quot;\x41&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">metasploit</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/13/payload generate/">展开全文 >></a>
         </p>
       
 
@@ -808,6 +808,97 @@
         <!-- 目录内容结束 -->
 
   
+    <article id="post-中央帝国的财政秘密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/27/中央帝国的财政秘密/">&lt;中央帝国的财政秘密&gt;读后总结</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/04/27/中央帝国的财政秘密/" class="archive-article-date">
+  	<time datetime="2018-04-27T06:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>中央帝国的诞生:秦</p>
+</blockquote>
+<p>&emsp;&emsp;秦为了统一六国，围绕战争建设了一套高效财政机器，从民间抽血。但制度惯性导致秦政府无法重构财政，财政机器沿着习惯继续抽血，民间经济无法重建，最终崩塌。<br>&emsp;&emsp;<strong>建立统一国家，需要经历2个步骤。第一，军队无力征服；第二步，用文官进行政治征服，建立统一制度。战争期间，需要调用财政资源服务战争。但是政治征服时候需要财政服务于政治和民生，建立制度，发展经济。但是由于惯性，大量军队的利益，如果让军队掌握太多资源，无法建立后续的政治结构，最终导致资源分配不平衡。所以很多军事打下的帝国，又在军人的纷争或者财政危机中分崩离析。</strong><br>&emsp;&emsp;地处偏远的秦国，能组织60w大军，送往千里之外打仗，当时的制度多有高效。但是又毁于制度，人心向背。</p>
+<blockquote>
+<p>西汉</p>
+</blockquote>
+<p>&emsp;&emsp;汉高祖去世后，帝国连统一的财政制度都没有建立。只有直属领地的征税。中央只不过是比诸侯国面积大的诸侯国。但是汉高祖仇视商人和商业，并采取了很多抑制商业的措施。汉高祖采取了与秦始皇一样的用政治控制财政的道路。幸好才登基了8年，不然经济可能进一步恶化。<br>汉高祖建立的帝国过于庞大，各种问题，诸侯，外敌，底层的叛乱。<br>汉文帝:经济优先，财政让路。</p>
+<blockquote>
+<p>汉武帝时期</p>
+</blockquote>
+<p>&emsp;&emsp;汉武帝开始与匈奴开启战端,原本宽松的财政政策无法供应战争的支出。<br>&emsp;&emsp;汉武帝首先<strong>下诏卖爵</strong>，但是这是杀鸡取卵的政策，由于卖爵导致当吏的人很杂，增加帝国财政支出，最后这些人还进入了官场，导致官僚系统被败坏。<br>&emsp;&emsp;仍然无法带来足够的财政收入，汉武帝瞄准了<strong>货币</strong>。武帝之前，汉政府允许民间铸造货币，达到政府规格，即可进入市场流通。武帝听张汤之策通过铸造<strong>白金(银锡合金)</strong>搜刮民间的财富。而原本的法定货币为黄金和铜币。白金价格被严重高估，官方估值接近金的三分之二，出现暴利空间。出现大量偷铸钱币，使用假币的人。为了应对问题，投入大量人力，物力，使政府深度介入金融业。大量的人偷铸假币，最后导致白金币无法支撑，被废止。货币改革偷鸡不成蚀把米，反而造成市场混乱。<br>&emsp;&emsp;最终出路为官营垄断之源，求助于<strong>盐铁官营</strong>。政府侵蚀民间经济时代，出现一批理财专家用财产换取政府保护，并谋取更大的发展，所谓的能臣，<strong>从民间抽血，敛走的每一笔钱，最终通过另外一种方式转嫁到人民头上</strong>。能臣门跟现代非洲军事独裁者一样:通过建立国有企业，垄断自然资源，进而垄断最能影响国计民生的工业部门来获得收入。盐铁收归国有，并建立<strong>国有机构</strong>，为历朝历代提供重要蓝本。组织采集，产地低价收购，外地高价售出。许多朝代盐税占政府总收入一半。<br>&emsp;&emsp;并再投向商业税重组。采用酷吏征税。<br>&emsp;&emsp;最后2项对后世产生重大影响的政策为均输(长途运输业)，平准(粮食和土特产买卖)。目的为了增强政府财力和经济控制力。但是政府一旦逐利，比私人更加凶狠。敛财的官员坐庄哄抬价格，起不到平抑作用。成为最大的玩家。<br>&emsp;&emsp;<strong>官吏，奴婢增加导致官僚系统的财政负担增加，且由于政府控制全国经济导致物价飞涨(垄断)。对于农民农业税和人头税没有明显增加，但是工业产品价格更高，用以支付政府的垄断税。盐铁官营政策后，形成特权阶层，社会贫富差距大幅度增加，且这个阶层到农村收购大量土地，成为大地主。西汉豪强大族，东汉的世家大族，以及魏晋士族问题。且充斥各种特权阶层，拥有庞大土地，不缴纳农业税，导致农业税强加在弱势农民头上，他们拥有更少土地，承担更高的税负。</strong><br>&emsp;&emsp;武帝破坏汉初形成的官僚体制，建立围绕皇帝的内廷系统。<br>&emsp;&emsp;大一统帝国下，享有迁徙的便利，市场庞大，和平发展。也带来了日益庞大的官僚体系(<em>意味着官僚体系越来越庞大，养活且赡养问题)，引申到现代，如果发生了战争对于国家经济，民生的影响</em>。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/27/中央帝国的财政秘密/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-linux 自启动" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -928,11 +1019,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">vsfptd</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">vsfptd</a>
         		</li>
       		
 		</ul>
@@ -943,97 +1034,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/04/27/linuxvsftpd/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-中央帝国的财政秘密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/27/中央帝国的财政秘密/">&lt;中央帝国的财政秘密&gt;读后总结</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/04/27/中央帝国的财政秘密/" class="archive-article-date">
-  	<time datetime="2018-04-27T06:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>中央帝国的诞生:秦</p>
-</blockquote>
-<p>&emsp;&emsp;秦为了统一六国，围绕战争建设了一套高效财政机器，从民间抽血。但制度惯性导致秦政府无法重构财政，财政机器沿着习惯继续抽血，民间经济无法重建，最终崩塌。<br>&emsp;&emsp;<strong>建立统一国家，需要经历2个步骤。第一，军队无力征服；第二步，用文官进行政治征服，建立统一制度。战争期间，需要调用财政资源服务战争。但是政治征服时候需要财政服务于政治和民生，建立制度，发展经济。但是由于惯性，大量军队的利益，如果让军队掌握太多资源，无法建立后续的政治结构，最终导致资源分配不平衡。所以很多军事打下的帝国，又在军人的纷争或者财政危机中分崩离析。</strong><br>&emsp;&emsp;地处偏远的秦国，能组织60w大军，送往千里之外打仗，当时的制度多有高效。但是又毁于制度，人心向背。</p>
-<blockquote>
-<p>西汉</p>
-</blockquote>
-<p>&emsp;&emsp;汉高祖去世后，帝国连统一的财政制度都没有建立。只有直属领地的征税。中央只不过是比诸侯国面积大的诸侯国。但是汉高祖仇视商人和商业，并采取了很多抑制商业的措施。汉高祖采取了与秦始皇一样的用政治控制财政的道路。幸好才登基了8年，不然经济可能进一步恶化。<br>汉高祖建立的帝国过于庞大，各种问题，诸侯，外敌，底层的叛乱。<br>汉文帝:经济优先，财政让路。</p>
-<blockquote>
-<p>汉武帝时期</p>
-</blockquote>
-<p>&emsp;&emsp;汉武帝开始与匈奴开启战端,原本宽松的财政政策无法供应战争的支出。<br>&emsp;&emsp;汉武帝首先<strong>下诏卖爵</strong>，但是这是杀鸡取卵的政策，由于卖爵导致当吏的人很杂，增加帝国财政支出，最后这些人还进入了官场，导致官僚系统被败坏。<br>&emsp;&emsp;仍然无法带来足够的财政收入，汉武帝瞄准了<strong>货币</strong>。武帝之前，汉政府允许民间铸造货币，达到政府规格，即可进入市场流通。武帝听张汤之策通过铸造<strong>白金(银锡合金)</strong>搜刮民间的财富。而原本的法定货币为黄金和铜币。白金价格被严重高估，官方估值接近金的三分之二，出现暴利空间。出现大量偷铸钱币，使用假币的人。为了应对问题，投入大量人力，物力，使政府深度介入金融业。大量的人偷铸假币，最后导致白金币无法支撑，被废止。货币改革偷鸡不成蚀把米，反而造成市场混乱。<br>&emsp;&emsp;最终出路为官营垄断之源，求助于<strong>盐铁官营</strong>。政府侵蚀民间经济时代，出现一批理财专家用财产换取政府保护，并谋取更大的发展，所谓的能臣，<strong>从民间抽血，敛走的每一笔钱，最终通过另外一种方式转嫁到人民头上</strong>。能臣门跟现代非洲军事独裁者一样:通过建立国有企业，垄断自然资源，进而垄断最能影响国计民生的工业部门来获得收入。盐铁收归国有，并建立<strong>国有机构</strong>，为历朝历代提供重要蓝本。组织采集，产地低价收购，外地高价售出。许多朝代盐税占政府总收入一半。<br>&emsp;&emsp;并再投向商业税重组。采用酷吏征税。<br>&emsp;&emsp;最后2项对后世产生重大影响的政策为均输(长途运输业)，平准(粮食和土特产买卖)。目的为了增强政府财力和经济控制力。但是政府一旦逐利，比私人更加凶狠。敛财的官员坐庄哄抬价格，起不到平抑作用。成为最大的玩家。<br>&emsp;&emsp;<strong>官吏，奴婢增加导致官僚系统的财政负担增加，且由于政府控制全国经济导致物价飞涨(垄断)。对于农民农业税和人头税没有明显增加，但是工业产品价格更高，用以支付政府的垄断税。盐铁官营政策后，形成特权阶层，社会贫富差距大幅度增加，且这个阶层到农村收购大量土地，成为大地主。西汉豪强大族，东汉的世家大族，以及魏晋士族问题。且充斥各种特权阶层，拥有庞大土地，不缴纳农业税，导致农业税强加在弱势农民头上，他们拥有更少土地，承担更高的税负。</strong><br>&emsp;&emsp;武帝破坏汉初形成的官僚体制，建立围绕皇帝的内廷系统。<br>&emsp;&emsp;大一统帝国下，享有迁徙的便利，市场庞大，和平发展。也带来了日益庞大的官僚体系(<em>意味着官僚体系越来越庞大，养活且赡养问题)，引申到现代，如果发生了战争对于国家经济，民生的影响</em>。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/27/中央帝国的财政秘密/">展开全文 >></a>
         </p>
       
 
@@ -1184,7 +1184,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1192,7 +1192,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1200,15 +1200,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">逆向</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1220,15 +1216,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1248,11 +1248,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Window</a>
+                <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
+                <a href="javascript:void(0)" class="js-tag color2">Window</a>
               </li>
              
               <li class="article-tag-list-item">
