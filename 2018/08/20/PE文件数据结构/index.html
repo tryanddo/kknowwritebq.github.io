@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="IMAGE_DOS_HEADER dos头部">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-30T13:27:31.757Z">
+<meta property="og:updated_time" content="2018-10-27T00:38:34.982Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PE文件数据结构">
 <meta name="twitter:description" content="IMAGE_DOS_HEADER dos头部">
@@ -201,7 +201,7 @@
 </blockquote>
 <ul>
 <li>编程中使用IMAGE_FIRST_SECTION(pNtHeader)获取第一个区段头表的地址,通过+1获取下一个的地址</li>
-<li>FOA = RVA - VirtualAddress + PointerToRawData;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_SECTION_HEADER &#123;</span><br><span class="line">    BYTE    Name[IMAGE_SIZEOF_SHORT_NAME]; //区段的名字</span><br><span class="line">    union &#123;</span><br><span class="line">            DWORD   PhysicalAddress;</span><br><span class="line">            DWORD   VirtualSize;</span><br><span class="line">    &#125; Misc;							//区段的大小</span><br><span class="line">    DWORD   VirtualAddress;			//区段起始的相对虚拟地址(RVA)</span><br><span class="line">    DWORD   SizeOfRawData;			//区段在文件中的大小</span><br><span class="line">    DWORD   PointerToRawData;		//区段的文件偏移</span><br><span class="line">    DWORD   PointerToRelocations;</span><br><span class="line">    DWORD   PointerToLinenumbers;</span><br><span class="line">    WORD    NumberOfRelocations;</span><br><span class="line">    WORD    NumberOfLinenumbers;</span><br><span class="line">    DWORD   Characteristics; //区段的属性，载入时的意义比较重大</span><br><span class="line">&#125; IMAGE_SECTION_HEADER, *PIMAGE_SECTION_HEADER;</span><br></pre></td></tr></table></figure>
+<li>FOA = RVA - VirtualAddress + PointerToRawData;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_SECTION_HEADER &#123;</span><br><span class="line">    BYTE    Name[IMAGE_SIZEOF_SHORT_NAME]; //区段的名字</span><br><span class="line">    union &#123;</span><br><span class="line">            DWORD   PhysicalAddress;</span><br><span class="line">            DWORD   VirtualSize;</span><br><span class="line">    &#125; Misc;							//区段在文件中实际的大小</span><br><span class="line">    DWORD   VirtualAddress;			//区段起始的相对虚拟地址(RVA)</span><br><span class="line">    DWORD   SizeOfRawData;			//区段对齐后的大小</span><br><span class="line">    DWORD   PointerToRawData;		//区段的文件偏移</span><br><span class="line">    DWORD   PointerToRelocations;</span><br><span class="line">    DWORD   PointerToLinenumbers;</span><br><span class="line">    WORD    NumberOfRelocations;</span><br><span class="line">    WORD    NumberOfLinenumbers;</span><br><span class="line">    DWORD   Characteristics; //区段的属性，载入时的意义比较重大</span><br><span class="line">&#125; IMAGE_SECTION_HEADER, *PIMAGE_SECTION_HEADER;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <blockquote>
@@ -295,18 +295,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/远程线程注入技术/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/21/汇编3Win32汇编/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          远程线程注入技术
+          汇编学习2Win32汇编及进阶技术
         
       </div>
     </a>
   
   
-    <a href="/2018/08/20/dll文件的导出和调用/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">DLL文件的导出和调用</div>
+    <a href="/2018/08/20/逆向基础01/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">逆向基础01</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -440,10 +440,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
@@ -456,11 +452,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -468,11 +472,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -488,11 +492,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">vs设置</a>
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,15 +508,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -536,11 +536,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">食物</a>
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">深入理解计算机系统</a>
               </li>
             
             <div class="clearfix"></div>
