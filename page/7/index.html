@@ -157,6 +157,174 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-linuxvsftpd" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/27/linuxvsftpd/">centos7 vsftpd</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/04/27/linuxvsftpd/" class="archive-article-date">
+  	<time datetime="2018-04-27T06:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>centos7环境下<br>vsfptd<br>参考:<a href="https://www.linuxidc.com/Linux/2017-11/148518.htm" target="_blank" rel="noopener">https://www.linuxidc.com/Linux/2017-11/148518.htm</a><br>     <a href="https://blog.csdn.net/qq_15766181/article/details/46554643" target="_blank" rel="noopener">https://blog.csdn.net/qq_15766181/article/details/46554643</a><br>     <a href="https://jingyan.baidu.com/article/ae97a646f72debbbfd461d1b.html" target="_blank" rel="noopener">https://jingyan.baidu.com/article/ae97a646f72debbbfd461d1b.html</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">1.1安装vsftpd</span><br><span class="line">  yum install -y vsftpd</span><br><span class="line">1.2启动vsftpd</span><br><span class="line">  service vsftpd start</span><br><span class="line">  netstat -nltp |grep 21</span><br><span class="line"></span><br><span class="line">2 配置vsftp</span><br><span class="line">2.1阻止匿名访问和切换根目录</span><br><span class="line">  vi /etc/vsftpd/vsftp.conf</span><br><span class="line">  </span><br><span class="line">  #禁用匿名用户</span><br><span class="line">  anonymous_enable-NO</span><br><span class="line">  </span><br><span class="line">  #禁止切换根目录101行 删除</span><br><span class="line">  chroot_local_user=YES</span><br><span class="line">2.2 创建FTP用户</span><br><span class="line">  useradd ftpuser</span><br><span class="line">  #设置密码</span><br><span class="line">  echo &quot;ftpuser&quot; | passwd ftpuser --stdin </span><br><span class="line">  #只能通过FTP访问服务器</span><br><span class="line">  usermod -s /sbin/nologin ftpuser </span><br><span class="line">  #为用户分配主目录</span><br><span class="line">  mkdir -p /data/ftp/pub</span><br><span class="line">  #创建登陆欢迎文件</span><br><span class="line">  echo &quot;欢迎访问ftp服务器&quot; &gt; /data/ftp/welcome.txt</span><br><span class="line">  #设置访问权限</span><br><span class="line">  chmod a-w /data/ftp &amp;&amp; chmod 777 -R /data/ftp/pub</span><br><span class="line">  #设置用户的主目录</span><br><span class="line">  usermod -d /data/ftp ftpuser</span><br><span class="line"></span><br><span class="line">3.访问FTP</span><br><span class="line">  #关闭SELINUX</span><br><span class="line">  sestatus #查看selinux状态</span><br><span class="line">  vi /etc/selinux/config</span><br><span class="line">  SELINUX=disabled</span><br><span class="line">  reboot</span><br><span class="line">  #防火墙设置</span><br><span class="line">  iptables -A INPUT -p tcp --dport 20 -j ACCEPT</span><br><span class="line">  iptables -A INPUT -p tcp --dport 21 -j ACCEPT </span><br><span class="line">  service iptables save</span><br><span class="line">  service iptables restart</span><br><span class="line"></span><br><span class="line">4.错误问题解决</span><br><span class="line">命令: LIST</span><br><span class="line">错误: 连接超时</span><br><span class="line">错误: 读取目录列表失败</span><br><span class="line">  1.编辑vsftpd配置文件</span><br><span class="line">  vi /etc/vsftpd/vsftpd.conf</span><br><span class="line">  添加：</span><br><span class="line">  #开启被动模式</span><br><span class="line">  pasv_enable=YES  </span><br><span class="line">  #随机最小端口       </span><br><span class="line">  pasv_min_port=4000</span><br><span class="line">  #随机最大端口       </span><br><span class="line">  pasv_max_port=5000      </span><br><span class="line">  2.加载内核 ip_conntrack_ftp 和 ip_nat_ftp（终端执行）</span><br><span class="line">  modprobe ip_conntrack_ftp</span><br><span class="line">  modprobe ip_nat_ftp</span><br><span class="line">  3.防火墙设置</span><br><span class="line">  iptables -A OUTPUT -p tcp --sport 4000:5000 -j ACCEPT</span><br><span class="line">  iptables -A INPUT -p tcp --dport 4000:5000 -j ACCEPT</span><br><span class="line">  service iptables save</span><br><span class="line">  service iptables restart</span><br><span class="line">  4.重启vsftpd</span><br><span class="line">  service vsftpd restart</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">vsfptd</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/27/linuxvsftpd/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-linux 自启动" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/27/linux 自启动/">linux服务自启动</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/04/27/linux 自启动/" class="archive-article-date">
+  	<time datetime="2018-04-27T06:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>centos7 kail2.0(debain7)设置<br>systemctl list-unit-files|grep enabled #查看那些服务自启<br>systemctl enable xxx #开启某个服务自启</p>
+<p>未有systemcl之前的系统<br>chkconfig<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --list / --list sshd #查看有什么服务自启动/查看sshd服务自启动</span><br><span class="line">chkconfig servicename on/off</span><br><span class="line">chkconfig --level 35 sshd on #级别3和5开机自启动</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>原理</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/27/linux 自启动/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-python-nmap" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -410,88 +578,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-markdown语法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/markdown语法/">markdown语法</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/markdown语法/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>首先记录几个可以查询markdown语法的网站:<br><a href="https://www.jianshu.com/p/78fb460f538e" target="_blank" rel="noopener">https://www.jianshu.com/p/78fb460f538e</a><br><a href="https://blog.csdn.net/abcd302/article/details/51776467" target="_blank" rel="noopener">https://blog.csdn.net/abcd302/article/details/51776467</a><br></p>
-        
-          <a class="article-more-a" href="/2018/03/25/markdown语法/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/markdown语法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-hexo yilia" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -577,20 +663,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-生而贫穷" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-如何阅读一本书" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/生而贫穷/">生而贫穷笔记以及读后感</a>
+      <a class="article-title" href="/2018/03/25/如何阅读一本书/">&lt;如何阅读一本书&gt;之读后感</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/25/生而贫穷/" class="archive-article-date">
+        <a href="/2018/03/25/如何阅读一本书/" class="archive-article-date">
   	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
 </a>
         
@@ -599,8 +685,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>阶级的固化,社会流动性的丧失，会导致由于消费的差距，购买力不足，产生经济危机。就跟封建社会土地兼并达到一定临界点，会发生农名起义。<br>阶级靠3种，卵巢彩票(家庭等)，历史时势，个人努力。</p>
-
+        <h3 id="首先我想对整本书做归纳"><a href="#首先我想对整本书做归纳" class="headerlink" title="首先我想对整本书做归纳"></a>首先我想对整本书做归纳</h3><p> &lt;如何阅读一本书&gt;是一本实用形的书，指引读者应该如何阅读一本书，但是其中的技巧可以应用于各种杂志，文章，视频等。<br> 我认为这本书对于我最重要的2点是:</p>
+<ul>
+<li><p>如何主动的去阅读一本书<br>主动的阅读是贯彻于整本书一个观点。需要去明白阅读的目的，是为了娱乐，获取咨询，还是提高理解力。为了获得理解力而阅读的行为，需要花更多的时间去分析整本书的骨架等。<br>做一个主动阅读的读者需要提出问题，回答问题，做笔记。</p></li></ul>
+        
+          <a class="article-more-a" href="/2018/03/25/如何阅读一本书/#more">more >></a>
+        
       
 
       
@@ -623,87 +713,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/生而贫穷/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-知识变现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/知识变现/">知识变现-记录</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/知识变现/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>核心能力与热闹无关，不过时，不褪色。<br>持续行动的能力是可以训练的而训练的方式，就是持续行动。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/知识变现/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/25/如何阅读一本书/">展开全文 >></a>
         </p>
       
 
@@ -784,6 +794,88 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/03/25/偶尔一次幻想/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-shell学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/shell学习/">shell学习1</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/shell学习/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><p>常见shells<br>/bin/sh<br>/bin/bash #预设<br>/bin/zsh<br>/bin/csh<br>查看用户默认shell<br>/etc/passwd<br></p>
+        
+          <a class="article-more-a" href="/2018/03/25/shell学习/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/25/shell学习/">展开全文 >></a>
         </p>
       
 
@@ -917,88 +1009,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-shell学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/shell学习/">shell学习1</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/shell学习/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><p>常见shells<br>/bin/sh<br>/bin/bash #预设<br>/bin/zsh<br>/bin/csh<br>查看用户默认shell<br>/etc/passwd<br></p>
-        
-          <a class="article-more-a" href="/2018/03/25/shell学习/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/shell学习/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
@@ -1092,10 +1102,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
@@ -1108,11 +1114,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1121,6 +1127,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1140,15 +1150,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1164,11 +1174,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1176,11 +1186,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">

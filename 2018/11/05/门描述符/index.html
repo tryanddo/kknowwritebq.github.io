@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>人格及其转变-现象学-jordan peterson | 想与做</title>
+  <title>门描述符 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;emsp;&amp;emsp;人们生活在自己定义的感知框架中。在现实世界里的物质是无限的，我们以狭隘的感知而有目的性的去感知世界。&amp;emsp;&amp;emsp;现象的特性是过去和未来内隐其中。过去的经历，经验影响当下你对客观对象的体验。在体验当下的同时未来也在一步步展开。所以过去与当下的行为会影响未来的展开，我们没办法完全控制事件的发展，但是在某种程度上又可以影响事件的进展。我觉得应该主动去理解过去的某些客观">
-<meta name="keywords" content="笔记,心理学">
+  <meta name="description" content="调用门:type为12(1100)中断门:type为14(1110)陷阱门:type为15(1111)任务门:type为5(0101)  调用门   call cs:EIP EIP是没用的1.根据CS查gdt,发现对应的段描述符是一个调用门2.在调用门描述符存储着另一个代码段的段选择子3.选择子指向的段 段.base+调用门描述符的偏移地址就是真正要访问的地址">
+<meta name="keywords" content="Window编程原理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="人格及其转变-现象学-jordan peterson">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/11/02/人格及其转变-现象学/index.html">
+<meta property="og:title" content="门描述符">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/11/05/门描述符/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;人们生活在自己定义的感知框架中。在现实世界里的物质是无限的，我们以狭隘的感知而有目的性的去感知世界。&amp;emsp;&amp;emsp;现象的特性是过去和未来内隐其中。过去的经历，经验影响当下你对客观对象的体验。在体验当下的同时未来也在一步步展开。所以过去与当下的行为会影响未来的展开，我们没办法完全控制事件的发展，但是在某种程度上又可以影响事件的进展。我觉得应该主动去理解过去的某些客观">
+<meta property="og:description" content="调用门:type为12(1100)中断门:type为14(1110)陷阱门:type为15(1111)任务门:type为5(0101)  调用门   call cs:EIP EIP是没用的1.根据CS查gdt,发现对应的段描述符是一个调用门2.在调用门描述符存储着另一个代码段的段选择子3.选择子指向的段 段.base+调用门描述符的偏移地址就是真正要访问的地址">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-02T06:15:14.431Z">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/gdt/gdt_4.jpg">
+<meta property="og:updated_time" content="2018-11-05T11:11:27.529Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="人格及其转变-现象学-jordan peterson">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;人们生活在自己定义的感知框架中。在现实世界里的物质是无限的，我们以狭隘的感知而有目的性的去感知世界。&amp;emsp;&amp;emsp;现象的特性是过去和未来内隐其中。过去的经历，经验影响当下你对客观对象的体验。在体验当下的同时未来也在一步步展开。所以过去与当下的行为会影响未来的展开，我们没办法完全控制事件的发展，但是在某种程度上又可以影响事件的进展。我觉得应该主动去理解过去的某些客观">
+<meta name="twitter:title" content="门描述符">
+<meta name="twitter:description" content="调用门:type为12(1100)中断门:type为14(1110)陷阱门:type为15(1111)任务门:type为5(0101)  调用门   call cs:EIP EIP是没用的1.根据CS查gdt,发现对应的段描述符是一个调用门2.在调用门描述符存储着另一个代码段的段选择子3.选择子指向的段 段.base+调用门描述符的偏移地址就是真正要访问的地址">
+<meta name="twitter:image" content="http://picture.jbyusk.com:8080/gdt/gdt_4.jpg">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -161,14 +163,14 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-人格及其转变-现象学" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-门描述符" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      人格及其转变-现象学-jordan peterson
+      门描述符
     </h1>
   
 
@@ -178,8 +180,8 @@
 		</span>
 	    
         
-        <a href="/2018/11/02/人格及其转变-现象学/" class="archive-article-date">
-  	<time datetime="2018-11-02T05:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-02</time>
+        <a href="/2018/11/05/门描述符/" class="archive-article-date">
+  	<time datetime="2018-11-05T08:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
 </a>
         
       </header>
@@ -187,7 +189,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&emsp;&emsp;人们生活在自己定义的感知框架中。在现实世界里的物质是无限的，我们以狭隘的感知而有目的性的去感知世界。<br>&emsp;&emsp;现象的特性是过去和未来内隐其中。过去的经历，经验影响当下你对客观对象的体验。在体验当下的同时未来也在一步步展开。所以过去与当下的行为会影响未来的展开，我们没办法完全控制事件的发展，但是在某种程度上又可以影响事件的进展。我觉得应该主动去理解过去的某些客观规律，而不是被动依靠大脑的一种本能去一天天度日。主动去观察我们的过去和想象未来是很有趣的事情。<br>&emsp;&emsp;对于现象学的观点是要重塑对于客体的看法。与客体的互动决定了对于客观体验的展开。是不是意味着当你拥有大量关于互动对于体验展开的数据时，就能逆向的根据想要得到的客观体验去选择互动的方式。知道自己在哪，在干什么，带有目标的去感知客观世界。虽然客体是客观存在,但是根据你观察客体的主观目的，仍然会使客体呈现出不同的体验。个体与个体所体验的所有的元素构成了个人现实。<br>&emsp;&emsp;感知是一种主动的现象，不存在被动感知。你在哪，你将去哪，为了联系这2者所采取的实际行动。过去与未来内隐其中是因为，过去建立的价值体系影响了现在的感知。我在想一个人被动的抵触这个世界的时候，即使自身没有意识到,但是自我就会以消极的态度去感知世界，从而感知到的世界所呈现出来的特性大概上也是消极的。人与人感知的复杂性在于，我们带有目的性去感知人，获得的感知却可能阻碍我们的目的性，比如想放假，想获得快乐，或者未来的某段生活。<br>&emsp;&emsp;最先被感知到的是意义。通常我们以为感知世界的方式是先看到客体，思考并评价，然后做出反应。即为遵从客体，感觉，知觉，情绪，认知，最后行为。但是其实不是这样。我们与世界的互动是多层次的，最低一层应该是生理反应上的无意识的行为。世界上充满无数对你有意义的，影响到你生存的客体，最先感知到是这个模式与你生存之间的相关性。我们对于意义做出反应。正是由于我们演化出意义的感知，这使我们得以生存。如果对于意义的定义是生存的机制，那对于某件事的意义就在于，生存机制告诉我们做这件事情在过去和未来都会很和谐。<br>&emsp;&emsp;是什么决定我们所感知客体的意义。是我们透过我们的价值文化历史去感知，还是客体本身就存在的。比如美的意义，是你的透过自己的过滤网看到美，还是美本身就存在。jordan peterson的观点是2者都存在。<br>&emsp;&emsp;好奇心不能完全控制，但是也不是随机产生的。精神分裂症的部分原因是随机的产生意义，这种意义有着不连贯性。而足够聪明的把这些不连贯的意义联系起来会产生偏执型幻觉。如果说好奇心是自我对于本我的显现，那么看一个人好奇心的点就能隐现出一个人价值体系，以及赖以生存的结构。而改变别人这种体系和结构是很难的，因为这是与其生存的机制息息相关。而为什么有人会想要改变自身的体系和结构了呢，难道是因为这个人意识到了自身的生存机制存在了某种问题。<br>&emsp;&emsp;在好奇心的驱动下，你感知世界，形成自我，同时也形成对于世界的认知。<br>&emsp;&emsp;物体的复杂性在于，当了做了一件事，你以为你知道它会带来什么，它可能完成预期的某些功能，但是在时间的推移下，它会产生了更多的可能性。我们只能在自己认知下有限的掌控事物，或者说我们都在通过自身感知的小孔看世界。<br>&emsp;&emsp;最先到达未来的是想象力，先想象，然后通过语言去表达。真正的艺术应该是表达出超越语言所能表达的东西，蕴含着对于想象力的表诉。<br>&emsp;&emsp;没有对存在承担起责任，就会产生神经的愧疚和自责。</p>
+        <p>调用门:type为12(1100)<br>中断门:type为14(1110)<br>陷阱门:type为15(1111)<br>任务门:type为5(0101)</p>
+<blockquote>
+<p>调用门</p>
+</blockquote>
+<p><img src="http://picture.jbyusk.com:8080/gdt/gdt_4.jpg" alt=""></p>
+<p>call cs:EIP EIP是没用的<br>1.根据CS查gdt,发现对应的段描述符是一个调用门<br>2.在调用门描述符存储着另一个代码段的段选择子<br>3.选择子指向的段 段.base+调用门描述符的偏移地址就是真正要访问的地址</p>
 
       
 
@@ -201,11 +208,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">心理学</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
         		</li>
       		
 		</ul>
@@ -261,7 +264,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/11/02/人格及其转变-现象学/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/11/05/门描述符/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -276,8 +279,8 @@
 <nav id="article-nav">
   
   
-    <a href="/2018/10/29/计算机系统漫游/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">计算机系统漫游</div>
+    <a href="/2018/11/02/人格及其转变-现象学-jordan peterson/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">人格及其转变-现象学-jordan peterson</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -411,10 +414,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
@@ -427,7 +426,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -439,23 +450,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,6 +474,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
@@ -479,7 +486,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -487,11 +494,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">Window内核漏洞利用</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Window内核漏洞利用</a>
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -500,10 +511,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Window</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
               </li>
              
               <li class="article-tag-list-item">

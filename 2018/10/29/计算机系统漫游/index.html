@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="系统的硬件组成   总线携带并在各个部件中传递数据 I/O设备I/O设备通过控制器或者适配器与I/O总线相连。控制器和适配器的区别是封装方式的不同,作用都是在I/O总线和I/O设备之间传递数据 主存临时存储设备。由一组动态随机存取存储器(DRAM)芯片组成。逻辑上讲,存储器是一个线性的字节数组,每个字节都有一个索引即为地址。 处理器中央处理单元(CPU)。解释(或执行)主存中存储的指令。CPU从">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-29T13:31:17.507Z">
+<meta property="og:updated_time" content="2018-11-02T07:54:00.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机系统漫游">
 <meta name="twitter:description" content="系统的硬件组成   总线携带并在各个部件中传递数据 I/O设备I/O设备通过控制器或者适配器与I/O总线相连。控制器和适配器的区别是封装方式的不同,作用都是在I/O总线和I/O设备之间传递数据 主存临时存储设备。由一组动态随机存取存储器(DRAM)芯片组成。逻辑上讲,存储器是一个线性的字节数组,每个字节都有一个索引即为地址。 处理器中央处理单元(CPU)。解释(或执行)主存中存储的指令。CPU从">
@@ -207,8 +207,13 @@
 <blockquote>
 <p>操作系统管理硬件</p>
 </blockquote>
-<p>为了防止</p>
-<p>0x0F335A70</p>
+<p>1.为了防止硬件被应用程序滥用<br>2.为应用程序提供一个简单一致的机制来控制复制而通常不相同的低级硬件设备。<br>操作系统通过几个基础的抽象概念来实现这2个功能:进程,虚拟内存和文件。进程是对处理器,主存和I/O设备的抽象表示.虚拟内存是主存和磁盘I/O设备的抽象表示.文件时对I/O设备的抽象表示。</p>
+<ul>
+<li>进程<br>进程是操作系统对于一个运行中的程序的抽象。操作系统通过上下文切换来实现并发执行进程。上下文包括寄存器,PC,主存的内容等。</li>
+<li>线程<br>一个进程可以由多个线程的执行单元组成。每个线程共享同样的代码和全局数据。</li>
+<li>虚拟内存<br>基本思想,将进程的虚拟内存的内容存储在硬盘上,然后用主存作为磁盘的高速缓存。</li>
+<li>文件<br>文件即为字节序列。</li>
+</ul>
 
       
 
@@ -302,8 +307,8 @@
     </a>
   
   
-    <a href="/2018/10/26/qq防撤回/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">qq防撤回</div>
+    <a href="/2018/10/26/加壳_C++Stub实现加壳/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">加壳_C++Stub实现加壳</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -437,10 +442,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
@@ -453,11 +454,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -466,6 +467,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -485,15 +490,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -509,11 +514,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -521,11 +526,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="CPU对调试的硬件支持 外部中断称为中断,内部中断称为异常。 异常的中断分为3种:故障/陷阱/终止 1. 故障,进入异常处理程序前,保存引发异常的CS和EIP,然后处理异常后返回异常出现的指令出接着执行。 2. 陷阱,    进入异常处理程序前,保存引发异常的下一条指令的CS和EIP 3. 终止,很难纠正此类错误的明确信息。  调试器一般有以下2种形式:  汇编级调试器:显示被调试进程正在执行的">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-13T13:31:07.392Z">
+<meta property="og:updated_time" content="2018-11-05T11:11:32.527Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="调试器">
 <meta name="twitter:description" content="CPU对调试的硬件支持 外部中断称为中断,内部中断称为异常。 异常的中断分为3种:故障/陷阱/终止 1. 故障,进入异常处理程序前,保存引发异常的CS和EIP,然后处理异常后返回异常出现的指令出接着执行。 2. 陷阱,    进入异常处理程序前,保存引发异常的下一条指令的CS和EIP 3. 终止,很难纠正此类错误的明确信息。  调试器一般有以下2种形式:  汇编级调试器:显示被调试进程正在执行的">
@@ -282,18 +282,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/基于SEH的exploit/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/20/分段机制-32位下的gdt/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          基于SEH的exploit
+          分段机制_32位下的gdt
         
       </div>
     </a>
   
   
-    <a href="/2018/08/20/dll文件的导出和调用/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">DLL文件的导出和调用</div>
+    <a href="/2018/08/20/迫使shellcode执行方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">exploit_2_迫使shellcode执行方法</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -427,10 +427,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
@@ -443,11 +439,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -456,6 +452,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -475,15 +475,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -499,11 +499,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -511,11 +511,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">

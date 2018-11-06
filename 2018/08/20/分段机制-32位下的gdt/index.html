@@ -6,17 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>qq防撤回 | 想与做</title>
+  <title>分段机制_32位下的gdt | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="逆向">
+  <meta name="description" content="段寄存器  8086段寄存器有CS,DS,ES,SS32位处理器中,增加了FS,GS段寄存器中可见部分为16位的段选择子,不可见部分为描述符高速缓存器，存放段的基地址,范围和段属性。T1 = 0时使用gdt,T1 = 1时使用ldtRPL为0,1,2,3环,表示权限index在T1 = 0下,表示在gdt表的第几项  gdtr-全局描述符表寄存器  gdtr为48位高32位为gdt的基地址低16">
+<meta name="keywords" content="内核编程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="qq防撤回">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/10/26/qq防撤回/index.html">
+<meta property="og:title" content="分段机制_32位下的gdt">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/08/20/分段机制-32位下的gdt/index.html">
 <meta property="og:site_name" content="想与做">
+<meta property="og:description" content="段寄存器  8086段寄存器有CS,DS,ES,SS32位处理器中,增加了FS,GS段寄存器中可见部分为16位的段选择子,不可见部分为描述符高速缓存器，存放段的基地址,范围和段属性。T1 = 0时使用gdt,T1 = 1时使用ldtRPL为0,1,2,3环,表示权限index在T1 = 0下,表示在gdt表的第几项  gdtr-全局描述符表寄存器  gdtr为48位高32位为gdt的基地址低16">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-25T13:33:38.654Z">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/gdt/gdt_1.jpg">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/gdt/gdt_2.jpg">
+<meta property="og:image" content="http://picture.jbyusk.com:8080/gdt/gdt_3.jpg">
+<meta property="og:updated_time" content="2018-11-06T05:55:40.171Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="qq防撤回">
+<meta name="twitter:title" content="分段机制_32位下的gdt">
+<meta name="twitter:description" content="段寄存器  8086段寄存器有CS,DS,ES,SS32位处理器中,增加了FS,GS段寄存器中可见部分为16位的段选择子,不可见部分为描述符高速缓存器，存放段的基地址,范围和段属性。T1 = 0时使用gdt,T1 = 1时使用ldtRPL为0,1,2,3环,表示权限index在T1 = 0下,表示在gdt表的第几项  gdtr-全局描述符表寄存器  gdtr为48位高32位为gdt的基地址低16">
+<meta name="twitter:image" content="http://picture.jbyusk.com:8080/gdt/gdt_1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -158,14 +165,14 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-qq防撤回" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-分段机制-32位下的gdt" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      qq防撤回
+      分段机制_32位下的gdt
     </h1>
   
 
@@ -175,8 +182,8 @@
 		</span>
 	    
         
-        <a href="/2018/10/26/qq防撤回/" class="archive-article-date">
-  	<time datetime="2018-10-26T13:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-26</time>
+        <a href="/2018/08/20/分段机制-32位下的gdt/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
       </header>
@@ -184,7 +191,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <blockquote>
+<p>段寄存器</p>
+</blockquote>
+<p>8086段寄存器有CS,DS,ES,SS<br>32位处理器中,增加了FS,GS<br>段寄存器中可见部分为16位的段选择子,不可见部分为描述符高速缓存器，存放段的基地址,范围和段属性。<br><img src="http://picture.jbyusk.com:8080/gdt/gdt_1.jpg" alt=""><br>T1 = 0时使用gdt,T1 = 1时使用ldt<br>RPL为0,1,2,3环,表示权限<br>index在T1 = 0下,表示在gdt表的第几项</p>
+<blockquote>
+<p>gdtr-全局描述符表寄存器</p>
+</blockquote>
+<p>gdtr为48位<br>高32位为gdt的基地址<br>低16位为gdt的项个数</p>
+<blockquote>
+<p>gdt 描述表</p>
+</blockquote>
+<p><img src="http://picture.jbyusk.com:8080/gdt/gdt_2.jpg" alt=""><br>G 粒度位,0时,粒度位字节,1时,粒度位4kb<br>D/B 默认操作大小(0=16位段;1=32位段)<br>L 64位代码段<br>AVL 可供系统软件使用<br>P 描述符有效位 为1时段描述符有效<br>DPL 描述符特权级别<br>S 描述符类型(0=系统段,1=代码段或数据段)<br>TYPE 段的类型 4位<br>当S=1:<br><img src="http://picture.jbyusk.com:8080/gdt/gdt_3.jpg" alt=""><br>最高位=0为数据段,最高位=1为代码段<br>对于数据段默认可读,E=1为向下扩展,E=0为向上扩展<br>                 W=1为可写,W=0为不可写<br>对于代码段默认可执行,C=1为一致性段,C=0为非一致性段<br>                 R=1为可读,R=0为不可读</p>
+
       
 
       
@@ -197,7 +216,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内核编程</a>
         		</li>
       		
 		</ul>
@@ -253,7 +272,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/10/26/qq防撤回/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/08/20/分段机制-32位下的gdt/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -267,18 +286,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/10/29/计算机系统漫游/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/20/注入方式/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          计算机系统漫游
+          dll注入方式
         
       </div>
     </a>
   
   
-    <a href="/2018/10/26/加壳_添加区段信息/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">加壳_添加区段信息</div>
+    <a href="/2018/08/20/Windows调试器编写/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">调试器</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -412,10 +431,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
@@ -428,11 +443,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -441,6 +456,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -460,15 +479,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -484,11 +503,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -496,11 +515,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
