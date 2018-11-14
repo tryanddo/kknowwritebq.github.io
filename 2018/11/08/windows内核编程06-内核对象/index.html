@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>Tag: Window | 想与做</title>
+  <title>windows内核编程06-内核对象以及Object_HOOk | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="想与做">
-<meta property="og:url" content="http://blog.jbyusk.com/tags/Window/index.html">
+  <meta name="description" content="windows内核主要有3层:执行体,微内核,HAL其中对象管理器是执行体中的组件:主要管理执行体对象内核对象包含2部分组成:对象头和对象体每个对象的对象头都一样,而对象体根据不同对象而不一样  对象头12345678910111213141516kd&amp;gt; dt _OBJECT_HEADERnt!_OBJECT_HEADER   +0x000 PointerCount     : Int4B">
+<meta name="keywords" content="HOOK技术,内核编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows内核编程06-内核对象以及Object_HOOk">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/11/08/windows内核编程06-内核对象/index.html">
 <meta property="og:site_name" content="想与做">
+<meta property="og:description" content="windows内核主要有3层:执行体,微内核,HAL其中对象管理器是执行体中的组件:主要管理执行体对象内核对象包含2部分组成:对象头和对象体每个对象的对象头都一样,而对象体根据不同对象而不一样  对象头12345678910111213141516kd&amp;gt; dt _OBJECT_HEADERnt!_OBJECT_HEADER   +0x000 PointerCount     : Int4B">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-11T01:46:13.855Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="想与做">
+<meta name="twitter:title" content="windows内核编程06-内核对象以及Object_HOOk">
+<meta name="twitter:description" content="windows内核主要有3层:执行体,微内核,HAL其中对象管理器是执行体中的组件:主要管理执行体对象内核对象包含2部分组成:对象头和对象体每个对象的对象头都一样,而对象体根据不同对象而不一样  对象头12345678910111213141516kd&amp;gt; dt _OBJECT_HEADERnt!_OBJECT_HEADER   +0x000 PointerCount     : Int4B">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -156,59 +161,191 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-windows内核编程06-内核对象" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/29/漏洞利用原理高级/" class="archive-article-date">
-  	<time datetime="2018-09-29T07:28:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-29</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/29/漏洞利用原理高级/">漏洞利用原理高级</a>
+    <h1 class="article-title" itemprop="name">
+      windows内核编程06-内核对象以及Object_HOOk
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+	    
+        
+        <a href="/2018/11/08/windows内核编程06-内核对象/" class="archive-article-date">
+  	<time datetime="2018-11-08T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-08</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>windows内核主要有3层:执行体,微内核,HAL<br>其中对象管理器是执行体中的组件:主要管理执行体对象<br>内核对象包含2部分组成:对象头和对象体<br>每个对象的对象头都一样,而对象体根据不同对象而不一样</p>
+<ul>
+<li>对象头<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _OBJECT_HEADER</span><br><span class="line">nt!_OBJECT_HEADER</span><br><span class="line">   +0x000 PointerCount     : Int4B</span><br><span class="line">   +0x004 HandleCount      : Int4B</span><br><span class="line">   +0x004 NextToFree       : Ptr32 Void</span><br><span class="line">   +0x008 Lock             : _EX_PUSH_LOCK</span><br><span class="line">   +0x00c TypeIndex        : UChar</span><br><span class="line">   +0x00d TraceFlags       : UChar</span><br><span class="line">   +0x00e InfoMask         : UChar</span><br><span class="line">   +0x00f Flags            : UChar</span><br><span class="line">   +0x010 ObjectCreateInfo : Ptr32 _OBJECT_CREATE_INFORMATION</span><br><span class="line">   +0x010 QuotaBlockCharged : Ptr32 Void</span><br><span class="line">   +0x014 SecurityDescriptor : Ptr32 Void</span><br><span class="line">   +0x018 Body             : _QUAD</span><br><span class="line"></span><br><span class="line">其中TypeIndex表示对象的类型,是数组的下标,数组名为ObTypeIndexTable由nt模块导出</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>内核对象类型</p>
+</blockquote>
+<ul>
+<li>Object Hook概念</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"># OBJECT HOOK原理</span><br><span class="line">1. 找到对象原型地址表:ObTypeIndexTable</span><br><span class="line">2. 在表中找到要HOOK的对象的原型,遍历表,使用类型名来找出原型.</span><br><span class="line">3. 通过`OBJECT_TYPE`结构体中的`TypeInfo` 就能找到原型中保存的函数指针</span><br><span class="line">4. 将自定义的函数保存到要HOOK的函数指针中.</span><br><span class="line"></span><br><span class="line">ObTypeIndexTable是一个指针数组 存放_OBJECT_TYPE结构体的地址</span><br><span class="line">_OBJECT_TYPE+0x28存放_OBJECT_TYPE_INITIALIZER结构体</span><br><span class="line">_OBJECT_TYPE_INITIALIZER+0x30之后的一些成员为对象成员函数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">通过替换_OBJECT_TYPE_INITIALIZER的函数指针来进行hook</span><br><span class="line">kd&gt; dd ObTypeIndexTable</span><br><span class="line">83f7d580  00000000 bad0b0b0 86544768 865446a0</span><br><span class="line">83f7d590  865445d8 865ce040 865cef00 865cee38</span><br><span class="line">83f7d5a0  865ced70 865ceca8 865cebe0 865ce528</span><br><span class="line">83f7d5b0  865ea418 865ea350 865f1040 865f1208</span><br><span class="line">83f7d5c0  865f1140 865f52f8 865f5230 865f5168</span><br><span class="line">83f7d5d0  865ebc90 865ebbc8 865ebb00 865eba38</span><br><span class="line">83f7d5e0  865eb970 865eb8a8 865eb7e0 865eb718</span><br><span class="line">83f7d5f0  865eb650 865f2f78 865f2eb0 865f2de8</span><br><span class="line">kd&gt; dt _OBJECT_TYPE 86544768 </span><br><span class="line">nt!_OBJECT_TYPE</span><br><span class="line">   +0x000 TypeList         : _LIST_ENTRY [ 0x86544740 - 0x866111a8 ]DefaultObject</span><br><span class="line">   +0x008 Name             : _UNICODE_STRING &quot;Type&quot;</span><br><span class="line">   +0x010     : 0x83f7c860 Void</span><br><span class="line">   +0x014 Index            : 0x2 &apos;&apos;</span><br><span class="line">   +0x018 TotalNumberOfObjects : 0x2a</span><br><span class="line">   +0x01c TotalNumberOfHandles : 0</span><br><span class="line">   +0x020 HighWaterNumberOfObjects : 0x2a</span><br><span class="line">   +0x024 HighWaterNumberOfHandles : 0</span><br><span class="line">   +0x028 TypeInfo         : _OBJECT_TYPE_INITIALIZER</span><br><span class="line">   +0x078 TypeLock         : _EX_PUSH_LOCK</span><br><span class="line">   +0x07c Key              : 0x546a624f</span><br><span class="line">   +0x080 CallbackList     : _LIST_ENTRY [ 0x865447e8 - 0x865447e8 ]</span><br><span class="line">kd&gt; dt _OBJECT_TYPE_INITIALIZER</span><br><span class="line">nt!_OBJECT_TYPE_INITIALIZER</span><br><span class="line">   +0x000 Length           : Uint2B</span><br><span class="line">   +0x002 ObjectTypeFlags  : UChar</span><br><span class="line">   +0x002 CaseInsensitive  : Pos 0, 1 Bit</span><br><span class="line">   +0x002 UnnamedObjectsOnly : Pos 1, 1 Bit</span><br><span class="line">   +0x002 UseDefaultObject : Pos 2, 1 Bit</span><br><span class="line">   +0x002 SecurityRequired : Pos 3, 1 Bit</span><br><span class="line">   +0x002 MaintainHandleCount : Pos 4, 1 Bit</span><br><span class="line">   +0x002 MaintainTypeList : Pos 5, 1 Bit</span><br><span class="line">   +0x002 SupportsObjectCallbacks : Pos 6, 1 Bit</span><br><span class="line">   +0x002 CacheAligned     : Pos 7, 1 Bit</span><br><span class="line">   +0x004 ObjectTypeCode   : Uint4B</span><br><span class="line">   +0x008 InvalidAttributes : Uint4B</span><br><span class="line">   +0x00c GenericMapping   : _GENERIC_MAPPING</span><br><span class="line">   +0x01c ValidAccessMask  : Uint4B</span><br><span class="line">   +0x020 RetainAccess     : Uint4B</span><br><span class="line">   +0x024 PoolType         : _POOL_TYPE</span><br><span class="line">   +0x028 DefaultPagedPoolCharge : Uint4B</span><br><span class="line">   +0x02c DefaultNonPagedPoolCharge : Uint4B</span><br><span class="line">   +0x030 DumpProcedure    : Ptr32     void </span><br><span class="line">   +0x034 OpenProcedure    : Ptr32     long </span><br><span class="line">   +0x038 CloseProcedure   : Ptr32     void </span><br><span class="line">   +0x03c DeleteProcedure  : Ptr32     void </span><br><span class="line">   +0x040 ParseProcedure   : Ptr32     long </span><br><span class="line">   +0x044 SecurityProcedure : Ptr32     long </span><br><span class="line">   +0x048 QueryNameProcedure : Ptr32     long </span><br><span class="line">   +0x04c OkayToCloseProcedure : Ptr32     unsigned char</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Object Hook实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br></pre></td><td class="code"><pre><span class="line">//函数原型可以在WRK项目中找到</span><br><span class="line">typedef NTSTATUS(*FnIopParseFile)(</span><br><span class="line">	IN PVOID ParseObject,</span><br><span class="line">	IN PVOID ObjectType,</span><br><span class="line">	IN PACCESS_STATE AccessState,</span><br><span class="line">	IN KPROCESSOR_MODE AccessMode,</span><br><span class="line">	IN ULONG Attributes,</span><br><span class="line">	IN OUT PUNICODE_STRING CompleteName,</span><br><span class="line">	IN OUT PUNICODE_STRING RemainingName,</span><br><span class="line">	IN OUT PVOID Context OPTIONAL,</span><br><span class="line">	IN PSECURITY_QUALITY_OF_SERVICE SecurityQos OPTIONAL,</span><br><span class="line">	OUT PVOID *Object</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">// 声明函数</span><br><span class="line">PULONG _declspec(dllimport) ObGetObjectType(PVOID);</span><br><span class="line"></span><br><span class="line">FnIopParseFile g_oldObjectParse;</span><br><span class="line">POBJECT_TYPE g_pFileObjType;</span><br><span class="line"></span><br><span class="line">typedef struct _OBJECT_TYPE_INITIALIZER</span><br><span class="line">&#123;</span><br><span class="line">	USHORT Length;</span><br><span class="line">	USHORT type;</span><br><span class="line">	PVOID ObjectTypeCode;</span><br><span class="line">	PVOID InvalidAttributes;</span><br><span class="line">	GENERIC_MAPPING GenericMapping;</span><br><span class="line">	PVOID ValidAccessMask;</span><br><span class="line">	PVOID RetainAccess;</span><br><span class="line">	POOL_TYPE PoolType;</span><br><span class="line">	PVOID DefaultPagedPoolCharge;</span><br><span class="line">	PVOID DefaultNonPagedPoolCharge;</span><br><span class="line">	PVOID DumpProcedure;</span><br><span class="line">	PVOID OpenProcedure;</span><br><span class="line">	PVOID CloseProcedure;</span><br><span class="line">	PVOID DeleteProcedure;</span><br><span class="line">	PVOID ParseProcedure;</span><br><span class="line">	PVOID SecurityProcedure;</span><br><span class="line">	PVOID QueryNameProcedure;</span><br><span class="line">	USHORT OkayToCloseProcedure;</span><br><span class="line">&#125; OBJECT_TYPE_INITIALIZER, *POBJECT_TYPE_INITIALIZER;</span><br><span class="line"></span><br><span class="line">typedef struct _OBJECT_TYPE</span><br><span class="line">&#123;</span><br><span class="line">	LIST_ENTRY TypeList;         //         : _LIST_ENTRY</span><br><span class="line">	UNICODE_STRING Name;         //             : _UNICODE_STRING</span><br><span class="line">	PVOID DefaultObject;         //    : Ptr32 Void</span><br><span class="line">	ULONG Index;         //            : UChar</span><br><span class="line">	ULONG TotalNumberOfObjects;         // : Uint4B</span><br><span class="line">	ULONG TotalNumberOfHandles;         // : Uint4B</span><br><span class="line">	ULONG HighWaterNumberOfObjects;         // : Uint4B</span><br><span class="line">	ULONG HighWaterNumberOfHandles;         // : Uint4B</span><br><span class="line">	OBJECT_TYPE_INITIALIZER TypeInfo;         //         : _OBJECT_TYPE_INITIALIZER</span><br><span class="line">	PVOID TypeLock;         //         : _EX_PUSH_LOCK</span><br><span class="line">	ULONG Key;         //              : Uint4B</span><br><span class="line">	LIST_ENTRY CallbackList;         //     : _LIST_ENTRY</span><br><span class="line">&#125; OBJECT_TYPE, *POBJECT_TYPE;</span><br><span class="line"></span><br><span class="line">typedef struct _OBJECT_CREATE_INFORMATION</span><br><span class="line">&#123;</span><br><span class="line">	ULONG Attributes;</span><br><span class="line">	HANDLE RootDirectory;</span><br><span class="line">	KPROCESSOR_MODE ProbeMode;</span><br><span class="line">	ULONG PagedPoolCharge;</span><br><span class="line">	ULONG NonPagedPoolCharge;</span><br><span class="line">	ULONG SecurityDescriptorCharge;</span><br><span class="line">	PVOID SecurityDescriptor;</span><br><span class="line">	PSECURITY_QUALITY_OF_SERVICE SecurityQos;</span><br><span class="line">	SECURITY_QUALITY_OF_SERVICE SecurityQualityOfService;</span><br><span class="line">&#125; OBJECT_CREATE_INFORMATION, *POBJECT_CREATE_INFORMATION;</span><br><span class="line"></span><br><span class="line">typedef struct _OBJECT_HEADER</span><br><span class="line">&#123;</span><br><span class="line">	//对象头部的指针计数，对对象头指针引用的计数</span><br><span class="line">	LONG_PTR PointerCount;</span><br><span class="line">	union</span><br><span class="line">	&#123;</span><br><span class="line">		//句柄引用计数</span><br><span class="line">		LONG_PTR HandleCount;</span><br><span class="line">		PVOID NextToFree;</span><br><span class="line">	&#125;;</span><br><span class="line">	POBJECT_TYPE Type;</span><br><span class="line">	//OBJECT_HEADER_NAME_INFO相对于此结构的偏移</span><br><span class="line">	UCHAR NameInfoOffset;</span><br><span class="line">	//OBJECT_HEADER_HANDLE_INFO相对于此结构的偏移</span><br><span class="line">	UCHAR HandleInfoOffset;</span><br><span class="line">	//OBJECT_HEADER_QUOTA_INFO相对于此结构的偏移</span><br><span class="line">	UCHAR QuotaInfoOffset;</span><br><span class="line">	UCHAR Flags;</span><br><span class="line"></span><br><span class="line">	union</span><br><span class="line">	&#123;</span><br><span class="line">		//创建对象是用于创建对象附加头的结构</span><br><span class="line">		//里面保存了和附加对象头类似的信息</span><br><span class="line">		PVOID ObjectCreateInfo;</span><br><span class="line">		PVOID QuotaBlockCharged;</span><br><span class="line">	&#125;;</span><br><span class="line">	PSECURITY_DESCRIPTOR SecurityDescriptor;</span><br><span class="line">	QUAD Body;</span><br><span class="line">&#125; OBJECT_HEADER, *POBJECT_HEADER;</span><br><span class="line"></span><br><span class="line">NTSTATUS MyIopParseFile(</span><br><span class="line">	IN PVOID ParseObject,</span><br><span class="line">	IN PVOID ObjectType,</span><br><span class="line">	IN PACCESS_STATE AccessState,</span><br><span class="line">	IN KPROCESSOR_MODE AccessMode,</span><br><span class="line">	IN ULONG Attributes,</span><br><span class="line">	IN OUT PUNICODE_STRING CompleteName,</span><br><span class="line">	IN OUT PUNICODE_STRING RemainingName,</span><br><span class="line">	IN OUT PVOID Context OPTIONAL,</span><br><span class="line">	IN PSECURITY_QUALITY_OF_SERVICE SecurityQos OPTIONAL,</span><br><span class="line">	OUT PVOID *Object)</span><br><span class="line">&#123;</span><br><span class="line">	NTSTATUS status;</span><br><span class="line">	// 调用原始函数.</span><br><span class="line">	status = g_oldObjectParse(ParseObject,</span><br><span class="line">							  ObjectType,</span><br><span class="line">							  AccessState,</span><br><span class="line">							  AccessMode,</span><br><span class="line">							  Attributes,</span><br><span class="line">							  CompleteName,</span><br><span class="line">							  RemainingName,</span><br><span class="line">							  Context,</span><br><span class="line">							  SecurityQos,</span><br><span class="line">							  Object);</span><br><span class="line"></span><br><span class="line">	if (CompleteName)</span><br><span class="line">	&#123;</span><br><span class="line">		KdPrint((&quot;\n[MyIopParseFile]ComplateName=%wZ &quot;, CompleteName));</span><br><span class="line">	&#125;</span><br><span class="line">	if (RemainingName)</span><br><span class="line">	&#123;</span><br><span class="line">		KdPrint((&quot;\n[MyIopParseFile]RemainingName=%wZ &quot;, RemainingName));</span><br><span class="line">	&#125;</span><br><span class="line">	return status;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void installHook()</span><br><span class="line">&#123;</span><br><span class="line">	DbgBreakPoint();</span><br><span class="line"></span><br><span class="line">	// 获取ObTypeIndexTable首地址, 表的地址在ObGetObjectType函数内部中出现.</span><br><span class="line">	// 因此, 取函数首地址, 加上一定偏移就能得到该表的首地址.</span><br><span class="line">	// 在win7 32系统下, 该表在函数中的0xF偏移处.</span><br><span class="line">	/*</span><br><span class="line">	kd&gt; u ObGetObjectType</span><br><span class="line">	nt!ObGetObjectType:</span><br><span class="line">	84291a72 8bff            mov     edi,edi</span><br><span class="line">	84291a74 55              push    ebp</span><br><span class="line">	84291a75 8bec            mov     ebp,esp</span><br><span class="line">	84291a77 8b4508          mov     eax,dword ptr [ebp+8]</span><br><span class="line">	84291a7a 0fb640f4        movzx   eax,byte ptr [eax-0Ch]</span><br><span class="line">	84291a7e 8b0485c0801784  mov     eax,dword ptr nt!ObTypeIndexTable (841780c0)[eax*4]</span><br><span class="line">	84291a85 5d              pop     ebp</span><br><span class="line">	84291a86 c20400          ret     4</span><br><span class="line">	*/</span><br><span class="line">	</span><br><span class="line">	ULONG addr = ObGetObjectType;</span><br><span class="line">	OBJECT_TYPE **typeIndexTable = (OBJECT_TYPE*)*(ULONG*)(addr + 0xF);</span><br><span class="line">	</span><br><span class="line">	ULONG i = 2;</span><br><span class="line">	UNICODE_STRING fileTypeName;</span><br><span class="line">	RtlInitUnicodeString(&amp;fileTypeName, L&quot;File&quot;);//File对象</span><br><span class="line">	g_pFileObjType = NULL;</span><br><span class="line"></span><br><span class="line">	// 遍历TypeIndex表,找到File对象的原型</span><br><span class="line">	while (typeIndexTable[i])</span><br><span class="line">	&#123;</span><br><span class="line">		KdPrint((&quot;Index=%d, Name=%wZ\n&quot;, typeIndexTable[i]-&gt;Index, &amp;typeIndexTable[i]-&gt;Name));</span><br><span class="line"></span><br><span class="line">		// 判断类型名是否一致</span><br><span class="line">		if (0==RtlCompareUnicodeString(&amp;typeIndexTable[i]-&gt;Name, &amp;fileTypeName, TRUE))</span><br><span class="line">		&#123;</span><br><span class="line">			g_pFileObjType = typeIndexTable[i];</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		++i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// HOOK</span><br><span class="line">	if (g_pFileObjType)</span><br><span class="line">	&#123;</span><br><span class="line">		g_oldObjectParse = (FnIopParseFile)g_pFileObjType-&gt;TypeInfo.ParseProcedure;</span><br><span class="line">		g_pFileObjType-&gt;TypeInfo.ParseProcedure = (PVOID)MyIopParseFile;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void uninstallHook()</span><br><span class="line">&#123;</span><br><span class="line">	if (g_pFileObjType)</span><br><span class="line">	&#123;</span><br><span class="line">		_asm sti; // 屏蔽中断</span><br><span class="line">		// 将原始函数还原回去</span><br><span class="line">		g_pFileObjType-&gt;TypeInfo.ParseProcedure = g_oldObjectParse;</span><br><span class="line">		_asm cli; // 允许中断</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void unload(DRIVER_OBJECT* obj)</span><br><span class="line">&#123;</span><br><span class="line">	// 卸载HOOK</span><br><span class="line">	uninstallHook();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NTSTATUS DriverEntry(PDRIVER_OBJECT object,</span><br><span class="line">					 PUNICODE_STRING path)</span><br><span class="line">&#123;</span><br><span class="line">	NTSTATUS status;</span><br><span class="line">	</span><br><span class="line">	// 安装HOOK</span><br><span class="line">	installHook();</span><br><span class="line">	</span><br><span class="line">	object-&gt;DriverUnload = unload;</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Window</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">HOOK技术</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内核编程</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/11/08/windows内核编程06-内核对象/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/11/08/SSDT_hook/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          SSDThook
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/11/08/windows内核编程05-内核API/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">windows内核编程05-内核API</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2159376"></script>
+<!-- UY END --> 
+  
+  
+  
+  
   
 
-    
+  
+
+  
+
+  
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
 
 
           </div>
@@ -235,9 +372,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
@@ -297,7 +434,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -309,19 +454,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -329,7 +462,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -357,6 +498,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
@@ -369,11 +518,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -381,19 +530,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Window</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>Unitx下c汇编-ATT | 想与做</title>
+  <title>linux proc文件系统 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Unitx下的GCC产生的汇编是ATT  程序编程  1234567891011gcc -Og -o p p1.c p2.c -Og高速编译器生成符合原始C语言机器代码的优化等级 如果为了程序性能考虑执行选线-O1/-O2 -o 生成可执行文件编译器: 将产生的2个源文件的汇编代码,后缀为.s汇编器: 将汇编代码转成二进制目标文件,后缀为.o链接器: 将目标二进制目标文件和库函数代码合并,并产生最">
-<meta name="keywords" content="汇编">
+  <meta name="description" content="内核运行时实时的将内核的数据结构的值以文件的方式呈现在/proc目录的一些特定文件。  常见的proc目录   proc/NN 为进程ID以及该目录下的子目录http://www.cnblogs.com/DswCnblog/p/5780389.html一些目录介绍的博客,之后有用到再专门去学学习123456789/proc/N N为进程ID该目录下包含进程本身的相关信息。子目录或文件cmdline">
+<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Unitx下c汇编-ATT">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/08/20/Unitx下c汇编-ATT/index.html">
+<meta property="og:title" content="linux proc文件系统">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/11/13/linux proc文件系统/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="Unitx下的GCC产生的汇编是ATT  程序编程  1234567891011gcc -Og -o p p1.c p2.c -Og高速编译器生成符合原始C语言机器代码的优化等级 如果为了程序性能考虑执行选线-O1/-O2 -o 生成可执行文件编译器: 将产生的2个源文件的汇编代码,后缀为.s汇编器: 将汇编代码转成二进制目标文件,后缀为.o链接器: 将目标二进制目标文件和库函数代码合并,并产生最">
+<meta property="og:description" content="内核运行时实时的将内核的数据结构的值以文件的方式呈现在/proc目录的一些特定文件。  常见的proc目录   proc/NN 为进程ID以及该目录下的子目录http://www.cnblogs.com/DswCnblog/p/5780389.html一些目录介绍的博客,之后有用到再专门去学学习123456789/proc/N N为进程ID该目录下包含进程本身的相关信息。子目录或文件cmdline">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-02T13:33:14.874Z">
+<meta property="og:updated_time" content="2018-11-13T02:46:58.203Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Unitx下c汇编-ATT">
-<meta name="twitter:description" content="Unitx下的GCC产生的汇编是ATT  程序编程  1234567891011gcc -Og -o p p1.c p2.c -Og高速编译器生成符合原始C语言机器代码的优化等级 如果为了程序性能考虑执行选线-O1/-O2 -o 生成可执行文件编译器: 将产生的2个源文件的汇编代码,后缀为.s汇编器: 将汇编代码转成二进制目标文件,后缀为.o链接器: 将目标二进制目标文件和库函数代码合并,并产生最">
+<meta name="twitter:title" content="linux proc文件系统">
+<meta name="twitter:description" content="内核运行时实时的将内核的数据结构的值以文件的方式呈现在/proc目录的一些特定文件。  常见的proc目录   proc/NN 为进程ID以及该目录下的子目录http://www.cnblogs.com/DswCnblog/p/5780389.html一些目录介绍的博客,之后有用到再专门去学学习123456789/proc/N N为进程ID该目录下包含进程本身的相关信息。子目录或文件cmdline">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -161,14 +161,14 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-Unitx下c汇编-ATT" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-linux proc文件系统" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Unitx下c汇编-ATT
+      linux proc文件系统
     </h1>
   
 
@@ -178,8 +178,8 @@
 		</span>
 	    
         
-        <a href="/2018/08/20/Unitx下c汇编-ATT/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+        <a href="/2018/11/13/linux proc文件系统/" class="archive-article-date">
+  	<time datetime="2018-11-13T06:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
 </a>
         
       </header>
@@ -187,22 +187,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Unitx下的GCC产生的汇编是ATT</p>
+        <p>内核运行时实时的将内核的数据结构的值以文件的方式呈现在/proc目录的一些特定文件。</p>
 <blockquote>
-<p>程序编程</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">gcc -Og -o p p1.c p2.c </span><br><span class="line">-Og高速编译器生成符合原始C语言机器代码的优化等级 如果为了程序性能考虑执行选线-O1/-O2 </span><br><span class="line">-o 生成可执行文件</span><br><span class="line">编译器: 将产生的2个源文件的汇编代码,后缀为.s</span><br><span class="line">汇编器: 将汇编代码转成二进制目标文件,后缀为.o</span><br><span class="line">链接器: 将目标二进制目标文件和库函数代码合并,并产生最终的可执行文件。</span><br><span class="line">-S 生成汇编代码,后缀为.s</span><br><span class="line">-c 生成二进制目标文件,后缀为.o</span><br><span class="line"></span><br><span class="line">objdumpp -d p1.o</span><br><span class="line">将二进制文件反汇编成汇编代码</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>访问信息</p>
+<p>常见的proc目录</p>
 </blockquote>
 <ul>
-<li><p>寄存器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">rax eax ax al/ah</span><br><span class="line">rbx ebx bx bl/bh</span><br><span class="line">rcx ecx cx dl/dh</span><br><span class="line">rdx edx dx dl/dh</span><br><span class="line">rsi esi si </span><br><span class="line">rdi edi di</span><br><span class="line">rbp ebp bp</span><br><span class="line">rsp esp sp</span><br><span class="line">r8</span><br><span class="line">r9</span><br><span class="line">r10</span><br><span class="line">r11</span><br><span class="line">r12</span><br><span class="line">r13</span><br><span class="line">r14</span><br><span class="line">r15</span><br></pre></td></tr></table></figure>
+<li>proc/NN 为进程ID以及该目录下的子目录<br><a href="http://www.cnblogs.com/DswCnblog/p/5780389.html" target="_blank" rel="noopener">http://www.cnblogs.com/DswCnblog/p/5780389.html</a>一些目录介绍的博客,之后有用到再专门去学学习<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/proc/N N为进程ID</span><br><span class="line">该目录下包含进程本身的相关信息。</span><br><span class="line"></span><br><span class="line">子目录或文件</span><br><span class="line">cmdline 进程启动命令</span><br><span class="line">maps 与进程相关的内存映射信息</span><br><span class="line">mem 进程持有的内存,不可读</span><br><span class="line">status 进程状态信息,比stat/statm 更具可读性</span><br><span class="line">self 链接到当前运行的进程</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>数据传送指令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">movb</span><br><span class="line">movw </span><br><span class="line">movl  //特殊 会讲高4字节设置为0</span><br><span class="line">movq  //只能以表示为32位补码数字的立即数作为源操作数,然后符号扩展到64的值放到目的位置</span><br><span class="line">movabsq //可以任意64位立即数值作为源操作数,并只能以寄存器作为目的</span><br><span class="line"></span><br><span class="line">movzbw //将0扩展的字节传送到字</span><br><span class="line">movzbl //将0扩展的字节传送到双字</span><br><span class="line">movzwl //将0扩展的字传送到双字</span><br><span class="line">movzbq //将0扩展的字节传送到四字</span><br><span class="line">movzwq //将0扩展的字传送到四字</span><br><span class="line">movl相当于将0扩展的双字传送到四字</span><br><span class="line"></span><br><span class="line">movsbw</span><br><span class="line">movsbl</span><br><span class="line">movswl</span><br><span class="line">movsbq</span><br><span class="line">movswq</span><br><span class="line">movslq</span><br><span class="line">cltq  将eax符号扩展到rax</span><br></pre></td></tr></table></figure></li>
 </ul>
-
+<blockquote>
+<p>使用proc获取进程信息</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
 
       
@@ -215,7 +211,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
@@ -271,7 +267,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/08/20/Unitx下c汇编-ATT/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/11/13/linux proc文件系统/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -285,18 +281,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/PE文件编程/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/11/13/linux文件系统/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          PE文件编程
+          linux文件系统
         
       </div>
     </a>
   
   
-    <a href="/2018/08/20/汇编1_寄存器/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">汇编学习1寄存器</div>
+    <a href="/2018/11/12/乌合之众/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">乌合之众</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -430,7 +426,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -442,19 +446,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -462,7 +454,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -490,6 +490,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
@@ -502,11 +510,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -514,19 +522,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Window</a>
               </li>
              
               <li class="article-tag-list-item">

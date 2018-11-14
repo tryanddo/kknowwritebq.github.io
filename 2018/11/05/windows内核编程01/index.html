@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>驱动开发 | 想与做</title>
+  <title>windows内核编程01 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="内核驱动程序  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910">
-<meta name="keywords" content="Window编程原理">
+  <meta name="description" content="驱动开发常识   环境安装需要安装WDK(微软驱动开发工具包),且WDK需要与WDK同一版本的SDK。 项目配置如果加载驱动的是win732位系统,必须将驱动项目的目标系统设置为win7,且驱动必须是x86体系。 源码编写最好使用c项目,由于c++有名称粉碎,定义时需要加入extern”C” 驱动调试编写的驱动实则是系统内核的一个插件,windows的系统内核文件为ntoskrnl.exe,所有">
+<meta name="keywords" content="内核编程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="驱动开发">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/08/20/驱动开发/index.html">
+<meta property="og:title" content="windows内核编程01">
+<meta property="og:url" content="http://blog.jbyusk.com/2018/11/05/windows内核编程01/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="内核驱动程序  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910">
+<meta property="og:description" content="驱动开发常识   环境安装需要安装WDK(微软驱动开发工具包),且WDK需要与WDK同一版本的SDK。 项目配置如果加载驱动的是win732位系统,必须将驱动项目的目标系统设置为win7,且驱动必须是x86体系。 源码编写最好使用c项目,由于c++有名称粉碎,定义时需要加入extern”C” 驱动调试编写的驱动实则是系统内核的一个插件,windows的系统内核文件为ntoskrnl.exe,所有">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-12T11:47:41.500Z">
+<meta property="og:updated_time" content="2018-11-09T07:12:08.310Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="驱动开发">
-<meta name="twitter:description" content="内核驱动程序  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910">
+<meta name="twitter:title" content="windows内核编程01">
+<meta name="twitter:description" content="驱动开发常识   环境安装需要安装WDK(微软驱动开发工具包),且WDK需要与WDK同一版本的SDK。 项目配置如果加载驱动的是win732位系统,必须将驱动项目的目标系统设置为win7,且驱动必须是x86体系。 源码编写最好使用c项目,由于c++有名称粉碎,定义时需要加入extern”C” 驱动调试编写的驱动实则是系统内核的一个插件,windows的系统内核文件为ntoskrnl.exe,所有">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -161,14 +161,14 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-驱动开发" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-windows内核编程01" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      驱动开发
+      windows内核编程01
     </h1>
   
 
@@ -178,8 +178,8 @@
 		</span>
 	    
         
-        <a href="/2018/08/20/驱动开发/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+        <a href="/2018/11/05/windows内核编程01/" class="archive-article-date">
+  	<time datetime="2018-11-05T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
 </a>
         
       </header>
@@ -188,9 +188,45 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>内核驱动程序</p>
+<p>驱动开发常识</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">C程序:</span><br><span class="line">/***************************************************************************</span><br><span class="line">	created:	2018/1/19</span><br><span class="line">	filename:	E:\0day\HelloWorld\helloworld.c</span><br><span class="line">	author:		test</span><br><span class="line">	purpose		Hello World driver demo</span><br><span class="line">***************************************************************************/</span><br><span class="line"></span><br><span class="line">#include&lt;ntddk.h&gt;</span><br><span class="line">#define DEVICE_NAME L&quot;\\Device\\HelloWorld&quot;</span><br><span class="line">#define DEVICE_LINK	L&quot;\\DosDevices\\HelloWorld&quot;</span><br><span class="line">//创建的设备对象指针</span><br><span class="line">PDEVICE_OBJECT g_DeviceObject;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/***************************************************************************</span><br><span class="line">驱动卸载函数</span><br><span class="line">		输入：驱动对象的指针</span><br><span class="line">		输出：无</span><br><span class="line">***************************************************************************/</span><br><span class="line">VOID DriverUnload(IN PDRIVER_OBJECT driverObject)</span><br><span class="line">&#123;</span><br><span class="line">	//什么都不做，就打印一句话</span><br><span class="line">	KdPrint((&quot;DriverUnload:88!\n&quot;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/***************************************************************************</span><br><span class="line">驱动派遣例程函数</span><br><span class="line">		输入：驱动对象的指针,Irp指针</span><br><span class="line">		输出：NTSTATUS类型的结果</span><br><span class="line">***************************************************************************/</span><br><span class="line">NTSTATUS DrvDispatch(IN PDEVICE_OBJECT driverObject,IN PIRP pIrp)</span><br><span class="line">&#123;</span><br><span class="line">	KdPrint((&quot;Enter DrvDispatch\n&quot;));</span><br><span class="line">	//设置IRP的完成状态</span><br><span class="line">	pIrp-&gt;IoStatus.Status=STATUS_SUCCESS;</span><br><span class="line">	//设置IRP的操作字节数</span><br><span class="line">	pIrp-&gt;IoStatus.Information=0;</span><br><span class="line">	//完成IRP的处理</span><br><span class="line">	IoCompleteRequest(pIrp,IO_NO_INCREMENT);</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/***************************************************************************</span><br><span class="line">驱动入口函数</span><br><span class="line">		输入：驱动对象的指针,服务程序对应的注册表路径</span><br><span class="line">		输出：NTSTATUS类型的结果</span><br><span class="line">***************************************************************************/</span><br><span class="line">NTSTATUS DriverEntry(IN PDRIVER_OBJECT driverObject,</span><br><span class="line">					 IN PUNICODE_STRING registryPath)</span><br><span class="line">&#123;</span><br><span class="line">	NTSTATUS	ntStatus;</span><br><span class="line">	UNICODE_STRING devName;</span><br><span class="line">	UNICODE_STRING symLinkName;</span><br><span class="line"></span><br><span class="line">	int i=0;</span><br><span class="line">	//打印一句调试信息</span><br><span class="line">	KdPrint((&quot;DriverEntry: Hello world driver demo!\n&quot;));</span><br><span class="line">	//设置该驱动对象的卸载函数</span><br><span class="line">	driverObject-&gt;DriverUnload = DriverUnload;</span><br><span class="line">	//创建设备</span><br><span class="line">	RtlInitUnicodeString(&amp;devName,DEVICE_NAME);</span><br><span class="line">	ntStatus = IoCreateDevice(driverObject,</span><br><span class="line">				0,</span><br><span class="line">				&amp;devName,</span><br><span class="line">				FILE_DEVICE_UNKNOWN,</span><br><span class="line">				0,TRUE,</span><br><span class="line">				&amp;g_DeviceObject);</span><br><span class="line">	if(!NT_SUCCESS(ntStatus))</span><br><span class="line">	&#123;</span><br><span class="line">		IoDeleteDevice(g_DeviceObject);</span><br><span class="line">		return ntStatus;</span><br><span class="line">	&#125;</span><br><span class="line">	//创建符号链接</span><br><span class="line">	RtlInitUnicodeString(&amp;symLinkName,DEVICE_LINK);</span><br><span class="line">	ntStatus = IoCreateSymbolicLink(&amp;symLinkName,&amp;devName);</span><br><span class="line">	if(!NT_SUCCESS(ntStatus))</span><br><span class="line">	&#123;</span><br><span class="line">		IoDeleteDevice(g_DeviceObject);</span><br><span class="line">		return ntStatus;</span><br><span class="line">	&#125;</span><br><span class="line">	//设置该驱动对象的派遣例程函数</span><br><span class="line">	for(i=0; i&lt;IRP_MJ_MAXIMUM_FUNCTION;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		driverObject-&gt;MajorFunction[i] = DrvDispatch;</span><br><span class="line">	&#125;</span><br><span class="line">	//返回成功结果</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">makefile文件:</span><br><span class="line">固定格式</span><br><span class="line">!IF 0</span><br><span class="line">Copyright (C) Microsoft Corporation, 1999 - 2002</span><br><span class="line">Module Name:</span><br><span class="line">    makefile.</span><br><span class="line">Notes:</span><br><span class="line">    DO NOT EDIT THIS FILE!!! Edit .\sources. if you want to add a new source file</span><br><span class="line">    to this component. This file merrely indirects to the real make file that is  </span><br><span class="line">    shared by all the components of Windows Nt (DDK)</span><br><span class="line">!ENDIF</span><br><span class="line">!INCLUDES $(NTMAKEENV)\makefile.def</span><br><span class="line"></span><br><span class="line">source文件:</span><br><span class="line">TARGETNAME=helloworld</span><br><span class="line">TARGETTYPE=DRIVER</span><br><span class="line">SOURCES=helloworld.c</span><br></pre></td></tr></table></figure>
+<ul>
+<li>环境安装<br>需要安装WDK(微软驱动开发工具包),且WDK需要与WDK同一版本的SDK。</li>
+<li>项目配置<br>如果加载驱动的是win732位系统,必须将驱动项目的目标系统设置为win7,且驱动必须是x86体系。</li>
+<li>源码编写<br>最好使用c项目,由于c++有名称粉碎,定义时需要加入extern”C”</li>
+<li>驱动调试<br>编写的驱动实则是系统内核的一个插件,windows的系统内核文件为ntoskrnl.exe,所有内核模块都是加载到这个exe的dll.调试内核驱动需要使用双机调试环境,使用windbg来调试。</li>
+</ul>
+<blockquote>
+<p>内核API</p>
+</blockquote>
+<p>编写驱动程序需要使用内核API</p>
+<ul>
+<li>命名规则如下:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">函数前缀 所属的组件或函数说明</span><br><span class="line">Cc 		 缓存管理器 </span><br><span class="line">Cm 		 配置管理器(即注册表) </span><br><span class="line">Dbg/Kd   调试支持函数 </span><br><span class="line">Ex 		 执行体函数:内存分配 互斥体等</span><br><span class="line">FsRtl 	 文件系统驱动程序 </span><br><span class="line">Fstub 	 文件系统引导接口函数 </span><br><span class="line">Hal 	 HAL提供的接口函数 </span><br><span class="line">Io 		 I/O管理器 </span><br><span class="line">Ke 		 内核函数 </span><br><span class="line">Lpc 	 本地过程调用(LPC)函数 </span><br><span class="line">Mm 		 内存管理器 </span><br><span class="line">Nt 		 windwos系统服务 </span><br><span class="line">Ob 		 对象管理器 </span><br><span class="line">Perf 	 日志记录函数 </span><br><span class="line">Po 		 电源管理器 </span><br><span class="line">Pp 		 即插即用管理器 </span><br><span class="line">Ps 		 进程/线程 </span><br><span class="line">Raw 	 RAW文件系统函数 </span><br><span class="line">Rtl 	 内存运行时库函数 </span><br><span class="line">Se 		 安全函数 </span><br><span class="line">Vf 		 驱动程序检验器函数 </span><br><span class="line">Wmi 	 Windows管理器规范 </span><br><span class="line">Zw 		 和Nt前缀同名的一套函数,省去了参数验证的步骤,其它逻辑相同,可以认为以Nt前缀为名称的函数针对用户模式的调用者,以Zw前缀为名称的函数针对内核模式调用者</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>数据类型,字符串和内存操作</p>
+</blockquote>
+<ul>
+<li><p>数据类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">数据类型 	长度			基本型				类型名称</span><br><span class="line">UINT8 		8 bit   	unsigned char 		无符号字符 </span><br><span class="line">UCHAR 		8 bit 		unsigned char 		无符号字符 </span><br><span class="line">PUCHAR 		32 bit 		unsigned char* 		无符号字符指针 </span><br><span class="line">UINT16 		16 bit 		unsigned short 		无符号短整形 </span><br><span class="line">USHORT 		16 bit 		unsigned short 		无符号短整形 </span><br><span class="line">PUSHORT 	32 bit 		unsigned short* 	无符号短整形指针 </span><br><span class="line">UINT32 		32 bit 		unsigned int 		无符号整形 </span><br><span class="line">UINT 		32 bit 		unsigned int 		无符号整形 </span><br><span class="line">ULONG 		32 bit 		unsigned long 		无符号长整形 </span><br><span class="line">PUNIT 		32 bit 		unsigned int* 		无符号整形指针 </span><br><span class="line">UINT64 		64 bit 		unsigned __int64 	无符号64位整形 </span><br><span class="line">ULONG64 	64 bit 		unsigned __int64 	无符号64位整形 </span><br><span class="line">PULONG64 	32 bit 		unsigned __int64* 	无符号64位整形指针</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//统一采用UNICODE_STRING结构体存取字符串,默认使用Unicode编码</span><br><span class="line"></span><br><span class="line">typedef struct _UNICODE_STRING &#123;</span><br><span class="line">	USHORT Length; // 字符串的长度, 单位是字节数</span><br><span class="line">	USHORT MaximumLength; // 最大字节数</span><br><span class="line">	PWCH   Buffer;</span><br><span class="line">#endif // MIDL_PASS</span><br><span class="line">&#125; UNICODE_STRING;</span><br><span class="line"></span><br><span class="line">函数名							功能</span><br><span class="line">RtlInitUnicodeString 			初始化字符串 ,注意,此函数不会分配空间. </span><br><span class="line">RtlFreeUnicodeString 			销毁字符串 </span><br><span class="line">RtlCopyUnicodeString 			拷贝字符串 </span><br><span class="line">RtlAppendUnicodeStringToString 	追加字符串 </span><br><span class="line">RtlCmpareUnicodeString 			比较字符串 </span><br><span class="line">RtlUnicodeStringToInteger 		字符串转数字 </span><br><span class="line">RtlIntegerToUnicodeString 		数字转字符串 </span><br><span class="line">RtlAppendUnicodeStringToString 	将UNICODE字符串结构转换为ANSI </span><br><span class="line">Kdprint 						输出调试信息</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内存操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">ExAllocatePool - 内存分配函数</span><br><span class="line">RtlCopyMemory 拷贝内存</span><br><span class="line">RtlFillMemory 填充内存</span><br><span class="line">ExFreePool - 内存释放函数</span><br><span class="line"></span><br><span class="line">void* alloc(ULONG size)</span><br><span class="line">&#123;</span><br><span class="line">	return ExAllocatePool(PagedPool, size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void* reAlloc(void* src, ULONG size)</span><br><span class="line">&#123;</span><br><span class="line">	if (!src)</span><br><span class="line">	&#123;</span><br><span class="line">		return NULL;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void* data = alloc(size);</span><br><span class="line">	RtlCopyMemory(data, src, size);</span><br><span class="line">	ExFreePool(data);</span><br><span class="line">	return data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void free(void* data)</span><br><span class="line">&#123;</span><br><span class="line">	if (data)</span><br><span class="line">	&#123;</span><br><span class="line">		ExFreePool(data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>内核链表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//在windows内核中,无论什么链表,都是使用如下结构的双向链表:</span><br><span class="line">typedef struct _LIST_ENTRY &#123;</span><br><span class="line">struct _LIST_ENTRY *Flink; // 指向下一个节点,如果没有下一个,则指向链表的头结点(循环链表)</span><br><span class="line">struct _LIST_ENTRY *Blink; // 指向上一个节点.(双向链表)</span><br><span class="line">&#125; LIST_ENTRY, *PLIST_ENTRY, *RESTRICTED_POINTER PRLIST_ENTRY;</span><br><span class="line"></span><br><span class="line">内核中提供了以下函数来操作链表:</span><br><span class="line">InitializeListHead - 初始化链表</span><br><span class="line">InsertHeadList - 将节点插入到链表头部</span><br><span class="line">InsertTailList - 将节点插入到链表尾部</span><br><span class="line">RemoveHeadList - 链表头部删除一个节点</span><br><span class="line">RemoveTailList - 链表尾部删除一个节点</span><br><span class="line">RemoveEntryList 删除一个节点</span><br><span class="line">IsListEmpty 链表是否为空</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Mdl</p>
+</blockquote>
+<p>获得虚拟地址的物理地址,通过映射出一个新的虚拟地址,通过修改新的虚拟地址起到修改原虚拟地址的效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">IoAllocateMdl 				创建MDL</span><br><span class="line">IoBuildPartialMdl 			创建一个已存在MDL的子MDL</span><br><span class="line">IoFreeMdl 					销毁MDL</span><br><span class="line">MmBuildMdlForNonPagedPool 	修改MDL以描述内核模式中一个非分页内存区域</span><br><span class="line">MmGetMdlByteCount 			取缓冲区字节大小</span><br><span class="line">MmGetMdlByteOffset 			取缓冲区在第一个内存页中的偏移</span><br><span class="line">MmGetMdlVirtualAddress 		取虚拟地址</span><br><span class="line">MmGetSystemAddressForMdl 	创建映射到同一内存位置的内核模式虚拟地址</span><br><span class="line">MmGetSystemAddressForMdlSafe与MmGetSystemAddressForMdl相同，但Windows 2000首选</span><br><span class="line">MmInitializeMdl 	    	(再)初始化MDL以描述一个给定的虚拟缓冲区</span><br><span class="line">MmPrepareMdlForReuse 		再初始化MDL</span><br><span class="line">MmProbeAndLockPages 		地址有效性校验后锁定内存页</span><br><span class="line">MmSizeOfMdl 				取为描述一个给定的虚拟缓冲区的MDL所占用的内存大小</span><br><span class="line">MmUnlockPages 				为该MDL解锁内存页</span><br><span class="line"></span><br><span class="line">char* pBuff = &quot;123456789Abcdefg&quot;;</span><br><span class="line">	//pBuff[0] = &apos;A&apos;;</span><br><span class="line">	MDL* pMdl = IoAllocateMdl(pBuff,/*需要建立MDL描述的虚拟地址*/</span><br><span class="line">							  20,</span><br><span class="line">							  NULL,</span><br><span class="line">							  NULL,</span><br><span class="line">							  NULL);</span><br><span class="line">	MmBuildMdlForNonPagedPool(pMdl);</span><br><span class="line"></span><br><span class="line">	char* pStr2 = (char*)</span><br><span class="line">		MmMapLockedPagesSpecifyCache(pMdl,/*需要进行映射的MDL*/</span><br><span class="line">									 KernelMode,/*内核模式*/</span><br><span class="line">									 MmWriteCombined,/*可写模式*/</span><br><span class="line">									 0, 0, 0);</span><br><span class="line"></span><br><span class="line">	pStr2[0] = &apos;A&apos;;</span><br><span class="line">	KdPrint((&quot;&amp;pStr=%p,pStr = %s &amp;pStr2=%p,pStr2 = %s&quot;,</span><br><span class="line">			 pStr, pStr,</span><br><span class="line">			 pStr2, pStr2));</span><br></pre></td></tr></table></figure></p>
+
       
 
       
@@ -203,7 +239,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内核编程</a>
         		</li>
       		
 		</ul>
@@ -259,7 +295,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/08/20/驱动开发/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/11/05/windows内核编程01/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -273,18 +309,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/逆向基础01/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/11/06/windows内核编程02/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          逆向基础01
+          windows内核编程02
         
       </div>
     </a>
   
   
-    <a href="/2018/08/20/注入方式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">dll注入方式</div>
+    <a href="/2018/11/05/门描述符/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">门描述符</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -418,7 +454,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -430,19 +474,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -450,7 +482,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -478,6 +518,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
@@ -490,11 +538,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -502,19 +550,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Window</a>
               </li>
              
               <li class="article-tag-list-item">

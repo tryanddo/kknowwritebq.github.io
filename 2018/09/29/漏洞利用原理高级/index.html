@@ -9,14 +9,14 @@
   <title>漏洞利用原理高级 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="GS编译技术一般在[esp-4]之前加入Security Cookie(esp Xor .data区第一个4字节数据),函数返回前首先检测Security Cookie是否覆盖,从而把针对操作系统的栈溢出变的困难。覆盖虚函数地址/异常处理地址覆盖/直接覆盖种子以及Security Cookie+SafeSEH调用RtlIsValidHandle()函数校验1.异常处理函数位于加载模块内存范围之外">
-<meta name="keywords" content="Window">
+<meta name="keywords" content="漏洞分析">
 <meta property="og:type" content="article">
 <meta property="og:title" content="漏洞利用原理高级">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/09/29/漏洞利用原理高级/index.html">
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="GS编译技术一般在[esp-4]之前加入Security Cookie(esp Xor .data区第一个4字节数据),函数返回前首先检测Security Cookie是否覆盖,从而把针对操作系统的栈溢出变的困难。覆盖虚函数地址/异常处理地址覆盖/直接覆盖种子以及Security Cookie+SafeSEH调用RtlIsValidHandle()函数校验1.异常处理函数位于加载模块内存范围之外">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-29T07:48:24.365Z">
+<meta property="og:updated_time" content="2018-11-10T15:49:21.737Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="漏洞利用原理高级">
 <meta name="twitter:description" content="GS编译技术一般在[esp-4]之前加入Security Cookie(esp Xor .data区第一个4字节数据),函数返回前首先检测Security Cookie是否覆盖,从而把针对操作系统的栈溢出变的困难。覆盖虚函数地址/异常处理地址覆盖/直接覆盖种子以及Security Cookie+SafeSEH调用RtlIsValidHandle()函数校验1.异常处理函数位于加载模块内存范围之外">
@@ -203,7 +203,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Window</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">漏洞分析</a>
         		</li>
       		
 		</ul>
@@ -418,7 +418,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -430,19 +438,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -450,7 +446,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -478,6 +482,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
@@ -490,11 +502,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -502,19 +514,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dll注入</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Window</a>
               </li>
              
               <li class="article-tag-list-item">
