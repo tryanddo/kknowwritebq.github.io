@@ -9,14 +9,14 @@
   <title>SSDThook | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
-<meta name="keywords" content="HOOK技术,内核编程">
+<meta name="keywords" content="内核编程,HOOK技术">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSDThook">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/11/08/SSDT_hook/index.html">
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-12T15:18:54.360Z">
+<meta property="og:updated_time" content="2018-11-14T08:11:04.490Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSDThook">
 <meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
@@ -187,7 +187,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;ntddk.h&gt;</span><br><span class="line"></span><br><span class="line">void Unload(DRIVER_OBJECT* object);</span><br><span class="line">void installSysenterHook();</span><br><span class="line">void UnloadSysenterHook();</span><br><span class="line">void MyKiFastCallEntry();</span><br><span class="line"></span><br><span class="line">ULONG_PTR g_oldKiFastCallEntry;</span><br><span class="line">ULONG g_uPid = 2940;  //需要保护的进程ID,这个PID可以通过内核通讯修改</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NTSTATUS DriverEntry(DRIVER_OBJECT* driver, UNICODE_STRING* path)</span><br><span class="line">&#123;</span><br><span class="line">	DbgBreakPoint();</span><br><span class="line">	driver-&gt;DriverUnload = Unload;</span><br><span class="line"></span><br><span class="line">	//安装hook</span><br><span class="line">	installSysenterHook();</span><br><span class="line"></span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Unload(DRIVER_OBJECT* object)</span><br><span class="line">&#123;</span><br><span class="line">	UnloadSysenterHook();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//安装HOOK</span><br><span class="line">void _declspec(naked) installSysenterHook()</span><br><span class="line">&#123;</span><br><span class="line">	_asm</span><br><span class="line">	&#123;</span><br><span class="line">		push edx;</span><br><span class="line">		push eax;</span><br><span class="line">		push ecx;</span><br><span class="line"></span><br><span class="line">		//备份原始函数</span><br><span class="line">		mov ecx, 0x176;//SYSENTER_EIP_MSR寄存器的编号,保存着KiFastCallEntry的地址</span><br><span class="line">		rdmsr;	//指令使ecx寄存器的值作为msr寄存器组的编号,将这个编号的寄存器中的值读取到edx</span><br><span class="line">		mov[g_oldKiFastCallEntry], eax</span><br><span class="line"></span><br><span class="line">		//将新的函数设置进去</span><br><span class="line">		mov eax, MyKiFastCallEntry</span><br><span class="line">		xor edx, edx</span><br><span class="line">		wrmsr; //ecx存放MSR寄存器的编号,将edx:eax写入到编号的寄存器中</span><br><span class="line">		pop ecx</span><br><span class="line">		pop eax</span><br><span class="line">		pop edx</span><br><span class="line">		ret</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//卸载hook</span><br><span class="line">void _declspec(naked) UnloadSysenterHook() </span><br><span class="line">&#123;</span><br><span class="line">	_asm</span><br><span class="line">	&#123;</span><br><span class="line">		push edx;</span><br><span class="line">		push eax;</span><br><span class="line">		push ecx;</span><br><span class="line">		//将原函数地址设置进去</span><br><span class="line">		mov eax, [g_oldKiFastCallEntry]</span><br><span class="line">		xor edx, edx</span><br><span class="line">		mov ecx, 0x176</span><br><span class="line">		wrmsr</span><br><span class="line">		pop ecx</span><br><span class="line">		pop eax</span><br><span class="line">		pop edx</span><br><span class="line">		ret</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void _declspec(naked) MyKiFastCallEntry()</span><br><span class="line">&#123;</span><br><span class="line">	/*</span><br><span class="line">	* 本函数是从用户层直接切换进来的.</span><br><span class="line">	* 在本函数中,有以下信息可以使用:</span><br><span class="line">	* 1. eax保存的是调用号</span><br><span class="line">	* 2. edx保存着用户层的栈顶,且用户层的栈顶布局为:</span><br><span class="line">	*		edx+0 [ 返回地址1 ]</span><br><span class="line">	*		edx+4 [ 返回地址2 ]</span><br><span class="line">	*		edx+8 [ 形   参1 ]</span><br><span class="line">	*		edx+C [ 形   参2 ]</span><br><span class="line">	* 3. 要HOOK的API是 OpenProcess,其调用号和参数信息为:</span><br><span class="line">	*    调用号 - 0xBE</span><br><span class="line">	*    函数参数 -</span><br><span class="line">	*    NtOpenProcess(</span><br><span class="line">	*  [edx+08h] PHANDLE            ProcessHandle,// 输出参数,进程句柄</span><br><span class="line">	*  [edx+0Ch] ACCESS_MASK        DesiredAccess,// 打开的权限</span><br><span class="line">	*  [edx+10h] POBJECT_ATTRIBUTES ObjectAttributes,// 对象属性,无用</span><br><span class="line">	*  [edx+14h] PCLIENT_ID         ClientId         // 进程ID和线程ID的结构体</span><br><span class="line">	*  最后一个参数的结构体原型为:</span><br><span class="line">	*  typedef struct _CLIENT_ID</span><br><span class="line">	*  &#123;</span><br><span class="line">	*		PVOID UniqueProcess;// 进程ID</span><br><span class="line">	* 	PVOID UniqueThread; // 线程ID(在这个函数中用不到)</span><br><span class="line">	*  &#125; CLIENT_ID, *PCLIENT_ID;</span><br><span class="line">	*</span><br><span class="line">	* HOOK 步骤:</span><br><span class="line">	* 1. 检查调用号是不是0xBE(ZwOpenProcess)</span><br><span class="line">	* 2. 检查进程ID是不是要保护的进程的ID</span><br><span class="line">	* 3. 如果是,则将进程ID改为0,再调用原来的函数,这样一来,即使功能被执行,</span><br><span class="line">	*    也无法打开进程, 或者将访问权限设置为0,同样也能让进程无法被打开.</span><br><span class="line">	* 4. 如果不是,则调用原来的KiFastCallEntry函数</span><br><span class="line">	*/</span><br><span class="line">	_asm</span><br><span class="line">	&#123;</span><br><span class="line">		;//1.检查调用号</span><br><span class="line">		cmp eax,0xBE</span><br><span class="line">		jne _DONE</span><br><span class="line">		</span><br><span class="line">		push eax</span><br><span class="line">		</span><br><span class="line">		//获取参数</span><br><span class="line">		mov eax,[edx+0x14]</span><br><span class="line">		mov eax,[eax]</span><br><span class="line">		//获取参数(进程ID)</span><br><span class="line">		cmp eax,[g_uPid]</span><br><span class="line">		pop eax</span><br><span class="line">		jne _DONE ;//不是要保护的进程</span><br><span class="line"></span><br><span class="line">		//是就调用参数,让后续函数调用失败</span><br><span class="line">		mov [edx+0xC],0 //访问权限设置为0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	_DONE:</span><br><span class="line">		//调用原KiFastCallEntry</span><br><span class="line">		jmp g_oldKiFastCallEntry</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;ntddk.h&gt;</span><br><span class="line"></span><br><span class="line">typedef  struct  _KSYSTEM_SERVICE_TABLE</span><br><span class="line">&#123;</span><br><span class="line">	PULONG  ServiceTableBase;   //函数地址表的首地址</span><br><span class="line">	PULONG  ServiceCounterTableBase;// 函数表中每个函数被调用的次数</span><br><span class="line">	ULONG   NumberOfService;// 服务函数的个数, NumberOfService * 4 就是整个地址表的大小</span><br><span class="line">	UCHAR*   ParamTableBase; // 参数个数表首地址</span><br><span class="line">&#125; KSYSTEM_SERVICE_TABLE, *PKSYSTEM_SERVICE_TABLE;</span><br><span class="line"></span><br><span class="line">typedef  struct  _KSERVICE_TABLE_DESCRIPTOR</span><br><span class="line">&#123;</span><br><span class="line">	KSYSTEM_SERVICE_TABLE   ntoskrnl;// ntoskrnl.exe的服务函数，即SSDT</span><br><span class="line">	KSYSTEM_SERVICE_TABLE   win32k; // win32k.sys的服务函数(GDI32.dll/User32.dll 的内核支持)，即ShadowSSDT</span><br><span class="line">	KSYSTEM_SERVICE_TABLE   notUsed1; // 不使用</span><br><span class="line">	KSYSTEM_SERVICE_TABLE   notUsed2; // 不使用</span><br><span class="line">&#125;KSERVICE_TABLE_DESCRIPTOR, *PKSERVICE_TABLE_DESCRIPTOR;</span><br><span class="line">typedef NTSTATUS(NTAPI*FnZwOpenProcess)(PHANDLE ProcessHandle, ACCESS_MASK DesiredAccess, POBJECT_ATTRIBUTES ObjectAttributes, PCLIENT_ID ClientId);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void OnUnLoad(DRIVER_OBJECT* driver);</span><br><span class="line"></span><br><span class="line">void installHookSSDT();</span><br><span class="line">void uninstallHook();</span><br><span class="line">void disablePageWriteProtect();</span><br><span class="line">void enablePageWriteProtect();</span><br><span class="line">NTSTATUS NTAPI MyZwOpenProcess(PHANDLE ProcessHandle, ACCESS_MASK DesiredAccess, POBJECT_ATTRIBUTES ObjectAttributes, PCLIENT_ID ClientId);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">FnZwOpenProcess g_oldZwOpenProcess; // 原始ZwOpenProcess函数</span><br><span class="line">ULONG			g_uPid; // 需要保护的进程ID, 这个PID可以通过内核通讯来修改.</span><br><span class="line">KSERVICE_TABLE_DESCRIPTOR* g_pServiceTable = NULL;</span><br><span class="line"></span><br><span class="line">NTSTATUS DriverEntry(DRIVER_OBJECT* driver, UNICODE_STRING* path)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	DbgBreakPoint();</span><br><span class="line">	driver-&gt;DriverUnload = OnUnLoad;</span><br><span class="line">	</span><br><span class="line">	// 安装HOOK</span><br><span class="line">	installHookSSDT();</span><br><span class="line"></span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void OnUnLoad(DRIVER_OBJECT* driver)</span><br><span class="line">&#123;</span><br><span class="line">	// 卸载HOOK</span><br><span class="line">	uninstallHook();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void installHookSSDT()</span><br><span class="line">&#123;</span><br><span class="line">	// 1. 找到SSDT表的首地址</span><br><span class="line">	// 1.1 在分析KiFastCallEntry时, 可以看到系统从KPCR中取出了当前线程对象</span><br><span class="line">	//     然后又从当前线程对象(KTHREAD)中取出了ServiceTable.因此,可以仿照</span><br><span class="line">	//     这个做法.</span><br><span class="line">	// 1.2 ServiceTable在KTHREAD的以下偏移:</span><br><span class="line">	//	   +0x0bc ServiceTable     : Ptr32 Void</span><br><span class="line">	PETHREAD* pCurThread = PsGetCurrentThread();</span><br><span class="line"></span><br><span class="line">	g_pServiceTable = (KSERVICE_TABLE_DESCRIPTOR*)</span><br><span class="line">		(*(ULONG*)((ULONG_PTR)pCurThread + 0xBC));</span><br><span class="line"></span><br><span class="line">	// 2. 找到函数在表中的位置(其位置就是调用号.)</span><br><span class="line">	// 2.1 保存旧的函数地址(0xBE是ZwOpenProcess函数)</span><br><span class="line">	g_oldZwOpenProcess =</span><br><span class="line">		(FnZwOpenProcess)g_pServiceTable-&gt;ntoskrnl.ServiceTableBase[0xBE];</span><br><span class="line"></span><br><span class="line">	// 3. 将内存分页设置为可写</span><br><span class="line">	disablePageWriteProtect();</span><br><span class="line">	// 4. 写入新函数地址到SSDT表中</span><br><span class="line">	g_pServiceTable-&gt;ntoskrnl.ServiceTableBase[0xBE] = (PULONG)MyZwOpenProcess;</span><br><span class="line">	// 5. 将内存分页属性恢复不可写</span><br><span class="line">	enablePageWriteProtect();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void uninstallHook()</span><br><span class="line">&#123;</span><br><span class="line">	if (g_oldZwOpenProcess)</span><br><span class="line">	&#123;</span><br><span class="line">		// 1. 将内存分页设置为可写</span><br><span class="line">		disablePageWriteProtect();</span><br><span class="line">		// 2. 写入新函数地址到SSDT表中</span><br><span class="line">		g_pServiceTable-&gt;ntoskrnl.ServiceTableBase[0xBE] = (PULONG)g_oldZwOpenProcess;</span><br><span class="line">		// 3. 将内存分页属性恢复不可写</span><br><span class="line">		enablePageWriteProtect();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NTSTATUS NTAPI MyZwOpenProcess(PHANDLE ProcessHandle,</span><br><span class="line">							   ACCESS_MASK DesiredAccess, </span><br><span class="line">							   POBJECT_ATTRIBUTES ObjectAttributes, </span><br><span class="line">							   PCLIENT_ID ClientId)</span><br><span class="line">&#123;</span><br><span class="line">	if (ClientId-&gt;UniqueProcess == g_uPid)</span><br><span class="line">	&#123;</span><br><span class="line">		DesiredAccess = 0; // 将访问权限置零</span><br><span class="line">	&#125;</span><br><span class="line">	// 调用原始函数</span><br><span class="line">	return g_oldZwOpenProcess(ProcessHandle, </span><br><span class="line">							  DesiredAccess, </span><br><span class="line">							  ObjectAttributes, </span><br><span class="line">							  ClientId);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 关闭内存页写入保护</span><br><span class="line">void _declspec(naked) disablePageWriteProtect()</span><br><span class="line">&#123;</span><br><span class="line">	_asm</span><br><span class="line">	&#123;</span><br><span class="line">		push eax;</span><br><span class="line">		mov eax, cr0;</span><br><span class="line">		and eax, ~0x10000;</span><br><span class="line">		mov cr0, eax;</span><br><span class="line">		pop eax;</span><br><span class="line">		ret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 开启内存页写入保护</span><br><span class="line">void _declspec(naked) enablePageWriteProtect()</span><br><span class="line">&#123;</span><br><span class="line">	_asm</span><br><span class="line">	&#123;</span><br><span class="line">		push eax;</span><br><span class="line">		mov eax, cr0;</span><br><span class="line">		or eax, 0x10000;</span><br><span class="line">		mov cr0, eax;</span><br><span class="line">		pop eax;</span><br><span class="line">		ret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -200,11 +200,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">HOOK技术</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内核编程</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内核编程</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">HOOK技术</a>
         		</li>
       		
 		</ul>
@@ -284,8 +284,8 @@
     </a>
   
   
-    <a href="/2018/11/08/windows内核编程06-内核对象/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">windows内核编程06-内核对象以及Object_HOOk</div>
+    <a href="/2018/11/08/windows内核编程05-内核API/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">windows内核编程05-内核API</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -419,7 +419,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -427,7 +439,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -439,7 +451,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -447,31 +459,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -479,19 +467,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -499,15 +495,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -524,6 +524,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深入理解计算机系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">

