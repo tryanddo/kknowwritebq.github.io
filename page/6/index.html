@@ -157,6 +157,188 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-windows异常与调试" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/windows异常与调试/">异常与调试</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/windows异常与调试/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Windows异常处理:<br>SEH-结构化异常处理<br>VEH-向量化异常处理<br>VCH-向量化异常处理</p>
+<blockquote>
+<p>SEH-结构化异常处理</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">__try&#123;&#125;</span><br><span class="line">__finally&#123;&#125; //必定会执行 通过AbnormalTermiantion(void)获取是正常方式还是非正常方式</span><br><span class="line"></span><br><span class="line">__try&#123;&#125;</span><br><span class="line">__except&#123;&#125;</span><br><span class="line"></span><br><span class="line">//EXCEPTION_EXECUTE_HANDLER(1) ：执行异常处理块，不回到异常产生处</span><br><span class="line">//EXCEPTION_CONTINUE_SEARCH(0) ：处理不了，找别人吧</span><br><span class="line">//EXCEPTION_CONTINUE_EXECUTION(-1)：不相信这个事实，再执行一下试试</span><br><span class="line">//GetExceptionCode() 返回异常类型</span><br><span class="line">//GetExceptionInformation() 包含上下文信息 以及异常的类型等信息</span><br><span class="line">#include &quot;pch.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;tchar.h&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a;</span><br><span class="line"></span><br><span class="line">DWORD Filter(DWORD Code, _EXCEPTION_POINTERS * pexception_Point, int **p) &#123;</span><br><span class="line">	if (EXCEPTION_ACCESS_VIOLATION == Code) &#123;</span><br><span class="line">		*p = &amp;a;  //此处发现异常一直不断发生</span><br><span class="line">		return EXCEPTION_CONTINUE_EXECUTION; //修复了异常，从产生异常处执行。</span><br><span class="line">	&#125;</span><br><span class="line">	else if (EXCEPTION_STACK_OVERFLOW == Code) &#123;</span><br><span class="line">		return EXCEPTION_CONTINUE_SEARCH;  //修复不了，让别人修复吧</span><br><span class="line">	&#125;</span><br><span class="line">	else if (EXCEPTION_BREAKPOINT == Code) &#123;</span><br><span class="line">		return EXCEPTION_EXECUTE_HANDLER;   //请执行异常处理块吧</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">int _tmain(int argc, _TCHAR* argv[]) &#123;</span><br><span class="line">	int *p = NULL;</span><br><span class="line">	__try &#123;</span><br><span class="line">		p = NULL;</span><br><span class="line">		*p = 100;</span><br><span class="line">	&#125;</span><br><span class="line">	__except (Filter(GetExceptionCode(), GetExceptionInformation(), &amp;p)) &#123;</span><br><span class="line">		printf(&quot;hehe&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>VEH:AddVectoredExceptionHandler函数实现</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//veh异常处理函数</span><br><span class="line">LONG NTAPI veh_handlerA(</span><br><span class="line">  _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 访问异常</span><br><span class="line"> //if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> //&#123;</span><br><span class="line"> // ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line"> // //异常处理了，回去执行</span><br><span class="line"> // return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> //&#125;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">//veh异常处理函数</span><br><span class="line">LONG NTAPI veh_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //veh,一经注册全进程有效</span><br><span class="line"> AddVectoredExceptionHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  veh_handlerA);    //异常处理回调</span><br><span class="line"> AddVectoredExceptionHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  veh_handlerB);    //异常处理回调</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line"> __except (EXCEPTION_EXECUTE_HANDLER)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">// 总结，程序中如果有veh,同时拥有seh,系统会先检查veh,veh处理不了在找seh处理。</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>VCH: AddVectoredContinueHandler函数实现</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//vch异常处理函数</span><br><span class="line">LONG NTAPI vch_handlerA(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 访问异常</span><br><span class="line"> //if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> //&#123;</span><br><span class="line"> // ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line"> // //异常处理了，回去执行</span><br><span class="line"> // return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> //&#125;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">//vch异常处理函数</span><br><span class="line">LONG NTAPI vch_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //vch,一经注册全进程有效</span><br><span class="line"> AddVectoredContinueHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  vch_handlerA);    //异常处理回调</span><br><span class="line"> AddVectoredContinueHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  vch_handlerB);    //异常处理回调</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line"> __except (EXCEPTION_CONTINUE_SEARCH)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">// 总结：程序中如果有vch,同时拥有seh，那么先处理seh,如果seh无法处理，再交给vch</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>默认SEH异常处理函数:SetUnhandledExceptionFilter函数实现</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//seh异常处理函数</span><br><span class="line">LONG NTAPI seh_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> printf(&quot;调用默认的SEH函数了\n&quot;);</span><br><span class="line"> if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> &#123;</span><br><span class="line">  ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line">  //异常处理了，回去执行</span><br><span class="line">  return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> &#125;</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //默认seh处理函数,一经注册全进程有效</span><br><span class="line"> SetUnhandledExceptionFilter(seh_handlerB);</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line">// 总结：当所有的seh都无法处理时，调用默认顶级异常UEH.</span><br><span class="line"> __except (EXCEPTION_CONTINUE_SEARCH)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>SEH原理剖析</p>
+</blockquote>
+<p>用户层有数据结构叫做TEB,产生异常时,系统通过FS:[0]找到链表，依次调用异常处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;pch.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//异常处理指针</span><br><span class="line">typedef LONG (NTAPI *ExceptionFun)(</span><br><span class="line">	_Inout_ struct _EXCEPTION_RECORD *ExceptionRecord,</span><br><span class="line">	_In_ PVOID EstablisherFrame,</span><br><span class="line">	_Inout_ struct _CONTEXT *ContextRecord,</span><br><span class="line">	_In_ PVOID DispatcherContext</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int a = 5;</span><br><span class="line">// 异常处理回调</span><br><span class="line">LONG NTAPI</span><br><span class="line">Exception_routine(</span><br><span class="line">	_Inout_ struct _EXCEPTION_RECORD *ExceptionRecord,</span><br><span class="line">	_In_ PVOID EstablisherFrame,</span><br><span class="line">	_Inout_ struct _CONTEXT *ContextRecord,</span><br><span class="line">	_In_ PVOID DispatcherContext</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line">	//修复异常</span><br><span class="line">	ContextRecord-&gt;Eax = (DWORD)&amp;a;	</span><br><span class="line">	//异常修复了回去执行。</span><br><span class="line">	return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	// 异常结构体</span><br><span class="line">	struct Excptionlist &#123;</span><br><span class="line">		Excptionlist * pnext;</span><br><span class="line">		ExceptionFun hander;</span><br><span class="line">	&#125;;</span><br><span class="line">	Excptionlist node;</span><br><span class="line">	node.hander = Exception_routine;		//异常处理回调</span><br><span class="line"></span><br><span class="line">	__asm &#123;</span><br><span class="line">		mov eax, fs:[0];					//excptionlist 异常指针</span><br><span class="line">		mov dword ptr[node.pnext], eax;		//指向原始的地址</span><br><span class="line">		lea eax, node;						//获取节点的地址</span><br><span class="line">		mov fs:[0], eax;					//插入新节点</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//触发异常</span><br><span class="line">	_asm  mov eax, 0;</span><br><span class="line">	_asm  mov[eax], 0x55;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	//卸载异常处理器</span><br><span class="line">	_asm &#123;</span><br><span class="line">		mov eax, fs:[0].pnext;	//excptionlist 指针</span><br><span class="line">		mov fs:[0], eax;  //fs:[0] = node.next;</span><br><span class="line">	&#125;</span><br><span class="line">	getchar();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/windows异常与调试/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-smali" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/smali/">smali</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/smali/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>数据类型和描述符</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">基本类型:</span><br><span class="line">boolean Z</span><br><span class="line">byte 	B</span><br><span class="line">short 	S</span><br><span class="line">char 	C</span><br><span class="line">int 	I</span><br><span class="line">long	J</span><br><span class="line">float	F</span><br><span class="line">void 	V</span><br><span class="line">double  D</span><br><span class="line"></span><br><span class="line">引用类型:</span><br><span class="line">数组和对象</span><br><span class="line">数组:</span><br><span class="line">[I   一维数组</span><br><span class="line">[[I  二维数组</span><br><span class="line">[Ljava/lang/String; 一维String数组</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/smali/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-Windows调试器编写" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -248,20 +430,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-windows权限" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-windows操作系统的基本概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/windows权限/">windows权限</a>
+      <a class="article-title" href="/2018/08/20/windows操作系统的基本概念/">windows操作系统的基本概念</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/windows权限/" class="archive-article-date">
+        <a href="/2018/08/20/windows操作系统的基本概念/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -270,23 +452,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>令牌:创建的进程与登陆系统的账户有相同的权限，这个权限称为令牌<br>安全描述符:创建对象时拥有,描述什么样的用户以及权限可以访问自己,什么用户是拒绝访问的。<br>UAC:User Account Control UAC机制,即使以管理员权限创建进程也是分配一个低权限的令牌(Filter Token).</p>
-<blockquote>
-<p>通过按钮控制UAC的提权操作</p>
+        <blockquote>
+<p>windows特性</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">// 1. 获得本进程的令牌</span><br><span class="line">	HANDLE hToken = NULL;</span><br><span class="line">	if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &amp;hToken))</span><br><span class="line">		return false;</span><br><span class="line">	// 2. 获取提升类型</span><br><span class="line">	TOKEN_ELEVATION_TYPE ElevationType = TokenElevationTypeDefault;</span><br><span class="line">	BOOL                 bIsAdmin = false;</span><br><span class="line">	DWORD                dwSize = 0;</span><br><span class="line">	if (GetTokenInformation(hToken, TokenElevationType, &amp;ElevationType,</span><br><span class="line">		sizeof(TOKEN_ELEVATION_TYPE), &amp;dwSize)) &#123;</span><br><span class="line">		// 2.1 创建管理员组的对应SID</span><br><span class="line">		BYTE adminSID[SECURITY_MAX_SID_SIZE];</span><br><span class="line">		dwSize = sizeof(adminSID);</span><br><span class="line">		CreateWellKnownSid(WinBuiltinAdministratorsSid, NULL, &amp;adminSID, &amp;dwSize);</span><br><span class="line">		// 2.2 判断当前进程运行用户角色是否为管理员</span><br><span class="line">		if (ElevationType == TokenElevationTypeLimited) &#123;</span><br><span class="line">			// a. 获取连接令牌的句柄</span><br><span class="line">			HANDLE hUnfilteredToken = NULL;</span><br><span class="line">			GetTokenInformation(hToken, TokenLinkedToken, (PVOID)&amp;hUnfilteredToken,</span><br><span class="line">				sizeof(HANDLE), &amp;dwSize);</span><br><span class="line">			// b. 检查这个原始的令牌是否包含管理员的SID</span><br><span class="line">			if (!CheckTokenMembership(hUnfilteredToken, &amp;adminSID, &amp;bIsAdmin))</span><br><span class="line">				return false;</span><br><span class="line">			CloseHandle(hUnfilteredToken);</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			bIsAdmin = IsUserAnAdmin();</span><br><span class="line">		&#125;</span><br><span class="line">		CloseHandle(hToken);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 3. 判断具体的权限状况</span><br><span class="line">	BOOL bFullToken = false;</span><br><span class="line">	switch (ElevationType) &#123;</span><br><span class="line">	case TokenElevationTypeDefault: /* 默认的用户或UAC被禁用 */</span><br><span class="line">		if (IsUserAnAdmin())  bFullToken = true; // 默认用户有管理员权限</span><br><span class="line">		else                  bFullToken = false;// 默认用户不是管理员组</span><br><span class="line">		break;</span><br><span class="line">	case TokenElevationTypeFull:    /* 已经成功提高进程权限 */</span><br><span class="line">		if (IsUserAnAdmin())  bFullToken = true; //当前以管理员权限运行</span><br><span class="line">		else                  bFullToken = false;//当前未以管理员权限运行</span><br><span class="line">		break;</span><br><span class="line">	case TokenElevationTypeLimited: /* 进程在以有限的权限运行 */</span><br><span class="line">		if (bIsAdmin)  bFullToken = false;//用户有管理员权限，但进程权限有限</span><br><span class="line">		else           bFullToken = false;//用户不是管理员组，且进程权限有限</span><br><span class="line">	&#125;</span><br><span class="line">	// 4. 根据权限的不同控制按钮的显示</span><br><span class="line">	if (!bFullToken)</span><br><span class="line">		Button_SetElevationRequiredState(m_Button.m_hWnd,</span><br><span class="line">		!bFullToken);</span><br><span class="line">	else</span><br><span class="line">		::ShowWindow(m_Button.m_hWnd, SW_HIDE);</span><br><span class="line"></span><br><span class="line">	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE</span><br></pre></td></tr></table></figure>
+<ol>
+<li>可移植性<br>软件分层的体系结构,只有硬件抽象层与硬件紧密关联(HAL).windows从32移植到64位CPU,只改动了少量代码。</li>
+<li>兼容性<br>API名称和调用接口的一致性。为支持DOS程序和16位Windows程序,引入环境子系统概念,不同环境子系统,向各自的应用程序提供API支持。</li>
+<li>健壮性和可靠性<br>用户模式和内核模式的划分。<br>应用程序要访问物理内存,物理端口,应用程序都需要向内核模式下的组件提出请求。</li>
+<li>可扩展性<br>将内核从执行体组件中分离。内核只负责线程调度工作.而执行程序组件包含其他操作系统组件,包括内存管理组件,进程管理组件等,安装模块化方法设计。</li>
+<li>性能<br>由于分层设计,各个层次调用带来性能损失.通过I/O异步设计,CPU不会浪费时间在I/O操作上。基于多进程和多线程,尽量可能多个线程保持同时运行。支持异步操作。</li>
+</ol>
 <blockquote>
-<p>管理员权限打开窗口</p>
+<p>操作系统分层 总体架构</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 1. 隐藏当前窗口</span><br><span class="line">	::ShowWindow(this-&gt;m_hWnd, SW_HIDE);</span><br><span class="line">	// 2. 获取当前程序路径</span><br><span class="line">	WCHAR szApplication[MAX_PATH] = &#123; 0 &#125;;</span><br><span class="line">	DWORD cchLength = _countof(szApplication);</span><br><span class="line">	QueryFullProcessImageName(GetCurrentProcess(), 0,</span><br><span class="line">		szApplication, &amp;cchLength);</span><br><span class="line">	// 3. 以管理员权限重新打开进程</span><br><span class="line">	SHELLEXECUTEINFO sei = &#123; sizeof(SHELLEXECUTEINFO) &#125;;</span><br><span class="line">	sei.lpVerb = L&quot;runas&quot;;      // 请求提升权限</span><br><span class="line">	sei.lpFile = szApplication; // 可执行文件路径</span><br><span class="line">	sei.lpParameters = NULL;          // 不需要参数</span><br><span class="line">	sei.nShow = SW_SHOWNORMAL; // 正常显示窗口</span><br><span class="line">	if (ShellExecuteEx(&amp;sei))</span><br><span class="line">		exit(0);</span><br><span class="line">	else</span><br><span class="line">		::ShowWindow(this-&gt;m_hWnd, SW_SHOWNORMAL);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1.应用程序以来3个dll,然后这3个dll最后会调用ntdll.dll</span><br><span class="line">USER32.dll(窗口管理)		3个dll最后通过ntdll.dll调用</span><br><span class="line">GDI32.dll(GDI函数)      -----------------------------&gt; ntdll.dll</span><br><span class="line">KERNEL32.dll(内核调用函数 线程调度等)</span><br><span class="line">2.ntdll.dll调用系统服务</span><br><span class="line">Windows2000 下通过int 2e 进入内核</span><br><span class="line">windowsxp以及之后 通过sysenter 进入内核</span><br><span class="line">将参数和系统服务号传入系统服务。系统服务有一个系统服务描述表(System Service Descriptor Table)。根据系统服务号作为索引找到服务函数的函数地址。</span><br><span class="line">3.执行程序组件</span><br><span class="line">位于Ntoskrnl.exe的上层</span><br><span class="line">	(1)对象管理程序 windows定义了很多数据结构,这些数据结构就是对象,对象管理器用于创建,管理,回收对象组件.驱动开发中就涉及到驱动程序对象,设备对象等。</span><br><span class="line">	(2)进程管理程序 依赖对象管理程序和虚拟内存管理程序等</span><br><span class="line">	(3)虚拟内存管理程序 虚拟内存的申请,回收</span><br><span class="line">	(4)I/O管理器 负责发起I/O请求,统一为IRP请求形式,IRP包含设备操作的重要数据。包括读写操作,字节长度,通讯方式等</span><br><span class="line">	(5)配置管理程序 软件硬件配置信息,使用注册表的数据库保存数据。设备驱动程序根据注册表的信息进行加载</span><br><span class="line">4.驱动程序</span><br><span class="line">  处理方式:</span><br><span class="line">	(1)直接操作硬件,完成IRP</span><br><span class="line">	(2)转发到更底层的驱动,并等待底层驱动返回</span><br><span class="line">	(3)不急于完成。分配新的IRP发到其他驱动程序,并等待返回。</span><br><span class="line">5.内核</span><br><span class="line">	执行在最高特权之上,通过自旋锁提供对多处理器同步的支持</span><br><span class="line">	包含以下功能:对内核对象的支持,对线程的调度,对多处理器同步的支持,中断处理函数的支持,对错误陷阱的支持,对错误陷阱的支持,对其他硬件特殊功能的支持。</span><br><span class="line">	调度线程的时候不能被其他线程打断,即不能允许线程的切换.但是可以被更高的中断请求级别(IRQL)打断。</span><br><span class="line">6.硬件抽象层</span><br><span class="line">	驱动也可以操作硬件抽象层,尽量使用硬件抽象层的宏而不适用汇编例如IN,OUT</span><br><span class="line">7.windows与微内核</span><br><span class="line">	操作系统主要组件运行与独立的进程中,有私有的地址空间。</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>提升进程权限为调试权限</p>
+<p>从应用程序到驱动程序</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">BOOL fOk = FALSE;    HANDLE hToken;</span><br><span class="line">	// 以修改权限的方式，打开进程的令牌</span><br><span class="line">	if (OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES,</span><br><span class="line">		&amp;hToken)) &#123;</span><br><span class="line">		// 令牌权限结构体</span><br><span class="line">		TOKEN_PRIVILEGES tp;</span><br><span class="line">		tp.PrivilegeCount = 1;</span><br><span class="line">		//获得LUID</span><br><span class="line">		LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &amp;tp.Privileges[0].Luid);</span><br><span class="line">		tp.Privileges[0].Attributes = fEnable ? SE_PRIVILEGE_ENABLED : 0;</span><br><span class="line">		AdjustTokenPrivileges(hToken, FALSE, &amp;tp, sizeof(tp), NULL, NULL); //修改权限</span><br><span class="line">		fOk = (GetLastError() == ERROR_SUCCESS);</span><br><span class="line">		CloseHandle(hToken);</span><br><span class="line">	&#125;</span><br><span class="line">	return(fOk);</span><br></pre></td></tr></table></figure>
+<p>对所有硬件设备的操作都以普通文件看待。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CreateFile CloseHandle ReadFIle WirteFile CancelIo DeviceControl</span><br><span class="line">等操作</span><br><span class="line">实例:</span><br><span class="line">		CreateFile							</span><br><span class="line">应用程序------------&gt;win32子系统(Kernel32.dll)--------&gt;ntdll.dll</span><br><span class="line">									创建并发送IRP</span><br><span class="line">--------&gt;系统服务函数--------&gt;I/O管理器-----------&gt;设备驱动---------&gt;</span><br><span class="line">硬件抽象层---------&gt;硬件</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>权限的遍历</p>
+<p>虚拟内存</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">//打开令牌，获取句柄</span><br><span class="line">	HANDLE hToken = 0;</span><br><span class="line">	OpenProcessToken(GetCurrentProcess(), //进程句柄</span><br><span class="line">		TOKEN_QUERY,                      //打开方式（查询）</span><br><span class="line">		&amp;hToken);</span><br><span class="line">	if (hToken == 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;令牌打开失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取令牌权限信息</span><br><span class="line">	//第一次调用是为了获取所需要的空间大小</span><br><span class="line">	DWORD dwSize = 0;</span><br><span class="line">	GetTokenInformation(hToken,  //令牌句柄</span><br><span class="line">		TokenPrivileges,         //查询内容</span><br><span class="line">		NULL,                    //查询结果（缓冲区地址） </span><br><span class="line">		NULL,                    //缓冲区地址大小</span><br><span class="line">		&amp;dwSize);                //实际需要的大小</span><br><span class="line">	//获取到大小后，申请相应的内存后，</span><br><span class="line">	//再次调用GetTokenInformation，此时就会得到</span><br><span class="line">	//令牌权限信息</span><br><span class="line">	char* pBuf = new char[dwSize]&#123;&#125;;</span><br><span class="line">	GetTokenInformation(hToken,</span><br><span class="line">		TokenPrivileges,</span><br><span class="line">		pBuf, dwSize,</span><br><span class="line">		&amp;dwSize);</span><br><span class="line">	TOKEN_PRIVILEGES* pTokenPrivileges = </span><br><span class="line">		              (TOKEN_PRIVILEGES*)pBuf;</span><br><span class="line">	//权限保存在LUID_AND_ATTRIBUTES中，</span><br><span class="line">	//个数为pTokenPrivileges-&gt;PrivilegeCount个</span><br><span class="line">	LUID_AND_ATTRIBUTES* pPrivileges = </span><br><span class="line">		                   pTokenPrivileges-&gt;Privileges;</span><br><span class="line">	//遍历权限</span><br><span class="line">	for (int i = 0; i &lt; pTokenPrivileges-&gt;PrivilegeCount; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		char szPrivilegeName[100] = &#123;&#125;;</span><br><span class="line">		DWORD dwSize = sizeof(szPrivilegeName);</span><br><span class="line">		//根据权限的LUID来查询相对应的字符串命名</span><br><span class="line">		//pPrivileges-&gt;Attributes表示权限是否开启</span><br><span class="line">		//（0：未开启；2：开启；3：默认开启）</span><br><span class="line">		LookupPrivilegeNameA(NULL,</span><br><span class="line">			&amp;pPrivileges-&gt;Luid,</span><br><span class="line">			szPrivilegeName,</span><br><span class="line">			&amp;dwSize);</span><br><span class="line"></span><br><span class="line">		printf(&quot;权限：%s --- 状态[%d]\n&quot;, </span><br><span class="line">			 szPrivilegeName, pPrivileges-&gt;Attributes);</span><br><span class="line">		//下一个</span><br><span class="line">		pPrivileges++;</span><br><span class="line">	&#125;</span><br><span class="line">	//释放内存</span><br><span class="line">	delete pBuf;</span><br><span class="line">	system(&quot;pause&quot;);</span><br></pre></td></tr></table></figure>
+<p>DriverEntry例程和AddDevice例程是运行在系统system进程中.system进程是windows第一个运行的进程。需要加载驱动时,该进程会有一个线程将驱动程序加载到内核模式地址空间并调用DriverEntry例程。<br>而IRP_MJ_READ和IRP_MJ_WRITE的派遣函数运行于应用程序的上下文中。通过PsGetCurrentProcess函数得到当前运行的进程。</p>
+<ul>
+<li>Lookaside结构<br>当申请和回收内存的操作十分频繁的时候。考虑使用Lookaside对象</li>
+</ul>
+
       
 
       
@@ -299,7 +490,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window内核编程</a>
         		</li>
       		
 		</ul>
@@ -309,7 +500,96 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/windows权限/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/windows操作系统的基本概念/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-android_hook" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/android_hook/">android_hook</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/android_hook/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>Cydia Substrate</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>xposed</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1.新建一个无Activity工程</span><br><span class="line"></span><br><span class="line">2.设置清单文件</span><br><span class="line">添加如下:</span><br><span class="line">	&lt;!--使xposed模块有效--&gt;</span><br><span class="line">    &lt;meta-data android:name=&quot;xposedmodule&quot; android:value=&quot;true&quot;&gt;&lt;/meta-data&gt;</span><br><span class="line">    &lt;!--xposed模块名称--&gt;</span><br><span class="line">    &lt;meta-data android:name=&quot;xposeddescription&quot; android:value=&quot;xy神器插件&quot;&gt;&lt;/meta-data&gt;</span><br><span class="line">    &lt;!--xposed模块最低版本--&gt;</span><br><span class="line">    &lt;meta-data android:name=&quot;xposedminversion&quot; android:value=&quot;54&quot;&gt;&lt;/meta-data&gt;</span><br><span class="line"></span><br><span class="line">3.导入Xposed jar包,并设置为privoder</span><br><span class="line">project-&gt;app目录下新建一个目录,例如起名为lib</span><br><span class="line">Xposed jar包复制到lib目录下</span><br><span class="line">工程文件夹右键找到open module settings-&gt;apps-&gt;Dependencies</span><br><span class="line">添加lib目录下的Xposed jar包,scope选择runtime only/provided</span><br><span class="line"></span><br><span class="line">4.创建main类,实现xposed中的接口</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>xposed接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">package com.kebao.xposehook;</span><br><span class="line"></span><br><span class="line">import android.util.Log;</span><br><span class="line">import android.telephony.TelephonyManager;</span><br><span class="line"></span><br><span class="line">import de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line">import de.robv.android.xposed.XC_MethodHook;</span><br><span class="line">import de.robv.android.xposed.XC_MethodReplacement;</span><br><span class="line">import de.robv.android.xposed.XposedBridge;</span><br><span class="line">import de.robv.android.xposed.XposedHelpers;</span><br><span class="line">import de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line">public class Main implements IXposedHookLoadPackage &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        hook1(loadPackageParam);</span><br><span class="line">        hook2(loadPackageParam);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void hook2(XC_LoadPackage.LoadPackageParam loadPackageParam) &#123;</span><br><span class="line"></span><br><span class="line">        // 分析信息</span><br><span class="line">        // hook的包名：com.bluelesson.crackme002</span><br><span class="line">        // hook的类名：com.bluelesson.crackme002.MainActivity</span><br><span class="line">        // hook的方法原型：boolean CheckRegister(String src, String dest)</span><br><span class="line">        String packageName = &quot;com.bluelesson.crackme002&quot;;</span><br><span class="line">        // 判断是不是对应的包，不是直接返回</span><br><span class="line">        if(!loadPackageParam.packageName.equals(packageName))&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        XposedBridge.log(&quot;info findAndHookMethod CheckRegister&quot;);// 显示在Hook框架日志窗口中</span><br><span class="line">        // hook指定的类方法</span><br><span class="line">        XposedHelpers.findAndHookMethod(&quot;com.bluelesson.crackme002.MainActivity&quot;,</span><br><span class="line">                loadPackageParam.classLoader,</span><br><span class="line">                &quot;CheckRegister&quot;, String.class, String.class,</span><br><span class="line">                new XC_MethodHook() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable &#123;</span><br><span class="line">                        super.beforeHookedMethod(param);</span><br><span class="line"></span><br><span class="line">                        XposedBridge.log(&quot;参数1：&quot; + param.args[0]);</span><br><span class="line">                        XposedBridge.log(&quot;参数2：&quot; + param.args[1]);</span><br><span class="line"></span><br><span class="line">                        param.args[0] = &quot;Hello&quot;;</span><br><span class="line">                        param.args[1] = &quot;15PB&quot;;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    @Override</span><br><span class="line">                    protected void afterHookedMethod(MethodHookParam param) throws Throwable &#123;</span><br><span class="line">                        super.afterHookedMethod(param);</span><br><span class="line"></span><br><span class="line">                        XposedBridge.log(&quot;参数1：&quot; + param.args[0]);</span><br><span class="line">                        XposedBridge.log(&quot;参数2：&quot; + param.args[1]);</span><br><span class="line"></span><br><span class="line">                        param.setResult(true);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void hook1(XC_LoadPackage.LoadPackageParam loadPackageParam)&#123;</span><br><span class="line">        // 分析信息</span><br><span class="line">        // hook的包名：com.bluelesson.testphoneinfo</span><br><span class="line">        // hook的类名：android.telephony.TelephonyManager</span><br><span class="line">        // hook的方法原型：public String getDeviceId()</span><br><span class="line"></span><br><span class="line">        String packageName = &quot;com.bluelesson.testphoneinfo&quot;;</span><br><span class="line">        // 判断是不是对应的包，不是直接返回</span><br><span class="line">        if(!loadPackageParam.packageName.equals(packageName))&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        XposedBridge.log(&quot;info findAndHookMethod getDeviceId&quot;);// 显示在Hook框架日志窗口中</span><br><span class="line">        // hook指定的类方法</span><br><span class="line">        XposedHelpers.findAndHookMethod(TelephonyManager.class, &quot;getDeviceId&quot;, new XC_MethodReplacement() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            protected Object replaceHookedMethod(MethodHookParam methodHookParam) throws Throwable &#123;</span><br><span class="line">                XposedBridge.log(&quot;info replaceHookedMethod&quot;);</span><br><span class="line">                return &quot;我就是序列号&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/android_hook/">展开全文 >></a>
         </p>
       
 
@@ -426,85 +706,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-注入方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/注入方式/">dll注入方式</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/注入方式/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">dll注入</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/注入方式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-汇编1_寄存器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -587,20 +788,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-逆向分析方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-PE文件编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/逆向分析方法/">逆向分析方法</a>
+      <a class="article-title" href="/2018/08/20/PE文件编程/">PE文件编程</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/逆向分析方法/" class="archive-article-date">
+        <a href="/2018/08/20/PE文件编程/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -609,108 +810,34 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li>自上而下的分析<br>从程序入口点开始分析,模拟程序运行的整个流程,对程序进行分析</li>
-<li>自下而上分析<br>找到关键API,栈回溯分析,比如程序弹出MessageBoxA/W，从弹框栈回溯分析找到窗口回调函数,从窗口回调函数开始分析</li>
-<li>字符串分析<br>根据弹窗提示的字符串,再调试器中查找,定位关键代码,再分析<br>根据调试时查看到的第三方库的版本号<br>比如:加密通讯库openssl  嵌入式脚本lua</li>
-<li>源码对比分析<br>分析源码特征,然后去调试分析<br>5.假设某一个函数的内部复杂,可以在成功调用函数的代码处,不停调用目标函数,构造类似参数,从返回值,传出参数来判断函数的功能。</li>
-</ol>
-<p>分析心态:分析过程中不停猜测程序的意图和流程</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/逆向分析方法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-Hook原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/Hook原理/">HooK原理</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/Hook原理/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>万能神奇Hook:<br>1.系统提供的消息Hook机制<br>2.自定义的Hook汇编技巧</p>
-<blockquote>
-<p>消息钩子例子</p>
+        <blockquote>
+<p>读取文件</p>
 </blockquote>
-<p>1.SetWindowsHookEx设置钩子<br>2.CallNextHookEx为钩子链的下一个程序设置钩子<br>3.UnhookWindowsHookEx卸载钩子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">HHOOK g_Hook;</span><br><span class="line">HMODULE g_hModule;</span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK KeyboardProc(</span><br><span class="line">	int code,           // 消息类型</span><br><span class="line">	WPARAM wParam,      // 虚拟码</span><br><span class="line">	LPARAM lParam) &#123;    // 按键信息</span><br><span class="line"></span><br><span class="line">	// 判断是否wParam与lParam都有键盘消息，是的话则执行打印操作</span><br><span class="line">	if (code == HC_ACTION)&#123;</span><br><span class="line">		// 将256个虚拟键的状态拷贝到指定的缓冲区中，如果成功则继续</span><br><span class="line">		BYTE KeyState[256] = &#123; 0 &#125;;</span><br><span class="line">		if (GetKeyboardState(KeyState)) &#123;</span><br><span class="line">			// 得到第16–23位，键盘虚拟码</span><br><span class="line">			LONG  KeyInfo = lParam;</span><br><span class="line">			UINT  keyCode = (KeyInfo &gt;&gt; 16) &amp; 0x00ff;</span><br><span class="line">			WCHAR wKeyCode = 0;</span><br><span class="line">			ToAscii((UINT)wParam, keyCode, KeyState, (LPWORD)&amp;wKeyCode, 0);</span><br><span class="line">			// 将其打印出来</span><br><span class="line">			WCHAR szInfo[512] = &#123; 0 &#125;;</span><br><span class="line">			swprintf_s(szInfo, 512, L&quot;Hook_%c&quot;, (char)wKeyCode);</span><br><span class="line">			OutputDebugString(szInfo);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return CallNextHookEx(g_Hook, code, wParam, lParam);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BOOL InstallHook() &#123;</span><br><span class="line">	g_Hook = SetWindowsHookEx(</span><br><span class="line">		WH_KEYBOARD,//按键消息的钩子</span><br><span class="line">		KeyboardProc, //回调函数</span><br><span class="line">		g_hModule,</span><br><span class="line">		0);</span><br><span class="line"></span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br><span class="line">// 导出函数：卸载钩子</span><br><span class="line">BOOL UninstallHook() &#123;</span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return UnhookWindowsHookEx(g_Hook);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:</span><br><span class="line">		g_hModule = hModule;</span><br><span class="line">		InstallHook();</span><br><span class="line"></span><br><span class="line">		break;</span><br><span class="line">// 	case DLL_THREAD_ATTACH:</span><br><span class="line">// 	case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		//UninstallHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">char* ReadFileToMem(char *pFilePath) &#123;</span><br><span class="line">	HANDLE hFile = CreateFileA(pFilePath,</span><br><span class="line">		GENERIC_READ,</span><br><span class="line">		NULL,</span><br><span class="line">		NULL,</span><br><span class="line">		OPEN_EXISTING,</span><br><span class="line">		FILE_ATTRIBUTE_NORMAL,</span><br><span class="line">		NULL</span><br><span class="line">		);</span><br><span class="line">	if (hFile == INVALID_HANDLE_VALUE) &#123;</span><br><span class="line">		printf(&quot;File open failed\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取文件大小</span><br><span class="line">	DWORD dwFileSize = GetFileSize(hFile, NULL);</span><br><span class="line">	//申请空间</span><br><span class="line">	char *pFileBuf = new char[dwFileSize];</span><br><span class="line">	//读文件</span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	BOOL bRet = ReadFile(hFile, pFileBuf, dwFileSize, &amp;dwRead, NULL);</span><br><span class="line">	if (bRet) &#123;</span><br><span class="line">		return pFileBuf;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>自定义钩子</p>
+<p>判断是否是PE文件</p>
 </blockquote>
-<ul>
-<li><p>内联Hook<br>通过修改Opcode 使原本跳转到原函数的地址变成跳转到制定函数的地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void UnHook();</span><br><span class="line">void OnHook();</span><br><span class="line">BYTE g_old[5];</span><br><span class="line">BYTE g_New[5] = &#123;0xE9&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line">	//卸载钩子</span><br><span class="line">	UnHook();</span><br><span class="line">	int nRet = MessageBoxW(hWnd, lpText, lpCaption, uType);</span><br><span class="line">	//安装钩子</span><br><span class="line">	OnHook();</span><br><span class="line">	return nRet;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void OnHook()</span><br><span class="line">&#123;</span><br><span class="line">	//获取MessageBoxW地址</span><br><span class="line">	DWORD dwMsg = (DWORD)MessageBoxW;</span><br><span class="line">	DWORD dwMyMsg = (DWORD)MyMessageBoxW;</span><br><span class="line">	//计算偏移 offset = 目标地址 - jmp所在地址 - 指令长度</span><br><span class="line">	DWORD dwOffset = dwMyMsg - dwMsg - 5;</span><br><span class="line"></span><br><span class="line">	//保存原来的Opcode</span><br><span class="line">	memcpy(g_old, MessageBoxW, 5);</span><br><span class="line">	//构造Hook地址</span><br><span class="line">	*(DWORD*)(g_New + 1) = dwOffset;</span><br><span class="line">	//修改地址</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW,g_New,  5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW, g_old, 5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int _tmain(int argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	OnHook();</span><br><span class="line">	MessageBox(0,0,0,0);</span><br><span class="line">	UnHook();</span><br><span class="line">	MessageBox(0, 0, 0, 0);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>IATHook<br>1.通过导入表查询到制定的函数名<br>2.根据函数名制定函数地址<br>3.替换函数地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">// dllmain.cpp : 定义 DLL 应用程序的入口点。</span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">typedef int (WINAPI*FP_MSG)(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType);</span><br><span class="line"></span><br><span class="line">FP_MSG g_MyMsg;</span><br><span class="line">DWORD g_IAT_Addr;</span><br><span class="line">DWORD g_Addr;</span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line"></span><br><span class="line">	return g_MyMsg(hWnd, lpText, lpCaption, uType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line"></span><br><span class="line">	*(DWORD*)g_IAT_Addr = (DWORD)g_MyMsg;</span><br><span class="line"></span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line">   INT中函数名的下标与IAT中函数地址是一一对应的</span><br><span class="line">*/</span><br><span class="line">void IAT_hook(char* pFunName,char* pDllName)</span><br><span class="line">&#123;</span><br><span class="line">	//获取加载基址</span><br><span class="line">	HMODULE hMod = GetModuleHandle(NULL);</span><br><span class="line">	DWORD dwImageBase = (DWORD)hMod;</span><br><span class="line"></span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)hMod;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = </span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + dwImageBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pImportDir = </span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)</span><br><span class="line">		&amp;pNt-&gt;OptionalHeader.DataDirectory[1];</span><br><span class="line">	//获取导入表地址</span><br><span class="line">	PIMAGE_IMPORT_DESCRIPTOR pImport = </span><br><span class="line">		(PIMAGE_IMPORT_DESCRIPTOR)</span><br><span class="line">		(pImportDir-&gt;VirtualAddress + dwImageBase);</span><br><span class="line">	</span><br><span class="line">	//遍历导入表，查找函数地址的位置</span><br><span class="line">	while (pImport-&gt;Name)</span><br><span class="line">	&#123;</span><br><span class="line">		char* pDll = (char*)(pImport-&gt;Name + dwImageBase);</span><br><span class="line">		//比对模块名（_stricmp比对时不区分大小写）</span><br><span class="line">		if (!_stricmp(pDll, pDllName))</span><br><span class="line">		&#123;</span><br><span class="line">			//IAT找到了</span><br><span class="line">			DWORD* pIAT = (DWORD*)(pImport-&gt;FirstThunk + dwImageBase);</span><br><span class="line">			DWORD* pINT = (DWORD*)(pImport-&gt;OriginalFirstThunk + dwImageBase);</span><br><span class="line"></span><br><span class="line">			while (*pINT)</span><br><span class="line">			&#123;</span><br><span class="line">				//最高位为0是名称导入的</span><br><span class="line">				if (!(*pINT &amp; 0x80000000))</span><br><span class="line">				&#123;</span><br><span class="line">					PIMAGE_IMPORT_BY_NAME pName =</span><br><span class="line">						(PIMAGE_IMPORT_BY_NAME)</span><br><span class="line">						(*pINT + dwImageBase);</span><br><span class="line">					//比对函数名称</span><br><span class="line">					if (!_stricmp(pName-&gt;Name,pFunName))</span><br><span class="line">					&#123;</span><br><span class="line">						//进来说明找到了</span><br><span class="line">						//保存原来的地址用于恢复</span><br><span class="line">						g_IAT_Addr = (DWORD)pIAT;</span><br><span class="line">						//将MessageBoxW地址赋值给函数指针</span><br><span class="line">						g_MyMsg = (FP_MSG)*pIAT;</span><br><span class="line">					    //IAT表的内存属性是只读</span><br><span class="line">						//需要修改内存属性为可写才能修改</span><br><span class="line">						DWORD dwOld;</span><br><span class="line">						VirtualProtect(pIAT, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">						//修改为自己的函数地址</span><br><span class="line">						*pIAT = (DWORD)MyMessageBoxW;</span><br><span class="line">						//恢复原来的属性</span><br><span class="line">						VirtualProtect(pIAT, 4, dwOld, &amp;dwOld);</span><br><span class="line">						return;</span><br><span class="line">						</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				//下一个</span><br><span class="line">				pINT++;</span><br><span class="line">				pIAT++;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		//下一个某块</span><br><span class="line">		pImport++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:		</span><br><span class="line">		IAT_hook(&quot;MessageBoxW&quot;,&quot;user32.dll&quot;);</span><br><span class="line">		break;</span><br><span class="line">	//case DLL_THREAD_ATTACH:</span><br><span class="line">	//case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		UnHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">BOOL IsPeFile(char *pFileBuf) &#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pFileBuf;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = (PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFileBuf);</span><br><span class="line">	if (pDos-&gt;e_magic != IMAGE_DOS_SIGNATURE || pNt-&gt;Signature != IMAGE_NT_SIGNATURE) &#123;</span><br><span class="line">		printf(&quot;file is not pe\n&quot;);</span><br><span class="line">		return FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>RVA to FOA</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">DWORD RVAtoFOA(DWORD dwRVA, char* pBase) &#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pBase;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = (PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pBase);</span><br><span class="line">	//获取区段个数</span><br><span class="line">	DWORD dwSectionCount = pNt-&gt;FileHeader.NumberOfSections;</span><br><span class="line">	//获取第一个区段表的地址</span><br><span class="line">	PIMAGE_SECTION_HEADER pSec1= IMAGE_FIRST_SECTION(pNt);</span><br><span class="line">	//循环比对地址落在哪个区段内</span><br><span class="line">	for (DWORD i = 0; i &lt; dwSectionCount; i++) &#123;</span><br><span class="line">		if (dwRVA &gt;= pSec1-&gt;VirtualAddress &amp;&amp; dwRVA &lt;= (pSec1-&gt;VirtualAddress +</span><br><span class="line">			pSec1-&gt;SizeOfRawData)) &#123;</span><br><span class="line">			return dwRVA - </span><br><span class="line">				pSec1-&gt;VirtualAddress + </span><br><span class="line">				pSec1-&gt;PointerToRawData;</span><br><span class="line">		&#125;</span><br><span class="line">		//下一个区段地址</span><br><span class="line">		pSec1++;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>显示PE文件中的一些重要字段</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void ShowImportantData(char *pFile) &#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pFile;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = (PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFile);</span><br><span class="line">	//加载基址</span><br><span class="line">	printf(&quot;加载基址:0x%X\n&quot;, pNt-&gt;OptionalHeader.ImageBase);</span><br><span class="line">	//OEP 入口点</span><br><span class="line">	printf(&quot;OEP 入口点:0x%X\n&quot;, pNt-&gt;OptionalHeader.AddressOfEntryPoint);</span><br><span class="line">	//文件属性</span><br><span class="line">	printf(&quot;文件属性:0x%X\n&quot;, pNt-&gt;FileHeader.Characteristics);</span><br><span class="line">	//32bit或者是64bit</span><br><span class="line">	printf(&quot;文件特性:%s\n&quot;, pNt-&gt;OptionalHeader.Magic==0x10B?&quot;32位&quot;:&quot;64位&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>导出表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">//遍历导出表</span><br><span class="line">void TraExportTable(char* pFileBase)</span><br><span class="line">&#123;</span><br><span class="line">	//找到导出表</span><br><span class="line">	PIMAGE_DOS_HEADER pDos =</span><br><span class="line">		(PIMAGE_DOS_HEADER)pFileBase;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt =</span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFileBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pExportDir = </span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)&amp;pNt-&gt;OptionalHeader.DataDirectory[0];</span><br><span class="line">	//判断是否有导出表</span><br><span class="line">	if (!pExportDir-&gt;Size)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;没有导出表\n&quot;);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取导出表的FOA</span><br><span class="line">	DWORD dwExportFOA = RVAtoFOA(pExportDir-&gt;VirtualAddress,</span><br><span class="line">		                 pFileBase);</span><br><span class="line">	//导出表再文件中的位置</span><br><span class="line">	PIMAGE_EXPORT_DIRECTORY pExportTable = </span><br><span class="line">		        (PIMAGE_EXPORT_DIRECTORY)(dwExportFOA + pFileBase);</span><br><span class="line"></span><br><span class="line">	//打印名字</span><br><span class="line">	char* pFileName = </span><br><span class="line">		RVAtoFOA(pExportTable-&gt;Name, pFileBase) + pFileBase;</span><br><span class="line">	printf(&quot;模块名：%s\n&quot;, pFileName);</span><br><span class="line"></span><br><span class="line">	//获取函数地址表中元素个数</span><br><span class="line">	DWORD dwFunCount = pExportTable-&gt;NumberOfFunctions;</span><br><span class="line">	//获取函数名称表中元素个数</span><br><span class="line">	DWORD dwFunNameCount = pExportTable-&gt;NumberOfNames;</span><br><span class="line"></span><br><span class="line">	//地址表地址</span><br><span class="line">	PDWORD pAddress = </span><br><span class="line">		(PDWORD)(RVAtoFOA(pExportTable-&gt;AddressOfFunctions,pFileBase) + pFileBase);</span><br><span class="line">	//名称表地址</span><br><span class="line">	PDWORD pName =</span><br><span class="line">		(PDWORD)(RVAtoFOA(pExportTable-&gt;AddressOfNames, pFileBase) + pFileBase);</span><br><span class="line">	//序号表地址</span><br><span class="line">	PWORD pOrdinal =</span><br><span class="line">		(PWORD)(RVAtoFOA(pExportTable-&gt;AddressOfNameOrdinals, pFileBase) + pFileBase);</span><br><span class="line"></span><br><span class="line">	for (DWORD i = 0; i &lt; dwFunCount;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (pAddress[i] == 0)</span><br><span class="line">		&#123;</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line">		//判断是否是名称导出</span><br><span class="line">		BOOL bFlag = FALSE;</span><br><span class="line">		for (DWORD n = 0; n &lt; dwFunNameCount;n++)</span><br><span class="line">		&#123;</span><br><span class="line">			if (i == pOrdinal[n])</span><br><span class="line">			&#123;</span><br><span class="line">				bFlag = TRUE;</span><br><span class="line">				//有名字就到名称表中找到名称的地址</span><br><span class="line">				char* pFunName = RVAtoFOA(pName[n], pFileBase) + pFileBase;</span><br><span class="line">				printf(&quot;函数名： %s函数序号：%d\n&quot;, pFunName, i + pExportTable-&gt;Base);</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		//序号导出</span><br><span class="line">		if (!bFlag)</span><br><span class="line">		   printf(&quot;函数名：【NULL】函数序号：%d\n&quot;,  i + pExportTable-&gt;Base);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>导入表</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">//遍历导入表</span><br><span class="line">void TraImportTable(char* pFileBase)</span><br><span class="line">&#123;</span><br><span class="line">	//找到导出表</span><br><span class="line">	PIMAGE_DOS_HEADER pDos =</span><br><span class="line">		(PIMAGE_DOS_HEADER)pFileBase;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt =</span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFileBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pImportDir =</span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)&amp;pNt-&gt;OptionalHeader.DataDirectory[1];</span><br><span class="line">	//是否有导入表</span><br><span class="line">	if (pImportDir-&gt;Size == 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;没有导入表\n&quot;);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取导入表再文件中的地址</span><br><span class="line">	DWORD dwFOA = RVAtoFOA(pImportDir-&gt;VirtualAddress, pFileBase);</span><br><span class="line">	PIMAGE_IMPORT_DESCRIPTOR pImportTable = </span><br><span class="line">		         (PIMAGE_IMPORT_DESCRIPTOR)(dwFOA + pFileBase);</span><br><span class="line">	//以一个全0结构结尾</span><br><span class="line">	while (pImportTable-&gt;Name)</span><br><span class="line">	&#123;</span><br><span class="line">		//显示模块名</span><br><span class="line">		printf(&quot;模块名：%s\n&quot;,RVAtoFOA(pImportTable-&gt;Name, pFileBase) + pFileBase);</span><br><span class="line">		//通过OriginalFirstThunk（INT）或者FirstThunk（IAT）都可以便利到函数名</span><br><span class="line">		PIMAGE_THUNK_DATA pThunk = </span><br><span class="line">			(PIMAGE_THUNK_DATA)</span><br><span class="line">			(RVAtoFOA(pImportTable-&gt;FirstThunk, pFileBase) + pFileBase);</span><br><span class="line">		while (pThunk-&gt;u1.AddressOfData)</span><br><span class="line">		&#123;</span><br><span class="line">			//判断导入方式如果IMAGE_THUNK_DATA的最高位位0,说明是名称导入，否则就是序号导入</span><br><span class="line">			if (IMAGE_SNAP_BY_ORDINAL32(pThunk-&gt;u1.Ordinal))</span><br><span class="line">			&#123;</span><br><span class="line">				printf(&quot;\t函数名：【NULL】 函数序号：%04X\n&quot;,</span><br><span class="line">					pThunk-&gt;u1.Ordinal &amp;&amp; 0xFFFF);</span><br><span class="line">			&#125;</span><br><span class="line">			else //名称导入</span><br><span class="line">			&#123;</span><br><span class="line">				PIMAGE_IMPORT_BY_NAME pName =</span><br><span class="line">					(PIMAGE_IMPORT_BY_NAME)</span><br><span class="line">					(RVAtoFOA(pThunk-&gt;u1.AddressOfData, pFileBase) + pFileBase);</span><br><span class="line">				printf(&quot;\t函数名：%s 函数序号：%04X\n&quot;, pName-&gt;Name,</span><br><span class="line">					pName-&gt;Hint);</span><br><span class="line">			&#125;</span><br><span class="line">			//下一个函数</span><br><span class="line">			pThunk++;</span><br><span class="line">		&#125;</span><br><span class="line">		//下一个模块的导入信息</span><br><span class="line">		pImportTable++; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>手工调用TLS</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void RepairTLS(char *BaseAddr) &#123;</span><br><span class="line">	IMAGE_DATA_DIRECTORY * pDDir = GetOptionHeader(BaseAddr)-&gt;DataDirectory;</span><br><span class="line">	//压缩后将数据目录表的TLS修复</span><br><span class="line">	if (g_Sc.TlsDataDir.VirtualAddress!=0x0) &#123;</span><br><span class="line"></span><br><span class="line">		DWORD oldProtect;</span><br><span class="line">		VirtualProtect(pDDir + 9, 8,PAGE_READWRITE,&amp;oldProtect);</span><br><span class="line">		memcpy(pDDir + 9, (void *)&amp;g_Sc.TlsDataDir, sizeof(IMAGE_DATA_DIRECTORY));</span><br><span class="line">		VirtualProtect(pDDir + 9, 8, oldProtect, &amp;oldProtect);</span><br><span class="line">		//手工调用原TLS函数</span><br><span class="line">		PIMAGE_TLS_DIRECTORY pTlsDir = (PIMAGE_TLS_DIRECTORY)((pDDir + 9)-&gt;VirtualAddress + BaseAddr);</span><br><span class="line">		PIMAGE_TLS_CALLBACK* lpTlsFun = (PIMAGE_TLS_CALLBACK*)(pTlsDir-&gt;AddressOfCallBacks);</span><br><span class="line">		while ((*lpTlsFun) != NULL) &#123; //判断是否有TLS回调函数</span><br><span class="line">			(*lpTlsFun)(BaseAddr, DLL_PROCESS_ATTACH, NULL);</span><br><span class="line">			lpTlsFun++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -734,196 +861,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/Hook原理/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-逆向基础03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/逆向基础03/">逆向基础03</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/逆向基础03/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>vs全家桶-gs/堆栈/堆栈变量</p>
-</blockquote>
-<ul>
-<li>checkStackVars<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.lea edx,xxxx</span><br><span class="line">  call xxx</span><br><span class="line">2.call内部对0xccccccc进行判断</span><br><span class="line">3.函数一般在函数末尾</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>+checkGS 特征<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#函数开头</span><br><span class="line">mov eax,__security_cookie</span><br><span class="line">xor eax,ebp</span><br><span class="line">mov [ebp-4],eax</span><br><span class="line"></span><br><span class="line">#函数结尾</span><br><span class="line">mov ecx,[ebp-4]</span><br><span class="line">xor ecx,ebp</span><br><span class="line">call check_函数</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>checkESP<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.cmp ebp,esp</span><br><span class="line">  call xxx</span><br><span class="line">2.call内部是jnz xxx</span><br><span class="line">3.一般在函数结束时,call调用完之后出现</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>VS编译器生成C++类代码特色</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#对于类</span><br><span class="line">1.this指针,VS编辑器会使用ECX来作为this指针传参</span><br><span class="line"></span><br><span class="line">#构造函数</span><br><span class="line">1.使用ECX传this</span><br><span class="line">2.call内部对ECX指向缓冲区进行赋值或者初始化</span><br><span class="line">3.返回值EAX是this指针</span><br><span class="line">例如:</span><br><span class="line">push ecx</span><br><span class="line">lea edi,[ebp+xx]</span><br><span class="line">mov ecx,xx/4</span><br><span class="line">mov eax,0CCCCCCCCh</span><br><span class="line">rep stosd</span><br><span class="line">pop ecx</span><br><span class="line">mov [ebp+this],ecx ;this指针放入局部变量</span><br><span class="line">xxxxxxx</span><br><span class="line">mov eax,[ebp+this]</span><br><span class="line"></span><br><span class="line">#成员函数</span><br><span class="line">1.使用ECX传this</span><br><span class="line">2.call内部对ECX指向缓冲区进行赋值或者初始化</span><br><span class="line"></span><br><span class="line">#析构函数</span><br><span class="line">#构造函数</span><br><span class="line">1.使用ECX传this</span><br><span class="line">2.call内部对ECX指向缓冲区进行访问或者释放</span><br><span class="line">3.局部对象一般调用在函数退出时</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>VS程序内存和编译的一些特征</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.内存值特点</span><br><span class="line">  FDFDFDFD 堆的边界,也作为堆标记</span><br><span class="line">  CDCDCDCD 堆申请空间未初始化状态 new-&gt;malloc-&gt;HeapAlloc-&gt;RtAllocHeap</span><br><span class="line">  CCCCCCCC 局部堆栈未初始化状态</span><br><span class="line">  40300000 浮点数(IEEE浮点表示法)</span><br><span class="line">  3D9B5DC1 不像地址不像数据认为是hash值</span><br><span class="line">  00380000 VirtualAlloc申请的内存地址(页对齐)</span><br><span class="line">  FEFEFEFE 堆释放之后的填充信息</span><br><span class="line">  0012FF8C 堆栈地址一般比较小</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>vs2015/2017 全局变量</p>
-</blockquote>
-<p>_initterm 循环调用全局对象构造函数 可以用来写反调试<br>initterm.cpp 假如在调用全局对象时,通过eip跳过调用,来测试是否有反调试<br>8B 4D F8 8B 11 89 55 F4 8B 4D F4 FF 15 ?? ?? ?? ?? FF 55 F4</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/逆向基础03/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-ollydbg软件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/ollydbg软件/">ollydbg软件</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/ollydbg软件/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>od支持的调试方式<br>① 支持拖拽<br>② 支持菜单 -文件 -打开,打开的时候可以添加命令行参数<br>③ 支持右键菜单打开<br>④ 支持附加调试<br>⑤ 支持DLL调试<br>⑥ 支持多线程调试</p>
-</blockquote>
-<blockquote>
-<p>od中的断点有哪些,原理分别是什么?<br>① 软件断点,F2,修改代码处为int3,异常触发再还原<br>② 硬件断点,寄存器设置地址到dr0~dr3,dr6,触发单步异常<br>③ 内存断点,修改属性(VirtualProtectEx)<br>④ 条件断点,Shift+F2,与软件断点一样<br>⑤ 消息断点，在条件基础上增加了宏定义<br>⑥ 记录断点，利用跟踪记录,然后设置条件,可以断下 </p>
-</blockquote>
-<p>快捷方式</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/ollydbg软件/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/PE文件编程/">展开全文 >></a>
         </p>
       
 
@@ -1058,9 +996,93 @@
         <!-- 目录内容结束 -->
 
   
+    <article id="post-PE文件数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/PE文件数据结构/">PE文件数据结构</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/PE文件数据结构/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>IMAGE_DOS_HEADER dos头部</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2018/08/20/PE文件数据结构/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/PE文件数据结构/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
     </nav>
   
 
@@ -1151,11 +1173,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1167,11 +1193,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1183,11 +1205,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1196,6 +1218,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1215,10 +1241,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
               </li>
              
@@ -1227,7 +1249,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1235,11 +1257,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1259,11 +1285,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>

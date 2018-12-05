@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="网络协议 12345应用层 dns http https dhcp rtmp p2p gtp rpc传输层 tcp udp网络层 ip icmp OSPF BGP IPSec GPE链路层 arp vlan stp物理层 网络跳线  分层协议 12345复杂的程序都需要分层。混杂模式就是把网口把所有经过的全部拿进来。二层设备:包取下mac头,通过mac头看转发丢弃还是留下。三层设备:第二层设备剩">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-20T01:07:11.082Z">
+<meta property="og:updated_time" content="2018-11-20T06:01:32.636Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络协议学习第一天">
 <meta name="twitter:description" content="网络协议 12345应用层 dns http https dhcp rtmp p2p gtp rpc传输层 tcp udp网络层 ip icmp OSPF BGP IPSec GPE链路层 arp vlan stp物理层 网络跳线  分层协议 12345复杂的程序都需要分层。混杂模式就是把网口把所有经过的全部拿进来。二层设备:包取下mac头,通过mac头看转发丢弃还是留下。三层设备:第二层设备剩">
@@ -194,9 +194,19 @@
 <li><p>分层协议</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">复杂的程序都需要分层。</span><br><span class="line">混杂模式就是把网口把所有经过的全部拿进来。</span><br><span class="line">二层设备:包取下mac头,通过mac头看转发丢弃还是留下。</span><br><span class="line">三层设备:第二层设备剩下的数据,取下ip头,通过ip头看是转发丢弃还是留下。</span><br><span class="line">注意要点:在网络上跑的包都是完整的多层协议信息都有的。可以有下层没上层,但是不能有上层没下层</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>ip与mac地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>ip与mac</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip用于局域网外的定位</span><br><span class="line">mac用于本地局域网范围内的定位</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ip addr解析 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:1d:d0:1b brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.10.10.130/24 brd 10.10.10.255 scope global dynamic eth0</span><br><span class="line">       valid_lft 603736sec preferred_lft 603736sec</span><br><span class="line">    inet6 fe80::20c:29ff:fe1d:d01b/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line"></span><br><span class="line">网络状态标识符:</span><br><span class="line">lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1</span><br><span class="line">eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">UP:启动着</span><br><span class="line">BROADCAST:这个网卡有广播地址</span><br><span class="line">MULTICAST:可以发送多播包</span><br><span class="line">LOWER_UP:启动的,网线插着的</span><br><span class="line">MTU 1500:以太网最大的传输单元是1500 mac层</span><br><span class="line">qdisc: queueing discipline(排队规则) </span><br><span class="line">	最简单pfifo:不对进入的数据包做任何处理,采用先入先出 </span><br><span class="line">		  pfifo_fast:队列包括3个波段,每个波段内采用先入先出,优先级band 0最高,band 2最低</span><br><span class="line">		  数据包根据IP头的TOS(Type of Service)字段,判断放在哪个band</span><br><span class="line">LOOPBACK：环回地址</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ip地址的设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">net-tool：</span><br><span class="line">sudo ifconfig eth1 10.0.0.1/24</span><br><span class="line">sudo ifconfig eth1 up</span><br><span class="line">iproute2：</span><br><span class="line">sudo ip addr add 10.0.0.1/24 dev eth1</span><br><span class="line">sudo ip link set up eth1</span><br><span class="line"></span><br><span class="line">linux下，只有同网段的才会发送arp包，不同网段直接发给网关。</span><br><span class="line">网关至少与当前网络的一个网卡是同一网段。</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
+<blockquote>
+<p>DHCP协议<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">比如满足到处抱着笔记本到处跑的人员的ip分配</span><br><span class="line">解析：</span><br><span class="line">1.DHCP Discover：当一个新机器假如网络，使用ip地址0.0.0.0发生一个广播包，目的地址为255.255.255.255，广播包封装udp，udp封装bootp。而dhcp是bootp的增强版。</span><br><span class="line">2.DHCP offer ：dhcp server分配一个可用ip，假如有多个dhcp server，会才用最先到的ip，并仍以0.0.0.0广播，告诉所有dhcp server用哪个dhcp server的ip</span><br><span class="line">3.dhcp server发一个DHCP ACK消息包，并将ip地址的合法租用信息和其他配置信息广播给客户机。</span><br><span class="line">4.租约完成，广播让大家都知道</span><br><span class="line">ip地址的收回与续租：租期过去50%，向提供ip地址的dhcp server发送dhcp 请求消息，客户机接到服务器回应的DHCP ACK消息包，根据提供的新的租期和其他tcp/ip参数更新配置。</span><br></pre></td></tr></table></figure></p>
+</blockquote>
 
       
 
@@ -280,9 +290,18 @@
   
 <nav id="article-nav">
   
+    <a href="/2018/11/30/android_NDK_动态调试/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          android_NDK_动态调试
+        
+      </div>
+    </a>
   
-    <a href="/2018/11/16/metesploit_payload模块之meterpreter/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">payload模块之meterpreter</div>
+  
+    <a href="/2018/11/20/网络协议学习第二天-网络层/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">网络协议学习第二天-网络层</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -416,11 +435,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -432,11 +455,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -448,11 +467,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -461,6 +480,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -480,10 +503,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
               </li>
              
@@ -492,7 +511,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -500,11 +519,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -524,11 +547,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>

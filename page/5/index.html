@@ -157,21 +157,320 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-汇编指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-漏洞利用原理高级" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/汇编指令/">汇编学习2汇编指令</a>
+      <a class="article-title" href="/2018/09/29/漏洞利用原理高级/">漏洞利用原理高级</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/汇编指令/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+        <a href="/2018/09/29/漏洞利用原理高级/" class="archive-article-date">
+  	<time datetime="2018-09-29T07:28:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-29</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>GS编译技术<br>一般在[esp-4]之前加入Security Cookie(esp Xor .data区第一个4字节数据),函数返回前首先检测Security Cookie是否覆盖,从而把针对操作系统的栈溢出变的困难。<br>覆盖虚函数地址/异常处理地址覆盖/直接覆盖种子以及Security Cookie<br>+SafeSEH<br>调用RtlIsValidHandle()函数校验<br>1.异常处理函数位于加载模块内存范围之外,且dep关闭<br>2.异常处理函数位于加载模块内存范围之内,未启用SafeSEH,且模块不是纯IL<br>3.异常处理函数位于加载模块内存范围之内,相应模块启用SafeSEH,异常处理函数地址包含再安全S.E.H表中<br>4.S.E.H中的异常函数指针指向堆区</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">漏洞分析</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/29/漏洞利用原理高级/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-看书得角度转变" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/15/看书得角度转变/">看书的角度转变</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/09/15/看书得角度转变/" class="archive-article-date">
+  	<time datetime="2018-09-15T00:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-15</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以前看书喜欢跟随作者的思路,自然而然的去享受书的发展。现在看书喜欢带着多角度,辩证的角度去看书。不喜欢把一切都归咎于艺术的表现方式就去接受，或者是为了让感动连贯就不去反驳。因为我一直认为一个观点认可了，就会在大脑里形成意识，说不定在未来的某个时刻就成为了阻扰你做出决定的因素。虚虚假假真真实实又有几个人辨别得清,现实的作者写出虚幻的世界，成为了现实读者指导生活的准则。就比如以前小说里总是这样描述:当一个人的喜欢不被接受,最喜欢的写法就是将喜欢转为暗地里默默的支持与祝福，这样的喜欢有种淡淡的忧伤,让人感动。但是如果这种事情真的发生在自己的身上,不因爱生恨就已经是极好,竟然还能默默喜欢并真心的祝福。不过,这种书的情节多了,或许就会有人真的认可这种说法并且去实践也说不定。人类创造了语言和文字,然后创造的语言和文字又在循环的影响着后来人的行为和举止。有时候也分不清哪些是现实的延伸,哪些是幻想的延伸。总归来说,我还是比较赞同以多角度去看书,以自己的角度,以别人的角度,以旁观人的角度,添加了时间和空间的角度等等,从中选择出一个自己最认可的观点。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/15/看书得角度转变/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-异常分发原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/11/异常分发原理/">异常分发原理</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/09/11/异常分发原理/" class="archive-article-date">
+  	<time datetime="2018-09-11T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-11</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>先构造TRAP_FRAME陷阱帧结构,保存寄存器现场，然后调用CommonDispatchException</li>
+<li>通过CS段寄存器后2位判断是用户异常还是内核异常，并构建一个异常记录的结构(异常地址，异常Code)，调用KiDispatchException</li>
+<li>KiDispatchException中判断异常时在内核还是用户。如果是用户层则检测内核调试器，发给内核调试器。处理了，结束异常分发，程序继续执行。检测用户调试器，发给用户调试器，处理了，结束异常分发，程序继续执行。设置TrapFram-&gt;Eip = KeUserDispachExcption，用户层异常处理</li>
+<li>KeUserDispachExcption： 用户层函数，寻找异常处理程序， VEH-&gt;SEH-&gt;VCH. 无法处理，抛出异常RtlRaiseException(),异常次数为2. 处理了异常,ZwContinue(),恢复程序。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/11/异常分发原理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-关于情商的思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>几年前也看过类似的言论，之前也没觉得很对。现在见识多了，感觉好像貌似挺对的。如果说智商的提高可以通过不断看书，思考，培养逻辑思维的话，那情商其实是也是掌握了某些相处的规则，某种关于情绪的规则，亦或长久以来约定俗成的规则，亦或是天生基因自带来规则。大部分人，遇人遇事都以自己的情绪在考虑问题，那么情商高的人考虑自己的时候也会考虑别人。但是从某种意义上，也会存在一批人掌握了规则，然后可以利用这些规则来获取别人的信任等等。突然觉得玄幻小说里，将人的能力具现到掌握各种规则的简单粗暴的世界到底是怎么样的？有的人说，活得太明白，反而就没意思了。有的人说，如果活都活不明白，那岂不是没意思。度的把握总是难的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/11/关于情商的思考/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-汇编3Win32汇编" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/21/汇编3Win32汇编/">汇编学习2Win32汇编及进阶技术</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/21/汇编3Win32汇编/" class="archive-article-date">
+  	<time datetime="2018-08-21T08:39:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-21</time>
 </a>
         
       </header>
@@ -180,21 +479,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>数据传输指令</p>
+<p>Hello 15pb</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MOV</span><br><span class="line">MOVSX 符号位扩展填充16位或者32位</span><br><span class="line">MOVZX 0扩展填充至16位或者32位</span><br><span class="line">PUSH/POP 压栈/出栈</span><br><span class="line">PUSHF/POPF 压栈/出栈 标志寄存器</span><br><span class="line">PUSHA/POPA/PUSHAD/POPAD 所有寄存器压栈或出栈(16位/32位)</span><br><span class="line">XCHG 交换源操作数和目标操作数的内容</span><br><span class="line">LEA 源操作数的地址给予寄存器 LEA AX,[2];ax=2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">.386	;指定386指令集</span><br><span class="line">.model flat,stdcall ;内存模型平坦模式，win32程序调用方式stdcall</span><br><span class="line">option casemap:none ;选项区分大小写</span><br><span class="line"></span><br><span class="line">include windows.inc</span><br><span class="line">include user32.inc	;包含头文件</span><br><span class="line">includelib user32.lib	;包含库文件</span><br><span class="line">include msvcrt.inc	;运行时头文件</span><br><span class="line">includelib msvcrt.lib	;运行时库文件</span><br><span class="line"></span><br><span class="line">.const	;常量</span><br><span class="line"></span><br><span class="line">.data	;数据定义,伪指令</span><br><span class="line"></span><br><span class="line">	;全局变量</span><br><span class="line">	;定义字符串 </span><br><span class="line">	;变量名 变量类型 初始值</span><br><span class="line">	szTitle byte &quot;hello&quot;,0ah,0dh,0</span><br><span class="line">	szText byte &quot;hello 15pb&quot;,0ah,0dh,0</span><br><span class="line">	</span><br><span class="line">	;定义变量</span><br><span class="line">	;变量名 变量类型 变量初始值</span><br><span class="line">	age dword 4,5,6,7</span><br><span class="line">	;变量名 变量类型 数组长度 dup(初始值)</span><br><span class="line">	array dword 20 dup(?) ;20个的数组  </span><br><span class="line">.code</span><br><span class="line"></span><br><span class="line">;函数格式</span><br><span class="line">	; 函数名 proc</span><br><span class="line">	; 	内容</span><br><span class="line">	; 函数名 endp</span><br><span class="line">Fun proc</span><br><span class="line">	</span><br><span class="line">	push offset szText</span><br><span class="line">	call crt_printf</span><br><span class="line">	add esp,04h</span><br><span class="line">	ret</span><br><span class="line">	</span><br><span class="line">Fun endp</span><br><span class="line">	</span><br><span class="line">start:	;程序入口</span><br><span class="line">	call Fun</span><br><span class="line">	mov ecx,5</span><br><span class="line">LOOP1:</span><br><span class="line">	push 0;按钮</span><br><span class="line">	push offset szTitle;标题</span><br><span class="line">	push offset szText;内容</span><br><span class="line">	push 0;第一个参数,句柄</span><br><span class="line">	call MessageBox</span><br><span class="line">	loop LOOP1</span><br><span class="line">	</span><br><span class="line">	ret;返回系统调用</span><br><span class="line"></span><br><span class="line">end start	;程序结束</span><br><span class="line"></span><br><span class="line">end		;文件结尾</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>算术和逻辑运算指令</p>
+<p>X86调用约定</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ADD</span><br><span class="line">ADC 加上进位CF</span><br><span class="line">INC:自增1，不影响CF标志位</span><br><span class="line">SUB </span><br><span class="line">SBB 减去进位CF</span><br><span class="line">DEC:自减1，不影响CF标志位</span><br><span class="line">MUL:</span><br><span class="line">IMUL:</span><br><span class="line">DIV:</span><br><span class="line">IDIV:</span><br><span class="line">CMP:第一个操作数减去第二个操作数,不保存结果,影响EFLAGS寄存器中标志位</span><br><span class="line">AND:与</span><br><span class="line">OR: 或</span><br><span class="line">XOR:异或</span><br><span class="line">NOT:取反</span><br><span class="line">TEST:与and相同，但是不保存结果，只影响标志位</span><br><span class="line">SHL:高位放CF，低位置0</span><br><span class="line">SHR:低位移入CF,高位补0,无符号除法</span><br><span class="line">SAR:操作数右移，符号位不变,用于有符号数除法</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>串操作指令</p>
-</blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">movs:串操作指令 movsb/movsw/movsd 执行次数有cx决定 源操作数有Si/ESi 目的操作数Di/EDI 根据DF标志位决定 </span><br><span class="line">lea si,[100]</span><br><span class="line">lea di,[100]</span><br><span class="line">mov cx,10</span><br><span class="line">cld </span><br><span class="line">rep movsb ;相当于memcpy</span><br><span class="line"></span><br><span class="line">stos:存入串指令 stosb/stosw/stosd 将al/ax/eax寄存器中的字节/字/双字存储到目标操作数 </span><br><span class="line">lea di,[100]</span><br><span class="line">mov cx,10</span><br><span class="line">mov al,31</span><br><span class="line">cld</span><br><span class="line">rep stosb ;填充10个字节的31h,相当于memset</span><br><span class="line"></span><br><span class="line">lods:取出串指令 lodsb/lodsw/lodsd 将源操作数中的字节/字/双字分别加载到 al/ax/eax寄存器 </span><br><span class="line">lea si,[120] </span><br><span class="line">mov cx,10 </span><br><span class="line">xor a,ax </span><br><span class="line">xor dx,dx </span><br><span class="line">lodsb </span><br><span class="line">add dx,ax, ;加法计算 </span><br><span class="line">loop 10B</span><br><span class="line"></span><br><span class="line">cmps:串比较指令 cmpsb/cmpsw/cmpsd </span><br><span class="line">lea si,[100] </span><br><span class="line">lea di,[120] </span><br><span class="line">mov cx,10 </span><br><span class="line">cld </span><br><span class="line">repe cmpsb </span><br><span class="line">je 114 ;相等跳出mov bx,1 </span><br><span class="line">mov bx,1</span><br><span class="line"></span><br><span class="line">rep:重复操作前缀 rep:cx = 0结束 repe:cx =0/zf=0 repne:cx=0/zf=1</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>控制转移指令</p>
-</blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JMP:无条件转移 near ptr(近转移) short(短转移) far ptr(远转移 CS+IP) </span><br><span class="line">JCC:有条件转移 </span><br><span class="line">LOOP:循环指令 loop 立即数 </span><br><span class="line">CALL:函数调用指令 call完用ret返回指令回到主程序 </span><br><span class="line">RET:返回指令 ret/retf(远跳)/retn(近跳) 立即数 :SP+立即数</span><br></pre></td></tr></table></figure>
+<p>调用约定:函数参数入栈顺序和函数平衡者<br><strong>cdecl    C/C++ 默认调用约定，参数从右往左入栈，堆栈由调用者平衡
+</strong>stdcall    标准调用约定 winapi绝大部分的调用约定 ret imm 函数内部平衡堆栈<br><strong>fastcall    参数从右往左,mov edx,2 mov ecx,1 前2个参数放在寄存器中,函数内部平衡堆栈
+</strong>thiscall    c++类调用约定  参数从右往左,this指针放入ecx<br></p>
+        
+          <a class="article-more-a" href="/2018/08/21/汇编3Win32汇编/#more">more >></a>
+        
       
 
       
@@ -217,376 +513,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/汇编指令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-基于SEH的exploit" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/基于SEH的exploit/">基于SEH的exploit</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/基于SEH的exploit/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/基于SEH的exploit/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-PE文件数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/PE文件数据结构/">PE文件数据结构</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/PE文件数据结构/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>IMAGE_DOS_HEADER dos头部</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2018/08/20/PE文件数据结构/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/PE文件数据结构/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-windows内存管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/windows内存管理/">windows内存管理</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/windows内存管理/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>虚拟内存概念:</p>
-<ul>
-<li>每一个进程都有4GB的虚拟内存空间</li>
-<li>低2GB为用户空间,高2GB为系统空间</li>
-<li>进程中使用的全部是虚拟地址,具体虚拟地址到物理地址的转换由操作系统内核完成(分段和分页)。</li>
-<li>一个进程的虚拟空间只有使用一部分与物理内存有映射关系。对于不同进程的同一数据,物理内存中只有一份,分别映射到多个进程中。</li>
-<li>各个进程中所使用的内存数量超过物理内存的时候,操作系统还能将物理内存中暂时用不到的数据交换到硬盘中。</li>
-</ul>
-<blockquote>
-<p>堆的内存管理</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HANDLE      hHeap = HeapCreate(0, //操作选项（0代表无操作）</span><br><span class="line">		                           0, //初始大小（0代表初始大小是4KB）</span><br><span class="line">								   0);//最大有多大（0代表是可增长）</span><br><span class="line">	SYSTEM_INFO si;       //系统信息</span><br><span class="line">	GetSystemInfo(&amp;si);   // 获取系统信息</span><br><span class="line">	//在堆上分配3个页面大小的内存</span><br><span class="line">	LPVOID lpMem = HeapAlloc(hHeap, </span><br><span class="line">		HEAP_ZERO_MEMORY, </span><br><span class="line">		si.dwPageSize * 3);</span><br><span class="line">	HeapFree(hHeap, 0, lpMem);</span><br><span class="line">	HeapDestroy(hHeap);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>虚拟内存的管理</p>
-</blockquote>
-<p>虚拟内存管理按照分页来管理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//申请一块虚拟内存</span><br><span class="line">VirtualAlloc(</span><br><span class="line">    _In_opt_ LPVOID lpAddress, //分配起始位置,自动对齐到整数位置</span><br><span class="line">    _In_ SIZE_T dwSize,	//大小</span><br><span class="line">    _In_ DWORD flAllocationType,	//预定(MEM_RELEASE)还是提交(MEM_COMMIT)</span><br><span class="line">    _In_ DWORD flProtect	//保护属性</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">//释放一块虚拟内存</span><br><span class="line">VirtualFree(</span><br><span class="line">    LPVOID lpAddress,</span><br><span class="line">    _In_ SIZE_T dwSize,</span><br><span class="line">    _In_ DWORD dwFreeType</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//申请一块可读可写的虚拟内存</span><br><span class="line">	LPVOID lpvResult = VirtualAlloc(</span><br><span class="line">		NULL,                      //内存起始地址（NULL代表系统指定）</span><br><span class="line">		1024 * 64 * 1,             // 申请内存大小，64KB * 1</span><br><span class="line">		MEM_RESERVE | MEM_COMMIT,  // 申请内存的类型，预定并调拨内存</span><br><span class="line">		PAGE_READWRITE);           // 内存的属性，可读写</span><br><span class="line">	//向内存中写入数据</span><br><span class="line">	memcpy((LPWSTR)lpvResult, L&quot;15PB!&quot;,wcslen(L&quot;15PB!&quot;)*2);</span><br><span class="line">	//MessageBox(NULL, (LPWSTR)lpvResult, NULL, MB_OK);</span><br><span class="line">	DWORD dwOldProtect;</span><br><span class="line">	//将内存属性修改为只读</span><br><span class="line">	VirtualProtect(lpvResult, 1, PAGE_READONLY, &amp;dwOldProtect);</span><br><span class="line">	//再次向内存中写入数据</span><br><span class="line">	//因为没有可写属性，所以会触发访问异常（0xC0000005）</span><br><span class="line">	memcpy((LPWSTR)lpvResult, L&quot;hello&quot;, wcslen(L&quot;hello&quot;) * 2);</span><br><span class="line"></span><br><span class="line">	//释放虚拟内存</span><br><span class="line">	VirtualFree(lpvResult, //内存起始地址</span><br><span class="line">		0,                 //内存大小（如果是释放，则必须为0）</span><br><span class="line">		MEM_RELEASE);      //释放方式（MEM_RELEASE表示释放，</span><br><span class="line">	                       //   MEM_RESERVE表示保留，但内存状态</span><br><span class="line">	                       //   不再是MEM_COMMIT类型了）</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>跨进程读写虚拟内存<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">DWORD dwPid = 6172;</span><br><span class="line">	//获取进程句柄</span><br><span class="line">	HANDLE hProcess = </span><br><span class="line">		OpenProcess(PROCESS_ALL_ACCESS, FALSE, dwPid);</span><br><span class="line"></span><br><span class="line">	if (hProcess == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;打开失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//申请一块内存</span><br><span class="line">	LPVOID lpBuf = VirtualAllocEx(hProcess, NULL, 1, </span><br><span class="line">		                         MEM_COMMIT, PAGE_READWRITE);</span><br><span class="line">	DWORD dwWrite;</span><br><span class="line">	BOOL bRet = WriteProcessMemory(hProcess, </span><br><span class="line">		                      lpBuf, &quot;hello&quot;, </span><br><span class="line">		                      strlen(&quot;hello&quot;) + 1, &amp;dwWrite);</span><br><span class="line"></span><br><span class="line">	if (!bRet)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;写入失败\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	bRet = </span><br><span class="line">		 VirtualProtectEx(hProcess, </span><br><span class="line">		                    lpBuf, 1,</span><br><span class="line">		                    PAGE_READONLY, </span><br><span class="line">		                    &amp;dwOld);</span><br><span class="line"></span><br><span class="line">	WriteProcessMemory(hProcess,</span><br><span class="line">		lpBuf, &quot;world&quot;,</span><br><span class="line">		strlen(&quot;world&quot;) + 1, &amp;dwWrite);</span><br><span class="line"></span><br><span class="line">	char strBuf[100] = &#123;&#125;;</span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	ReadProcessMemory(hProcess, lpBuf, </span><br><span class="line">		       strBuf, sizeof(strBuf), &amp;dwRead);</span><br><span class="line"></span><br><span class="line">	VirtualFreeEx(hProcess, lpBuf, 0, MEM_RELEASE);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>内存映射</p>
-</blockquote>
-<ol>
-<li>文件映射:将文件内容映射到进程虚拟内存中的技术</li>
-<li>映射成功的文件可以用视图view来引用这段内存,从而达到操作位于此段内存中文件的目的</li>
-<li>使用文件映射需要先创建映射对象,映射对象分为命名的和未命名的，命名的映射对象可以进行跨进程读写。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">//打开文件，获取句柄</span><br><span class="line">HANDLE hFile = CreateFile(L&quot;123.exe&quot;, //文件路径</span><br><span class="line">	GENERIC_READ | GENERIC_WRITE,     //访问方式</span><br><span class="line">	NULL,                             //安全属性（默认）</span><br><span class="line">	NULL,                             //堆栈大小（默认）</span><br><span class="line">	OPEN_EXISTING,                    //创建标志</span><br><span class="line">	FILE_ATTRIBUTE_NORMAL,            //文件标志</span><br><span class="line">	NULL);                            //文件ID</span><br><span class="line">if (hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;文件打开失败\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//创建文件映射对象</span><br><span class="line">HANDLE hMap = CreateFileMapping(hFile, //文件句柄</span><br><span class="line">	NULL,                              //安全属性</span><br><span class="line">	PAGE_READWRITE,                    //保护属性</span><br><span class="line">	NULL,                              //对象大小高字节</span><br><span class="line">	NULL,                              //对象大小低字节</span><br><span class="line">	NULL);                             //名字</span><br><span class="line"></span><br><span class="line">//与物理内存建立映射关系</span><br><span class="line">LPVOID lpMapBuf = MapViewOfFile(hMap,//映射对象</span><br><span class="line">	FILE_MAP_READ | FILE_MAP_WRITE,  //保护属性</span><br><span class="line">	NULL,                            //映射的高字节</span><br><span class="line">	NULL,                            //映射的低字节</span><br><span class="line">	NULL);                           //实际映射大小（0是默认）</span><br><span class="line">//修改文件</span><br><span class="line">char* pBuf = (char*)lpMapBuf;</span><br><span class="line">pBuf[0] = &apos;W&apos;;</span><br><span class="line">pBuf[1] = &apos;Q&apos;;</span><br><span class="line"></span><br><span class="line">//取消映射，关闭句柄</span><br><span class="line">UnmapViewOfFile(lpMapBuf);</span><br><span class="line">CloseHandle(hMap);</span><br><span class="line">CloseHandle(hFile);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ul>
-<li>命名map,跨进程读写<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">//进程A</span><br><span class="line">	//创建文件映射对象</span><br><span class="line">	HANDLE hMap = CreateFileMapping(NULL, //文件句柄</span><br><span class="line">		NULL,                              //安全属性</span><br><span class="line">		PAGE_READWRITE,                    //保护属性</span><br><span class="line">		NULL,                              //对象大小高字节</span><br><span class="line">		100,                               //对象大小低字节</span><br><span class="line">		L&quot;Map&quot;);                           //名字</span><br><span class="line"></span><br><span class="line">	//与物理内存建立映射关系</span><br><span class="line">	LPVOID lpMapBuf = MapViewOfFile(hMap,//映射对象</span><br><span class="line">		FILE_MAP_READ | FILE_MAP_WRITE,  //保护属性</span><br><span class="line">		NULL,                            //映射的高字节</span><br><span class="line">		NULL,                            //映射的低字节</span><br><span class="line">		NULL);                           //实际映射大小（0是默认）</span><br><span class="line">	</span><br><span class="line">	printf(&quot;----&gt;%s\n&quot;, (char*)lpMapBuf);</span><br><span class="line">	// 	memcpy(lpMapBuf, </span><br><span class="line">	// 	&quot;hello world&quot;, </span><br><span class="line">	// 	strlen(&quot;hello world&quot;) + 1);</span><br><span class="line"></span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line"></span><br><span class="line">	UnmapViewOfFile(lpMapBuf);</span><br><span class="line">	CloseHandle(hMap);</span><br><span class="line"></span><br><span class="line">//进程B</span><br><span class="line">	HANDLE hMap = OpenFileMapping(FILE_MAP_ALL_ACCESS, </span><br><span class="line">        FALSE,</span><br><span class="line">		L&quot;Map&quot;);   </span><br><span class="line">	if(hMap == NULL)</span><br><span class="line">		return false;</span><br><span class="line">	//与物理内存建立映射关系</span><br><span class="line">	LPVOID lpMapBuf = MapViewOfFile(hMap,//映射对象</span><br><span class="line">		FILE_MAP_READ | FILE_MAP_WRITE,  //保护属性</span><br><span class="line">		NULL,                            //映射的高字节</span><br><span class="line">		NULL,                            //映射的低字节</span><br><span class="line">		NULL);                           //实际映射大小（0是默认）</span><br><span class="line">	//修改文件</span><br><span class="line">	char* pBuf = (char*)lpMapBuf;</span><br><span class="line">	pBuf[0] = &apos;W&apos;;</span><br><span class="line">	pBuf[1] = &apos;Q&apos;;</span><br><span class="line"></span><br><span class="line">	//取消映射，关闭句柄</span><br><span class="line">	UnmapViewOfFile(lpMapBuf);</span><br><span class="line">	CloseHandle(hMap);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>虚拟内存遍历</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">enum MEMORYSTATE &#123;</span><br><span class="line">	e_stat_free = MEM_FREE,</span><br><span class="line">	e_stat_reserve = MEM_RESERVE,</span><br><span class="line">	e_stat_commit = MEM_COMMIT</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">enum MEMORYTYPE &#123;</span><br><span class="line">	e_type_image = MEM_IMAGE,</span><br><span class="line">	e_type_mapped = MEM_MAPPED,</span><br><span class="line">	e_type_private = MEM_PRIVATE,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef struct VMINFO &#123;</span><br><span class="line">	DWORD		address;</span><br><span class="line">	DWORD		size;</span><br><span class="line">	MEMORYSTATE state;</span><br><span class="line">&#125;VMINFO;</span><br><span class="line"></span><br><span class="line">void queryVirtualMemoryStatue(HANDLE hProcess, list&lt;VMINFO&gt;* memoryStatue) &#123;</span><br><span class="line"></span><br><span class="line">	MEMORY_BASIC_INFORMATION	mbi = &#123; 0 &#125;;</span><br><span class="line">	VMINFO						statue = &#123; 0 &#125;;</span><br><span class="line">	DWORD						dwAddress = 0;</span><br><span class="line">	DWORD						dwSize = 0;</span><br><span class="line">	BOOL						bRet = FALSE;</span><br><span class="line">	while (1) &#123;</span><br><span class="line"></span><br><span class="line">		bRet = VirtualQueryEx(hProcess,</span><br><span class="line">			(LPCVOID)dwAddress,</span><br><span class="line">			&amp;mbi,</span><br><span class="line">			sizeof(MEMORY_BASIC_INFORMATION));</span><br><span class="line">		if (bRet == FALSE)</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		statue.address = dwAddress;</span><br><span class="line">		statue.state = (MEMORYSTATE)mbi.State;</span><br><span class="line">		dwSize = mbi.RegionSize;</span><br><span class="line"></span><br><span class="line">		// 输出内存状态, </span><br><span class="line">		// 内存状态用于描述虚拟内存有没有和物理存储器进行关联.</span><br><span class="line">		// 或是否被预定.</span><br><span class="line">		// free   : 闲置,没有预定,没有和物理存储器关联</span><br><span class="line">		// reserve: 保留,被预定,没有和物理存储器关联</span><br><span class="line">		// commit : 提交,已经和物理存储器关联</span><br><span class="line">		switch (statue.state) &#123;</span><br><span class="line">		case e_stat_free:</span><br><span class="line">			printf(&quot;0x%08X : Free\n&quot;, statue.address);</span><br><span class="line">			break;</span><br><span class="line">		case e_stat_reserve:</span><br><span class="line">			printf(&quot;0x%08X : reserve\n&quot;, statue.address);</span><br><span class="line">			break;</span><br><span class="line">		case e_stat_commit:</span><br><span class="line">			printf(&quot;0x%08X : commit\n&quot;, statue.address);</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// 如果内存地址已经提交到物理内存,则遍历提交到的每一个内存块.</span><br><span class="line">		if (statue.state == e_stat_commit) &#123;</span><br><span class="line"></span><br><span class="line">			dwSize = 0;</span><br><span class="line">			LPVOID	dwAllocationBase = mbi.AllocationBase;</span><br><span class="line">			DWORD	dwBlockAddress = (DWORD)dwAddress;</span><br><span class="line">			while (1) &#123;</span><br><span class="line"></span><br><span class="line">				bRet = VirtualQueryEx(hProcess,</span><br><span class="line">					(LPCVOID)dwBlockAddress,</span><br><span class="line">					&amp;mbi,</span><br><span class="line">					sizeof(MEMORY_BASIC_INFORMATION));</span><br><span class="line">				if (bRet == FALSE) &#123;</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">				// 判断遍历出来的内存块是否是同一块.(看它们的分配的首地址是否相等.)</span><br><span class="line">				// 如果不是,则跳出循环.</span><br><span class="line">				if (mbi.AllocationBase != dwAllocationBase)</span><br><span class="line">					break;</span><br><span class="line"></span><br><span class="line">				printf(&quot;\t0x%08X &quot;, dwBlockAddress);</span><br><span class="line"></span><br><span class="line">				// 输出内存类型</span><br><span class="line">				// 内存类型表示虚拟内存是以何种方式和物理存储器进行关联</span><br><span class="line">				// image  : 是从影像文件中映射而来</span><br><span class="line">				// mapped : 内存映射</span><br><span class="line">				// private: 私有内存,其它进程无法访问.</span><br><span class="line">				switch (mbi.Type) &#123;</span><br><span class="line">				case e_type_image:</span><br><span class="line">					printf(&quot; 类型: image   &quot;);</span><br><span class="line">					break;</span><br><span class="line">				case e_type_mapped:</span><br><span class="line">					printf(&quot; 类型: mapped  &quot;);</span><br><span class="line">					break;</span><br><span class="line">				case e_type_private:</span><br><span class="line">					printf(&quot; 类型: private &quot;);</span><br><span class="line">					break;</span><br><span class="line">				default:</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				// 输出内存分页属性</span><br><span class="line">				// 内存分页属性用于表示内存分页能够进行何种访问,如读,写,执行,写时拷贝.</span><br><span class="line">				if (mbi.Protect == 0)</span><br><span class="line">					printf(&quot;---&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE)</span><br><span class="line">					printf(&quot;E--&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE_READ)</span><br><span class="line">					printf(&quot;ER-&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE_READWRITE)</span><br><span class="line">					printf(&quot;ERW&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_READONLY)</span><br><span class="line">					printf(&quot;-R-&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_READWRITE)</span><br><span class="line">					printf(&quot;-RW&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_WRITECOPY)</span><br><span class="line">					printf(&quot;WCOPY&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE_WRITECOPY)</span><br><span class="line">					printf(&quot;EWCOPY&quot;);</span><br><span class="line"></span><br><span class="line">				// 输出内存块的大小.</span><br><span class="line">				printf(&quot; 大小:0x%X\n&quot;, mbi.RegionSize);</span><br><span class="line"></span><br><span class="line">				// 索引到下一个内存块</span><br><span class="line">				dwBlockAddress += mbi.RegionSize;</span><br><span class="line"></span><br><span class="line">				// 累加内存块的大小</span><br><span class="line">				dwSize += mbi.RegionSize;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		statue.size = dwSize;</span><br><span class="line">		memoryStatue-&gt;push_back(statue);</span><br><span class="line"></span><br><span class="line">		// 遍历下一块虚拟内存.</span><br><span class="line">		dwAddress += dwSize;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/windows内存管理/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-分段机制-32位下的gdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/分段机制-32位下的gdt/">分段机制_32位下的gdt</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/分段机制-32位下的gdt/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>段寄存器</p>
-</blockquote>
-<p>8086段寄存器有CS,DS,ES,SS<br>32位处理器中,增加了FS,GS<br>段寄存器中可见部分为16位的段选择子,不可见部分为描述符高速缓存器，存放段的基地址,范围和段属性。<br><img src="http://picture.jbyusk.com:8080/gdt/gdt_1.jpg" alt=""><br>T1 = 0时使用gdt,T1 = 1时使用ldt<br>RPL为0,1,2,3环,表示权限<br>index在T1 = 0下,表示在gdt表的第几项</p>
-<blockquote>
-<p>gdtr-全局描述符表寄存器</p>
-</blockquote>
-<p>gdtr为48位<br>高32位为gdt的基地址<br>低16位为gdt的项个数</p>
-<blockquote>
-<p>gdt 描述表</p>
-</blockquote>
-<p><img src="http://picture.jbyusk.com:8080/gdt/gdt_2.jpg" alt=""><br>G 粒度位,0时,粒度位字节,1时,粒度位4kb<br>D/B 默认操作大小(0=16位段;1=32位段)<br>L 64位代码段<br>AVL 可供系统软件使用<br>P 描述符有效位 为1时段描述符有效<br>DPL 描述符特权级别<br>S 描述符类型(0=系统段,1=代码段或数据段)<br>TYPE 段的类型 4位<br>当S=1:<br><img src="http://picture.jbyusk.com:8080/gdt/gdt_3.jpg" alt=""><br>最高位=0为数据段,最高位=1为代码段<br>对于数据段默认可读,E=1为向下扩展,E=0为向上扩展<br>                 W=1为可写,W=0为不可写<br>对于代码段默认可执行,C=1为一致性段,C=0为非一致性段<br>                 R=1为可读,R=0为不可读</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内核编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/分段机制-32位下的gdt/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/21/汇编3Win32汇编/">展开全文 >></a>
         </p>
       
 
@@ -713,20 +640,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-逆向基础02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-windows网络编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/逆向基础02/">逆向基础02-编译器特征</a>
+      <a class="article-title" href="/2018/08/20/windows网络编程/">windows网络编程</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/逆向基础02/" class="archive-article-date">
+        <a href="/2018/08/20/windows网络编程/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -736,27 +663,227 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>EXEINFO与PEID的原理<br>查壳或者查询编译语言使用特征<br>1.OEP特征<br>2.链接器特征<br>3.人肉查找的时候,查看区段名称</p>
+<p>TCP_SOCKET</p>
 </blockquote>
-<h3 id="BC"><a href="#BC" class="headerlink" title="BC++"></a>BC++</h3><ol>
-<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/BC++.png" alt=""><br>二进制特征:EB 10 66 62 3A 43 2B 2B 48 4F 4B<br>第一个调用的API是GetModHandleA</li>
-<li>链接器版本<br>5.00</li>
-<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/BC++1.png" alt=""></li>
-</ol>
-<h3 id="delphi"><a href="#delphi" class="headerlink" title="delphi+"></a>delphi+</h3><ol>
-<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/delphi1.png" alt=""><br>二进制特征:55 8B EC 83 C4 F0 B8 ?? ?? ?? ?? E8<br>OEP处有5个CALL调用,第一个API调用是GetModuleHandleA<br>第一个调用的API是GetModHandleA</li>
-<li>链接器版本<br>2.25</li>
-<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/delphi2.png" alt=""></li>
-</ol>
-<h3 id="VC6-0-amp-易语言"><a href="#VC6-0-amp-易语言" class="headerlink" title="VC6.0 &amp; 易语言"></a>VC6.0 &amp; 易语言</h3><ol>
-<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/yilan1.png" alt=""><br>二进制特征:55 8B EC 6A FF 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? 64 A1 00 00 00 00 50 64 89 25 00 00 00 00 83 EC 58<br>OEP处开辟堆栈空间是sub esp,0x58<br>OEP处API调用GetVersion<br>第一个调用的API是GetModHandleA</li>
-<li>链接器版本<br>6.0</li>
-<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/yilan2.png" alt=""></li>
-</ol>
-<h3 id="VS程序的链接器版本"><a href="#VS程序的链接器版本" class="headerlink" title="VS程序的链接器版本"></a>VS程序的链接器版本</h3><p>VC 6.0 6.0<br>VC2003 7.0，7.1<br>VS2005 8.0<br>VS2008 9.0<br>VS2010 10.0<br>VS2012 11.0<br>VS2013 12.0<br>VS2015 14.0<br>VS2017 14.1</p>
 <ul>
-<li>VS2013 main函数特征<br>1.二进制特征<br>50 E8 ???????? 8B 00 50 E8 ???????? 8B 08 51 E8</li>
+<li><p>TCP服务端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#define _WINSOCK_DEPRECATED_NO_WARNINGS </span><br><span class="line">#include &lt;WinSock2.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;ws2_32.lib&quot;)</span><br><span class="line"></span><br><span class="line">//TCP服务器</span><br><span class="line">// 1. 初始化环境</span><br><span class="line">// 2. 创建套接字</span><br><span class="line">// SOCKET WSAAPI socket(</span><br><span class="line">// 	_In_  int af,       // 通信协议族</span><br><span class="line">// 	_In_  int type,     // 套接字类型</span><br><span class="line">// 	_In_  int protocol);// 传输协议(前两个参数确定后，可以设置为0)</span><br><span class="line">// af类型：</span><br><span class="line">// AF_INET        //internet 协议(使用TCP UDP协议)</span><br><span class="line">// AF_IRDA        //红外协议</span><br><span class="line">// AF_BTH         //蓝牙协议</span><br><span class="line">// ……</span><br><span class="line">// type类型</span><br><span class="line">// SOCK_STREAM    //流式 socket（需建立连接，通信过程可靠）</span><br><span class="line">// SOCK_DGRAM     //数据报 socket（无需建立连接，通讯过程不可靠）</span><br><span class="line">// SOCK_RAW       //原始套接字</span><br><span class="line">// ……</span><br><span class="line">// protocol类型</span><br><span class="line">// IPPROTO_TCP    //当type类型为SOCK_STREAM 时</span><br><span class="line">// IPPROTO_UDP    //当type类型为SOCK_DGRAM 时</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 3. 绑定</span><br><span class="line">// 4. 监听</span><br><span class="line">// 5. 等待连接</span><br><span class="line">// 6. 发送接收</span><br><span class="line">// 7. 关闭套接字</span><br><span class="line">// 8. 清理环境</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	// 1. 初始化环境</span><br><span class="line">	WSADATA wd = &#123;0&#125;;</span><br><span class="line">	int Iret;</span><br><span class="line">	Iret = WSAStartup(</span><br><span class="line">		MAKEWORD(2, 2),		//请求的版本号 2.2</span><br><span class="line">		&amp;wd);				//版本信息</span><br><span class="line"></span><br><span class="line">	if (Iret!=0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 2. 创建套接字</span><br><span class="line">	SOCKET Sscok = socket(</span><br><span class="line">		AF_INET,		//通信协议族</span><br><span class="line">		SOCK_STREAM,	//套接字类型</span><br><span class="line">		IPPROTO_TCP);	//协议类型</span><br><span class="line">	if (Sscok==INVALID_SOCKET)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;创建socket失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 3. 绑定</span><br><span class="line">	sockaddr_in Saddr = &#123; 0 &#125;;</span><br><span class="line">	Saddr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	Saddr.sin_port = htons(0x1234);</span><br><span class="line">	Saddr.sin_family = AF_INET;</span><br><span class="line"></span><br><span class="line">	Iret = bind(</span><br><span class="line">		Sscok,				  //绑定的套接字</span><br><span class="line">		(sockaddr*)&amp;Saddr,	  //绑定服务地址</span><br><span class="line">		sizeof(Saddr)		  //地址大小</span><br><span class="line">	);</span><br><span class="line">	if (Iret==SOCKET_ERROR)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;绑定失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 4. 监听</span><br><span class="line">	listen(</span><br><span class="line">		Sscok,		//服务套接字</span><br><span class="line">		SOMAXCONN);	//连接最大数量</span><br><span class="line"></span><br><span class="line">	// 5. 等待连接</span><br><span class="line">		sockaddr_in Caddr = &#123; 0 &#125;;		//客户端地址</span><br><span class="line">		int CaddrSize = sizeof(Caddr);	//地址大小</span><br><span class="line"></span><br><span class="line">		SOCKET Csock = accept(			//返回客户端套接字</span><br><span class="line">			Sscok,						//服务端套接字字</span><br><span class="line">			(sockaddr*)&amp;Caddr,			//接收客户地址信息</span><br><span class="line">			&amp;CaddrSize);				//地址大小（必须填写大小）</span><br><span class="line"></span><br><span class="line">		if (Csock==INVALID_SOCKET)</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;等待链接失败\n&quot;);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	// 6. 发送接收</span><br><span class="line">		char buff[1024] = &#123;&#125;;</span><br><span class="line">		recv(</span><br><span class="line">			Csock,	//客户端套接字</span><br><span class="line">			buff,	//数据缓冲区</span><br><span class="line">			1024,	//接收字节数</span><br><span class="line">			0);		//标志</span><br><span class="line"></span><br><span class="line">		printf(&quot;接收客户信息：%s\n&quot;,buff);</span><br><span class="line">		system(&quot;pause&quot;);</span><br><span class="line"></span><br><span class="line">	// 7. 关闭套接字</span><br><span class="line">		closesocket(Csock);</span><br><span class="line">		closesocket(Sscok);</span><br><span class="line"></span><br><span class="line">	// 8. 清理环境</span><br><span class="line">		WSACleanup();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TCP客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#define _WINSOCK_DEPRECATED_NO_WARNINGS </span><br><span class="line">#include &lt;WinSock2.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;ws2_32.lib&quot;)</span><br><span class="line"></span><br><span class="line">//TCP客户端</span><br><span class="line"></span><br><span class="line">//1. 初始化环境</span><br><span class="line">//2. 创建套接字</span><br><span class="line">//3. 发起连接</span><br><span class="line">//4. 发送接收数据</span><br><span class="line">//5. 关闭套接字</span><br><span class="line">//6. 清理环境</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	//1. 初始化环境</span><br><span class="line">	WSADATA wd = &#123;0&#125;;</span><br><span class="line">	int Iret;</span><br><span class="line"></span><br><span class="line">	Iret = WSAStartup(MAKEWORD(2, 2), &amp;wd);</span><br><span class="line">	if (Iret!=0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化错误\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//2. 创建套接字</span><br><span class="line">	SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line"></span><br><span class="line">	//3. 发起连接</span><br><span class="line">	sockaddr_in Saddr = &#123; 0 &#125;;</span><br><span class="line">	Saddr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	Saddr.sin_port = htons(0x1234);</span><br><span class="line">	Saddr.sin_family = AF_INET;</span><br><span class="line"></span><br><span class="line">	Iret = connect(</span><br><span class="line">		sock,					//套接字</span><br><span class="line">		(sockaddr*)&amp;Saddr,		//服务端地址</span><br><span class="line">		sizeof(Saddr)			//地址大小</span><br><span class="line">	);</span><br><span class="line">	if (Iret==SOCKET_ERROR)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;链接失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//4. 发送接收数据</span><br><span class="line"></span><br><span class="line">	char buff[1024] = &#123;0 &#125;;</span><br><span class="line">	while (true)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;输入要发送的消息： &quot;);</span><br><span class="line">		gets_s(buff, 1024);</span><br><span class="line">		send(sock, buff, 1024, 0);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//发送断开连接</span><br><span class="line">	shutdown(sock, SD_BOTH);</span><br><span class="line"></span><br><span class="line">	//5. 关闭套接字</span><br><span class="line">	closesocket(sock);</span><br><span class="line"></span><br><span class="line">	//6. 清理环境</span><br><span class="line">	WSACleanup();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
+<blockquote>
+<p>UDP_Socket</p>
+</blockquote>
+<ul>
+<li><p>UDP服务端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#define _WINSOCK_DEPRECATED_NO_WARNINGS </span><br><span class="line">#include &lt;WinSock2.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;ws2_32.lib&quot;)</span><br><span class="line"></span><br><span class="line">//UDP服务</span><br><span class="line"></span><br><span class="line">//1.初始环境</span><br><span class="line">//2.创建套接字</span><br><span class="line">//3.绑定地址</span><br><span class="line">//4.接收数据（发送数据）</span><br><span class="line">//5.关闭套接字</span><br><span class="line">//6.清理环境</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	//1.初始环境</span><br><span class="line">	WSADATA wd = &#123; 0 &#125;;</span><br><span class="line">	int Iret;</span><br><span class="line"></span><br><span class="line">	Iret = WSAStartup(MAKEWORD(2, 2), &amp;wd);</span><br><span class="line">	if (Iret != 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化错误\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//2.创建套接字</span><br><span class="line">	SOCKET Sock = socket(</span><br><span class="line">		AF_INET,		//通信协议</span><br><span class="line">		SOCK_DGRAM,		//套接字类型报文协议</span><br><span class="line">		IPPROTO_UDP		//具体协议</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	//3.绑定地址</span><br><span class="line">	sockaddr_in Saddr = &#123; 0 &#125;;</span><br><span class="line">	Saddr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	Saddr.sin_port = htons(0x1234);</span><br><span class="line">	Saddr.sin_family = AF_INET;</span><br><span class="line">	Iret = bind(</span><br><span class="line">		Sock,				  //绑定的套接字</span><br><span class="line">		(sockaddr*)&amp;Saddr,	  //绑定服务地址</span><br><span class="line">		sizeof(Saddr)		  //地址大小</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	//4.接收数据（发送数据）</span><br><span class="line">	char buff[1024] = &#123; 0 &#125;;</span><br><span class="line">	sockaddr_in Caddr = &#123; 0 &#125;;		//客户端地址</span><br><span class="line">	int CaddrSize = sizeof(Caddr);	//地址大小</span><br><span class="line"></span><br><span class="line">	recvfrom(</span><br><span class="line">		Sock,				//套接字</span><br><span class="line">		buff,				//数据缓冲区</span><br><span class="line">		1024,				//数据大小</span><br><span class="line">		0,					//标志</span><br><span class="line">		(sockaddr*)&amp;Caddr,	//客户地址</span><br><span class="line">		&amp;CaddrSize			//地址大小</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	printf(&quot;收到客户消息：%s&quot;, buff);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		//发送数据</span><br><span class="line">	char buff2[1024] = &#123; &quot;hello Clinet\n&quot; &#125;;</span><br><span class="line">	sendto(</span><br><span class="line">		Sock,					//套接字</span><br><span class="line">		buff2,					//缓冲区</span><br><span class="line">		1024,					//缓冲区大小</span><br><span class="line">		0,						//标志</span><br><span class="line">		(sockaddr*)&amp;Caddr,		//客户端地址</span><br><span class="line">		CaddrSize				//地址大小</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//5.关闭套接字</span><br><span class="line">	closesocket(Sock);</span><br><span class="line"></span><br><span class="line">	//6.清理环境</span><br><span class="line">	WSACleanup();</span><br><span class="line"></span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>UDP客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#define _WINSOCK_DEPRECATED_NO_WARNINGS </span><br><span class="line">#include &lt;WinSock2.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;ws2_32.lib&quot;)</span><br><span class="line"></span><br><span class="line">//UDP客户端</span><br><span class="line"></span><br><span class="line">//1.初始环境</span><br><span class="line">//2.创建套接字</span><br><span class="line">//3.绑定地址</span><br><span class="line">//4.发送数据(接收数据）</span><br><span class="line">//5.关闭套接字</span><br><span class="line">//6.清理环境</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	//1.初始环境</span><br><span class="line">	WSADATA wd = &#123; 0 &#125;;</span><br><span class="line">	int Iret;</span><br><span class="line"></span><br><span class="line">	Iret = WSAStartup(MAKEWORD(2, 2), &amp;wd);</span><br><span class="line">	if (Iret != 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化错误\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//2.创建套接字</span><br><span class="line">	SOCKET Sock = socket(</span><br><span class="line">		AF_INET,		//通信协议</span><br><span class="line">		SOCK_DGRAM,		//套接字类型报文协议</span><br><span class="line">		IPPROTO_UDP		//具体协议</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	//3.绑定地址</span><br><span class="line"></span><br><span class="line">	//客户地址</span><br><span class="line">	sockaddr_in Caddr = &#123; 0 &#125;;</span><br><span class="line">	Caddr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	Caddr.sin_port = htons(0x1236);	//客户发送数据端口</span><br><span class="line">	Caddr.sin_family = AF_INET;</span><br><span class="line">	Iret = bind(</span><br><span class="line">		Sock,				  //绑定的套接字</span><br><span class="line">		(sockaddr*)&amp;Caddr,	  //绑定服务地址</span><br><span class="line">		sizeof(Caddr)		  //地址大小</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	//4.发送数据(接收数据）</span><br><span class="line">	//服务器地址</span><br><span class="line">	sockaddr_in Saddr = &#123; 0 &#125;;</span><br><span class="line">	Saddr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	Saddr.sin_port = htons(0x1234);</span><br><span class="line">	Saddr.sin_family = AF_INET;</span><br><span class="line">	Iret = bind(</span><br><span class="line">		Sock,				  //绑定的套接字</span><br><span class="line">		(sockaddr*)&amp;Saddr,	  //绑定服务地址</span><br><span class="line">		sizeof(Saddr)		  //地址大小</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	char buff[1024] = &#123; &quot;hello: Server\n&quot; &#125;;</span><br><span class="line">	sendto(Sock, buff, 1024, 0, (sockaddr*)&amp;Saddr, sizeof(Saddr));</span><br><span class="line"></span><br><span class="line">	//接收消息</span><br><span class="line">	int addrSize=sizeof(Saddr);</span><br><span class="line">	recvfrom(Sock, buff, 1024, 0, (sockaddr*)&amp;Saddr, &amp;addrSize);</span><br><span class="line">	printf(&quot;接收服务消息：%s&quot;, buff);</span><br><span class="line"></span><br><span class="line">	//5.关闭套接字</span><br><span class="line">	closesocket(Sock);</span><br><span class="line">	//6.清理环境</span><br><span class="line">	WSACleanup();</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>网络编程完成端口IOCP</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#define _WINSOCK_DEPRECATED_NO_WARNINGS </span><br><span class="line">#include &lt;WinSock2.h&gt;</span><br><span class="line">#include &lt;process.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;ws2_32.lib&quot;)</span><br><span class="line"></span><br><span class="line">//1.初始环境</span><br><span class="line">//2.创建套接字</span><br><span class="line">//3.绑定</span><br><span class="line">//4.监听</span><br><span class="line">//5.创建完成端口</span><br><span class="line">//6.开辟工作线程</span><br><span class="line">//7.等待客户连接</span><br><span class="line">//8.完成端口与客户套接字绑定</span><br><span class="line">//9.发起IO读取数据 WSARecv</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//C++继承，对OVERLAPPED进行扩展，方便在工作线程使用</span><br><span class="line">struct MYOVERLAPPED : OVERLAPPED</span><br><span class="line">&#123;</span><br><span class="line">	SOCKET m_Csock;		//客户端套接字</span><br><span class="line">	sockaddr_in m_addr;	//客户信息</span><br><span class="line">	WSABUF m_buf;		//消息缓冲区</span><br><span class="line"></span><br><span class="line">	MYOVERLAPPED(SOCKET sock, sockaddr_in addr) :m_buf(), OVERLAPPED()</span><br><span class="line">	&#123;</span><br><span class="line">		m_Csock = sock;		//客户端套接字</span><br><span class="line">		m_addr = addr;		///客户信息</span><br><span class="line">		m_buf.buf = new char[1024]&#123;&#125;;</span><br><span class="line">		m_buf.len = 1024;</span><br><span class="line">	&#125;</span><br><span class="line">	~MYOVERLAPPED()</span><br><span class="line">	&#123;</span><br><span class="line">		if (m_buf.buf!=NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			delete[] m_buf.buf;</span><br><span class="line">			m_buf.buf = NULL;</span><br><span class="line">		&#125;</span><br><span class="line">		if (m_Csock!=NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			closesocket(m_Csock);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HANDLE g_hcompPort;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//工作线程</span><br><span class="line">unsigned _stdcall workThread(void *param)</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwReadSize=0;</span><br><span class="line">	DWORD dwKey=0;</span><br><span class="line">	MYOVERLAPPED *pov;</span><br><span class="line">	BOOL bRet;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	while (true)</span><br><span class="line">	&#123;</span><br><span class="line">		bRet = GetQueuedCompletionStatus(</span><br><span class="line">			g_hcompPort,</span><br><span class="line">			&amp;dwReadSize,</span><br><span class="line">			&amp;dwKey,</span><br><span class="line">			(OVERLAPPED**)&amp;pov,</span><br><span class="line">			-1</span><br><span class="line">		);</span><br><span class="line"></span><br><span class="line">		if (bRet!=FALSE &amp;&amp; pov!=NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			//客户掉线了</span><br><span class="line">			if (pov-&gt;InternalHigh==0)</span><br><span class="line">			&#123;</span><br><span class="line">				printf(&quot;客户%s掉线了\n&quot;, inet_ntoa(pov-&gt;m_addr.sin_addr));</span><br><span class="line">				delete pov; //删除ov结构体</span><br><span class="line">				continue;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			printf(&quot;客户%s: 内容：%s\n&quot;,</span><br><span class="line">				inet_ntoa(pov-&gt;m_addr.sin_addr),</span><br><span class="line">				pov-&gt;m_buf.buf</span><br><span class="line">			);</span><br><span class="line"></span><br><span class="line">			//再次发起IO,读取下次任务</span><br><span class="line">			DWORD dwReadSize = 0;</span><br><span class="line">			DWORD dwFlag=0;</span><br><span class="line">			WSARecv(</span><br><span class="line">				pov-&gt;m_Csock,</span><br><span class="line">				&amp;pov-&gt;m_buf,</span><br><span class="line">				1,</span><br><span class="line">				&amp;dwReadSize,</span><br><span class="line">				&amp;dwFlag,</span><br><span class="line">				pov,</span><br><span class="line">				NULL</span><br><span class="line">			);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	//1.初始环境</span><br><span class="line">	WSADATA wd = &#123; 0 &#125;;</span><br><span class="line">	int Iret;</span><br><span class="line">	Iret = WSAStartup(</span><br><span class="line">		MAKEWORD(2, 2),		//请求的版本号 2.2</span><br><span class="line">		&amp;wd);				//版本信息</span><br><span class="line"></span><br><span class="line">	if (Iret != 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 2. 创建套接字</span><br><span class="line">	SOCKET Sscok = socket(</span><br><span class="line">		AF_INET,		//通信协议族</span><br><span class="line">		SOCK_STREAM,	//套接字类型</span><br><span class="line">		IPPROTO_TCP);	//协议类型</span><br><span class="line">	if (Sscok == INVALID_SOCKET)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;创建socket失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 3. 绑定</span><br><span class="line">	sockaddr_in Saddr = &#123; 0 &#125;;</span><br><span class="line">	Saddr.sin_addr.S_un.S_addr = inet_addr(&quot;192.168.43.157&quot;);</span><br><span class="line">	Saddr.sin_port = htons(0x1234);</span><br><span class="line">	Saddr.sin_family = AF_INET;</span><br><span class="line"></span><br><span class="line">	Iret = bind(</span><br><span class="line">		Sscok,				  //绑定的套接字</span><br><span class="line">		(sockaddr*)&amp;Saddr,	  //绑定服务地址</span><br><span class="line">		sizeof(Saddr)		  //地址大小</span><br><span class="line">	);</span><br><span class="line">	if (Iret == SOCKET_ERROR)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;绑定失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 4. 监听</span><br><span class="line">	listen(</span><br><span class="line">		Sscok,		//服务套接字</span><br><span class="line">		SOMAXCONN);	//连接最大数量</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//5.创建完成端口</span><br><span class="line">	SYSTEM_INFO si = &#123;&#125;;</span><br><span class="line">	GetSystemInfo(&amp;si);</span><br><span class="line"></span><br><span class="line">	g_hcompPort = CreateIoCompletionPort(</span><br><span class="line">		INVALID_HANDLE_VALUE,			</span><br><span class="line">		NULL,</span><br><span class="line">		NULL,</span><br><span class="line">		si.dwNumberOfProcessors * 2</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	//6.开辟工作线程</span><br><span class="line">	for (int i=0;i&lt;si.dwNumberOfProcessors*2;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		_beginthreadex(NULL, NULL, workThread, NULL, NULL, NULL);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//7.等待客户连接</span><br><span class="line">	while (true)</span><br><span class="line">	&#123;</span><br><span class="line">		sockaddr_in Caddr = &#123;0&#125;;</span><br><span class="line">		int CaddrSize = sizeof(Caddr);</span><br><span class="line"></span><br><span class="line">		SOCKET Csock = accept(Sscok, (sockaddr*)&amp;Caddr, &amp;CaddrSize);</span><br><span class="line"></span><br><span class="line">		//8.完成端口与客户套接字绑定</span><br><span class="line">		CreateIoCompletionPort(</span><br><span class="line">			(HANDLE)Csock,		//客户套接字</span><br><span class="line">			g_hcompPort,		//完成端口</span><br><span class="line">			NULL, NULL);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		//9.发起IO读取数据 WSARecv</span><br><span class="line"></span><br><span class="line">		MYOVERLAPPED * pov = new MYOVERLAPPED(Csock, Caddr);</span><br><span class="line"></span><br><span class="line">		DWORD dwReadSize=0;</span><br><span class="line">		DWORD dwFlag = 0;</span><br><span class="line">		WSARecv(</span><br><span class="line">			Csock,		//客户套接字</span><br><span class="line">			&amp;pov-&gt;m_buf,		//消息缓冲区</span><br><span class="line">			1,			//缓冲区大小</span><br><span class="line">			&amp;dwReadSize,//实际读取大小</span><br><span class="line">			&amp;dwFlag,	//标志</span><br><span class="line">			pov,		//异步IO结构</span><br><span class="line">			NULL		//APC调用函数</span><br><span class="line">		);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/windows网络编程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-汇编指令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/汇编指令/">汇编学习2汇编指令</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/汇编指令/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>数据传输指令</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MOV</span><br><span class="line">MOVSX 符号位扩展填充16位或者32位</span><br><span class="line">MOVZX 0扩展填充至16位或者32位</span><br><span class="line">PUSH/POP 压栈/出栈</span><br><span class="line">PUSHF/POPF 压栈/出栈 标志寄存器</span><br><span class="line">PUSHA/POPA/PUSHAD/POPAD 所有寄存器压栈或出栈(16位/32位)</span><br><span class="line">XCHG 交换源操作数和目标操作数的内容</span><br><span class="line">LEA 源操作数的地址给予寄存器 LEA AX,[2];ax=2</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>算术和逻辑运算指令</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ADD</span><br><span class="line">ADC 加上进位CF</span><br><span class="line">INC:自增1，不影响CF标志位</span><br><span class="line">SUB </span><br><span class="line">SBB 减去进位CF</span><br><span class="line">DEC:自减1，不影响CF标志位</span><br><span class="line">MUL:</span><br><span class="line">IMUL:</span><br><span class="line">DIV:</span><br><span class="line">IDIV:</span><br><span class="line">CMP:第一个操作数减去第二个操作数,不保存结果,影响EFLAGS寄存器中标志位</span><br><span class="line">AND:与</span><br><span class="line">OR: 或</span><br><span class="line">XOR:异或</span><br><span class="line">NOT:取反</span><br><span class="line">TEST:与and相同，但是不保存结果，只影响标志位</span><br><span class="line">SHL:高位放CF，低位置0</span><br><span class="line">SHR:低位移入CF,高位补0,无符号除法</span><br><span class="line">SAR:操作数右移，符号位不变,用于有符号数除法</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>串操作指令</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">movs:串操作指令 movsb/movsw/movsd 执行次数有cx决定 源操作数有Si/ESi 目的操作数Di/EDI 根据DF标志位决定 </span><br><span class="line">lea si,[100]</span><br><span class="line">lea di,[100]</span><br><span class="line">mov cx,10</span><br><span class="line">cld </span><br><span class="line">rep movsb ;相当于memcpy</span><br><span class="line"></span><br><span class="line">stos:存入串指令 stosb/stosw/stosd 将al/ax/eax寄存器中的字节/字/双字存储到目标操作数 </span><br><span class="line">lea di,[100]</span><br><span class="line">mov cx,10</span><br><span class="line">mov al,31</span><br><span class="line">cld</span><br><span class="line">rep stosb ;填充10个字节的31h,相当于memset</span><br><span class="line"></span><br><span class="line">lods:取出串指令 lodsb/lodsw/lodsd 将源操作数中的字节/字/双字分别加载到 al/ax/eax寄存器 </span><br><span class="line">lea si,[120] </span><br><span class="line">mov cx,10 </span><br><span class="line">xor a,ax </span><br><span class="line">xor dx,dx </span><br><span class="line">lodsb </span><br><span class="line">add dx,ax, ;加法计算 </span><br><span class="line">loop 10B</span><br><span class="line"></span><br><span class="line">cmps:串比较指令 cmpsb/cmpsw/cmpsd </span><br><span class="line">lea si,[100] </span><br><span class="line">lea di,[120] </span><br><span class="line">mov cx,10 </span><br><span class="line">cld </span><br><span class="line">repe cmpsb </span><br><span class="line">je 114 ;相等跳出mov bx,1 </span><br><span class="line">mov bx,1</span><br><span class="line"></span><br><span class="line">rep:重复操作前缀 rep:cx = 0结束 repe:cx =0/zf=0 repne:cx=0/zf=1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>控制转移指令</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JMP:无条件转移 near ptr(近转移) short(短转移) far ptr(远转移 CS+IP) </span><br><span class="line">JCC:有条件转移 </span><br><span class="line">LOOP:循环指令 loop 立即数 </span><br><span class="line">CALL:函数调用指令 call完用ret返回指令回到主程序 </span><br><span class="line">RET:返回指令 ret/retf(远跳)/retn(近跳) 立即数 :SP+立即数</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/汇编指令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-逆向基础03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/逆向基础03/">逆向基础03</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/逆向基础03/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>vs全家桶-gs/堆栈/堆栈变量</p>
+</blockquote>
+<ul>
+<li>checkStackVars<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.lea edx,xxxx</span><br><span class="line">  call xxx</span><br><span class="line">2.call内部对0xccccccc进行判断</span><br><span class="line">3.函数一般在函数末尾</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>+checkGS 特征<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#函数开头</span><br><span class="line">mov eax,__security_cookie</span><br><span class="line">xor eax,ebp</span><br><span class="line">mov [ebp-4],eax</span><br><span class="line"></span><br><span class="line">#函数结尾</span><br><span class="line">mov ecx,[ebp-4]</span><br><span class="line">xor ecx,ebp</span><br><span class="line">call check_函数</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>checkESP<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.cmp ebp,esp</span><br><span class="line">  call xxx</span><br><span class="line">2.call内部是jnz xxx</span><br><span class="line">3.一般在函数结束时,call调用完之后出现</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>VS编译器生成C++类代码特色</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#对于类</span><br><span class="line">1.this指针,VS编辑器会使用ECX来作为this指针传参</span><br><span class="line"></span><br><span class="line">#构造函数</span><br><span class="line">1.使用ECX传this</span><br><span class="line">2.call内部对ECX指向缓冲区进行赋值或者初始化</span><br><span class="line">3.返回值EAX是this指针</span><br><span class="line">例如:</span><br><span class="line">push ecx</span><br><span class="line">lea edi,[ebp+xx]</span><br><span class="line">mov ecx,xx/4</span><br><span class="line">mov eax,0CCCCCCCCh</span><br><span class="line">rep stosd</span><br><span class="line">pop ecx</span><br><span class="line">mov [ebp+this],ecx ;this指针放入局部变量</span><br><span class="line">xxxxxxx</span><br><span class="line">mov eax,[ebp+this]</span><br><span class="line"></span><br><span class="line">#成员函数</span><br><span class="line">1.使用ECX传this</span><br><span class="line">2.call内部对ECX指向缓冲区进行赋值或者初始化</span><br><span class="line"></span><br><span class="line">#析构函数</span><br><span class="line">#构造函数</span><br><span class="line">1.使用ECX传this</span><br><span class="line">2.call内部对ECX指向缓冲区进行访问或者释放</span><br><span class="line">3.局部对象一般调用在函数退出时</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>VS程序内存和编译的一些特征</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.内存值特点</span><br><span class="line">  FDFDFDFD 堆的边界,也作为堆标记</span><br><span class="line">  CDCDCDCD 堆申请空间未初始化状态 new-&gt;malloc-&gt;HeapAlloc-&gt;RtAllocHeap</span><br><span class="line">  CCCCCCCC 局部堆栈未初始化状态</span><br><span class="line">  40300000 浮点数(IEEE浮点表示法)</span><br><span class="line">  3D9B5DC1 不像地址不像数据认为是hash值</span><br><span class="line">  00380000 VirtualAlloc申请的内存地址(页对齐)</span><br><span class="line">  FEFEFEFE 堆释放之后的填充信息</span><br><span class="line">  0012FF8C 堆栈地址一般比较小</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>vs2015/2017 全局变量</p>
+</blockquote>
+<p>_initterm 循环调用全局对象构造函数 可以用来写反调试<br>initterm.cpp 假如在调用全局对象时,通过eip跳过调用,来测试是否有反调试<br>8B 4D F8 8B 11 89 55 F4 8B 4D F4 FF 15 ?? ?? ?? ?? FF 55 F4</p>
 
       
 
@@ -780,7 +907,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/逆向基础02/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/逆向基础03/">展开全文 >></a>
         </p>
       
 
@@ -814,20 +941,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-windows异常与调试" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-dll文件的导出和调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/windows异常与调试/">异常与调试</a>
+      <a class="article-title" href="/2018/08/20/dll文件的导出和调用/">DLL文件的导出和调用</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/windows异常与调试/" class="archive-article-date">
+        <a href="/2018/08/20/dll文件的导出和调用/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -836,27 +963,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Windows异常处理:<br>SEH-结构化异常处理<br>VEH-向量化异常处理<br>VCH-向量化异常处理</p>
-<blockquote>
-<p>SEH-结构化异常处理</p>
+        <blockquote>
+<p>导出函数的方式</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">__try&#123;&#125;</span><br><span class="line">__finally&#123;&#125; //必定会执行 通过AbnormalTermiantion(void)获取是正常方式还是非正常方式</span><br><span class="line"></span><br><span class="line">__try&#123;&#125;</span><br><span class="line">__except&#123;&#125;</span><br><span class="line"></span><br><span class="line">//EXCEPTION_EXECUTE_HANDLER(1) ：执行异常处理块，不回到异常产生处</span><br><span class="line">//EXCEPTION_CONTINUE_SEARCH(0) ：处理不了，找别人吧</span><br><span class="line">//EXCEPTION_CONTINUE_EXECUTION(-1)：不相信这个事实，再执行一下试试</span><br><span class="line">//GetExceptionCode() 返回异常类型</span><br><span class="line">//GetExceptionInformation() 包含上下文信息 以及异常的类型等信息</span><br><span class="line">#include &quot;pch.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;tchar.h&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a;</span><br><span class="line"></span><br><span class="line">DWORD Filter(DWORD Code, _EXCEPTION_POINTERS * pexception_Point, int **p) &#123;</span><br><span class="line">	if (EXCEPTION_ACCESS_VIOLATION == Code) &#123;</span><br><span class="line">		*p = &amp;a;  //此处发现异常一直不断发生</span><br><span class="line">		return EXCEPTION_CONTINUE_EXECUTION; //修复了异常，从产生异常处执行。</span><br><span class="line">	&#125;</span><br><span class="line">	else if (EXCEPTION_STACK_OVERFLOW == Code) &#123;</span><br><span class="line">		return EXCEPTION_CONTINUE_SEARCH;  //修复不了，让别人修复吧</span><br><span class="line">	&#125;</span><br><span class="line">	else if (EXCEPTION_BREAKPOINT == Code) &#123;</span><br><span class="line">		return EXCEPTION_EXECUTE_HANDLER;   //请执行异常处理块吧</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">int _tmain(int argc, _TCHAR* argv[]) &#123;</span><br><span class="line">	int *p = NULL;</span><br><span class="line">	__try &#123;</span><br><span class="line">		p = NULL;</span><br><span class="line">		*p = 100;</span><br><span class="line">	&#125;</span><br><span class="line">	__except (Filter(GetExceptionCode(), GetExceptionInformation(), &amp;p)) &#123;</span><br><span class="line">		printf(&quot;hehe&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>关键字导出:_declspec(dllexport)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 导出一个全局变量</span><br><span class="line">  _declspec(dllexport) DWORD g_nNum;</span><br><span class="line">  // 导出一个函数</span><br><span class="line">  _declspec(dllexport) void fun() &#123;</span><br><span class="line">      MessageBox(0, L&quot;fun&quot;, 0, 0);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>def模块定义导出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.添加.def格式文件到项目</span><br><span class="line">2.visual c++中属性-&gt;链接器-&gt;输入-&gt;模块定义文件 填写.def格式文件名称</span><br><span class="line">3. .def文件中,填写要导出的函数</span><br><span class="line">	EXPORTS</span><br><span class="line">	函数名 @序号 ;@序号 表示导出函数的序号</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <blockquote>
-<p>VEH:AddVectoredExceptionHandler函数实现</p>
+<p>DLL文件的调用</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//veh异常处理函数</span><br><span class="line">LONG NTAPI veh_handlerA(</span><br><span class="line">  _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 访问异常</span><br><span class="line"> //if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> //&#123;</span><br><span class="line"> // ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line"> // //异常处理了，回去执行</span><br><span class="line"> // return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> //&#125;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">//veh异常处理函数</span><br><span class="line">LONG NTAPI veh_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //veh,一经注册全进程有效</span><br><span class="line"> AddVectoredExceptionHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  veh_handlerA);    //异常处理回调</span><br><span class="line"> AddVectoredExceptionHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  veh_handlerB);    //异常处理回调</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line"> __except (EXCEPTION_EXECUTE_HANDLER)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">// 总结，程序中如果有veh,同时拥有seh,系统会先检查veh,veh处理不了在找seh处理。</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>显式调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">步骤:</span><br><span class="line">1.将(LoadLibrary)DLL加载到进程中. 得到DLL模块句柄</span><br><span class="line">2.获取dll的导出函数 (GetProcAddress ), 定义函数指针, 保存导出函数的地址</span><br><span class="line">3.通过函数指针调用导出函数.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>隐式调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.包含对应的头文件(包含了DLL导出函数的原型信息的头文件)</span><br><span class="line">2.包含对应的导入库</span><br><span class="line">	#pragma comment(lib , &quot;../debug/DllTest.lib&quot;)</span><br><span class="line">3.直接调用函数</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <blockquote>
-<p>VCH: AddVectoredContinueHandler函数实现</p>
+<p>DLL文件的调试</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//vch异常处理函数</span><br><span class="line">LONG NTAPI vch_handlerA(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 访问异常</span><br><span class="line"> //if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> //&#123;</span><br><span class="line"> // ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line"> // //异常处理了，回去执行</span><br><span class="line"> // return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> //&#125;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">//vch异常处理函数</span><br><span class="line">LONG NTAPI vch_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //vch,一经注册全进程有效</span><br><span class="line"> AddVectoredContinueHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  vch_handlerA);    //异常处理回调</span><br><span class="line"> AddVectoredContinueHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  vch_handlerB);    //异常处理回调</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line"> __except (EXCEPTION_CONTINUE_SEARCH)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">// 总结：程序中如果有vch,同时拥有seh，那么先处理seh,如果seh无法处理，再交给vch</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>默认SEH异常处理函数:SetUnhandledExceptionFilter函数实现</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//seh异常处理函数</span><br><span class="line">LONG NTAPI seh_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> printf(&quot;调用默认的SEH函数了\n&quot;);</span><br><span class="line"> if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> &#123;</span><br><span class="line">  ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line">  //异常处理了，回去执行</span><br><span class="line">  return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> &#125;</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //默认seh处理函数,一经注册全进程有效</span><br><span class="line"> SetUnhandledExceptionFilter(seh_handlerB);</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line">// 总结：当所有的seh都无法处理时，调用默认顶级异常UEH.</span><br><span class="line"> __except (EXCEPTION_CONTINUE_SEARCH)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>SEH原理剖析</p>
-</blockquote>
-<p>用户层有数据结构叫做TEB,产生异常时,系统通过FS:[0]找到链表，依次调用异常处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;pch.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//异常处理指针</span><br><span class="line">typedef LONG (NTAPI *ExceptionFun)(</span><br><span class="line">	_Inout_ struct _EXCEPTION_RECORD *ExceptionRecord,</span><br><span class="line">	_In_ PVOID EstablisherFrame,</span><br><span class="line">	_Inout_ struct _CONTEXT *ContextRecord,</span><br><span class="line">	_In_ PVOID DispatcherContext</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int a = 5;</span><br><span class="line">// 异常处理回调</span><br><span class="line">LONG NTAPI</span><br><span class="line">Exception_routine(</span><br><span class="line">	_Inout_ struct _EXCEPTION_RECORD *ExceptionRecord,</span><br><span class="line">	_In_ PVOID EstablisherFrame,</span><br><span class="line">	_Inout_ struct _CONTEXT *ContextRecord,</span><br><span class="line">	_In_ PVOID DispatcherContext</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line">	//修复异常</span><br><span class="line">	ContextRecord-&gt;Eax = (DWORD)&amp;a;	</span><br><span class="line">	//异常修复了回去执行。</span><br><span class="line">	return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	// 异常结构体</span><br><span class="line">	struct Excptionlist &#123;</span><br><span class="line">		Excptionlist * pnext;</span><br><span class="line">		ExceptionFun hander;</span><br><span class="line">	&#125;;</span><br><span class="line">	Excptionlist node;</span><br><span class="line">	node.hander = Exception_routine;		//异常处理回调</span><br><span class="line"></span><br><span class="line">	__asm &#123;</span><br><span class="line">		mov eax, fs:[0];					//excptionlist 异常指针</span><br><span class="line">		mov dword ptr[node.pnext], eax;		//指向原始的地址</span><br><span class="line">		lea eax, node;						//获取节点的地址</span><br><span class="line">		mov fs:[0], eax;					//插入新节点</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//触发异常</span><br><span class="line">	_asm  mov eax, 0;</span><br><span class="line">	_asm  mov[eax], 0x55;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	//卸载异常处理器</span><br><span class="line">	_asm &#123;</span><br><span class="line">		mov eax, fs:[0].pnext;	//excptionlist 指针</span><br><span class="line">		mov fs:[0], eax;  //fs:[0] = node.next;</span><br><span class="line">	&#125;</span><br><span class="line">	getchar();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>dll与exe都是自己写的,直接F11进入DLL代码中</li>
+<li><p>dll是自己编写,exe不是自己编写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.dll项目中,在项目属性中 配置属性-&gt;调试-&gt;命令 添加调用dll导出函数的exe的路径</span><br><span class="line">在dll导出函数中,下断点，然后以调试方式运行dll项目</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dll与exe都不是自己编写,只能使用汇编级调试器。</p>
+</li>
+</ul>
 
       
 
@@ -880,203 +1019,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/windows异常与调试/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-ATT-Unitx下c汇编" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/ATT-Unitx下c汇编/">ATT-Unitx下c汇编</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/ATT-Unitx下c汇编/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Unix下的GCC产生的汇编是ATT</p>
-<blockquote>
-<p>程序编程</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gcc -Og -o p p1.c p2.c </span><br><span class="line">-Og高速编译器生成符合原始C语言机器代码的优化等级 如果为了程序性能考虑执行选线-O1/-O2 </span><br><span class="line">-o 生成可执行文件</span><br><span class="line">编译器: 将产生的2个源文件的汇编代码,后缀为.s</span><br><span class="line">汇编器: 将汇编代码转成二进制目标文件,后缀为.o</span><br><span class="line">链接器: 将目标二进制目标文件和库函数代码合并,并产生最终的可执行文件。</span><br><span class="line">-S 生成汇编代码,后缀为.s</span><br><span class="line">-c 生成二进制目标文件,后缀为.o</span><br><span class="line"></span><br><span class="line">gcc -Og -S -masm=intel p1.c //生成inter汇编格式</span><br><span class="line">-masm=intel</span><br><span class="line">objdumpp -d p1.o</span><br><span class="line">将二进制文件反汇编成汇编代码</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>访问信息</p>
-</blockquote>
-<ul>
-<li><p>寄存器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">rax eax ax al/ah</span><br><span class="line">rbx ebx bx bl/bh</span><br><span class="line">rcx ecx cx dl/dh</span><br><span class="line">rdx edx dx dl/dh</span><br><span class="line">rsi esi si </span><br><span class="line">rdi edi di</span><br><span class="line">rbp ebp bp</span><br><span class="line">rsp esp sp</span><br><span class="line">r8</span><br><span class="line">r9</span><br><span class="line">r10</span><br><span class="line">r11</span><br><span class="line">r12</span><br><span class="line">r13</span><br><span class="line">r14</span><br><span class="line">r15</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>数据传送指令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">movb</span><br><span class="line">movw </span><br><span class="line">movl  //特殊 会讲高4字节设置为0</span><br><span class="line">movq  //只能以表示为32位补码数字的立即数作为源操作数,然后符号扩展到64的值放到目的位置</span><br><span class="line">movabsq //可以任意64位立即数值作为源操作数,并只能以寄存器作为目的</span><br><span class="line"></span><br><span class="line">movzbw //将0扩展的字节传送到字</span><br><span class="line">movzbl //将0扩展的字节传送到双字</span><br><span class="line">movzwl //将0扩展的字传送到双字</span><br><span class="line">movzbq //将0扩展的字节传送到四字</span><br><span class="line">movzwq //将0扩展的字传送到四字</span><br><span class="line">movl相当于将0扩展的双字传送到四字</span><br><span class="line"></span><br><span class="line">movsbw</span><br><span class="line">movsbl</span><br><span class="line">movswl</span><br><span class="line">movsbq</span><br><span class="line">movswq</span><br><span class="line">movslq</span><br><span class="line">cltq  将eax符号扩展到rax</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>浮点指令</p>
-</blockquote>
-<p>+传送浮点指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vmovss 传送单精度数</span><br><span class="line">vmovsd 传送双精度数</span><br><span class="line">vmovaps 传送对齐的封装好的单精度数</span><br><span class="line">vmovapd 传送对齐的封装好的双精度数</span><br></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/ATT-Unitx下c汇编/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-windows操作系统的基本概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/windows操作系统的基本概念/">windows操作系统的基本概念</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/windows操作系统的基本概念/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>windows特性</p>
-</blockquote>
-<ol>
-<li>可移植性<br>软件分层的体系结构,只有硬件抽象层与硬件紧密关联(HAL).windows从32移植到64位CPU,只改动了少量代码。</li>
-<li>兼容性<br>API名称和调用接口的一致性。为支持DOS程序和16位Windows程序,引入环境子系统概念,不同环境子系统,向各自的应用程序提供API支持。</li>
-<li>健壮性和可靠性<br>用户模式和内核模式的划分。<br>应用程序要访问物理内存,物理端口,应用程序都需要向内核模式下的组件提出请求。</li>
-<li>可扩展性<br>将内核从执行体组件中分离。内核只负责线程调度工作.而执行程序组件包含其他操作系统组件,包括内存管理组件,进程管理组件等,安装模块化方法设计。</li>
-<li>性能<br>由于分层设计,各个层次调用带来性能损失.通过I/O异步设计,CPU不会浪费时间在I/O操作上。基于多进程和多线程,尽量可能多个线程保持同时运行。支持异步操作。</li>
-</ol>
-<blockquote>
-<p>操作系统分层 总体架构</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1.应用程序以来3个dll,然后这3个dll最后会调用ntdll.dll</span><br><span class="line">USER32.dll(窗口管理)		3个dll最后通过ntdll.dll调用</span><br><span class="line">GDI32.dll(GDI函数)      -----------------------------&gt; ntdll.dll</span><br><span class="line">KERNEL32.dll(内核调用函数 线程调度等)</span><br><span class="line">2.ntdll.dll调用系统服务</span><br><span class="line">Windows2000 下通过int 2e 进入内核</span><br><span class="line">windowsxp以及之后 通过sysenter 进入内核</span><br><span class="line">将参数和系统服务号传入系统服务。系统服务有一个系统服务描述表(System Service Descriptor Table)。根据系统服务号作为索引找到服务函数的函数地址。</span><br><span class="line">3.执行程序组件</span><br><span class="line">位于Ntoskrnl.exe的上层</span><br><span class="line">	(1)对象管理程序 windows定义了很多数据结构,这些数据结构就是对象,对象管理器用于创建,管理,回收对象组件.驱动开发中就涉及到驱动程序对象,设备对象等。</span><br><span class="line">	(2)进程管理程序 依赖对象管理程序和虚拟内存管理程序等</span><br><span class="line">	(3)虚拟内存管理程序 虚拟内存的申请,回收</span><br><span class="line">	(4)I/O管理器 负责发起I/O请求,统一为IRP请求形式,IRP包含设备操作的重要数据。包括读写操作,字节长度,通讯方式等</span><br><span class="line">	(5)配置管理程序 软件硬件配置信息,使用注册表的数据库保存数据。设备驱动程序根据注册表的信息进行加载</span><br><span class="line">4.驱动程序</span><br><span class="line">  处理方式:</span><br><span class="line">	(1)直接操作硬件,完成IRP</span><br><span class="line">	(2)转发到更底层的驱动,并等待底层驱动返回</span><br><span class="line">	(3)不急于完成。分配新的IRP发到其他驱动程序,并等待返回。</span><br><span class="line">5.内核</span><br><span class="line">	执行在最高特权之上,通过自旋锁提供对多处理器同步的支持</span><br><span class="line">	包含以下功能:对内核对象的支持,对线程的调度,对多处理器同步的支持,中断处理函数的支持,对错误陷阱的支持,对错误陷阱的支持,对其他硬件特殊功能的支持。</span><br><span class="line">	调度线程的时候不能被其他线程打断,即不能允许线程的切换.但是可以被更高的中断请求级别(IRQL)打断。</span><br><span class="line">6.硬件抽象层</span><br><span class="line">	驱动也可以操作硬件抽象层,尽量使用硬件抽象层的宏而不适用汇编例如IN,OUT</span><br><span class="line">7.windows与微内核</span><br><span class="line">	操作系统主要组件运行与独立的进程中,有私有的地址空间。</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>从应用程序到驱动程序</p>
-</blockquote>
-<p>对所有硬件设备的操作都以普通文件看待。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CreateFile CloseHandle ReadFIle WirteFile CancelIo DeviceControl</span><br><span class="line">等操作</span><br><span class="line">实例:</span><br><span class="line">		CreateFile							</span><br><span class="line">应用程序------------&gt;win32子系统(Kernel32.dll)--------&gt;ntdll.dll</span><br><span class="line">									创建并发送IRP</span><br><span class="line">--------&gt;系统服务函数--------&gt;I/O管理器-----------&gt;设备驱动---------&gt;</span><br><span class="line">硬件抽象层---------&gt;硬件</span><br></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window内核编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/windows操作系统的基本概念/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/dll文件的导出和调用/">展开全文 >></a>
         </p>
       
 
@@ -1112,7 +1055,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 
@@ -1203,11 +1146,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1219,11 +1166,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1235,11 +1178,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1248,6 +1191,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1267,10 +1214,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
               </li>
              
@@ -1279,7 +1222,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1287,11 +1230,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1311,11 +1258,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>

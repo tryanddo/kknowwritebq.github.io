@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="驱动开发常识   环境安装需要安装WDK(微软驱动开发工具包),且WDK需要与WDK同一版本的SDK。 项目配置如果加载驱动的是win732位系统,必须将驱动项目的目标系统设置为win7,且驱动必须是x86体系。 源码编写最好使用c项目,由于c++有名称粉碎,定义时需要加入extern”C” 驱动调试编写的驱动实则是系统内核的一个插件,windows的系统内核文件为ntoskrnl.exe,所有">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-09T07:12:08.310Z">
+<meta property="og:updated_time" content="2018-11-21T03:22:14.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows内核编程01">
 <meta name="twitter:description" content="驱动开发常识   环境安装需要安装WDK(微软驱动开发工具包),且WDK需要与WDK同一版本的SDK。 项目配置如果加载驱动的是win732位系统,必须将驱动项目的目标系统设置为win7,且驱动必须是x86体系。 源码编写最好使用c项目,由于c++有名称粉碎,定义时需要加入extern”C” 驱动调试编写的驱动实则是系统内核的一个插件,windows的系统内核文件为ntoskrnl.exe,所有">
@@ -212,16 +212,16 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">数据类型 	长度			基本型				类型名称</span><br><span class="line">UINT8 		8 bit   	unsigned char 		无符号字符 </span><br><span class="line">UCHAR 		8 bit 		unsigned char 		无符号字符 </span><br><span class="line">PUCHAR 		32 bit 		unsigned char* 		无符号字符指针 </span><br><span class="line">UINT16 		16 bit 		unsigned short 		无符号短整形 </span><br><span class="line">USHORT 		16 bit 		unsigned short 		无符号短整形 </span><br><span class="line">PUSHORT 	32 bit 		unsigned short* 	无符号短整形指针 </span><br><span class="line">UINT32 		32 bit 		unsigned int 		无符号整形 </span><br><span class="line">UINT 		32 bit 		unsigned int 		无符号整形 </span><br><span class="line">ULONG 		32 bit 		unsigned long 		无符号长整形 </span><br><span class="line">PUNIT 		32 bit 		unsigned int* 		无符号整形指针 </span><br><span class="line">UINT64 		64 bit 		unsigned __int64 	无符号64位整形 </span><br><span class="line">ULONG64 	64 bit 		unsigned __int64 	无符号64位整形 </span><br><span class="line">PULONG64 	32 bit 		unsigned __int64* 	无符号64位整形指针</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>字符串</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//统一采用UNICODE_STRING结构体存取字符串,默认使用Unicode编码</span><br><span class="line"></span><br><span class="line">typedef struct _UNICODE_STRING &#123;</span><br><span class="line">	USHORT Length; // 字符串的长度, 单位是字节数</span><br><span class="line">	USHORT MaximumLength; // 最大字节数</span><br><span class="line">	PWCH   Buffer;</span><br><span class="line">#endif // MIDL_PASS</span><br><span class="line">&#125; UNICODE_STRING;</span><br><span class="line"></span><br><span class="line">函数名							功能</span><br><span class="line">RtlInitUnicodeString 			初始化字符串 ,注意,此函数不会分配空间. </span><br><span class="line">RtlFreeUnicodeString 			销毁字符串 </span><br><span class="line">RtlCopyUnicodeString 			拷贝字符串 </span><br><span class="line">RtlAppendUnicodeStringToString 	追加字符串 </span><br><span class="line">RtlCmpareUnicodeString 			比较字符串 </span><br><span class="line">RtlUnicodeStringToInteger 		字符串转数字 </span><br><span class="line">RtlIntegerToUnicodeString 		数字转字符串 </span><br><span class="line">RtlAppendUnicodeStringToString 	将UNICODE字符串结构转换为ANSI </span><br><span class="line">Kdprint 						输出调试信息</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//统一采用UNICODE_STRING结构体存取字符串,默认使用Unicode编码</span><br><span class="line"></span><br><span class="line">typedef struct _UNICODE_STRING &#123;</span><br><span class="line">	USHORT Length; // 字符串的长度, 单位是字节数</span><br><span class="line">	USHORT MaximumLength; // 最大字节数</span><br><span class="line">	PWCH   Buffer;</span><br><span class="line">#endif // MIDL_PASS</span><br><span class="line">&#125; UNICODE_STRING;</span><br><span class="line"></span><br><span class="line">函数名							功能</span><br><span class="line">RtlInitUnicodeString 			初始化字符串 ,注意,此函数不会分配空间. </span><br><span class="line">RtlFreeUnicodeString 			销毁字符串 </span><br><span class="line">RtlCopyUnicodeString 			拷贝字符串 </span><br><span class="line">RtlAppendUnicodeStringToString 	追加字符串 </span><br><span class="line">RtlCmpareUnicodeString 			比较字符串 </span><br><span class="line">RtlUnicodeStringToInteger 		字符串转数字 </span><br><span class="line">RtlIntegerToUnicodeString 		数字转字符串 </span><br><span class="line">RtlUpcaseUnicodeString 			转为大写</span><br><span class="line">RtlAppendUnicodeStringToString 	将UNICODE字符串结构转换为ANSI </span><br><span class="line">Kdprint 						输出调试信息</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>内存操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">ExAllocatePool - 内存分配函数</span><br><span class="line">RtlCopyMemory 拷贝内存</span><br><span class="line">RtlFillMemory 填充内存</span><br><span class="line">ExFreePool - 内存释放函数</span><br><span class="line"></span><br><span class="line">void* alloc(ULONG size)</span><br><span class="line">&#123;</span><br><span class="line">	return ExAllocatePool(PagedPool, size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void* reAlloc(void* src, ULONG size)</span><br><span class="line">&#123;</span><br><span class="line">	if (!src)</span><br><span class="line">	&#123;</span><br><span class="line">		return NULL;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void* data = alloc(size);</span><br><span class="line">	RtlCopyMemory(data, src, size);</span><br><span class="line">	ExFreePool(data);</span><br><span class="line">	return data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void free(void* data)</span><br><span class="line">&#123;</span><br><span class="line">	if (data)</span><br><span class="line">	&#123;</span><br><span class="line">		ExFreePool(data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">ExAllocatePool - 内存分配函数</span><br><span class="line">RtlCopyMemory 拷贝内存= memcpy</span><br><span class="line">RtlMoveMemory 拷贝内存(可重叠)</span><br><span class="line">RtlFillMemory 填充内存 = memset</span><br><span class="line">RtlEqualMemory 内存比较</span><br><span class="line">ExFreePool - 内存释放函数</span><br><span class="line"></span><br><span class="line">ProbeForRead 判断是否可读</span><br><span class="line">ProbeForWrite 判断是否可写</span><br><span class="line"></span><br><span class="line">void* alloc(ULONG size)</span><br><span class="line">&#123;</span><br><span class="line">	return ExAllocatePool(PagedPool, size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void* reAlloc(void* src, ULONG size)</span><br><span class="line">&#123;</span><br><span class="line">	if (!src)</span><br><span class="line">	&#123;</span><br><span class="line">		return NULL;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void* data = alloc(size);</span><br><span class="line">	RtlCopyMemory(data, src, size);</span><br><span class="line">	ExFreePool(data);</span><br><span class="line">	return data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void free(void* data)</span><br><span class="line">&#123;</span><br><span class="line">	if (data)</span><br><span class="line">	&#123;</span><br><span class="line">		ExFreePool(data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <blockquote>
 <p>内核链表</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//在windows内核中,无论什么链表,都是使用如下结构的双向链表:</span><br><span class="line">typedef struct _LIST_ENTRY &#123;</span><br><span class="line">struct _LIST_ENTRY *Flink; // 指向下一个节点,如果没有下一个,则指向链表的头结点(循环链表)</span><br><span class="line">struct _LIST_ENTRY *Blink; // 指向上一个节点.(双向链表)</span><br><span class="line">&#125; LIST_ENTRY, *PLIST_ENTRY, *RESTRICTED_POINTER PRLIST_ENTRY;</span><br><span class="line"></span><br><span class="line">内核中提供了以下函数来操作链表:</span><br><span class="line">InitializeListHead - 初始化链表</span><br><span class="line">InsertHeadList - 将节点插入到链表头部</span><br><span class="line">InsertTailList - 将节点插入到链表尾部</span><br><span class="line">RemoveHeadList - 链表头部删除一个节点</span><br><span class="line">RemoveTailList - 链表尾部删除一个节点</span><br><span class="line">RemoveEntryList 删除一个节点</span><br><span class="line">IsListEmpty 链表是否为空</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//在windows内核中,无论什么链表,都是使用如下结构的双向链表:</span><br><span class="line">typedef struct _LIST_ENTRY &#123;</span><br><span class="line">struct _LIST_ENTRY *Flink; // 指向下一个节点,如果没有下一个,则指向链表的头结点(循环链表)</span><br><span class="line">struct _LIST_ENTRY *Blink; // 指向上一个节点.(双向链表)</span><br><span class="line">&#125; LIST_ENTRY, *PLIST_ENTRY, *RESTRICTED_POINTER PRLIST_ENTRY;</span><br><span class="line"></span><br><span class="line">内核中提供了以下函数来操作链表:</span><br><span class="line">InitializeListHead - 初始化链表</span><br><span class="line">InsertHeadList - 将节点插入到链表头部</span><br><span class="line">InsertTailList - 将节点插入到链表尾部</span><br><span class="line">RemoveHeadList - 链表头部删除一个节点</span><br><span class="line">RemoveTailList - 链表尾部删除一个节点</span><br><span class="line">RemoveEntryList 删除一个节点</span><br><span class="line">IsListEmpty 链表是否为空</span><br><span class="line"></span><br><span class="line">//返回结构体的首地址</span><br><span class="line">p_str = CONTAINING_RECORD(PLIST_ENTRY指针,</span><br><span class="line">					结构体名称,</span><br><span class="line">					PLIST_ENTRY在结构体中的字段名);</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>Mdl</p>
 </blockquote>
@@ -454,11 +454,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -470,11 +474,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -486,11 +486,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -499,6 +499,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -518,10 +522,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
               </li>
              
@@ -530,7 +530,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -538,11 +538,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -562,11 +566,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>

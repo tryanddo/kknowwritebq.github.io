@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="windows特性   可移植性软件分层的体系结构,只有硬件抽象层与硬件紧密关联(HAL).windows从32移植到64位CPU,只改动了少量代码。 兼容性API名称和调用接口的一致性。为支持DOS程序和16位Windows程序,引入环境子系统概念,不同环境子系统,向各自的应用程序提供API支持。 健壮性和可靠性用户模式和内核模式的划分。应用程序要访问物理内存,物理端口,应用程序都需要向内核模">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-19T02:55:52.767Z">
+<meta property="og:updated_time" content="2018-11-21T03:26:53.422Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows操作系统的基本概念">
 <meta name="twitter:description" content="windows特性   可移植性软件分层的体系结构,只有硬件抽象层与硬件紧密关联(HAL).windows从32移植到64位CPU,只改动了少量代码。 兼容性API名称和调用接口的一致性。为支持DOS程序和16位Windows程序,引入环境子系统概念,不同环境子系统,向各自的应用程序提供API支持。 健壮性和可靠性用户模式和内核模式的划分。应用程序要访问物理内存,物理端口,应用程序都需要向内核模">
@@ -205,6 +205,13 @@
 <p>从应用程序到驱动程序</p>
 </blockquote>
 <p>对所有硬件设备的操作都以普通文件看待。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CreateFile CloseHandle ReadFIle WirteFile CancelIo DeviceControl</span><br><span class="line">等操作</span><br><span class="line">实例:</span><br><span class="line">		CreateFile							</span><br><span class="line">应用程序------------&gt;win32子系统(Kernel32.dll)--------&gt;ntdll.dll</span><br><span class="line">									创建并发送IRP</span><br><span class="line">--------&gt;系统服务函数--------&gt;I/O管理器-----------&gt;设备驱动---------&gt;</span><br><span class="line">硬件抽象层---------&gt;硬件</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>虚拟内存</p>
+</blockquote>
+<p>DriverEntry例程和AddDevice例程是运行在系统system进程中.system进程是windows第一个运行的进程。需要加载驱动时,该进程会有一个线程将驱动程序加载到内核模式地址空间并调用DriverEntry例程。<br>而IRP_MJ_READ和IRP_MJ_WRITE的派遣函数运行于应用程序的上下文中。通过PsGetCurrentProcess函数得到当前运行的进程。</p>
+<ul>
+<li>Lookaside结构<br>当申请和回收内存的操作十分频繁的时候。考虑使用Lookaside对象</li>
+</ul>
 
       
 
@@ -288,18 +295,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/20/ATT-Unitx下c汇编/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/20/Windows调试器编写/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          ATT-Unitx下c汇编
+          调试器
         
       </div>
     </a>
   
   
-    <a href="/2018/08/20/Windows调试器编写/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">调试器</div>
+    <a href="/2018/08/20/android_hook/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">android_hook</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -433,11 +440,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -449,11 +460,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -465,11 +472,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -478,6 +485,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -497,10 +508,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
               </li>
              
@@ -509,7 +516,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -517,11 +524,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -541,11 +552,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>
