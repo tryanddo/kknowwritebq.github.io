@@ -244,200 +244,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-windows内核编程02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/06/windows内核编程02/">windows内核编程02</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/11/06/windows内核编程02/" class="archive-article-date">
-  	<time datetime="2018-11-06T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>驱动对象/设备对象/IRP</p>
-</blockquote>
-<ul>
-<li><p>驱动对象</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _DRIVER_OBJECT &#123;</span><br><span class="line">    CSHORT Type;</span><br><span class="line">    CSHORT Size;</span><br><span class="line">	PDEVICE_OBJECT DeviceObject;</span><br><span class="line">    ULONG Flags;</span><br><span class="line">	PVOID DriverStart;</span><br><span class="line">    ULONG DriverSize;</span><br><span class="line">    PVOID DriverSection; //指向一个机构体,存储驱动名字/加载基址/下一个驱动的驱动信息等</span><br><span class="line">    PDRIVER_EXTENSION DriverExtension; //驱动扩展对于WDM程序比较重要</span><br><span class="line">	UNICODE_STRING DriverName; //驱动名称</span><br><span class="line">	PUNICODE_STRING HardwareDatabase; //设备的硬件数据库名称</span><br><span class="line">	PFAST_IO_DISPATCH FastIoDispatch; //文件驱动程序中的快速IO请求函数地址</span><br><span class="line">	PDRIVER_INITIALIZE DriverInit;    //</span><br><span class="line">    PDRIVER_STARTIO DriverStartIo;	  //DriverStartIo派发函数的地址</span><br><span class="line">    PDRIVER_UNLOAD DriverUnload;	  //卸载函数指针</span><br><span class="line">    PDRIVER_DISPATCH MajorFunction[IRP_MJ_MAXIMUM_FUNCTION + 1]; //30个派遣函数</span><br><span class="line"></span><br><span class="line">&#125; DRIVER_OBJECT;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">DriverSection指向的结构体;</span><br><span class="line">windbg:dt -b _LDR_DATA_TABLE_ENTRY</span><br><span class="line"></span><br><span class="line">typedef struct _LDR_DATA_TABLE_ENTRY &#123;</span><br><span class="line">    // Start from Windows XP</span><br><span class="line">    LIST_ENTRY InLoadOrderLinks; //可以通过这个双向链表遍历驱动对象</span><br><span class="line">    LIST_ENTRY InMemoryOrderLinks;</span><br><span class="line">    LIST_ENTRY InInitializationOrderLinks;</span><br><span class="line">    PVOID DllBase;</span><br><span class="line">    PVOID EntryPoint;</span><br><span class="line">    ULONG SizeOfImage;</span><br><span class="line">    UNICODE_STRING FullDllName;</span><br><span class="line">    UNICODE_STRING BaseDllName;</span><br><span class="line">    ULONG Flags;</span><br><span class="line">    USHORT LoadCount;</span><br><span class="line">    USHORT TlsIndex;    </span><br><span class="line">    union &#123;</span><br><span class="line">        LIST_ENTRY HashLinks;</span><br><span class="line">        struct &#123;</span><br><span class="line">            PVOID SectionPointer;</span><br><span class="line">            ULONG CheckSum;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    union &#123;</span><br><span class="line">        ULONG TimeDateStamp;</span><br><span class="line">        PVOID LoadedImports;</span><br><span class="line">    &#125;;</span><br><span class="line">    PVOID EntryPointActivationContext;        //_ACTIVATION_CONTEXT *</span><br><span class="line">    PVOID PatchInformation;</span><br><span class="line"></span><br><span class="line">    // Start from Windows Vista</span><br><span class="line">    LIST_ENTRY ForwarderLinks;</span><br><span class="line">    LIST_ENTRY ServiceTagLinks;</span><br><span class="line">    LIST_ENTRY StaticLinks;</span><br><span class="line">    PVOID ContextInformation;</span><br><span class="line">    PVOID OriginalBase;</span><br><span class="line">    LARGE_INTEGER LoadTime;</span><br><span class="line"></span><br><span class="line">&#125; LDR_DATA_TABLE_ENTRY, *PLDR_DATA_TABLE_ENTRY;</span><br><span class="line"></span><br><span class="line">//遍历驱动</span><br><span class="line">void EnumDriver(DRIVER_OBJECT* obj) &#123;</span><br><span class="line">	PLDR_DATA_TABLE_ENTRY pLdr = (PLDR_DATA_TABLE_ENTRY)obj-&gt;DriverSection;</span><br><span class="line">	LIST_ENTRY* pTemp = &amp;pLdr-&gt;InLoadOrderLinks;</span><br><span class="line"></span><br><span class="line">	do &#123;</span><br><span class="line">		PLDR_DATA_TABLE_ENTRY pDriverInfo = (PLDR_DATA_TABLE_ENTRY)pTemp;</span><br><span class="line">		pTemp = pTemp-&gt;Blink; //取下一个链表</span><br><span class="line">	&#125; while (pTemp!= (&amp;pLdr-&gt;InLoadOrderLinks));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设备对象</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">typedef struct DECLSPEC_ALIGN(MEMORY_ALLOCATION_ALIGNMENT) _DEVICE_OBJECT &#123;</span><br><span class="line">    CSHORT Type;</span><br><span class="line">    USHORT Size;</span><br><span class="line">    LONG ReferenceCount;</span><br><span class="line">    struct _DRIVER_OBJECT *DriverObject;  //归属那个驱动对象</span><br><span class="line">    struct _DEVICE_OBJECT *NextDevice;    //下一个设备对象(同一层),一个驱动对象可以创建多个设备对象</span><br><span class="line">    struct _DEVICE_OBJECT *AttachedDevice;//指向下一层驱动程序的设备对象(被挂载的设备对象)</span><br><span class="line">    struct _IRP *CurrentIrp;	//IRP串行化时很重要,用于决策当前IRP完成还是挂起等</span><br><span class="line">    PIO_TIMER Timer;</span><br><span class="line">    ULONG Flags;                                // DO_DIRECT_IO MDL方式读写数据/DO_BUFFER_IO读写操作使用缓冲区/默认使用传递进来的虚拟地址，但是页目录表地址不一样,导致不正确的读写数据</span><br><span class="line">    ULONG Characteristics;                      // See ntioapi:  FILE_...</span><br><span class="line">    __volatile PVPB Vpb;</span><br><span class="line">    PVOID DeviceExtension;  //指向LDR链的指针</span><br><span class="line">    DEVICE_TYPE DeviceType; //设备类型</span><br><span class="line">    CCHAR StackSize;  //设备栈的个数</span><br><span class="line">    union &#123;</span><br><span class="line">        LIST_ENTRY ListEntry;</span><br><span class="line">        WAIT_CONTEXT_BLOCK Wcb;</span><br><span class="line">    &#125; Queue;</span><br><span class="line">    ULONG AlignmentRequirement;</span><br><span class="line">    KDEVICE_QUEUE DeviceQueue;</span><br><span class="line">    KDPC Dpc;</span><br><span class="line">	ULONG ActiveThreadCount;</span><br><span class="line">    PSECURITY_DESCRIPTOR SecurityDescriptor;</span><br><span class="line">    KEVENT DeviceLock;</span><br><span class="line"></span><br><span class="line">    USHORT SectorSize;</span><br><span class="line">    USHORT Spare1;</span><br><span class="line"></span><br><span class="line">    struct _DEVOBJ_EXTENSION  *DeviceObjectExtension;</span><br><span class="line">    PVOID  Reserved;</span><br><span class="line"></span><br><span class="line">&#125; DEVICE_OBJECT;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>IRP<br>IRP如同windows应用程序的msg<br>I/O管理器创建一个IRP代表一个I/O操作,并传给驱动程序。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">IRP栈的获取:</span><br><span class="line">PIO_STACK_LOCATION IoGetGurrentIrpStackLocation(_In_ PIRP Irp);</span><br><span class="line"></span><br><span class="line">回调函数的填法有2种</span><br><span class="line">1:</span><br><span class="line">NTSTATUS onCreate(DEVICE_OBJECT* device, IRP* irp);</span><br><span class="line">obj-&gt;MajorFunction[IRP_MJ_CREATE]=OnsCreate;</span><br><span class="line"></span><br><span class="line">2.</span><br><span class="line">NTSTATUS DispatchFun(DEVICE_OBJECT* device, IRP* irp)</span><br><span class="line">&#123;</span><br><span class="line">	IO_STACK_LOCATION* pIoStack = NULL;</span><br><span class="line">	pIoStack = IoGetCurrentIrpStackLocation(irp);</span><br><span class="line"></span><br><span class="line">	switch(pIoStack-&gt;MajorFunction)&#123;</span><br><span class="line">	case IRP_MJ_CREATE:</span><br><span class="line">	</span><br><span class="line"> 	default:</span><br><span class="line"> 		IoCompleteRequest(irp, IO_NO_INCREMENT);</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>简单驱动测试实例</p>
-</blockquote>
-<p>windows内核使用DRIVER_OBJECT结构体来描述一个驱动对象,驱动加载时,通过调用DriverEntry来构造此对象。<br>DRIVER_OBJECT中的DriverUnload 必须初始化,指向卸载函数指针,如果为NULL会导致蓝屏<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;ntddk.h&gt;</span><br><span class="line"></span><br><span class="line">void Unload(DRIVER_OBJECT *object)</span><br><span class="line">&#123;</span><br><span class="line">	DbgBreakPoint();</span><br><span class="line">	DbgPrint(&quot;驱动被卸载&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NTSTATUS DriverEntry(DRIVER_OBJECT* object,</span><br><span class="line">	UNICODE_STRING* path)</span><br><span class="line">&#123;</span><br><span class="line">	DbgBreakPoint(); //添加断点</span><br><span class="line">	object-&gt;DriverUnload = Unload;</span><br><span class="line">	DbgPrint(&quot;HelloWorld&quot;);</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>加载驱动</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">wchar_t path[MAX_PATH];</span><br><span class="line">printf(&quot;请输入路径:&quot;);</span><br><span class="line">wscanf_s(L&quot;%lS&quot;,path,_countof(path));</span><br><span class="line">   //1.使用OpenSCManager函数打开SCM</span><br><span class="line">SC_HANDLE hServiceMgr = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);</span><br><span class="line">//2.使用CreateService函数利用SCM句柄创建一个服务</span><br><span class="line">SC_HANDLE hServiceDDk = CreateService(</span><br><span class="line">	hServiceMgr,//SMC句柄</span><br><span class="line">	L&quot;服务名称&quot;, //驱动服务名称</span><br><span class="line">	L&quot;显示名称&quot;, //驱动服务显示名称</span><br><span class="line">	SERVICE_ALL_ACCESS, //权限(所有访问权限)</span><br><span class="line">	SERVICE_KERNEL_DRIVER, //服务类型(驱动程序)</span><br><span class="line">	SERVICE_DEMAND_START, //启动方式</span><br><span class="line">	SERVICE_ERROR_IGNORE, //错误控制</span><br><span class="line">	path, //服务二进制文件路径(驱动文件路径)</span><br><span class="line">	NULL,</span><br><span class="line">	NULL,</span><br><span class="line">	NULL,</span><br><span class="line">	NULL,</span><br><span class="line">	NULL);</span><br><span class="line">//3.使用StartService函数启动我们刚刚创建的服务</span><br><span class="line">StartService(hServiceDDk, NULL, NULL);</span><br><span class="line">SERVICE_STATUS ss;</span><br><span class="line">ControlService(hServiceDDk,SERVICE_CONTROL_STOP,&amp;ss);//停止驱动</span><br><span class="line">DeleteService(hServiceDDk);//卸载驱动</span><br><span class="line">CloseServiceHandle(hServiceDDk);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>驱动测试之设备和符号链接以及3环打开设备对象</p>
-</blockquote>
-<ul>
-<li>驱动程序<br>设备对象是驱动对象和3环程序通讯的桥梁,3环程序通过设备对象发起请求。<br>设备对象由驱动对象创建并建立符号链接。<br>派遣函数是设备接收IO请求之后被调用来处理IO请求的函数。</li>
-</ul>
-<p>irp-&gt;IoStatus.Information = 0; //实际读取的字段<br>irp-&gt;IoStatus.Status = STATUS_SUCCESS; //只有返回STATUS_SUCCESS,才会返回数据到3环,否则直接返回错误代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;ntifs.h&gt;</span><br><span class="line"></span><br><span class="line">void UnLoad(DRIVER_OBJECT* obj)</span><br><span class="line">&#123;</span><br><span class="line">	KdPrint((&quot;驱动被卸载\n&quot;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NTSTATUS onCreate(DEVICE_OBJECT* device, IRP* irp);</span><br><span class="line">NTSTATUS onClose(DEVICE_OBJECT* device, IRP* irp);</span><br><span class="line">NTSTATUS onRead(DEVICE_OBJECT* device, IRP* irp);</span><br><span class="line">NTSTATUS onWrite(DEVICE_OBJECT* device, IRP* irp);</span><br><span class="line"></span><br><span class="line">NTSTATUS DriverEntry(DRIVER_OBJECT* object,</span><br><span class="line">	UNICODE_STRING* path)</span><br><span class="line">&#123;</span><br><span class="line">	NTSTATUS status;</span><br><span class="line">	KdPrint((&quot;驱动被加载\n&quot;));</span><br><span class="line">	DbgBreakPoint();</span><br><span class="line">	object-&gt;DriverUnload = UnLoad;</span><br><span class="line"></span><br><span class="line">	//1.创建设备对象</span><br><span class="line">	UNICODE_STRING ntDevName = &#123; 0 &#125;;</span><br><span class="line">	RtlInitUnicodeString(&amp;ntDevName, L&quot;\\Device\\mydev3&quot;);</span><br><span class="line"></span><br><span class="line">	DEVICE_OBJECT* pDevice = NULL;</span><br><span class="line">	status = IoCreateDevice(object,</span><br><span class="line">		0,</span><br><span class="line">		&amp;ntDevName,</span><br><span class="line">		FILE_DEVICE_UNKNOWN,</span><br><span class="line">		0,</span><br><span class="line">		0,</span><br><span class="line">		&amp;pDevice);</span><br><span class="line">	if (status != STATUS_SUCCESS) &#123;</span><br><span class="line">		return status;</span><br><span class="line">	&#125;</span><br><span class="line">	//2.给设备对象绑定符号链接</span><br><span class="line">	UNICODE_STRING dosSymLinkName = &#123; 0 &#125;;</span><br><span class="line">	RtlInitUnicodeString(&amp;dosSymLinkName,</span><br><span class="line">		L&quot;\\DosDevices\\dev3_03&quot;);</span><br><span class="line"></span><br><span class="line">	//给指定名称的设备对象创建一个符号链接</span><br><span class="line">	IoCreateSymbolicLink(&amp;dosSymLinkName,</span><br><span class="line">		&amp;ntDevName);</span><br><span class="line">	//这个链接可在3环使用</span><br><span class="line">	//3.设置派遣函数</span><br><span class="line">	object-&gt;MajorFunction[IRP_MJ_CREATE] = onCreate;</span><br><span class="line">	object-&gt;MajorFunction[IRP_MJ_CLOSE] = onClose;</span><br><span class="line">	object-&gt;MajorFunction[IRP_MJ_READ] = onRead;</span><br><span class="line">	object-&gt;MajorFunction[IRP_MJ_WRITE] = onWrite;</span><br><span class="line">	KdPrint((&quot;驱动加载成功\n&quot;));</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NTSTATUS onCreate(DEVICE_OBJECT* device, IRP* irp)</span><br><span class="line">&#123;</span><br><span class="line">	KdPrint((&quot;设备对象被创建\n&quot;));</span><br><span class="line">	// 将IO请求设置为完成状态</span><br><span class="line">	irp-&gt;IoStatus.Information = 0;</span><br><span class="line">	irp-&gt;IoStatus.Status = STATUS_SUCCESS;</span><br><span class="line">	IoCompleteRequest(irp, 0);</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NTSTATUS onClose(DEVICE_OBJECT* device, IRP* irp)</span><br><span class="line">&#123;</span><br><span class="line">	KdPrint((&quot;设备对象被关闭\n&quot;));</span><br><span class="line">	// 将IO请求设置为完成状态</span><br><span class="line">	irp-&gt;IoStatus.Information = 0;</span><br><span class="line">	irp-&gt;IoStatus.Status = STATUS_SUCCESS;</span><br><span class="line">	IoCompleteRequest(irp, 0);</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NTSTATUS onRead(DEVICE_OBJECT* device, IRP* irp)</span><br><span class="line">&#123;</span><br><span class="line">	KdPrint((&quot;设备对象被读取\n&quot;));</span><br><span class="line">	// 将IO请求设置为完成状态</span><br><span class="line">	irp-&gt;IoStatus.Information = 0;</span><br><span class="line">	irp-&gt;IoStatus.Status = STATUS_SUCCESS;</span><br><span class="line">	IoCompleteRequest(irp, 0);</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line">NTSTATUS onWrite(DEVICE_OBJECT* device, IRP* irp)</span><br><span class="line">&#123;</span><br><span class="line">	KdPrint((&quot;设备对象被写入\n&quot;));</span><br><span class="line">	// 将IO请求设置为完成状态</span><br><span class="line">	irp-&gt;IoStatus.Information = 0;</span><br><span class="line">	irp-&gt;IoStatus.Status = STATUS_SUCCESS;</span><br><span class="line">	IoCompleteRequest(irp, 0);</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>用户层调试<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	// 1. 打开内核的设备对象</span><br><span class="line">	//    通过内核设备对象的符号链接来打开</span><br><span class="line"></span><br><span class="line">	HANDLE hDev = 0;</span><br><span class="line">	hDev = CreateFile(L&quot;\\??\\dev3_03&quot;,</span><br><span class="line">		GENERIC_READ | GENERIC_WRITE,</span><br><span class="line">		FILE_SHARE_READ,</span><br><span class="line">		NULL,</span><br><span class="line">		OPEN_EXISTING,</span><br><span class="line">		FILE_ATTRIBUTE_NORMAL,</span><br><span class="line">		NULL);</span><br><span class="line">	if (hDev == INVALID_HANDLE_VALUE)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;打开失败&quot;);</span><br><span class="line">		system(&quot;pause&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	DWORD read = 0;</span><br><span class="line">	ReadFile(hDev, NULL, 0, &amp;read, 0);</span><br><span class="line">	WriteFile(hDev, NULL, 0, &amp;read, 0);</span><br><span class="line"></span><br><span class="line">	CloseHandle(hDev);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内核编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/06/windows内核编程02/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-驱动程序的基本结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/05/驱动程序的基本结构/">驱动程序的基本结构</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/11/05/驱动程序的基本结构/" class="archive-article-date">
-  	<time datetime="2018-11-05T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>驱动对象:DRIVER_OBJECT<br>重要字段:<br>DeviceObject 指向下一个设备对象,一个驱动对象可以由多个设备对象<br>DriverName 驱动程序名字,一般为\Driver\名称<br>HardwareDatabase 设备的硬件数据库键名<br>DriverStartIo StartIO例程的函数地址,用户串行化操作<br>DriverUnload 卸载驱动的回调函数<br>MajorFunction IRP的派遣函数<br>FastIoDispatch 文件驱动中用到的派遣函数</li>
-<li>设备对象 Device_Object<br>DriverObject 指向驱动程序中的驱动对象<br>NextDevice 指向下一个设备对象,同一个驱动对象的设备<br>AttachedDevice 指向下个设备对象,更高一层驱动的设备对象<br>CurrentIrp StartIO例程,此处指向当前IRP结构</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内核编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/05/驱动程序的基本结构/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-windows内核编程01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -523,6 +329,89 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/11/05/windows内核编程01/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-驱动程序的基本结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/05/驱动程序的基本结构/">驱动程序的基本结构</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/11/05/驱动程序的基本结构/" class="archive-article-date">
+  	<time datetime="2018-11-05T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>驱动对象:DRIVER_OBJECT<br>重要字段:<br>DeviceObject 指向下一个设备对象,一个驱动对象可以由多个设备对象<br>DriverName 驱动程序名字,一般为\Driver\名称<br>HardwareDatabase 设备的硬件数据库键名<br>DriverStartIo StartIO例程的函数地址,用户串行化操作<br>DriverUnload 卸载驱动的回调函数<br>MajorFunction IRP的派遣函数<br>FastIoDispatch 文件驱动中用到的派遣函数</li>
+<li>设备对象 Device_Object<br>DriverObject 指向驱动程序中的驱动对象<br>NextDevice 指向下一个设备对象,同一个驱动对象的设备<br>AttachedDevice 指向下个设备对象,更高一层驱动的设备对象<br>CurrentIrp StartIO例程,此处指向当前IRP结构</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内核编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/05/驱动程序的基本结构/">展开全文 >></a>
         </p>
       
 
@@ -831,6 +720,88 @@
         <!-- 目录内容结束 -->
 
   
+    <article id="post-vs实现加壳" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/26/vs实现加壳/">vs实现加壳</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/10/26/vs实现加壳/" class="archive-article-date">
+  	<time datetime="2018-10-26T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-26</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>环境设置</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.加壳项目设置:</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">加壳</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/26/vs实现加壳/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-加壳_C++Stub实现加壳" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1006,32 +977,16 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-vs实现加壳" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-exploit3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/26/vs实现加壳/">vs实现加壳</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/10/26/vs实现加壳/" class="archive-article-date">
-  	<time datetime="2018-10-26T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-26</time>
-</a>
-        
-      </header>
-
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>环境设置</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.加壳项目设置:</span><br></pre></td></tr></table></figure>
+        <p>CVE<br>EXPLOIT_DB</p>
+<p>代理方向代理洋葱浏览器<br>3389</p>
+<p>精准堆喷射</p>
+<p>XCHG eax,esp<br>retn</p>
+
       
 
       
@@ -1039,22 +994,11 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">加壳</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/26/vs实现加壳/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/10/24/exploit3/">展开全文 >></a>
         </p>
       
 
@@ -1193,19 +1137,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">逆向</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1217,11 +1161,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1233,15 +1177,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1261,11 +1205,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1273,11 +1217,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">

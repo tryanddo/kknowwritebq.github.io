@@ -157,61 +157,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-exploit3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>CVE<br>EXPLOIT_DB</p>
-<p>代理方向代理洋葱浏览器<br>3389</p>
-<p>精准堆喷射</p>
-<p>XCHG eax,esp<br>retn</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/24/exploit3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-Windbg之Mona2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -853,6 +798,98 @@
         <!-- 目录内容结束 -->
 
   
+    <article id="post-脱壳_手工加壳" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/05/脱壳_手工加壳/">加壳</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/10/05/脱壳_手工加壳/" class="archive-article-date">
+  	<time datetime="2018-10-05T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>壳代码基本流程</p>
+</blockquote>
+<p>1.保存寄存器环境<br>2.加载一些必要API<br>3.解密代码和数据<br>4.修复重定位<br>5.填充IAT<br>6.恢复寄存器环境</p>
+<blockquote>
+<p>手工加壳实例</p>
+</blockquote>
+<ul>
+<li>使用loadPE添加新的区段并修改区段信息<br><img src="http://picture.jbyusk.com:8080/dump/dump01.jpg" alt=""><br><img src="http://picture.jbyusk.com:8080/dump/dump02.jpg" alt=""></li>
+<li>使用010editor或者其他工具在新区段物理偏移地址开始位置填充区段大小的内容<br><img src="http://picture.jbyusk.com:8080/dump/dump03.jpg" alt=""></li>
+<li>在新区段写入新eop代码,并修改EOP地址为新的EOP地址<br><img src="http://picture.jbyusk.com:8080/dump/dump04.jpg" alt=""></li>
+<li>使用010加密比如使用xor加密,在汇编中对代码段解密,为了不处理重定向,取消随机地址<br><img src="http://picture.jbyusk.com:8080/dump/dump05.jpg" alt=""></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">脱壳</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/05/脱壳_手工加壳/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-脱壳基础01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -955,21 +992,21 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-脱壳_手工加壳" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-1.关于平均负载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/05/脱壳_手工加壳/">加壳</a>
+      <a class="article-title" href="/2018/09/30/1.关于平均负载/">1.关于平均负载</a>
     </h1>
   
 
 		
         
-        <a href="/2018/10/05/脱壳_手工加壳/" class="archive-article-date">
-  	<time datetime="2018-10-05T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
+        <a href="/2018/09/30/1.关于平均负载/" class="archive-article-date">
+  	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
 </a>
         
       </header>
@@ -977,19 +1014,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>壳代码基本流程</p>
-</blockquote>
-<p>1.保存寄存器环境<br>2.加载一些必要API<br>3.解密代码和数据<br>4.修复重定位<br>5.填充IAT<br>6.恢复寄存器环境</p>
-<blockquote>
-<p>手工加壳实例</p>
-</blockquote>
-<ul>
-<li>使用loadPE添加新的区段并修改区段信息<br><img src="http://picture.jbyusk.com:8080/dump/dump01.jpg" alt=""><br><img src="http://picture.jbyusk.com:8080/dump/dump02.jpg" alt=""></li>
-<li>使用010editor或者其他工具在新区段物理偏移地址开始位置填充区段大小的内容<br><img src="http://picture.jbyusk.com:8080/dump/dump03.jpg" alt=""></li>
-<li>在新区段写入新eop代码,并修改EOP地址为新的EOP地址<br><img src="http://picture.jbyusk.com:8080/dump/dump04.jpg" alt=""></li>
-<li>使用010加密比如使用xor加密,在汇编中对代码段解密,为了不处理重定向,取消随机地址<br><img src="http://picture.jbyusk.com:8080/dump/dump05.jpg" alt=""></li>
+        <ul>
+<li><p>uptime命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@kaliroot:~# uptime</span><br><span class="line"> 当前时间   运行时间       			  后面3个参数分别为1分钟,5分钟,15分钟的平均负载             </span><br><span class="line"> 20:49:51  up 1 day,  7:05,  1 user,  load average: 0.20, 0.76, 2.36</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>平均负载理想状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">平均负载:单位时间内,系统处于可运行状态(R)和不可中断状态(D)的平均进程数,也就是平均活跃进程数。</span><br><span class="line">不可中断状态是系统对进程和硬件的保护,防止读写过程中中断,导致进程和硬件数据不一致。</span><br><span class="line">当有n个逻辑cpu时,平均负载为n是为完全占用:例如2个时候,为2</span><br><span class="line">当平均负载&gt;n时即已经负载。</span><br><span class="line">grep &apos;model name&apos; /proc/cpuinfo | wc -l 获取逻辑cpu个数</span><br><span class="line"></span><br><span class="line">通过监控系统的平均负载,负载出现翻倍等异常需要去分析和调查。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>平均负载和CPU使用率</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">平均负载包括等待CPU和等待I/O的进程。</span><br><span class="line">例如当I/O负载很高的时候,平均负载很高,但是CPU使用率不高</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
+<blockquote>
+<p>案例分析<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">stress linux系统压力测试工具</span><br><span class="line">sysstat linux常用性能工具</span><br><span class="line">apt-get install stress sysstat</span><br><span class="line"></span><br><span class="line">1.CPU密集型进程</span><br><span class="line">开启4个窗口</span><br><span class="line">第一个窗口 模拟CPU使用率100%场景</span><br><span class="line">stress --cpu 1 --timeout 600</span><br><span class="line">第二个窗口 观察平均负载慢慢升到1</span><br><span class="line">watch -d update</span><br><span class="line">第三个窗口 观察CPU使用率</span><br><span class="line">mpstat --p ALL 5  //-P监控所有 5秒</span><br><span class="line">第四个窗口 观察那个进程占用了cpu使用率</span><br><span class="line">pidstat -u 5 1 //5秒输出一组数据</span><br><span class="line"></span><br><span class="line">2.I/O密集型进程</span><br><span class="line">第一个窗口 模拟I/O压力</span><br><span class="line">stress -i 1 --timeout 600</span><br><span class="line">第二个窗口 观察平均负载慢慢升到1</span><br><span class="line">watch -d update</span><br><span class="line">第三个窗口 观察IOiowait很高</span><br><span class="line">mpstat --p ALL 5 1 //-P监控所有 5秒</span><br><span class="line">第四个窗口 观察那个进程导致IOwait很高</span><br><span class="line">pidstat -u 5 1 //5秒输出一组数据</span><br><span class="line"></span><br><span class="line">3.大量进程场景</span><br><span class="line">第一个窗口 模拟多进程场景</span><br><span class="line">stress -c 8 --timeout 600</span><br><span class="line">第二个窗口 观察平均负载慢慢升到1</span><br><span class="line">watch -d update</span><br><span class="line">第三个窗口 观察进程 wait很高</span><br><span class="line">pidstat -u 5 1 //5秒输出一组数据</span><br></pre></td></tr></table></figure></p>
+</blockquote>
 
       
 
@@ -1003,7 +1041,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">脱壳</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">linux优化</a>
         		</li>
       		
 		</ul>
@@ -1013,7 +1051,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/05/脱壳_手工加壳/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/09/30/1.关于平均负载/">展开全文 >></a>
         </p>
       
 
@@ -1047,20 +1085,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-ATT-Unitx下c汇编" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-3.CPU使用率到100%" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/30/ATT-Unitx下c汇编/">ATT-Unitx下c汇编</a>
+      <a class="article-title" href="/2018/09/30/3.CPU使用率到100%/">3.CPU使用率到100%</a>
     </h1>
   
 
 		
         
-        <a href="/2018/09/30/ATT-Unitx下c汇编/" class="archive-article-date">
+        <a href="/2018/09/30/3.CPU使用率到100%/" class="archive-article-date">
   	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
 </a>
         
@@ -1069,27 +1107,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Unix下的GCC产生的汇编是ATT</p>
-<blockquote>
-<p>程序编程</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gcc -Og -o p p1.c p2.c </span><br><span class="line">-Og高速编译器生成符合原始C语言机器代码的优化等级 如果为了程序性能考虑执行选线-O1/-O2 </span><br><span class="line">-o 生成可执行文件</span><br><span class="line">编译器: 将产生的2个源文件的汇编代码,后缀为.s</span><br><span class="line">汇编器: 将汇编代码转成二进制目标文件,后缀为.o</span><br><span class="line">链接器: 将目标二进制目标文件和库函数代码合并,并产生最终的可执行文件。</span><br><span class="line">-S 生成汇编代码,后缀为.s</span><br><span class="line">-c 生成二进制目标文件,后缀为.o</span><br><span class="line"></span><br><span class="line">gcc -Og -S -masm=intel p1.c //生成inter汇编格式</span><br><span class="line">-masm=intel</span><br><span class="line">objdumpp -d p1.o</span><br><span class="line">将二进制文件反汇编成汇编代码</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>访问信息</p>
-</blockquote>
-<ul>
-<li><p>寄存器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">rax eax ax al/ah</span><br><span class="line">rbx ebx bx bl/bh</span><br><span class="line">rcx ecx cx dl/dh</span><br><span class="line">rdx edx dx dl/dh</span><br><span class="line">rsi esi si </span><br><span class="line">rdi edi di</span><br><span class="line">rbp ebp bp</span><br><span class="line">rsp esp sp</span><br><span class="line">r8</span><br><span class="line">r9</span><br><span class="line">r10</span><br><span class="line">r11</span><br><span class="line">r12</span><br><span class="line">r13</span><br><span class="line">r14</span><br><span class="line">r15</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>数据传送指令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">movb</span><br><span class="line">movw </span><br><span class="line">movl  //特殊 会讲高4字节设置为0</span><br><span class="line">movq  //只能以表示为32位补码数字的立即数作为源操作数,然后符号扩展到64的值放到目的位置</span><br><span class="line">movabsq //可以任意64位立即数值作为源操作数,并只能以寄存器作为目的</span><br><span class="line"></span><br><span class="line">movzbw //将0扩展的字节传送到字</span><br><span class="line">movzbl //将0扩展的字节传送到双字</span><br><span class="line">movzwl //将0扩展的字传送到双字</span><br><span class="line">movzbq //将0扩展的字节传送到四字</span><br><span class="line">movzwq //将0扩展的字传送到四字</span><br><span class="line">movl相当于将0扩展的双字传送到四字</span><br><span class="line"></span><br><span class="line">movsbw</span><br><span class="line">movsbl</span><br><span class="line">movswl</span><br><span class="line">movsbq</span><br><span class="line">movswq</span><br><span class="line">movslq</span><br><span class="line">cltq  将eax符号扩展到rax</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>浮点指令</p>
-</blockquote>
-<p>+传送浮点指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vmovss 传送单精度数</span><br><span class="line">vmovsd 传送双精度数</span><br><span class="line">vmovaps 传送对齐的封装好的单精度数</span><br><span class="line">vmovapd 传送对齐的封装好的双精度数</span><br></pre></td></tr></table></figure></p>
-
+        
       
 
       
@@ -1102,7 +1120,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">linux优化</a>
         		</li>
       		
 		</ul>
@@ -1112,7 +1130,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/30/ATT-Unitx下c汇编/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/09/30/3.CPU使用率到100%/">展开全文 >></a>
         </p>
       
 
@@ -1251,19 +1269,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">逆向</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1275,11 +1293,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1291,15 +1309,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1319,11 +1337,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1331,11 +1349,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">

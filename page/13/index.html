@@ -157,20 +157,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-pythonsysargparse模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-python pexpect" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/pythonsysargparse模块/">python sys与argparse模块</a>
+      <a class="article-title" href="/2018/03/20/python pexpect/">python pexpect</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/20/pythonsysargparse模块/" class="archive-article-date">
+        <a href="/2018/03/20/python pexpect/" class="archive-article-date">
   	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
 </a>
         
@@ -179,20 +179,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>命令行参数用法</p>
+        <p>安装:pip install pexpect<br>   如果配置pip详见&lt;kail2.0 python环境设置&gt;博文</p>
+<blockquote>
+<p>pexpect用法</p>
 </blockquote>
-<ul>
-<li>sys模块<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line">if len(sys.argv) == 2:</span><br><span class="line"> filename = sys.argv[1]</span><br><span class="line">if not os.path.isfile(filename)</span><br><span class="line"> print &apos;[-] &apos;+filename+&apos;does not exist&apos;.</span><br><span class="line">	 exit(0)</span><br><span class="line">if not os.access(filename,os.R_OK):</span><br><span class="line"> print &apos;[-] &apos;+filename+&apos; access denied.&apos;</span><br><span class="line"> exit(0)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>argparse模块</p>
-<h3 id="addargument函数详解"><a href="#addargument函数详解" class="headerlink" title="addargument函数详解"></a>addargument函数详解</h3><p>更详细可参考:<a href="https://blog.csdn.net/yugongpeng_blog/article/details/46693471" target="_blank" rel="noopener">https://blog.csdn.net/yugongpeng_blog/article/details/46693471</a></p>
-<p>parser.add_argument(‘-a’, action=”store_true”, dest=’test’,type=str,default=False)<br>第一个参数为执行py文件时后面加的选项，例如: python test.py -a ‘test’<br>dest参数 属性的名称，用法args.test<br>action store(保存参数值),storeconst(加上const参数)，append(列表)，append_const(把const参数放在列表)<br>type 类型，str,int等<br>help 帮助信息 python test.py -h 获取帮助信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(dest=&quot;zname&quot;,type=str)</span><br><span class="line">parser.add_argument(dest=&quot;dname&quot;,type=str)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">zname = args.zname</span><br><span class="line">dname = args.dname</span><br></pre></td></tr></table></figure></li>
-</ul>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pexpect</span><br><span class="line">connStr = &apos;ssh &apos; + user + &apos;@&apos; + host</span><br><span class="line">child = pexpect.spawn(connStr)</span><br><span class="line">ret = child.expect([xxx1,xxx2])</span><br><span class="line">if ret == 0: #如果提示中出现xxx1字符串，ret即为0</span><br><span class="line">  xxx</span><br><span class="line">if ret == 1: #如果提示中出现xxx2字符串，ret即为1</span><br><span class="line">  xxx</span><br><span class="line">child.sendline(cmd) #根据提示发送命令</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>pxssh</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from pexpect import pxssh</span><br><span class="line"></span><br><span class="line">ssh1 = pxssh.pxssh()</span><br><span class="line">ssh1.login(host,user,password)</span><br><span class="line">ssh1.sendline(cmd)</span><br><span class="line">ssh1.prompt()</span><br><span class="line">print(ssh1.before)</span><br></pre></td></tr></table></figure>
       
 
       
@@ -215,7 +210,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/pythonsysargparse模块/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/20/python pexpect/">展开全文 >></a>
         </p>
       
 
@@ -249,20 +244,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-搭建图片服务器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-python_mysql" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/搭建图片服务器/">ubuntu14 搭建图片服务器</a>
+      <a class="article-title" href="/2018/03/20/python_mysql/">python连接mysql</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/20/搭建图片服务器/" class="archive-article-date">
+        <a href="/2018/03/20/python_mysql/" class="archive-article-date">
   	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
 </a>
         
@@ -271,9 +266,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">wget -qO - https://openresty.org/package/pubkey.gpg | sudo apt-key add -</span><br><span class="line">sudo apt-get -y install software-properties-common 1&gt;1.log</span><br><span class="line">sudo add-apt-repository -y &quot;deb http://openresty.org/package/ubuntu $(lsb_release -sc) main&quot; 1&gt;1.log</span><br><span class="line">sudo apt-get update 1&gt;1.log</span><br><span class="line"></span><br><span class="line">sudo apt-get -y install openresty 1&gt;1.log</span><br><span class="line"></span><br><span class="line">cd /usr/local/openresty/nginx/conf</span><br><span class="line">mv /usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/nginxbake.conf</span><br><span class="line"></span><br><span class="line">touch /usr/local/openresty/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">echo &quot;worker_processes  1;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">	server &#123;</span><br><span class="line">        listen       端口;</span><br><span class="line">        server_name  域名;</span><br><span class="line">        #charset koi8-r;</span><br><span class="line">        #access_log  logs/host.access.log  main;</span><br><span class="line">        location / &#123;</span><br><span class="line">            root   图片路径;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;&quot; &gt;&gt; /usr/local/openresty/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">ln -s /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx</span><br><span class="line">nginx -c /usr/local/openresty/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">mkdir 创建图片路径</span><br></pre></td></tr></table></figure></p>
+        <h1 id="安装pymysql-模块"><a href="#安装pymysql-模块" class="headerlink" title="安装pymysql 模块"></a>安装pymysql 模块</h1><p>pip install pymysql</p>
+<p>#code<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import pymysql</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    #建立连接</span><br><span class="line">    con = pymysql.connect(host=&apos;ip&apos;,</span><br><span class="line">                          port=端口,</span><br><span class="line">                          user=用户,</span><br><span class="line">                          password=pass,</span><br><span class="line">                          db=数据库名称)</span><br><span class="line">    </span><br><span class="line">    #获取游标</span><br><span class="line">    cursor = con.cursor()</span><br><span class="line">    #执行sql语句</span><br><span class="line">    cursor.execute(&apos;select * from users;&apos;)</span><br><span class="line">    #读取结果集</span><br><span class="line">    result = cursor.fetchall()</span><br><span class="line">    #遍历结果集</span><br><span class="line">    for row in result:</span><br><span class="line">        print(row)</span><br><span class="line">        #for key,value in row.item(): #row为字典</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>使用python连接mysql报错</p>
 </blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#远程连接 1045 报错</span><br><span class="line">grant usage on *.* to 用户@ip identified by &apos;pass&apos;</span><br><span class="line">FLUSH privileges;</span><br><span class="line"></span><br><span class="line">#远程连接 1044报错</span><br><span class="line">grant ALL PRIVILEGES on *.* to 用户@ip identified by &apos;pass&apos; with grant option;</span><br><span class="line">FLUSH privileges;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -287,7 +285,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
@@ -297,7 +295,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/搭建图片服务器/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/20/python_mysql/">展开全文 >></a>
         </p>
       
 
@@ -417,20 +415,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-python_mysql" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-python threading模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/python_mysql/">python连接mysql</a>
+      <a class="article-title" href="/2018/03/20/python threading模块/">python threading模块</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/20/python_mysql/" class="archive-article-date">
+        <a href="/2018/03/20/python threading模块/" class="archive-article-date">
   	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
 </a>
         
@@ -439,13 +437,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="安装pymysql-模块"><a href="#安装pymysql-模块" class="headerlink" title="安装pymysql 模块"></a>安装pymysql 模块</h1><p>pip install pymysql</p>
-<p>#code<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">import pymysql</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    #建立连接</span><br><span class="line">    con = pymysql.connect(host=&apos;ip&apos;,</span><br><span class="line">                          port=端口,</span><br><span class="line">                          user=用户,</span><br><span class="line">                          password=pass,</span><br><span class="line">                          db=数据库名称)</span><br><span class="line">    </span><br><span class="line">    #获取游标</span><br><span class="line">    cursor = con.cursor()</span><br><span class="line">    #执行sql语句</span><br><span class="line">    cursor.execute(&apos;select * from users;&apos;)</span><br><span class="line">    #读取结果集</span><br><span class="line">    result = cursor.fetchall()</span><br><span class="line">    #遍历结果集</span><br><span class="line">    for row in result:</span><br><span class="line">        print(row)</span><br><span class="line">        #for key,value in row.item(): #row为字典</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>使用python连接mysql报错</p>
+        <blockquote>
+<p>线程简单用法</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#远程连接 1045 报错</span><br><span class="line">grant usage on *.* to 用户@ip identified by &apos;pass&apos;</span><br><span class="line">FLUSH privileges;</span><br><span class="line"></span><br><span class="line">#远程连接 1044报错</span><br><span class="line">grant ALL PRIVILEGES on *.* to 用户@ip identified by &apos;pass&apos; with grant option;</span><br><span class="line">FLUSH privileges;</span><br></pre></td></tr></table></figure>
-
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> import threading</span><br><span class="line">screenLock = threading.Semaphore(value=1) #使用锁阻止其他进程进入</span><br><span class="line">def test(n1,n2)</span><br><span class="line">    screenLock.acquire() </span><br><span class="line">    print(n1+n2)</span><br><span class="line">    screenLock.release()</span><br><span class="line"> def main()</span><br><span class="line">    t=threading.Thread(target=test,args=(n1,n2))</span><br><span class="line">    t.start()</span><br></pre></td></tr></table></figure>
       
 
       
@@ -468,94 +463,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/python_mysql/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-python pexpect" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/python pexpect/">python pexpect</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/20/python pexpect/" class="archive-article-date">
-  	<time datetime="2018-03-20T08:44:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>安装:pip install pexpect<br>   如果配置pip详见&lt;kail2.0 python环境设置&gt;博文</p>
-<blockquote>
-<p>pexpect用法</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pexpect</span><br><span class="line">connStr = &apos;ssh &apos; + user + &apos;@&apos; + host</span><br><span class="line">child = pexpect.spawn(connStr)</span><br><span class="line">ret = child.expect([xxx1,xxx2])</span><br><span class="line">if ret == 0: #如果提示中出现xxx1字符串，ret即为0</span><br><span class="line">  xxx</span><br><span class="line">if ret == 1: #如果提示中出现xxx2字符串，ret即为1</span><br><span class="line">  xxx</span><br><span class="line">child.sendline(cmd) #根据提示发送命令</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>pxssh</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from pexpect import pxssh</span><br><span class="line"></span><br><span class="line">ssh1 = pxssh.pxssh()</span><br><span class="line">ssh1.login(host,user,password)</span><br><span class="line">ssh1.sendline(cmd)</span><br><span class="line">ssh1.prompt()</span><br><span class="line">print(ssh1.before)</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/20/python pexpect/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/20/python threading模块/">展开全文 >></a>
         </p>
       
 
@@ -756,6 +664,88 @@
         <!-- 目录内容结束 -->
 
   
+    <article id="password-WeekPlan" class="article article-type-password  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/17/WeekPlan/">周计划</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2017/12/17/WeekPlan/" class="archive-article-date">
+  	<time datetime="2017-12-17T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-17</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>从今天开始我要开始尝试一些计划。<br></p>
+        
+          <a class="article-more-a" href="/2017/12/17/WeekPlan/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/17/WeekPlan/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span>
@@ -861,19 +851,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">逆向</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -885,11 +875,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -901,15 +891,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -929,11 +919,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
+                <a href="javascript:void(0)" class="js-tag color3">加壳</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -941,11 +931,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+                <a href="javascript:void(0)" class="js-tag color3">笔记</a>
               </li>
              
               <li class="article-tag-list-item">
