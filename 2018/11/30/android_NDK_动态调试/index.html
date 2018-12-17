@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="想与做">
 <meta property="og:description" content="Android so文件加载时执行函数分析   so文件加载执行流程1234567891011121314151617181920212223242526272829303132333435363738394041① Init段的 init_proc 函数(linker)② Init_arrayt段的构造数组函段(linker)③ Jni_Onload(libdvm.so)通过readelf查看">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-03T01:57:32.412Z">
+<meta property="og:updated_time" content="2018-12-05T05:57:37.504Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android_NDK_动态调试">
 <meta name="twitter:description" content="Android so文件加载时执行函数分析   so文件加载执行流程1234567891011121314151617181920212223242526272829303132333435363738394041① Init段的 init_proc 函数(linker)② Init_arrayt段的构造数组函段(linker)③ Jni_Onload(libdvm.so)通过readelf查看">
@@ -197,7 +197,7 @@
 <blockquote>
 <p>Android so文件动态调试</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">工具:IDA Pro,Android monitor,adb</span><br><span class="line">1.上传android_server到android机器中</span><br><span class="line">  adb push android_server /data/local/tmp/ands</span><br><span class="line">2.修改文件权限,测试运行</span><br><span class="line">  cd /data/local/temp</span><br><span class="line">  chmod 777 ands</span><br><span class="line">  ./ands</span><br><span class="line">3.带参数,修改端口运行</span><br><span class="line">  ./ands -p23456</span><br><span class="line"></span><br><span class="line">4.打开monitor,以调试方式启动apk</span><br><span class="line">  等待程序启动后,选中调试进程</span><br><span class="line">5.以调试方式启动apk</span><br><span class="line">  adb shell am start -D -n 包名/入口类名</span><br><span class="line">6. 设置端口转发</span><br><span class="line">  adb forward tcp:23456 tcp:23456</span><br><span class="line"></span><br><span class="line">7.启动IDA,附加调试apk</span><br><span class="line">  选择hostname:localhost;port:23456</span><br><span class="line">  选择指定进程</span><br><span class="line">8.启动jdb,附加apk,启动apk</span><br><span class="line">  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8700</span><br><span class="line"></span><br><span class="line">9.根据readelf -d获得的函数地址和动态调试的模块基址下断点</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">工具:IDA Pro,Android monitor,adb</span><br><span class="line">1.上传android_server到android机器中</span><br><span class="line">  adb push android_server /data/local/tmp/ands</span><br><span class="line">2.修改文件权限,测试运行</span><br><span class="line">  cd /data/local/temp</span><br><span class="line">  chmod 777 ands</span><br><span class="line">  ./ands</span><br><span class="line">3.带参数,修改端口运行</span><br><span class="line">  ./ands -p23456</span><br><span class="line"></span><br><span class="line">4.打开monitor,以调试方式启动apk</span><br><span class="line">  等待程序启动后,选中调试进程</span><br><span class="line">5.以调试方式启动apk</span><br><span class="line">  adb shell am start -D -n 包名/入口类名</span><br><span class="line">                           com.example.crack0/com.example.crack0.MainActivity</span><br><span class="line">6. 设置端口转发</span><br><span class="line">  adb forward tcp:23456 tcp:23456</span><br><span class="line"></span><br><span class="line">7.启动IDA,附加调试apk</span><br><span class="line">  选择hostname:localhost;port:23456</span><br><span class="line">  选择指定进程</span><br><span class="line">8.启动jdb,附加apk,启动apk</span><br><span class="line">  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8700</span><br><span class="line"></span><br><span class="line">9.根据readelf -d获得的函数地址和动态调试的模块基址下断点</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>直接向android设备发送输入文本</p>
 </blockquote>
@@ -284,18 +284,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/11/30/android_NDK/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/12/01/android_learn_guide/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          android_NDK
+          android 学习指南
         
       </div>
     </a>
   
   
-    <a href="/2018/11/20/网络协议学习第一天/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">网络协议学习第一天</div>
+    <a href="/2018/11/30/android_NDK/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">android_NDK</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -433,11 +433,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -453,19 +473,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -477,10 +493,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
@@ -489,11 +501,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -502,10 +518,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -537,23 +549,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深入理解计算机系统</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>

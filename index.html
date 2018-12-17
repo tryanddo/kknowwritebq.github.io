@@ -157,6 +157,292 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="password-WeekPlan" class="article article-type-password  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/17/WeekPlan/">周计划</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/12/17/WeekPlan/" class="archive-article-date">
+  	<time datetime="2018-12-17T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-17</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先我怀疑如果人只要想要满足自己,自然能找到无数的理由,甚至于不需要理由就能让自己去满足自己的欲望。<br>所以从今天开始我要开始尝试一些计划。<br>如果没有达到就惩罚自己。<br>2018/12/17-23<br>睡眠:<br>上课期间7点10分起<br>非上课期间8点起<br>晚上 11.30睡觉<br>中午可以睡一个小时</p>
+<p>吃饭:<br>周1,周3,周5午饭饭量减半</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/17/WeekPlan/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-网络协议学习第二天-网络层" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/05/网络协议学习第二天-网络层/">网络协议学习第二天-传输层</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/12/05/网络协议学习第二天-网络层/" class="archive-article-date">
+  	<time datetime="2018-12-05T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-05</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.顺序问题<br>2.丢包问题<br>3.连接维护<br>4.流量控制<br>5.拥塞控制</p>
+<blockquote>
+<p>连接维护</p>
+</blockquote>
+<ul>
+<li><p>TCP3次握手</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DDOS攻击</span><br><span class="line"></span><br><span class="line">1.客户端SYN</span><br><span class="line">2.服务端SYN,ACK,SEQ</span><br><span class="line">3.客户端ACK,SEQ</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TCP4次挥手</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">和平分手:</span><br><span class="line">1.客户端发送Fin,seq=q,进入FIN_WIAT_1状态</span><br><span class="line">2.服务端发送ACK,seq=p+1,进入CLOSE_WAIT</span><br><span class="line">  客户端收到后进入FIN_WIAT_2状态</span><br><span class="line">3.服务器发送ACK,seq=q,ack=p+1,进入LAST_ACK状态</span><br><span class="line">4.客户端收到后,发送ACK,seq=q+1,进入TIME_WAIT(等待-2MSL)</span><br><span class="line">  服务端收到后CLOSE</span><br><span class="line"></span><br><span class="line">非和平分手:</span><br><span class="line">2完成后,如果服务端直接跑了,TCP协议中没有处理,linux可以调整tcp_fin_timeout</span><br><span class="line">假如3完成后,客户端发完还需要等待2MSL,因为最后第四步假如服务端没收到,会重新发3.还有就是防止端口被新的应用使用时发生混乱,所以等B所有的包都gameover的时候.2MSL(Maximum Segment Lifetime),报文最大生存时间,在网络上存在的最长时间。</span><br><span class="line">超过2MSL收到服务器的包,会发送RST给服务端</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>流量控制</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">窗口大小 Advertisedwindow</span><br><span class="line">对于发送端:</span><br><span class="line">Advertisedwindow=发送已确认+未发送可发送</span><br><span class="line">对于接收端:</span><br><span class="line">Advertisedwindow =最大缓冲量-已接收并确认=未接收可接收</span><br><span class="line">rwnd 滑动窗口</span><br><span class="line">流量控制 :当缓存区一半为空才更新窗口</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>确认和重发机制</p>
+</blockquote>
+<ul>
+<li>超时重试<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">发送包后没有接到ACK,超过一定时间就重新尝试</span><br><span class="line">不宜过短,超过RTT(往返时间),不宜过长,影响访问</span><br><span class="line"></span><br><span class="line">自适应重传算法,即采样RTT,根据加权平均,计算出值</span><br><span class="line">超时间隔加倍,遇到一次超时重传,下一次的超时重传的间隔加倍。</span><br><span class="line">2次超时即网络环境差,不宜频繁发送。</span><br><span class="line"></span><br><span class="line">1.快速超时重传:发6的ack,要求7</span><br><span class="line">2.SACK 缓存地图对方,例如发6,8,9就知道7没传</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>阻塞机制</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">防止包丢失和超时重传</span><br><span class="line">包丢失,中间设备加缓存,排在队列,防止丢失</span><br><span class="line">排在队列里,时延增加,可以发送超时重传</span><br><span class="line"></span><br><span class="line">阻塞窗口 cwnd</span><br><span class="line">TCP BBR阻塞算法:快速填满管道,但是不填满中间设备的缓存,达到高宽带和低时延的平衡</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>socket编程</p>
+</blockquote>
+<ul>
+<li>TCP_socket<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">在内核中,socket维护了2个队列。</span><br><span class="line">一个队列是已经建立了连接的队列,这时候连接3次握手完毕,处于established状态;一个队列是还没有完全建立连接的队列,这个时候三次握手还没完成,处于syn_rcvd的状态。</span><br><span class="line">监听的socket和真正用来传数据的socket是2个,一个是监听socket,一个是已连接socket。</span><br><span class="line"></span><br><span class="line">tcp的socket是一个文件流,在linux中以文件形式存在.所以存在文件描述符,写入和读出也是通过文件描述符。</span><br><span class="line">每一个进程都有一个数据结构task_struct,里面指向一个文件描述符数组,这个文件描述符数组列出了这个进程打开的所有文件的文件描述符。文件描述符是一个整数,是文件描述符数组的下标。</span><br><span class="line">文件描述符数组的内容是一个指针,指向内核中所有打开的文件的列表。列表指向一个inode。对于socket,对应的inode中指向了socket在内核中的socket结构。</span><br><span class="line">这个socket结构中主要有2个队列,一个是发送队列,一个是接受队列。这2个队列里保存了sk_buff.这个缓存中能看到完整包的机构。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">linux下epoll机制解决了</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络协议</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/05/网络协议学习第二天-网络层/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-网络协议学习第三天-应用层" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/05/网络协议学习第三天-应用层/">网络协议学习第三天-应用层</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/12/05/网络协议学习第三天-应用层/" class="archive-article-date">
+  	<time datetime="2018-12-05T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-05</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>http协议和https协议</p>
+</blockquote>
+<p>http使用443端口,https使用80端口</p>
+<ul>
+<li><p>请求头 请求行 请求实体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">请求行:方法 URL 版本号</span><br><span class="line">请求头:host 请求资源的主机和端口</span><br><span class="line">	  User-Agent 操作系统,浏览器以及其他属性</span><br><span class="line">	  Refer 当前访问的URL的上一个URL	</span><br><span class="line">	  Cookie 请求者身份</span><br><span class="line">	  Range 请求实体部分内容,多线程下载时一定使用</span><br><span class="line">	  x-forware-for 请求端IP</span><br><span class="line">	  Accept 客户端接受那些MIME类型的信息</span><br><span class="line">响应头:server 服务器使用的web服务器名称</span><br><span class="line">	  Set-Cookie 向客户端设置cookie</span><br><span class="line">      Last-Modified 资源最后的修改时间</span><br><span class="line">	  Location 重定位 配合302状态码使用</span><br><span class="line">	  Refresh 服务器通过Refresh头告诉浏览器定时刷新浏览器</span><br><span class="line">普通头: 只用于传输消息</span><br><span class="line">实体头:Content-Type  用于像接收方指示实体的介质类型 JSON之类</span><br><span class="line">      Content-Encoding 附加内容的编码</span><br><span class="line">	  Content-Length 实体正文的长度</span><br><span class="line">      Last-Modified 用于指示资源最后的修改日期和时间</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>https</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">使用SSL加密</span><br><span class="line">1.客户端发送请求到服务器端</span><br><span class="line">2.服务器端返回证书和公开密钥，公开密钥作为证书的一部分而存在</span><br><span class="line">3.客户端验证证书和公开密钥的有效性，如果有效，则生成共享密钥并使用公开密钥加密发送到服务器端</span><br><span class="line">4.服务器端使用私有密钥解密数据，并使用收到的共享密钥加密数据，发送到客户端</span><br><span class="line">5.客户端使用共享密钥解密数据</span><br><span class="line">6.SSL加密建立</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>http应用<br>SEO之搜索引擎劫持:<br>Refer:通过比对Refer的内容,如果Refer的内容来自搜索引擎就跳转到自己的页面,即为域名劫持<br>User-agent 劫持搜索引擎的蜘蛛</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络协议</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/05/网络协议学习第三天-应用层/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-android_learn_guide" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -216,6 +502,99 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/12/01/android_learn_guide/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-android_NDK_动态调试" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/30/android_NDK_动态调试/">android_NDK_动态调试</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/11/30/android_NDK_动态调试/" class="archive-article-date">
+  	<time datetime="2018-11-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-30</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Android so文件加载时执行函数分析</p>
+</blockquote>
+<ul>
+<li>so文件加载执行流程<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">① Init段的 init_proc 函数(linker)</span><br><span class="line">② Init_arrayt段的构造数组函段(linker)</span><br><span class="line">③ Jni_Onload(libdvm.so)</span><br><span class="line">通过readelf查看init段和init_array段的地址</span><br><span class="line"></span><br><span class="line">PS E:\9_code\15pb\android_or_java\NDK\crackme-ndk&gt; readelf -d ./libnative-lib.so</span><br><span class="line"></span><br><span class="line">Dynamic section at offset 0x2bc0c contains 32 entries:</span><br><span class="line">  Tag        Type                         Name/Value</span><br><span class="line"> 0x00000003 (PLTGOT)                     0x2cda4</span><br><span class="line"> 0x00000002 (PLTRELSZ)                   1072 (bytes)</span><br><span class="line"> 0x00000017 (JMPREL)                     0x4060</span><br><span class="line"> 0x00000014 (PLTREL)                     REL</span><br><span class="line"> 0x00000011 (REL)                        0x3040</span><br><span class="line"> 0x00000012 (RELSZ)                      4128 (bytes)</span><br><span class="line"> 0x00000013 (RELENT)                     8 (bytes)</span><br><span class="line"> 0x6ffffffa (RELCOUNT)                   380</span><br><span class="line"> 0x00000006 (SYMTAB)                     0x158</span><br><span class="line"> 0x0000000b (SYMENT)                     16 (bytes)</span><br><span class="line"> 0x00000005 (STRTAB)                     0xf18</span><br><span class="line"> 0x0000000a (STRSZ)                      6277 (bytes)</span><br><span class="line"> 0x00000004 (HASH)                       0x27a0</span><br><span class="line"> 0x00000001 (NEEDED)                     Shared library: [liblog.so]</span><br><span class="line"> 0x00000001 (NEEDED)                     Shared library: [libm.so]</span><br><span class="line"> 0x00000001 (NEEDED)                     Shared library: [libstdc++.so]</span><br><span class="line"> 0x00000001 (NEEDED)                     Shared library: [libdl.so]</span><br><span class="line"> 0x00000001 (NEEDED)                     Shared library: [libc.so]</span><br><span class="line"> 0x0000000e (SONAME)                     Library soname: [libnative-lib.so]</span><br><span class="line"> 0x0000000c (INIT)                       0x5750</span><br><span class="line"> 0x0000001a (FINI_ARRAY)                 0x2c894</span><br><span class="line"> 0x0000001c (FINI_ARRAYSZ)               8 (bytes)</span><br><span class="line"> 0x00000019 (INIT_ARRAY)                 0x2c89c</span><br><span class="line"> 0x0000001b (INIT_ARRAYSZ)               28 (bytes)</span><br><span class="line"> 0x0000001e (FLAGS)                      BIND_NOW</span><br><span class="line"> 0x6ffffffb (FLAGS_1)                    Flags: NOW</span><br><span class="line"> 0x6ffffff0 (VERSYM)                     0x2e2c</span><br><span class="line"> 0x6ffffffc (VERDEF)                     0x2fe4</span><br><span class="line"> 0x6ffffffd (VERDEFNUM)                  1</span><br><span class="line"> 0x6ffffffe (VERNEED)                    0x3000</span><br><span class="line"> 0x6fffffff (VERNEEDNUM)                 2</span><br><span class="line"> 0x00000000 (NULL)                       0x0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>Android so文件动态调试</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">工具:IDA Pro,Android monitor,adb</span><br><span class="line">1.上传android_server到android机器中</span><br><span class="line">  adb push android_server /data/local/tmp/ands</span><br><span class="line">2.修改文件权限,测试运行</span><br><span class="line">  cd /data/local/temp</span><br><span class="line">  chmod 777 ands</span><br><span class="line">  ./ands</span><br><span class="line">3.带参数,修改端口运行</span><br><span class="line">  ./ands -p23456</span><br><span class="line"></span><br><span class="line">4.打开monitor,以调试方式启动apk</span><br><span class="line">  等待程序启动后,选中调试进程</span><br><span class="line">5.以调试方式启动apk</span><br><span class="line">  adb shell am start -D -n 包名/入口类名</span><br><span class="line">                           com.example.crack0/com.example.crack0.MainActivity</span><br><span class="line">6. 设置端口转发</span><br><span class="line">  adb forward tcp:23456 tcp:23456</span><br><span class="line"></span><br><span class="line">7.启动IDA,附加调试apk</span><br><span class="line">  选择hostname:localhost;port:23456</span><br><span class="line">  选择指定进程</span><br><span class="line">8.启动jdb,附加apk,启动apk</span><br><span class="line">  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8700</span><br><span class="line"></span><br><span class="line">9.根据readelf -d获得的函数地址和动态调试的模块基址下断点</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>直接向android设备发送输入文本</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell input text &quot;testtext&quot;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/30/android_NDK_动态调试/">展开全文 >></a>
         </p>
       
 
@@ -348,99 +727,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-android_NDK_动态调试" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/30/android_NDK_动态调试/">android_NDK_动态调试</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/11/30/android_NDK_动态调试/" class="archive-article-date">
-  	<time datetime="2018-11-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-30</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Android so文件加载时执行函数分析</p>
-</blockquote>
-<ul>
-<li>so文件加载执行流程<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">① Init段的 init_proc 函数(linker)</span><br><span class="line">② Init_arrayt段的构造数组函段(linker)</span><br><span class="line">③ Jni_Onload(libdvm.so)</span><br><span class="line">通过readelf查看init段和init_array段的地址</span><br><span class="line"></span><br><span class="line">PS E:\9_code\15pb\android_or_java\NDK\crackme-ndk&gt; readelf -d ./libnative-lib.so</span><br><span class="line"></span><br><span class="line">Dynamic section at offset 0x2bc0c contains 32 entries:</span><br><span class="line">  Tag        Type                         Name/Value</span><br><span class="line"> 0x00000003 (PLTGOT)                     0x2cda4</span><br><span class="line"> 0x00000002 (PLTRELSZ)                   1072 (bytes)</span><br><span class="line"> 0x00000017 (JMPREL)                     0x4060</span><br><span class="line"> 0x00000014 (PLTREL)                     REL</span><br><span class="line"> 0x00000011 (REL)                        0x3040</span><br><span class="line"> 0x00000012 (RELSZ)                      4128 (bytes)</span><br><span class="line"> 0x00000013 (RELENT)                     8 (bytes)</span><br><span class="line"> 0x6ffffffa (RELCOUNT)                   380</span><br><span class="line"> 0x00000006 (SYMTAB)                     0x158</span><br><span class="line"> 0x0000000b (SYMENT)                     16 (bytes)</span><br><span class="line"> 0x00000005 (STRTAB)                     0xf18</span><br><span class="line"> 0x0000000a (STRSZ)                      6277 (bytes)</span><br><span class="line"> 0x00000004 (HASH)                       0x27a0</span><br><span class="line"> 0x00000001 (NEEDED)                     Shared library: [liblog.so]</span><br><span class="line"> 0x00000001 (NEEDED)                     Shared library: [libm.so]</span><br><span class="line"> 0x00000001 (NEEDED)                     Shared library: [libstdc++.so]</span><br><span class="line"> 0x00000001 (NEEDED)                     Shared library: [libdl.so]</span><br><span class="line"> 0x00000001 (NEEDED)                     Shared library: [libc.so]</span><br><span class="line"> 0x0000000e (SONAME)                     Library soname: [libnative-lib.so]</span><br><span class="line"> 0x0000000c (INIT)                       0x5750</span><br><span class="line"> 0x0000001a (FINI_ARRAY)                 0x2c894</span><br><span class="line"> 0x0000001c (FINI_ARRAYSZ)               8 (bytes)</span><br><span class="line"> 0x00000019 (INIT_ARRAY)                 0x2c89c</span><br><span class="line"> 0x0000001b (INIT_ARRAYSZ)               28 (bytes)</span><br><span class="line"> 0x0000001e (FLAGS)                      BIND_NOW</span><br><span class="line"> 0x6ffffffb (FLAGS_1)                    Flags: NOW</span><br><span class="line"> 0x6ffffff0 (VERSYM)                     0x2e2c</span><br><span class="line"> 0x6ffffffc (VERDEF)                     0x2fe4</span><br><span class="line"> 0x6ffffffd (VERDEFNUM)                  1</span><br><span class="line"> 0x6ffffffe (VERNEED)                    0x3000</span><br><span class="line"> 0x6fffffff (VERNEEDNUM)                 2</span><br><span class="line"> 0x00000000 (NULL)                       0x0</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>Android so文件动态调试</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">工具:IDA Pro,Android monitor,adb</span><br><span class="line">1.上传android_server到android机器中</span><br><span class="line">  adb push android_server /data/local/tmp/ands</span><br><span class="line">2.修改文件权限,测试运行</span><br><span class="line">  cd /data/local/temp</span><br><span class="line">  chmod 777 ands</span><br><span class="line">  ./ands</span><br><span class="line">3.带参数,修改端口运行</span><br><span class="line">  ./ands -p23456</span><br><span class="line"></span><br><span class="line">4.打开monitor,以调试方式启动apk</span><br><span class="line">  等待程序启动后,选中调试进程</span><br><span class="line">5.以调试方式启动apk</span><br><span class="line">  adb shell am start -D -n 包名/入口类名</span><br><span class="line">6. 设置端口转发</span><br><span class="line">  adb forward tcp:23456 tcp:23456</span><br><span class="line"></span><br><span class="line">7.启动IDA,附加调试apk</span><br><span class="line">  选择hostname:localhost;port:23456</span><br><span class="line">  选择指定进程</span><br><span class="line">8.启动jdb,附加apk,启动apk</span><br><span class="line">  jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8700</span><br><span class="line"></span><br><span class="line">9.根据readelf -d获得的函数地址和动态调试的模块基址下断点</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>直接向android设备发送输入文本</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell input text &quot;testtext&quot;</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/30/android_NDK_动态调试/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-网络协议学习第一天" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -507,118 +793,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/11/20/网络协议学习第一天/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-网络协议学习第二天-网络层" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/20/网络协议学习第二天-网络层/">网络协议学习第二天-网络层</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/11/20/网络协议学习第二天-网络层/" class="archive-article-date">
-  	<time datetime="2018-11-20T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.顺序问题<br>2.丢包问题<br>3.连接维护<br>4.流量控制<br>5.拥塞控制</p>
-<blockquote>
-<p>连接维护</p>
-</blockquote>
-<ul>
-<li><p>TCP3次握手</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DDOS攻击</span><br><span class="line"></span><br><span class="line">1.客户端SYN</span><br><span class="line">2.服务端SYN,ACK,SEQ</span><br><span class="line">3.客户端ACK,SEQ</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>TCP4次挥手</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">和平分手:</span><br><span class="line">1.客户端发送Fin,seq=q,进入FIN_WIAT_1状态</span><br><span class="line">2.服务端发送ACK,seq=p+1,进入CLOSE_WAIT</span><br><span class="line">  客户端收到后进入FIN_WIAT_2状态</span><br><span class="line">3.服务器发送ACK,seq=q,ack=p+1,进入LAST_ACK状态</span><br><span class="line">4.客户端收到后,发送ACK,seq=q+1,进入TIME_WAIT(等待-2MSL)</span><br><span class="line">  服务端收到后CLOSE</span><br><span class="line"></span><br><span class="line">非和平分手:</span><br><span class="line">2完成后,如果服务端直接跑了,TCP协议中没有处理,linux可以调整tcp_fin_timeout</span><br><span class="line">假如3完成后,客户端发完还需要等待2MSL,因为最后第四步假如服务端没收到,会重新发3.还有就是防止端口被新的应用使用时发生混乱,所以等B所有的包都gameover的时候.2MSL(Maximum Segment Lifetime),报文最大生存时间,在网络上存在的最长时间。</span><br><span class="line">超过2MSL收到服务器的包,会发送RST给服务端</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>流量控制</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">窗口大小 Advertisedwindow</span><br><span class="line">对于发送端:</span><br><span class="line">Advertisedwindow=发送已确认+未发送可发送</span><br><span class="line">对于接收端:</span><br><span class="line">Advertisedwindow =最大缓冲量-已接收并确认=未接收可接收</span><br><span class="line">rwnd 滑动窗口</span><br><span class="line">流量控制 :当缓存区一半为空才更新窗口</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>确认和重发机制</p>
-</blockquote>
-<ul>
-<li>超时重试<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">发送包后没有接到ACK,超过一定时间就重新尝试</span><br><span class="line">不宜过短,超过RTT(往返时间),不宜过长,影响访问</span><br><span class="line"></span><br><span class="line">自适应重传算法,即采样RTT,根据加权平均,计算出值</span><br><span class="line">超时间隔加倍,遇到一次超时重传,下一次的超时重传的间隔加倍。</span><br><span class="line">2次超时即网络环境差,不宜频繁发送。</span><br><span class="line"></span><br><span class="line">1.快速超时重传:发6的ack,要求7</span><br><span class="line">2.SACK 缓存地图对方,例如发6,8,9就知道7没传</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>阻塞机制</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">防止包丢失和超时重传</span><br><span class="line">包丢失,中间设备加缓存,排在队列,防止丢失</span><br><span class="line">排在队列里,时延增加,可以发送超时重传</span><br><span class="line"></span><br><span class="line">阻塞窗口 cwnd</span><br><span class="line">TCP BBR阻塞算法:快速填满管道,但是不填满中间设备的缓存,达到高宽带和低时延的平衡</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>socket编程</p>
-</blockquote>
-<ul>
-<li>TCP_socket<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">在内核中,socket维护了2个队列。</span><br><span class="line">一个队列是已经建立了连接的队列,这时候连接3次握手完毕,处于established状态;一个队列是还没有完全建立连接的队列,这个时候三次握手还没完成,处于syn_rcvd的状态。</span><br><span class="line">监听的socket和真正用来传数据的socket是2个,一个是监听socket,一个是已连接socket。</span><br><span class="line"></span><br><span class="line">tcp的socket是一个文件流,在linux中以文件形式存在.所以存在文件描述符,写入和读出也是通过文件描述符。</span><br><span class="line">每一个进程都有一个数据结构task_struct,里面指向一个文件描述符数组,这个文件描述符数组列出了这个进程打开的所有文件的文件描述符。文件描述符是一个整数,是文件描述符数组的下标。</span><br><span class="line">文件描述符数组的内容是一个指针,指向内核中所有打开的文件的列表。列表指向一个inode。对于socket,对应的inode中指向了socket在内核中的socket结构。</span><br><span class="line">这个socket结构中主要有2个队列,一个是发送队列,一个是接受队列。这2个队列里保存了sk_buff.这个缓存中能看到完整包的机构。</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络协议</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/20/网络协议学习第二天-网络层/">展开全文 >></a>
         </p>
       
 
@@ -881,117 +1055,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-linux文件系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/13/linux文件系统/">linux文件系统</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/11/13/linux文件系统/" class="archive-article-date">
-  	<time datetime="2018-11-13T06:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Linux特点:<br>1.linux文件系统按照层次性结构建立<br>2.linux文件就是一组字节序列,没有严格结构约束和特殊定义<br>3.linux系统中每一个对象都表示为文件。采用施加在一般文件的调度或者管理方法来实现对所有对象的统一调度和管理。</p>
-<blockquote>
-<p>文件分类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ls -l</span><br><span class="line">第一个字符</span><br><span class="line">- 普通文件</span><br><span class="line">d 目录文件</span><br><span class="line">b 块设备文件</span><br><span class="line">c 字符设备文件</span><br><span class="line">l 链接文件</span><br><span class="line">p 管道文件</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<ul>
-<li><p>普通文件<br>linux系统对文件的管理是通过文件的属性信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">文件名</span><br><span class="line">文件索引号</span><br><span class="line">文件字节数</span><br><span class="line">最后访问时间</span><br><span class="line">文件存取权限</span><br><span class="line">属主名</span><br><span class="line">属组名</span><br><span class="line">文件链接数</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>目录文件</p>
-</li>
-<li><p>特殊/设备文件<br>将硬件资源看为文件。赋予了文件类型,属主等属性。可以类似于文件进行读写。<br>设备分2种:<br>  对应于面向字符的I/O设备<br>  对应于面向字节块进行I/O操作的设备</p>
-</li>
-</ul>
-<ul>
-<li>命名管道<br>进程通信的机制</li>
-<li>符号链接<br>指向一个文件</li>
-<li>套接字文件<br>进程间的通信端点</li>
-</ul>
-<blockquote>
-<p>文件I/O</p>
-</blockquote>
-<p>linux有2种机制来描述I/O连接:文件描述符/流</p>
-<ul>
-<li>文件描述符<br>文件描述符是为int类型的对象。标准输入对应文件描述符为0,标准输出对应的文件描述符为1。<br>对于特定设备的控制操作需要使用文件描述符。<br>使用特殊设备进行控制操作(例如非阻塞的方式),必须使用文件描述符。<br>文件描述符函数只提供简单的传送字符块的函数。</li>
-<li>流<br>流指向结构FILE的FILE*。<br>流函数是基于文件描述符实现。<br>流函数提供格式化I/O,字符I/O，面向行的I/O等大量函数。</li>
-</ul>
-<blockquote>
-<p>文件描述符相关函数</p>
-</blockquote>
-<blockquote>
-<p>流相关函数</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/13/linux文件系统/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-获取工具源码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1038,86 +1101,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/11/13/获取工具源码/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-乌合之众" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/12/乌合之众/">乌合之众</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/11/12/乌合之众/" class="archive-article-date">
-  	<time datetime="2018-11-12T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-12</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>群体毫无疑问是无意识的。<br>我们即将进入一个群体的时代。<br>群体的产生,开始于观念的传播,在人们脑中扎根,然后个人逐渐开始形成社团,致力于理论观念的实现。<br>科学给予我们的是智力所能把握的一些事情有关各种关系的知识,并没有承诺给予我们和平和幸福。<br>要想领导群众,不能根据所谓平等学的根据,而是要寻找那些能让人心动的东西或者能诱惑他们的东西。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/12/乌合之众/">展开全文 >></a>
         </p>
       
 
@@ -1248,11 +1231,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1268,19 +1271,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1292,10 +1291,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
@@ -1304,11 +1299,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1317,10 +1316,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1352,23 +1347,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深入理解计算机系统</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>

