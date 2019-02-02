@@ -157,6 +157,61 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-exploit3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>CVE<br>EXPLOIT_DB</p>
+<p>代理方向代理洋葱浏览器<br>3389</p>
+<p>精准堆喷射</p>
+<p>XCHG eax,esp<br>retn</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/24/exploit3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
     <article id="post-Windbg之Mona2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -179,7 +234,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1.首先安装python2.7.2<br>2.安装Visual C++ 2008运行库<br>3.安装WinDBG的python插件”Pykd”<br>4.将mona.py和Windbglib.py放在WinDBG.exe同目录下<br>5.运行WinDBG后,输入一下命令开始使用Mona<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.load pykd.pyd</span><br><span class="line">!py mona</span><br></pre></td></tr></table></figure></p>
+        <p>1.首先安装python2.7.2<br>2.安装Visual C++ 2008运行库<br>3.安装WinDBG的python插件”Pykd”,目录为Windbg下的winext<br>4.将mona.py和Windbglib.py放在WinDBG.exe同目录下<br>5.运行WinDBG后,输入一下命令开始使用Mona<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.load pykd.pyd</span><br><span class="line">!py mona</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>Mona2常用命令</p>
 </blockquote>
@@ -992,20 +1047,20 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-1.关于平均负载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-2.CPU上下文切换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/30/1.关于平均负载/">1.关于平均负载</a>
+      <a class="article-title" href="/2018/09/30/2.CPU上下文切换/">2.CPU上下文切换</a>
     </h1>
   
 
 		
         
-        <a href="/2018/09/30/1.关于平均负载/" class="archive-article-date">
+        <a href="/2018/09/30/2.CPU上下文切换/" class="archive-article-date">
   	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
 </a>
         
@@ -1014,20 +1069,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li><p>uptime命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@kaliroot:~# uptime</span><br><span class="line"> 当前时间   运行时间       			  后面3个参数分别为1分钟,5分钟,15分钟的平均负载             </span><br><span class="line"> 20:49:51  up 1 day,  7:05,  1 user,  load average: 0.20, 0.76, 2.36</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>平均负载理想状态</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">平均负载:单位时间内,系统处于可运行状态(R)和不可中断状态(D)的平均进程数,也就是平均活跃进程数。</span><br><span class="line">不可中断状态是系统对进程和硬件的保护,防止读写过程中中断,导致进程和硬件数据不一致。</span><br><span class="line">当有n个逻辑cpu时,平均负载为n是为完全占用:例如2个时候,为2</span><br><span class="line">当平均负载&gt;n时即已经负载。</span><br><span class="line">grep &apos;model name&apos; /proc/cpuinfo | wc -l 获取逻辑cpu个数</span><br><span class="line"></span><br><span class="line">通过监控系统的平均负载,负载出现翻倍等异常需要去分析和调查。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>平均负载和CPU使用率</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">平均负载包括等待CPU和等待I/O的进程。</span><br><span class="line">例如当I/O负载很高的时候,平均负载很高,但是CPU使用率不高</span><br></pre></td></tr></table></figure>
+        <p>在很短时间内,CPU进行任务切换,造成多任务的错觉。<br>而每个任务运行前,CPU根据CPU寄存器和程序技术器获得任务从哪加载,从哪运行。<br>而保持这些数据的环境为CPU上下文。<br>根据任务不同,分为进程上下文切换,线程上下文切换和中断上下文切换</p>
+<blockquote>
+<p>进程上下文切换<br>区分系统调用和进程上下文切换</p>
+</blockquote>
+<p>系统调用不涉及虚拟内存等用户态的资源,一直在同一个进程中进行。<br>进程上下文切换是从一个进程切换到另一个进程中运行。进程的上下文中包括虚拟内存,栈,全局变量以及内核堆栈和寄存器等内核空间的状态。<br>linux通过TLB管理虚拟内存到物理内存的映射关系,当虚拟内存刷新时,TLB也需要刷新,内存访问也会变量.对于多处理器系统,缓存是共享的,刷新缓存不仅会影响当前处理器的进程,还会影响共享缓存的其他处理器的进程。<br>linux为CPU维护一个就绪队列,根据优先级和等待CPU的时间排序,然后选择最需要的CPU进程(优先级最高和等待cpu时间最长的进程)。</p>
+<ul>
+<li>进程调度场景<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.为保证进程公平调度,CPU被划分成一段段时间片,这些时间片轮流分配到各个进程,进程时间片耗尽,系统被挂起,切换到其他等待CPU的进程运行。</span><br><span class="line">2.系统资源不足时,要等待资源满足才能运行,进程也会被挂起,系统调度其他进程运行。</span><br><span class="line">3.进程调用sleep这样的方法让自己主动挂起时,也会重新调度。</span><br><span class="line">4.当有优先级更高的进程运行时,保证高优先级进程的调度,进程会被挂起,从高优先级进程运行</span><br><span class="line">5.发生硬件中断时,CPU上进程会被中断挂起。</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <blockquote>
-<p>案例分析<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">stress linux系统压力测试工具</span><br><span class="line">sysstat linux常用性能工具</span><br><span class="line">apt-get install stress sysstat</span><br><span class="line"></span><br><span class="line">1.CPU密集型进程</span><br><span class="line">开启4个窗口</span><br><span class="line">第一个窗口 模拟CPU使用率100%场景</span><br><span class="line">stress --cpu 1 --timeout 600</span><br><span class="line">第二个窗口 观察平均负载慢慢升到1</span><br><span class="line">watch -d update</span><br><span class="line">第三个窗口 观察CPU使用率</span><br><span class="line">mpstat --p ALL 5  //-P监控所有 5秒</span><br><span class="line">第四个窗口 观察那个进程占用了cpu使用率</span><br><span class="line">pidstat -u 5 1 //5秒输出一组数据</span><br><span class="line"></span><br><span class="line">2.I/O密集型进程</span><br><span class="line">第一个窗口 模拟I/O压力</span><br><span class="line">stress -i 1 --timeout 600</span><br><span class="line">第二个窗口 观察平均负载慢慢升到1</span><br><span class="line">watch -d update</span><br><span class="line">第三个窗口 观察IOiowait很高</span><br><span class="line">mpstat --p ALL 5 1 //-P监控所有 5秒</span><br><span class="line">第四个窗口 观察那个进程导致IOwait很高</span><br><span class="line">pidstat -u 5 1 //5秒输出一组数据</span><br><span class="line"></span><br><span class="line">3.大量进程场景</span><br><span class="line">第一个窗口 模拟多进程场景</span><br><span class="line">stress -c 8 --timeout 600</span><br><span class="line">第二个窗口 观察平均负载慢慢升到1</span><br><span class="line">watch -d update</span><br><span class="line">第三个窗口 观察进程 wait很高</span><br><span class="line">pidstat -u 5 1 //5秒输出一组数据</span><br></pre></td></tr></table></figure></p>
+<p>线程上下文切换</p>
 </blockquote>
+<p>当有多个线程时,线程共用相同的虚拟内存和全局变量等资源,这些资源在上下文切换时不需要修改。<br>线程由自己的私有数据,比如栈和寄存器,这些在上下文切换是需要保存的。<br>对于同一进程的线程上下文切换,只切换线程的私有数据,寄存器不共享。</p>
+<blockquote>
+<p>中断上下文切换</p>
+</blockquote>
+<p>为了快速响应硬件事件,中断处理打断进程的正常调度和执行,转而调用中断处理程序,响应设备事件。<br>中断上下文切换至包括内核态中断服务程序执行所需要的状态,包括CPU寄存器,内核堆栈,硬件中断参数等。<br>对同一个 CPU 来说，中断处理比进程拥有更高的优先级。</p>
+<blockquote>
+<p>查看系统的上下文中断</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu:~/Desktop# vmstat 5</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 0  0      0 6770348  95812 707136    0    0   169    78  140  232 22  6 69  3  0</span><br><span class="line"> 0  0      0 6770456  95812 707168    0    0     0     0  284  783  3  2 95  0  0</span><br><span class="line"> 0  0      0 6770520  95820 707168    0    0     0     3  408  964  5  4 91  0  0</span><br><span class="line"> 0  0      0 6770520  95820 707168    0    0     0     0  348  883  5  5 90  0  0</span><br><span class="line"> 0  0      0 6769768  95820 707168    0    0     0     0  225  580  2  3 95  0  0</span><br><span class="line"> 0  0      0 6769768  95820 707168    0    0     0     0   90  187  1  1 98  0  0</span><br><span class="line"> 1  0      0 6769760  95820 707168    0    0     0     0  258  470  1  1 98  0  0</span><br><span class="line">cs每秒上下文切换次数</span><br><span class="line">in 每秒中断次数</span><br><span class="line">r 就绪队列的个数,即为正在运行和等待的进程个数</span><br><span class="line">b 处于不可中断睡眠状态的进程个数</span><br><span class="line">us 用户使用cpu占比</span><br><span class="line">sy 系统使用cpu占比</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root@ubuntu:~/Desktop# pidstat -w 5</span><br><span class="line">Linux 4.2.0-27-generic (ubuntu) 	11/27/2018 	_x86_64_	(2 CPU)</span><br><span class="line"></span><br><span class="line">05:55:14 PM   UID       PID   cswch/s nvcswch/s  Command</span><br><span class="line">05:55:19 PM     0         7     16.76      0.00  rcu_sched</span><br><span class="line">05:55:19 PM     0         9      9.16      0.00  rcuos/0</span><br><span class="line">05:55:19 PM     0        12      0.39      0.00  watchdog/</span><br><span class="line">cswch 每秒自愿上下文中断 进程无法获取资源导致的上下文切换</span><br><span class="line">nvcswch 每秒非自愿上下文中断 进程由于时间片已到,系统调度发生的上下文切换</span><br></pre></td></tr></table></figure>
+<ul>
+<li>案例分析<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">sysbench 多线程基准测试工具,用来评估不同系统参数下的数据库负载情况。</span><br><span class="line">可以用来模拟系统多线程调度切换的情况。</span><br><span class="line">apt-get install sysbench sysstat</span><br><span class="line"></span><br><span class="line"># 以 10 个线程运行 5 分钟的基准测试，模拟多线程切换的问题</span><br><span class="line">sysbench --threads=10 --max-time=300 threads run</span><br><span class="line"></span><br><span class="line">#每隔vmstat一秒查看上下文切换情况</span><br><span class="line">vmstat 1 1</span><br><span class="line">看到cs和in很高</span><br><span class="line">#查看进程</span><br><span class="line">pidstat -w 5 进程上下文切换</span><br><span class="line">pidstat -wt 5 线程上下文切换</span><br><span class="line">#查看中断上下文切换</span><br><span class="line">watch -d cat /proc/interrupts //-d 表示高亮显示变化的区域</span><br><span class="line">其中RES(重调度中断),这个中断类型,唤醒空闲状态的CPU来调度新的任务运行。是多处理器系统调度器用来分散任务到不同CPU的机制，称为处理器间中断。</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
 
@@ -1051,86 +1116,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/30/1.关于平均负载/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-3.CPU使用率到100%" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/30/3.CPU使用率到100%/">3.CPU使用率到100%</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/09/30/3.CPU使用率到100%/" class="archive-article-date">
-  	<time datetime="2018-09-30T08:46:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-30</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">linux优化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/30/3.CPU使用率到100%/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/09/30/2.CPU上下文切换/">展开全文 >></a>
         </p>
       
 
@@ -1178,7 +1164,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 secret
+    		&copy; 2019 secret
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -1261,6 +1247,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
@@ -1277,10 +1267,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
@@ -1293,10 +1279,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
@@ -1305,15 +1287,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1322,6 +1300,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1357,11 +1343,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">

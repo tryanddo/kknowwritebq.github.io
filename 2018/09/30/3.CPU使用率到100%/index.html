@@ -8,15 +8,18 @@
   <link rel="dns-prefetch" href="http://blog.jbyusk.com">
   <title>3.CPU使用率到100% | 想与做</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="linux优化">
+  <meta name="description" content="CPU使用率的概念   重要指标1234567891011121314user/us: 用户态CPU时间,不包括nice时间,但包括guest时间nice/ni: 优先级用户态CPU时间,即为nice值为1-19的CPU时间,nice可去-20到19,数值越大,优先级越低system/sys: 内核态CPU时间idle/id: 空闲时间,不包括iowaitiowait/wa: 等待i/o的CPU">
+<meta name="keywords" content="linux优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="3.CPU使用率到100%">
 <meta property="og:url" content="http://blog.jbyusk.com/2018/09/30/3.CPU使用率到100%/index.html">
 <meta property="og:site_name" content="想与做">
+<meta property="og:description" content="CPU使用率的概念   重要指标1234567891011121314user/us: 用户态CPU时间,不包括nice时间,但包括guest时间nice/ni: 优先级用户态CPU时间,即为nice值为1-19的CPU时间,nice可去-20到19,数值越大,优先级越低system/sys: 内核态CPU时间idle/id: 空闲时间,不包括iowaitiowait/wa: 等待i/o的CPU">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-17T00:14:08.867Z">
+<meta property="og:updated_time" content="2018-12-17T01:28:49.870Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3.CPU使用率到100%">
+<meta name="twitter:description" content="CPU使用率的概念   重要指标1234567891011121314user/us: 用户态CPU时间,不包括nice时间,但包括guest时间nice/ni: 优先级用户态CPU时间,即为nice值为1-19的CPU时间,nice可去-20到19,数值越大,优先级越低system/sys: 内核态CPU时间idle/id: 空闲时间,不包括iowaitiowait/wa: 等待i/o的CPU">
   
     <link rel="alternative" href="/atom.xml" title="想与做" type="application/atom+xml">
   
@@ -184,7 +187,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <blockquote>
+<p>CPU使用率的概念</p>
+</blockquote>
+<ul>
+<li>重要指标<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">user/us: 用户态CPU时间,不包括nice时间,但包括guest时间</span><br><span class="line">nice/ni: 优先级用户态CPU时间,即为nice值为1-19的CPU时间,nice可去-20到19,数值越大,优先级越低</span><br><span class="line">system/sys: 内核态CPU时间</span><br><span class="line">idle/id: 空闲时间,不包括iowait</span><br><span class="line">iowait/wa: 等待i/o的CPU时间</span><br><span class="line">irq/hi: 处理硬中断的CPU时间</span><br><span class="line">softirq/si: 处理软中断的CPU时间</span><br><span class="line">steal/st: 系统运行在虚拟机中,被其他虚拟机占用的CPU时间</span><br><span class="line">guest/guest: 运行虚拟机的CPU时间</span><br><span class="line">guest_nice/gnice: 以低优先级运行虚拟机的时间</span><br><span class="line"></span><br><span class="line">cpu使用率=1-(空闲时间-总CPU时间)</span><br><span class="line">性能分析工具给出的都是间隔一段时间的平均CPU使用率</span><br><span class="line">top为3秒,ps为进程的生命周期</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>CPU使用率过高</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.通过top ps pidstat找到使用率过高的进程</span><br><span class="line">2.通过perf top查找占用CPU过高的是代码里的哪个函数</span><br></pre></td></tr></table></figure>
       
 
       
@@ -267,18 +280,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/09/30/1.关于平均负载/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/09/30/ATT-Unitx下c汇编/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          1.关于平均负载
+          ATT-Unitx下c汇编
         
       </div>
     </a>
   
   
-    <a href="/2018/09/30/ATT-Unitx下c汇编/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ATT-Unitx下c汇编</div>
+    <a href="/2018/09/30/1.关于平均负载/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">1.关于平均负载</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -333,7 +346,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 secret
+    		&copy; 2019 secret
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -416,6 +429,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
@@ -432,10 +449,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
@@ -448,10 +461,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
@@ -460,15 +469,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -477,6 +482,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -512,11 +525,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -157,20 +157,102 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-shell正则表达" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-为什么我会想要写下来" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/shell正则表达/">shell学习2正则表达式</a>
+      <a class="article-title" href="/2018/04/02/为什么我会想要写下来/">为什么我要开始写作</a>
     </h1>
   
 
 		
         
-        <a href="/2018/03/25/shell正则表达/" class="archive-article-date">
+        <a href="/2018/04/02/为什么我会想要写下来/" class="archive-article-date">
+  	<time datetime="2018-04-02T02:45:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>从我个人而言，我有以下几个目的希望能通过写作来完成。<br></p>
+        
+          <a class="article-more-a" href="/2018/04/02/为什么我会想要写下来/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/02/为什么我会想要写下来/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-如何阅读一本书" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/如何阅读一本书/">&lt;如何阅读一本书&gt;之读后感</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/如何阅读一本书/" class="archive-article-date">
   	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
 </a>
         
@@ -179,28 +261,259 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>grep 支持正规表达式</p>
-<blockquote>
-<p>重要特殊字符</p>
-</blockquote>
-<h3 id="符"><a href="#符" class="headerlink" title="^符"></a>^符</h3><ol>
-<li>^word<br>待搜寻的字符串(word)在行首<br>grep -n ‘^#’ test.txt #以#开头的行</li>
-<li>[^]<br>方向选择<br>grep -n [^a-zA-Z] test.txt #找出有数字的行<h3 id="符-1"><a href="#符-1" class="headerlink" title="$符"></a>$符</h3></li>
-<li>word$<br>待搜寻的字符串(word)在行尾<br>grep -n ‘。$’ test.txt #以。为结尾的字符串</li>
-</ol>
-<h3 id=""><a href="#" class="headerlink" title="."></a>.</h3><ol>
-<li>代表任意一个字符<br>grep -n ‘a.a’ test.txt #a和a之间必须有一个字符</li>
-<li>由于.是特殊字符在字符串内需要用.来跳脱</li>
-</ol>
-<h3 id="-1"><a href="#-1" class="headerlink" title="+"></a>+</h3><p>   重复一个或一个以上的字符<br>   grep -n ‘#+a’ test.txt #有至少一个#号的字符串</p>
-<h3 id="-2"><a href="#-2" class="headerlink" title="?"></a>?</h3><p>   0个或一个的前一个字符<br>   grep -n ‘#?a’ test.txt #有至少一个#号的字符串</p>
-<h3 id="-3"><a href="#-3" class="headerlink" title="|"></a>|</h3><p>   用or的方式找出数个字符串<br>   grep -n ‘dog|check’ test.txt #找出有dog或者check的行</p>
-<h3 id="-4"><a href="#-4" class="headerlink" title="*"></a>*</h3><p> 正规表达式中<em>代表0个或者无限个前一个字符<br> (.</em>)代表任意无限个字符</p>
-<p>###()群组<br> grep -n ‘t(st|x)t’ test.txt 找出有test和txt的字符串</p>
-<h3 id="n-m"><a href="#n-m" class="headerlink" title="{n,m}"></a>{n,m}</h3><ol>
-<li>连续n到m个前一个字符<br>grep -n ‘te{2,3}st’ test.txt #e至少2个以上的字符串</li>
-</ol>
+        <h3 id="首先我想对整本书做归纳"><a href="#首先我想对整本书做归纳" class="headerlink" title="首先我想对整本书做归纳"></a>首先我想对整本书做归纳</h3><p> &lt;如何阅读一本书&gt;是一本实用形的书，指引读者应该如何阅读一本书，但是其中的技巧可以应用于各种杂志，文章，视频等。<br> 我认为这本书对于我最重要的2点是:</p>
+<ul>
+<li><p>如何主动的去阅读一本书<br>主动的阅读是贯彻于整本书一个观点。需要去明白阅读的目的，是为了娱乐，获取咨询，还是提高理解力。为了获得理解力而阅读的行为，需要花更多的时间去分析整本书的骨架等。<br>做一个主动阅读的读者需要提出问题，回答问题，做笔记。</p></li></ul>
+        
+          <a class="article-more-a" href="/2018/03/25/如何阅读一本书/#more">more >></a>
+        
+      
 
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/25/如何阅读一本书/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-知识变现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/知识变现/">知识变现-记录</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/知识变现/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>核心能力与热闹无关，不过时，不褪色。<br>持续行动的能力是可以训练的而训练的方式，就是持续行动。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/25/知识变现/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-搞定工作无压力" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/搞定工作无压力/">&lt;搞定无压工作的艺术&gt;之笔记</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/搞定工作无压力/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> 需要有意识的培养以结果和行为为导向的思维方式。</p>
+<blockquote>
+<p>为什么有事情一直不断萦绕在心头</p>
+</blockquote>
+<p> 1.事情没有明确要达到什么预期。<br> 2.没法确认下一步的具体行动是什么。<br> 3.没有把相关预期结果和具体行动的提示信息存放在系统里。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/25/搞定工作无压力/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-linux网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/linux网络/">linux网络相关</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/linux网络/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网络设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">centos:</span><br><span class="line">  /etc/sysconfig/network-scripts/ifcfg-*</span><br><span class="line">  ifup #开启某个网卡</span><br><span class="line">  ifdown #关闭某个网卡</span><br><span class="line">  service network start/stop/restart</span><br><span class="line">debian:</span><br><span class="line">  /etc/network/interface</span><br><span class="line">  service networking restart/start/stop</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>netstat</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tulnp | grep port #获取端口占用</span><br></pre></td></tr></table></figure>
       
 
       
@@ -223,7 +536,333 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/shell正则表达/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/25/linux网络/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-shell学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/shell学习/">shell学习1</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/shell学习/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><p>常见shells<br>/bin/sh<br>/bin/bash #预设<br>/bin/zsh<br>/bin/csh<br>查看用户默认shell<br>/etc/passwd<br></p>
+        
+          <a class="article-more-a" href="/2018/03/25/shell学习/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/25/shell学习/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-linux防火墙" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/linux防火墙/">linux防火墙设置</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/linux防火墙/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>centos7 下<br>Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.<br>参考:<a href="https://blog.csdn.net/c233728461/article/details/52679558" target="_blank" rel="noopener">https://blog.csdn.net/c233728461/article/details/52679558</a><br></p>
+        
+          <a class="article-more-a" href="/2018/03/25/linux防火墙/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/25/linux防火墙/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-markdown语法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/markdown语法/">markdown语法</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/markdown语法/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先记录几个可以查询markdown语法的网站:<br><a href="https://www.jianshu.com/p/78fb460f538e" target="_blank" rel="noopener">https://www.jianshu.com/p/78fb460f538e</a><br><a href="https://blog.csdn.net/abcd302/article/details/51776467" target="_blank" rel="noopener">https://blog.csdn.net/abcd302/article/details/51776467</a><br></p>
+        
+          <a class="article-more-a" href="/2018/03/25/markdown语法/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/25/markdown语法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+ <!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+  
+    <article id="post-生而贫穷" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/25/生而贫穷/">生而贫穷笔记以及读后感</a>
+    </h1>
+  
+
+		
+        
+        <a href="/2018/03/25/生而贫穷/" class="archive-article-date">
+  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
+</a>
+        
+      </header>
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>阶级的固化,社会流动性的丧失，会导致由于消费的差距，购买力不足，产生经济危机。就跟封建社会土地兼并达到一定临界点，会发生农名起义。<br>阶级靠3种，卵巢彩票(家庭等)，历史时势，个人努力。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/25/生而贫穷/">展开全文 >></a>
         </p>
       
 
@@ -342,659 +981,6 @@
         <!-- 目录内容结束 -->
 
   
-    <article id="post-搞定工作无压力" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/搞定工作无压力/">&lt;搞定无压工作的艺术&gt;之笔记</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/搞定工作无压力/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> 需要有意识的培养以结果和行为为导向的思维方式。</p>
-<blockquote>
-<p>为什么有事情一直不断萦绕在心头</p>
-</blockquote>
-<p> 1.事情没有明确要达到什么预期。<br> 2.没法确认下一步的具体行动是什么。<br> 3.没有把相关预期结果和具体行动的提示信息存放在系统里。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/搞定工作无压力/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-偶尔一次幻想" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/偶尔一次幻想/">偶尔的一次幻想</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/偶尔一次幻想/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>幻想着中午吃完饭,躺在摇椅上。暖风微微拂过，带来一丝倦意，带着这丝倦意，不知不觉睡下去。然后在睡眼朦胧中醒来，拿起一本历史或者哲学书。摇着摇椅，伴着暖风，伴着树叶沙沙的声响，时而陷入思考，时而懒懒的翻着书。周末的一下午就这么轻松的过去。幻想着，幻想着，然后情不自禁乐了一下。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/偶尔一次幻想/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-markdown语法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/markdown语法/">markdown语法</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/markdown语法/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>首先记录几个可以查询markdown语法的网站:<br><a href="https://www.jianshu.com/p/78fb460f538e" target="_blank" rel="noopener">https://www.jianshu.com/p/78fb460f538e</a><br><a href="https://blog.csdn.net/abcd302/article/details/51776467" target="_blank" rel="noopener">https://blog.csdn.net/abcd302/article/details/51776467</a><br></p>
-        
-          <a class="article-more-a" href="/2018/03/25/markdown语法/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/markdown语法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-为什么看各种经济社会的书籍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/为什么看各种经济社会的书籍/">为什么看各种经济社会的书籍</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/为什么看各种经济社会的书籍/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天有人问我，我是愤青吗，不然整天看阶级固化，贫富差距的东西有什么用。越看不是会越生气吗？<br>是的，阶级固化已经是现实。资产的边际效应用于比努力的边际效应要高。那些所谓的依靠自己成功人士的分子永远是少数的，要么通过颜值逆袭，通过自身超乎常人的经商头脑，亦或是智商情商超群。或者赶上历史的时势比如互联网。而现实是无数无比努力奋斗加班的人，却一无所有，反而因为压力生病。赚钱的主意要么掌握在资本的手中，要么就是在擦着法律的查边球，光鲜的职业也大部分依靠关系一代代传承。而当富者愈富,富者掌握了教育，医疗资源，掌握了剥削无产阶级的有产资产。作为一个不是特别聪明，也没有什么拿得出手的能力的人，为什么要花这么多的时间看这些，不会产生经济价值的东西，甚至于在未来或许起不到一点用处的东西呢？有这种时间，多花点时间培养出一个核心技能不是更好吗？<br>我觉得看这种书，只是让我更加理智，明白什么做出自认为比较正确的选择。我也从未想要依靠这些获取什么成果，满足知识欲望，或许是我目前行为的目的。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">思考</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/为什么看各种经济社会的书籍/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-生而贫穷" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/生而贫穷/">生而贫穷笔记以及读后感</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/生而贫穷/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>阶级的固化,社会流动性的丧失，会导致由于消费的差距，购买力不足，产生经济危机。就跟封建社会土地兼并达到一定临界点，会发生农名起义。<br>阶级靠3种，卵巢彩票(家庭等)，历史时势，个人努力。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/生而贫穷/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-知识变现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/知识变现/">知识变现-记录</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/知识变现/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>核心能力与热闹无关，不过时，不褪色。<br>持续行动的能力是可以训练的而训练的方式，就是持续行动。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/知识变现/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-linux网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/linux网络/">linux网络相关</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/linux网络/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>网络设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">centos:</span><br><span class="line">  /etc/sysconfig/network-scripts/ifcfg-*</span><br><span class="line">  ifup #开启某个网卡</span><br><span class="line">  ifdown #关闭某个网卡</span><br><span class="line">  service network start/stop/restart</span><br><span class="line">debian:</span><br><span class="line">  /etc/network/interface</span><br><span class="line">  service networking restart/start/stop</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>netstat</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tulnp | grep port #获取端口占用</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/linux网络/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
-    <article id="post-如何阅读一本书" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/25/如何阅读一本书/">&lt;如何阅读一本书&gt;之读后感</a>
-    </h1>
-  
-
-		
-        
-        <a href="/2018/03/25/如何阅读一本书/" class="archive-article-date">
-  	<time datetime="2018-03-25T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-25</time>
-</a>
-        
-      </header>
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="首先我想对整本书做归纳"><a href="#首先我想对整本书做归纳" class="headerlink" title="首先我想对整本书做归纳"></a>首先我想对整本书做归纳</h3><p> &lt;如何阅读一本书&gt;是一本实用形的书，指引读者应该如何阅读一本书，但是其中的技巧可以应用于各种杂志，文章，视频等。<br> 我认为这本书对于我最重要的2点是:</p>
-<ul>
-<li><p>如何主动的去阅读一本书<br>主动的阅读是贯彻于整本书一个观点。需要去明白阅读的目的，是为了娱乐，获取咨询，还是提高理解力。为了获得理解力而阅读的行为，需要花更多的时间去分析整本书的骨架等。<br>做一个主动阅读的读者需要提出问题，回答问题，做笔记。</p></li></ul>
-        
-          <a class="article-more-a" href="/2018/03/25/如何阅读一本书/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/25/如何阅读一本书/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
- <!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
@@ -1009,7 +995,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 secret
+    		&copy; 2019 secret
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -1092,6 +1078,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">汇编</a>
               </li>
              
@@ -1108,10 +1098,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Window编程原理</a>
               </li>
              
@@ -1124,10 +1110,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Windbg</a>
               </li>
              
@@ -1136,15 +1118,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">shellcode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1153,6 +1131,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1188,11 +1174,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">心理学</a>
               </li>
              
               <li class="article-tag-list-item">
